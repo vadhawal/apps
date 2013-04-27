@@ -1,0 +1,163 @@
+{% extends "base.html" %}
+{% load i18n future mezzanine_tags %}
+{% load relationship_tags %}
+{% load activity_tags %}
+{% block meta_title %}{{ profile_user.username }}{% endblock %}
+{% block title %}<p> Profile </p>{% endblock %}
+{% block body_id %}account{% endblock %}
+{% block extra_js %}
+
+    <script type="text/javascript">
+        $(function() {
+            $.ajaxSetup({
+                 beforeSend: function(xhr, settings) {
+                     function getCookie(name) {
+                         var cookieValue = null;
+                         if (document.cookie && document.cookie != '') {
+                             var cookies = document.cookie.split(';');
+                             for (var i = 0; i < cookies.length; i++) {
+                                 var cookie = jQuery.trim(cookies[i]);
+                                 // Does this cookie string begin with the name we want?
+                             if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                                 cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                                 break;
+                             }
+                         }
+                     }
+                     return cookieValue;
+                     }
+                     if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) {
+                         // Only send the token to relative URLs i.e. locally.
+                         xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+                     }
+                 }
+            });
+
+
+
+		  $(document).ready(function() {
+            $('#follow-btn').click(function() {
+                var add_link = $(this);
+                $.post(add_link.attr('href'), {}, function(data) {
+                    if (data.result === '1') {
+                        $('#follow-btn').hide();
+                        $('#unfollow-btn').show();
+ 						showSnazzySuccessMessage("Success, you're now following your friend.");
+                    } else {
+                        showSnazzySuccessMessage("Something went wrong!");
+                    }
+                });
+                return false;
+            });
+
+            $('#unfollow-btn').click(function() {
+                var add_link = $(this);
+                $.post(add_link.attr('href'), {}, function(data) {
+                    if (data.result === '1') {
+                    	showSnazzySuccessMessage("Success, you're not following your friend anymore.");
+                        $('#unfollow-btn').hide();
+                        $('#follow-btn').show();
+                    } else {
+                        showSnazzySuccessMessage("Something went wrong!");
+                    }
+                });
+                return false;
+            });
+        });
+	});		
+
+          $(document).ready(function() {
+                viewFeed();
+                $('#viewFeed').click(function() {
+                    viewFeed();
+                });    
+
+           }); 
+
+function viewFeed()
+{
+    $('#load-feeds').html("");
+    {% for follower in  profile_user.relationships.followers  %}
+    var link = "{% actor_url follower %}";
+    $.get(link, {}, function(data) {
+        $('#load-feeds').append(data);
+    });
+    {% endfor %}
+}
+function showSnazzySuccessMessage(text)
+{
+    if($("#successMessage").length < 1)
+    {
+        //If the message div doesn't exist, create it
+        $("body").append("<div id='successMessage' style='text-align:center;vertical-align:middle;width:400px;position:absolute;top:100px;left:200px;border:2px solid black;background:blue;margin:20px;display:none'>" + text + "</div>");
+    }
+    else
+    {
+        //Else, update the text
+        $("#successMessage").html(text);
+    }
+    //Fade message in
+    $("#successMessage").show('slow');
+    //Fade message out in 5 seconds
+    setTimeout('$("#successMessage").hide("slow")',5000);
+}
+
+    </script>
+
+{% endblock %}
+{% block main %}
+<div style="float:left;">
+{% if profile_user.get_profile.profile_photo %}
+<img style="margin-right:20px;" src="{{ profile_user.get_profile.profile_photo.url }}">
+{% elif profile_user.get_profile.image_url %}
+<img style="margin-right:20px;" src="{{ profile_user.get_profile.image_url }}">	
+{% endif %}
+
+
+<p>Followers: <p>{{ profile_user.relationships.followers.count }}</p> 
+<p>Followers: <p>{{ profile_user.relationships.followers}}</p> 
+
+{% if request.user.is_authenticated %}
+{% if profile_user == request.user %}
+<br><br><a class="btn btn-primary" style="" href="{% url "profile_update" %}">{% trans "Edit profile" %}</a>
+{% else %}
+<a id="unfollow-btn" href="{{ profile_user|remove_relationship_url:"following" }}" class="btn btn-primary">Unfollow</a>
+<a id="follow-btn" href="{{ profile_user|add_relationship_url:"following" }}" class="btn btn-primary">Follow</a>
+  {% if_relationship request.user profile_user "following" %}
+
+    <script type="text/javascript">
+    	$('#follow-btn').hide();
+    	$('#unfollow-btn').show();
+    </script>
+
+  {% else %}
+      <script type="text/javascript">
+    	$('#unfollow-btn').hide();
+    	$('#follow-btn').show();
+    </script> 
+
+  {% endif_relationship %}
+{% endif %}
+{% endif %}
+</div>
+
+<h2>{{ profile_user.get_full_name }}</h2>
+<div style="float:left;">
+{% for field, value in profile_fields %}
+{{ field }}: {{ value|linebreaks }}<br>
+{% endfor %}
+</div>
+
+<input id="viewFeed" type="button" class="button button-primary" value="Feed"></input>
+
+ <div id="load-feeds"></div>
+
+<div class="container span4">
+<p> Comments delivered: {{ profile_user.comment_comments.count }} </p>
+{% for comment in profile_user.comment_comments.all %}
+<p>{{ comment }}
+ <span class="timespan">{{ comment.submit_date|timesince }} {% trans "ago" %}</span></p>
+ For {{ comment.content_object }}</p>
+{% endfor %}
+</div>
+{% endblock %}

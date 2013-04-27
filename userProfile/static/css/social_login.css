@@ -1,0 +1,7 @@
+.fb_login {
+    background-color: linear-gradient(#3B5998 40px, #F6F8FA 40px) no-repeat scroll 0 0 / 100% 160px transparent; /* make the button transparent */
+   border-radius: 6px;
+   font-size: 20px;
+   font-weight: bold;
+   font-family: 'lucida grande',tahoma,verdana,arial,sans-serif;
+}
