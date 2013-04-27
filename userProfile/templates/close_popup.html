@@ -1,0 +1,24 @@
+
+{% block heading %}Login Facebook{% endblock %}
+
+{% block script_js %}
+<script type="text/javascript">
+  	function closeAndUpdate()
+    {
+      if (window.opener) {
+        window.opener.location.reload(true);
+        window.close();
+      }
+    }
+    window.setTimeout(closeAndUpdate, 2000);
+    </script>
+{% endblock %}
+<div style=" width: 200px;
+    height: 200px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    margin-left: -100px;
+    margin-top: -100px;">
+    Successfully Logged-in
+    </div>

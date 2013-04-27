@@ -2,12 +2,23 @@
 {% load i18n future mezzanine_tags %}
 {% load relationship_tags %}
 {% load activity_tags %}
+{% load hitcount_tags %}
+
 {% block meta_title %}{{ profile_user.username }}{% endblock %}
 {% block title %}<p> Profile </p>{% endblock %}
 {% block body_id %}account{% endblock %}
 {% block extra_js %}
 
+<link rel="stylesheet" href="{{ STATIC_URL }}css/creative.css">
+<link rel="stylesheet" href="{{ STATIC_URL }}css/navigation.css">
+
+<script src="{{ STATIC_URL }}js/jquery.jscrollpane.min.js"></script>
+<script src="{{ STATIC_URL }}js/jquery.mousewheel.js"></script>
+
+<link rel="stylesheet" href="{{ STATIC_URL }}css/jquery.jscrollpane.css">
     <script type="text/javascript">
+                var sIndex = 0;
+                var lIndex = 10;
         $(function() {
             $.ajaxSetup({
                  beforeSend: function(xhr, settings) {
@@ -36,13 +47,57 @@
 
 
 		  $(document).ready(function() {
+            {% get_hit_count_javascript for profile_user %}
+            $('#refreshActorCache').click(function() {
+                var add_link = $(this);
+                $.get(add_link.attr('href'), {}, function(data) {
+                });
+                return false;
+            });
+            $('#getSocialFriends').click(function() {
+                var add_link = $(this);
+                $.get(add_link.attr('href'), {}, function(data) {
+                    $('#socialFriendsList').html(data);
+                });
+                return false;
+            });
+            $('#getSocialFriends').click();
+            $('#refreshActorCache').click();
+            var FollowUnfollow = function() {
+                var element = $("#followContainer");
+                var classes = element.attr('class');
+                if (classes.indexOf('following') == -1) {
+
+                    classes+= ' following';
+                }
+                else {
+                    classes = classes.replace('following', '');
+                }
+                element.attr('class', classes); 
+            }
+            
+            {% if_relationship request.user profile_user "following" %}
+            var element = $("#followContainer");
+            var classes = element.attr('class');
+            if (classes.indexOf('following') == -1) {
+                    classes+= ' following';
+                }
+            element.attr('class', classes); 
+            {% endif_relationship %}
+
             $('#follow-btn').click(function() {
                 var add_link = $(this);
                 $.post(add_link.attr('href'), {}, function(data) {
                     if (data.result === '1') {
-                        $('#follow-btn').hide();
-                        $('#unfollow-btn').show();
+                        var followerCount = $('#followerCount').html();
+                        var followerCount = parseInt(followerCount) + 1;
+                        $('#followerCount').html(followerCount);
+                        $('.stat-followers').html(followerCount);
+                        var newFollower = '<a href="{{ request.user.get_absolute_url }}">{{ request.user.username }}</a>';
+                        $('#followerList').append(newFollower);
+
  						showSnazzySuccessMessage("Success, you're now following your friend.");
+                        FollowUnfollow();
                     } else {
                         showSnazzySuccessMessage("Something went wrong!");
                     }
@@ -55,35 +110,101 @@
                 $.post(add_link.attr('href'), {}, function(data) {
                     if (data.result === '1') {
                     	showSnazzySuccessMessage("Success, you're not following your friend anymore.");
-                        $('#unfollow-btn').hide();
-                        $('#follow-btn').show();
+                        var followerCount = $('#followerCount').html();
+                        var followerCount = parseInt(followerCount) - 1;
+                        $('#followerCount').html(followerCount);
+                        $('.stat-followers').html(followerCount);
+                        FollowUnfollow();
                     } else {
                         showSnazzySuccessMessage("Something went wrong!");
                     }
                 });
                 return false;
             });
+            var getFeed = function(){
+                {% if request.user.is_authenticated %}
+                    $('#load-feeds').html("");
+                    {% actor_url_subset request.user 0 10 as feed %}
+                    var link = "{{feed}}";
+                    $.get(link, {}, function(data) {
+                        $('#load-feeds').html(data);
+                    });
+                {% endif %}    
+            } 
+            {% if profile_user == request.user %}
+            getFeed();   
+          
+            updatestatus(); 
+            var element = $('.section-scroll').jScrollPane({
+                    horizontalGutter:5,
+                    verticalGutter:5,
+                    'showArrows': true
+                    });
+                    
+                    $('.jspDrag').hide();
+                    $('.jspScrollable').mouseenter(function(){
+                        $('.jspDrag').stop(true, true).fadeIn('slow');
+                    });
+                    $('.jspScrollable').mouseleave(function(){
+                        $('.jspDrag').stop(true, true).fadeOut('slow');
+                    });
+
+                api = element.data('jsp');
+                var scroll_handler = function(){
+                    if($('.section-scroll').outerHeight() + api.getContentPositionY() >= api.getContentHeight()) {
+                        //Fire another function here
+                        $('.section-scroll').unbind('scroll');
+                        
+                        scrollalert();
+                        var element = $('.section-scroll').jScrollPane({
+                                        horizontalGutter:5,
+                                        verticalGutter:5,
+                                        'showArrows': true
+                        });
+                        api = element.data('jsp');
+                        api.reinitialise();
+                        $('.section-scroll').bind('scroll', scroll_handler);
+                        
+                    }
+
+                }
+                $('.section-scroll').bind('scroll', scroll_handler);
+                {% endif %}
         });
-	});		
+	});
 
-          $(document).ready(function() {
-                viewFeed();
-                $('#viewFeed').click(function() {
-                    viewFeed();
-                });    
-
-           }); 
-
-function viewFeed()
-{
-    $('#load-feeds').html("");
-    {% for follower in  profile_user.relationships.followers  %}
-    var link = "{% actor_url follower %}";
-    $.get(link, {}, function(data) {
-        $('#load-feeds').append(data);
-    });
-    {% endfor %}
+function updatestatus(){  
+    //Show number of loaded items  
+    var totalItems=$('#load-feeds ul li').length;  
+    $('#status').text('Loaded '+totalItems+' Items');  
 }
+
+function scrollalert(){ 
+ 
+        $('#status').text('Loading more items...');
+   
+        sIndex = lIndex;
+        lIndex = lIndex + 5;
+        {% actor_url_subset profile_user 0 10 as feed %}
+        var link = "{{feed}}";
+
+        var linksplit = link.split("/");
+        linksplit[linksplit.length-2] = lIndex;
+        linksplit[linksplit.length-3] = sIndex;
+        link = linksplit.join('/');
+
+        $.get(link, {}, function(data) {
+            if(data.indexOf("No actions yet") >= 0)
+            {
+               $('.section-scroll').unbind('scroll');
+            }    
+            $('#load-feeds').append(data);
+            updatestatus(); 
+        }); 
+    /*}     
+    setTimeout('scrollalert();', 1500); */ 
+}
+
 function showSnazzySuccessMessage(text)
 {
     if($("#successMessage").length < 1)
@@ -101,7 +222,6 @@ function showSnazzySuccessMessage(text)
     //Fade message out in 5 seconds
     setTimeout('$("#successMessage").hide("slow")',5000);
 }
-
     </script>
 
 {% endblock %}
@@ -112,32 +232,54 @@ function showSnazzySuccessMessage(text)
 {% elif profile_user.get_profile.image_url %}
 <img style="margin-right:20px;" src="{{ profile_user.get_profile.image_url }}">	
 {% endif %}
+  
+  <div id="user-stats" class="left" style="background-color:#000000;color:#E9E6E6;">
+    <ul style="list-style:None;">
+      <li class="user-stat user-stat-color"><span class="user-stat-color be-font-inline">G</span>Profile Views <a href="" class="blue right bold stat-views header-link-color">{% get_hit_count for profile_user %}</a></li>
+      <li class="user-stat user-stat-color"><span class="user-stat-color be-font-inline">F</span>Appreciations <a href="" class="blue right bold stat-apps header-link-color">{{ profile_user.num_likes }}</a></li>
+      <li class="user-stat user-stat-color"><span class="user-stat-color be-font-inline">I</span>Followers <a id="followerCountBox" href="" class="right bold stat-followers header-link-color">{{ profile_user.relationships.followers.count }}</a></li>
+      <li class="user-stat user-stat-color"><span class="user-stat-color be-font-inline">H</span>Following <a id="followingCountBox" href="" class="right bold stat-following header-link-color">{{ profile_user.relationships.following.count }}</a></li>
+    </ul>
+    <span class="tiny-text" id="member-since" style="color:#E9E6E6;">Member Since: <span class="join-date" style="color:#E9E6E6;">{{profile_user.date_joined}}</span></span>
+    <span class="tiny-text" id="member-since" style="color:#E9E6E6;">Last Login: <span class="join-date" style="color:#E9E6E6;">{{profile_user.last_login}}</span></span>
+  </div> <!-- #user-stats -->
 
 
-<p>Followers: <p>{{ profile_user.relationships.followers.count }}</p> 
-<p>Followers: <p>{{ profile_user.relationships.followers}}</p> 
+<p>Followers: <span id="followerCount">{{ profile_user.relationships.followers.count }}</span> 
+<span id="followerList">
+{% for follower in profile_user.relationships.followers %}
+<a href="{{follower.get_absolute_url}}">
+{{ follower }}
+</a>
+{% endfor %}
+</span>
+</p>
+<p>Following: <span id="followingCount">{{ profile_user.relationships.following.count }}</span> 
+<span id="followingList">
+{% for following in profile_user.relationships.following %}
+<a href="{{following.get_absolute_url}}">
+{{ following }}
+</a>
+{% endfor %}
+</span>
+</p>
 
 {% if request.user.is_authenticated %}
 {% if profile_user == request.user %}
+
 <br><br><a class="btn btn-primary" style="" href="{% url "profile_update" %}">{% trans "Edit profile" %}</a>
 {% else %}
-<a id="unfollow-btn" href="{{ profile_user|remove_relationship_url:"following" }}" class="btn btn-primary">Unfollow</a>
-<a id="follow-btn" href="{{ profile_user|add_relationship_url:"following" }}" class="btn btn-primary">Follow</a>
+
+<div id="followContainer" class="follow-button-container action-follow-user" >
+    <a id="follow-btn" href="{{ profile_user|add_relationship_url:"following" }}" class="form-button form-button-follow form-button-small form-button-default form-button-left-icon form-button-icon-follow">Follow</a>
+    <a class="form-button form-button-following form-button-small form-button-light-and-grey form-button-left-icon form-button-icon-following">Following</a>
+    <a id="unfollow-btn" href="{{ profile_user|remove_relationship_url:"following" }}" class="form-button form-button-unfollow form-button-small form-button-red form-button-left-icon form-button-icon-unfollow">Unfollow</a></div>  
+
   {% if_relationship request.user profile_user "following" %}
-
-    <script type="text/javascript">
-    	$('#follow-btn').hide();
-    	$('#unfollow-btn').show();
-    </script>
-
-  {% else %}
-      <script type="text/javascript">
-    	$('#unfollow-btn').hide();
-    	$('#follow-btn').show();
-    </script> 
 
   {% endif_relationship %}
 {% endif %}
+
 {% endif %}
 </div>
 
@@ -148,10 +290,12 @@ function showSnazzySuccessMessage(text)
 {% endfor %}
 </div>
 
-<input id="viewFeed" type="button" class="button button-primary" value="Feed"></input>
-
- <div id="load-feeds"></div>
-
+{% if request.user.is_authenticated and profile_user == request.user   %}
+<div>
+    <a id="getSocialFriends" style="" href="{% url "friend_list" %}"></a>
+    <div id="socialFriendsList"></div>
+</div>
+{% endif %}
 <div class="container span4">
 <p> Comments delivered: {{ profile_user.comment_comments.count }} </p>
 {% for comment in profile_user.comment_comments.all %}
@@ -160,4 +304,22 @@ function showSnazzySuccessMessage(text)
  For {{ comment.content_object }}</p>
 {% endfor %}
 </div>
+{% if request.user.is_authenticated and profile_user != request.user   %}
+<div>
+    <a href="{% url "messages_compose_to" profile_user.username %}"><img src="{{STATIC_URL}}img/send.png"></a>
+</div>
+{% endif %}
+{% if profile_user == request.user and request.user.is_authenticated %}
+<div>
+    <a href="{% url "messages_inbox" %}"><img src="{{STATIC_URL}}img/inbox.png"></a>{{ messages_inbox_count }}
+</div>
+<div class="section-scroll" style="border-style:solid;
+border-width:medium;border-color:#00A3EF;">
+    <div id="load-feeds" class="content">
+    </div>
+</div>
+<span id="status" ></span><div id="loader">
+<a id="refreshActorCache" href="{% activity_actor_refresh_cache request.user %}"></a>
+ <!--div id="load-feeds" class="container span4 right"></div-->
+ {% endif %}
 {% endblock %}

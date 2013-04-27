@@ -21,6 +21,8 @@
 <link rel="stylesheet" href="{{ STATIC_URL }}css/mezzanine.css">
 <link rel="stylesheet" href="{{ STATIC_URL }}css/customnavbar.css">
 <link rel="stylesheet" href="{{ STATIC_URL }}css/social_login.css">
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/imagestore.css" media="screen" />
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/jquery.lightbox-0.5.css" media="screen" />
 {% ifinstalled cartridge.shop %}
 <link rel="stylesheet" href="{{ STATIC_URL }}css/cartridge.css">
 {% endifinstalled %}
@@ -30,6 +32,7 @@
 {% compress js %}
 <script src="{{ STATIC_URL }}mezzanine/js/{{ settings.JQUERY_FILENAME }}"></script>
 <script src="{{ STATIC_URL }}js/bootstrap.min.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/jquery.lightbox-0.5.js"></script>
 <script>
 $(function() {
     $('.middleinput:text, textarea').addClass('xlarge');
@@ -55,6 +58,7 @@ $(function() {
         {% search_form "all" %}
         {% page_menu "pages/menus/dropdown.html" %}
     </div>
+    <a href="/admin" style="background:#FF9900;" class="btn btn-primary">Add a Store</a>
 </div>
 </div>
 <div style="margin-top: 100px;" class="container">
@@ -106,7 +110,7 @@ $(function() {
 {% page_menu "pages/menus/footer.html" %}
 <br style="clear:both">
 <p>
-    {% trans "Powered by" %}car
+    {% trans "Powered by" %}
     <a href="http://mezzanine.jupo.org">Mezzanine</a>{% ifinstalled cartridge.shop %},
     <a href="http://cartridge.jupo.org">Cartridge</a>{% endifinstalled %}
     {% trans "and" %}

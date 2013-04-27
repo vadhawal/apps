@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% load i18n future mezzanine_tags %}
+
+
+{% load activity_tags %}
+
+{% block extra_js %}
+    <script type="text/javascript">
+          $(document).ready(function() {
+                viewFeed();
+                $('#viewFeed').click(function() {
+                    viewFeed();
+                });    
+
+           }); 
+
+function viewFeed()
+{
+    $('#load-feeds').html("");
+    {% for follower in  profile_user.relationships.followers  %}
+    var link = "{% actor_url follower %}";
+    $.get(link, {}, function(data) {
+        $('#load-feeds').append(data);
+    });
+    {% endfor %}
+}
+
+    </script>
+
+{% endblock %}
+
+{% block main %}
+ <div id="load-feeds" class="container span9 right"></div>
+ {% endblock %}

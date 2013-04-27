@@ -1,11 +1,14 @@
 {% load i18n mezzanine_tags comment_tags %}
 {% load mezzanine_tags i18n future %}
+{% load voting_tags %}
+
 <ul class="unstyled">
     {% for comment in comments_for_thread %}
 
     <li id="comment-{{ comment.id }}"
         {% url "commentProfile" comment.author as profile_url%}
-        {% if comment.by_author %}class="comment-author"{% endif %}>
+        {# {% if comment.by_author %}class="comment-author"{% endif %} #}
+        >
         {% editable comment.is_public comment.is_removed %}
         {% if not comment.is_removed and comment.is_public %}
         <strong>
@@ -54,6 +57,47 @@
         		<p></p>
        {% endif %}
         <p>{{ comment.comment|comment_filter }}</p>
+
+        {% score_for_object comment as score %}
+        <a id="up{{comment.id}}" href="/comments/{{ comment.id }}/up/vote/" onClick=" var add_link = $(this);
+            $.post(add_link.attr('href'),{HTTP_X_REQUESTED:'XMLHttpRequest'},
+                   function(data) {
+                       if (data.success == true) {
+                           $('#pScore'+'{{comment.id}}').text(data.score.num_up_votes);
+                           $('#nScore'+'{{comment.id}}').text((data.score.num_down_votes));
+                       } else {
+                           alert('ERROR: ' + data.error_message);
+                       }
+                   }, 'json');
+            return false;">
+
+        <img src="{{ STATIC_URL }}img/like.png">
+        </a>
+        <span id="pScore{{comment.id}}">{{score.num_up_votes}}</span>
+        <a id="down{{comment.id}}" href="/comments/{{ comment.id }}/down/vote/" onClick=" var add_link = $(this);
+            $.post(add_link.attr('href'),{HTTP_X_REQUESTED:'XMLHttpRequest'},
+                   function(data) {
+                       if (data.success == true) {
+                           $('#pScore'+'{{comment.id}}').text(data.score.num_up_votes);
+                           $('#nScore'+'{{comment.id}}').text((data.score.num_down_votes));
+                       } else {
+                           alert('ERROR: ' + data.error_message);
+                       }
+                   }, 'json');
+            return false;">
+        <img src="{{ STATIC_URL }}img/dislike.png"></a>
+        <span id="nScore{{comment.id}}">{{score.num_down_votes}}</span>
+        <a id="clear{{comment.id}}" href="/comments/{{ comment.id }}/clear/vote/" onClick=" var add_link = $(this);
+            $.post(add_link.attr('href'),{HTTP_X_REQUESTED:'XMLHttpRequest'},
+                   function(data) {
+                       if (data.success == true) {
+                           $('#pScore'+'{{comment.id}}').text(data.score.num_up_votes);
+                           $('#nScore'+'{{comment.id}}').text((data.score.num_down_votes));
+                       } else {
+                           alert('ERROR: ' + data.error_message);
+                       }
+                   }, 'json');
+            return false;">Clear</a>
 
         <a href="{{ request.path }}#comment-{{ comment.id }}">{% trans "Link" %}</a> {% if blog_post.allow_reply_to_comments %} / {%endif%}
         <a href="#reply-{{ comment.id }}" class="reply" {% if blog_post.allow_reply_to_comments != TRUE %}style="display:none;"{% endif %} >{% trans "Reply" %}</a>

@@ -1,0 +1,175 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load activity_tags %}
+{% load set_var %}
+
+{% block meta_title %}{% trans "Home" %}{% endblock %}
+{% block title %}{% trans "Home" %}{% endblock %}
+{% block breadcrumb_menu %}
+<li class="active">{% trans "Home" %}</li>
+{% endblock %}
+{% block extra_js %}
+<script src="{{ STATIC_URL }}js/jquery.jscrollpane.min.js"></script>
+<script src="{{ STATIC_URL }}js/jquery.mousewheel.js"></script>
+{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{{ STATIC_URL }}css/jquery.jscrollpane.css">
+<script type="text/javascript">
+                var sIndex = 0;
+                var lIndex = 10;
+                var inProcess = 0;
+{% if request.user.is_authenticated %}
+          $(document).ready(function() {
+            $('#refreshCache').click(function() {
+                var add_link = $(this);
+                $.get(add_link.attr('href'), {}, function(data) {
+                });
+                return false;
+            });
+            $('#refreshActivity').click(function() {
+                var add_link = $(this);
+                $.get(add_link.attr('href'), {}, function(data) {
+                    if(!data.contains('No actions yet'))
+                        $('#load-feeds').html(data);
+                });
+                return false;
+            });
+            $('#refreshCache').click();
+                viewFeed(); 
+                //scrollalert();
+                updatestatus(); 
+                setInterval(function () {
+                    checkAnyLatestActivity();
+                }, 10000); 
+                var element = $('.section-scroll').jScrollPane({
+                    horizontalGutter:5,
+                    verticalGutter:5,
+                    'showArrows': false
+                    });
+                    
+                    $('.jspDrag').hide();
+                    $('.jspScrollable').mouseenter(function(){
+                        $('.jspDrag').stop(true, true).fadeIn('slow');
+                    });
+                    $('.jspScrollable').mouseleave(function(){
+                        $('.jspDrag').stop(true, true).fadeOut('slow');
+                    });
+
+                api = element.data('jsp');
+                var scroll_handler = function(){
+                    if($('.section-scroll').outerHeight() + api.getContentPositionY() >= api.getContentHeight()) {
+                        //Fire another function here
+                        $('.section-scroll').unbind('scroll');
+                        scrollalert();
+                        var element = $('.section-scroll').jScrollPane();
+                        api = element.data('jsp');
+                        api.reinitialise();
+                        $('.section-scroll').bind('scroll', scroll_handler);
+                    }
+
+                }
+                $('.section-scroll').bind('scroll', scroll_handler); 
+                /*$('#viewFeed').click(function() {
+                    viewFeed();
+                });*/    
+
+}); 
+function checkAnyLatestActivity(){
+    $('#refreshActivity').click();
+}
+function updatestatus(){  
+    //Show number of loaded items  
+    var totalItems=$('#load-feeds ul li').length;  
+    $('#status').text('Loaded '+totalItems+' Items');  
+}
+
+function scrollalert(){ 
+    
+
+    /*var scrolltop=$('.content')[0].scrollTop;//$('#scrollbox').attr('scrollTop'); 
+
+    var scrollheight=$('.content')[0].scrollHeight;//$('#scrollbox').attr('scrollHeight');  
+    var windowheight=$('.content')[0].clientHeight;//$('#scrollbox').attr('clientHeight');  
+    var scrolloffset=20;  */
+        //alert(scrolltop);
+        //alert(scrollheight-(windowheight+scrolloffset));
+   // if(scrolltop>=(scrollheight-(windowheight+scrolloffset)))  
+    //{  
+        //fetch new items 
+        $('#status').text('Loading more items...');
+
+        sIndex = lIndex;
+        lIndex = lIndex + 5;
+        {% following_feedsubset_url request.user 0 10 as feed %}
+        var link = "{{feed}}";
+        var linksplit = link.split("/");
+        linksplit[linksplit.length-2] = lIndex;
+        linksplit[linksplit.length-3] = sIndex;
+        link = linksplit.join('/');
+
+        $.get(link, {}, function(data) {
+            if(data.indexOf("No actions yet") >= 0)
+            {
+                $('.section-scroll').unbind('scroll');
+            }    
+            $('#load-feeds').append(data);
+            updatestatus(); 
+        });  
+    //setTimeout('scrollalert();', 1500);  
+}  
+
+function viewFeed()
+{
+    $('#load-feeds').html("");
+    {% following_feedsubset_url request.user 0 5 as feed %}
+
+    var link="{{feed}}";
+    $.get(link, {}, function(data) {
+        $('#load-feeds').html(data);
+    });
+}
+{% endif %}
+</script>
+
+{% endblock %}
+
+
+
+{% block main %}
+
+{% if request.user.is_authenticated %}
+<!--input id="viewFeed" type="button" class="button button-primary btn-sucess" value="Feed"></input-->
+<a id="refreshCache" href="{% activity_refresh_cache request.user %}"></a>
+<a id="refreshActivity" href="{% activity_dynamic_update request.user %}"></a>
+<div class="section-scroll">
+    <div id="load-feeds" class="content">
+    </div>
+</div>
+<p><span id="status" ></span></p> 
+<!--div id="scrollcontainer">  
+    <div id="scrollbox" >  
+        <div id="load-feeds" >  
+
+        </div>  
+    </div>  
+    <p><span id="status" ></span></p>  
+</div-->
+
+{% endif %}
+{% if not request.user.is_authenticated %}
+    <div id="myCarousel" class="carousel slide">
+    <!-- Carousel items -->
+    <div class="carousel-inner">
+    <div class="active item">
+    <img alt="" src="{{ STATIC_URL }}img/01.jpg">
+    </div>
+    <div class="item"><img alt="" src="{{ STATIC_URL }}img/02.jpg"></div>
+    <div class="item"><img alt="" src="{{ STATIC_URL }}img/03.jpg"></div>
+    </div>
+    <!-- Carousel nav -->
+    <a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
+    <a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
+    </div>
+{% endif %}    
+{% endblock %}

@@ -9,10 +9,16 @@ from django.db.models.signals import post_save
 from django.db import models
 from django_resized import ResizedImageField
 from django.utils.translation import ugettext_lazy as _
+from django import forms
 
 def get_image_path(instance, filename):
     return os.path.join('users', str(instance.id), filename)
 
+class BroadcastForm(forms.Form):
+    message = forms.CharField(max_length=100)
+    class Meta:
+        app_label = 'userProfile'
+        
 class UserProfile(models.Model):
     user = models.OneToOneField(User, unique=True)
     GENDER_CHOICES = (
@@ -38,6 +44,7 @@ post_save.connect(create_user_profile, sender=User)
 
 
 from social_auth.backends.facebook import FacebookBackend
+from social_auth.backends.twitter import TwitterBackend
 from social_auth.backends import google
 from social_auth.signals import socialauth_registered
 from social_auth.signals import pre_update
@@ -51,21 +58,25 @@ def new_users_handler(sender, user, response, details, **kwargs):
             from django.core.files.base import ContentFile
             
             try:
-                url = None
-                if sender == FacebookBackend:
-                    url = "http://graph.facebook.com/%s/picture?type=large" \
-                                % response["id"]
-                elif sender == google.GoogleOAuth2Backend and "picture" in response:
-                    url = response["picture"]
+                #url = None
+                #if sender == FacebookBackend:
+                #    url = "http://graph.facebook.com/%s/picture?type=large" \
+                #                % response["id"]
+                #elif sender == TwitterBackend:
+                #    url = "https://api.twitter.com/1/users/profile_image?screen_name=twitterapi&size=bigger"
+
+                #elif sender == google.GoogleOAuth2Backend and "picture" in response:
+                #    url = response["picture"]
     
-                if url:
-                    avatar = urlopen(url)
+                #if url:
+                #    avatar = urlopen(url)
                     profile = UserProfile.objects.get(user=user)
                     #profile = user.get_profile()
                     if sender == FacebookBackend:
                         profile.image_url = 'https://graph.facebook.com/' + user.username+ '/picture'
                         #profile.profile_photo.save(slugify(user.username + " social") + '.jpg', ContentFile(avatar.read()))              
-                                    
+                    elif sender == TwitterBackend: 
+                        profile.image_url = user.social_auth.get(provider='twitter').extra_data['profile_image_url'] 
                     profile.save()
     
             except HTTPError:
@@ -75,7 +86,4 @@ def new_users_handler(sender, user, response, details, **kwargs):
  
 User.profile = property(lambda u: UserProfile.objects.get_or_create(user=u)[0]) 
 pre_update.connect(new_users_handler, sender=FacebookBackend)
-
-
-
-
+pre_update.connect(new_users_handler, sender=TwitterBackend)
