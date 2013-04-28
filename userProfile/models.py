@@ -48,6 +48,7 @@ from social_auth.backends.twitter import TwitterBackend
 from social_auth.backends import google
 from social_auth.signals import socialauth_registered
 from social_auth.signals import pre_update
+from social_auth.models import UserSocialAuth
 
 def new_users_handler(sender, user, response, details, **kwargs):
     user.is_new = True
@@ -73,7 +74,9 @@ def new_users_handler(sender, user, response, details, **kwargs):
                     profile = UserProfile.objects.get(user=user)
                     #profile = user.get_profile()
                     if sender == FacebookBackend:
-                        profile.image_url = 'https://graph.facebook.com/' + user.username+ '/picture'
+                        profile.image_url = "http://graph.facebook.com/%s/picture" \
+                                % response["id"]
+                        #'https://graph.facebook.com/' + user.social_auth.filter(provider="facebook")[0] + '/picture'
                         #profile.profile_photo.save(slugify(user.username + " social") + '.jpg', ContentFile(avatar.read()))              
                     elif sender == TwitterBackend: 
                         profile.image_url = user.social_auth.get(provider='twitter').extra_data['profile_image_url'] 
