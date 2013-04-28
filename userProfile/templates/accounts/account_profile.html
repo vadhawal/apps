@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load i18n future mezzanine_tags %}
+{% load i18n future mezzanine_tags accounts_tags %}
 {% load relationship_tags %}
 {% load activity_tags %}
 {% load hitcount_tags %}
@@ -285,8 +285,8 @@ function showSnazzySuccessMessage(text)
 
 <h2>{{ profile_user.get_full_name }}</h2>
 <div style="float:left;">
-{% for field, value in profile_fields %}
-{{ field }}: {{ value|linebreaks }}<br>
+{% for field, value in profile_user|profile_fields %}
+<p>{{ field }}: {{ value|linebreaksbr }}</p>
 {% endfor %}
 </div>
 

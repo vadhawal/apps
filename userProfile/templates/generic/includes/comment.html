@@ -1,4 +1,4 @@
-{% load i18n mezzanine_tags comment_tags %}
+{% load i18n mezzanine_tags comment_tags rating_tags %}
 {% load mezzanine_tags i18n future %}
 {% load voting_tags %}
 
@@ -39,7 +39,7 @@
             {% endif %}
             {% endif %}
         </strong>
-        <span class="timespan">{{ comment.submit_date|timesince }} {% trans "ago" %}</span>
+        <span class="timespan">{% blocktrans with sometime=comment.submit_date|timesince %}{{ sometime }} ago{% endblocktrans %}</span>
         {% if comment.get_rating_parameters  %}
         	<div class="panel rating">
        			<strong>{% trans "Ratings" %}</strong><br />
@@ -127,7 +127,7 @@
             {{ comment.user_name }}
             {% endif %}
         </strong>
-        <span class="timespan">{{ comment.submit_date|timesince }} {% trans "ago" %}</span>
+        <span class="timespan">{% blocktrans with sometime=comment.submit_date|timesince %}{{ sometime }} ago{% endblocktrans %}</span>
         <p>{{ comment.comment|comment_filter }}</p>
         {% endif %}
 
