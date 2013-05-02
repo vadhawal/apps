@@ -59,6 +59,7 @@
         <p>{{ comment.comment|comment_filter }}</p>
 
         {% score_for_object comment as score %}
+        {% voters_for_object comment as voters %}
         <a id="up{{comment.id}}" href="/comments/{{ comment.id }}/up/vote/" onClick=" var add_link = $(this);
             $.post(add_link.attr('href'),{HTTP_X_REQUESTED:'XMLHttpRequest'},
                    function(data) {
@@ -99,6 +100,14 @@
                    }, 'json');
             return false;">Clear</a>
 
+        <span id="voters{{comment.id}}">
+            {% for voter in voters.voters %}
+            <a href="{{ voter.get_absolute_url }}">
+                {{ voter.username }}
+            </a>
+            {% endfor %}
+        </span>
+        
         <a href="{{ request.path }}#comment-{{ comment.id }}">{% trans "Link" %}</a> {% if blog_post.allow_reply_to_comments %} / {%endif%}
         <a href="#reply-{{ comment.id }}" class="reply" {% if blog_post.allow_reply_to_comments != TRUE %}style="display:none;"{% endif %} >{% trans "Reply" %}</a>
         <form class="reply-form" method="post" id="reply-{{ comment.id }}"
