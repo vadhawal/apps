@@ -3,6 +3,7 @@
 {% load relationship_tags %}
 {% load activity_tags %}
 {% load hitcount_tags %}
+{% load userProfile_tags %}
 
 {% block meta_title %}{{ profile_user.username }}{% endblock %}
 {% block title %}<p> Profile </p>{% endblock %}
@@ -14,6 +15,7 @@
 
 <script src="{{ STATIC_URL }}js/jquery.jscrollpane.min.js"></script>
 <script src="{{ STATIC_URL }}js/jquery.mousewheel.js"></script>
+<script src="http://connect.facebook.net/en_US/all.js"></script>
 
 <link rel="stylesheet" href="{{ STATIC_URL }}css/jquery.jscrollpane.css">
     <script type="text/javascript">
@@ -47,6 +49,18 @@
 
 
 		  $(document).ready(function() {
+            $('#sendInvitesFB').click(function() {
+                        FB.init({ 
+                          appId: {% settings_value 'FACEBOOK_APP_ID' %}, cookie:true, 
+                          status:true, xfbml:true 
+                        });
+
+                        FB.ui({ method: 'apprequests', 
+                          message: 'Check out this cool application! Make your own network of friends, Share reviews, Get best vendors in town and much more...',
+                          new_style_message: true
+                      });
+                return false;
+            });
             {% get_hit_count_javascript for profile_user %}
             $('#refreshActorCache').click(function() {
                 var add_link = $(this);
@@ -266,7 +280,13 @@ function showSnazzySuccessMessage(text)
 
 {% if request.user.is_authenticated %}
 {% if profile_user == request.user %}
-
+{% for sa in request.user.social_auth.all %}
+    {% if sa.provider == "facebook" %}
+        <a id="sendInvitesFB" href="/">Invite Friends from facebook</a>
+    {% elif sa.provider == "twitter" %}
+        <!-- TBD for twitter/google -->
+    {% endif %}
+{% endfor %}
 <br><br><a class="btn btn-primary" style="" href="{% url "profile_update" %}">{% trans "Edit profile" %}</a>
 {% else %}
 
