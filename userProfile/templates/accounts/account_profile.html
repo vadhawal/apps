@@ -282,7 +282,7 @@ function showSnazzySuccessMessage(text)
 {% if profile_user == request.user %}
 {% for sa in request.user.social_auth.all %}
     {% if sa.provider == "facebook" %}
-        <a id="sendInvitesFB" href="/">Invite Friends from facebook</a>
+        Invite Friends: <a id="sendInvitesFB" href="#" ><img src="{{ STATIC_URL }}img/fb_login.png"></a>
     {% elif sa.provider == "twitter" %}
         <!-- TBD for twitter/google -->
     {% endif %}
