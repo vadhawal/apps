@@ -44,7 +44,6 @@ var lIndex = 5;
                 $.get(add_link.attr('href'), {}, function(data) {
                     if(data.indexOf("No actions yet") < 0)
                         $('#load-feeds').prepend(data);
-
                 });
                 return false;
             });
@@ -163,7 +162,7 @@ function viewFeed()
     <form id="broadcast" action="/broadcast/" method="post" class='album-form'>
     {% csrf_token %}
     {{ form.as_p }}
-    <textarea style="width:100%;" name="message"  placeholder="Broadcast to the world..."></textarea>
+    <textarea style="width:100%;height:60px" name="message"  placeholder="Broadcast to the world..."></textarea>
     <input type="submit" value="{% trans "Send" %}" class='btn btn-success'>
     </form>
 <!--input id="viewFeed" type="button" class="button button-primary btn-sucess" value="Feed"></input-->
