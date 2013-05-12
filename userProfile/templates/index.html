@@ -19,6 +19,18 @@ var sIndex = 0;
 var lIndex = 5;
 {% if request.user.is_authenticated %}
           $(document).ready(function() {
+            $('#broadcast').submit(function() {
+                $.post($(this).attr('action'), $(this).serialize(), function(data, textStatus, jqXHR){
+                        if(data == 'ok')
+                        {
+                            $("form").trigger('reset');
+                            alert('posted');
+                        }
+                        else
+                            alert(data);
+                })
+                return false;
+            });
             $('#loader').hide();
             $('#refreshCache').click(function() {
                 var add_link = $(this);
@@ -147,7 +159,7 @@ function viewFeed()
 {% block main %}
 
 {% if request.user.is_authenticated %}
-    <form action="/broadcast/" method="post" class='album-form'>
+    <form id="broadcast" action="/broadcast/" method="post" class='album-form'>
     {% csrf_token %}
     {{ form.as_p }}
     <textarea style="width:100%;" name="message"  placeholder="Broadcast to the world..."></textarea>
