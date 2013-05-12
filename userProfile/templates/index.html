@@ -24,7 +24,8 @@ var lIndex = 5;
                         if(data == 'ok')
                         {
                             $("form").trigger('reset');
-                            alert('posted');
+                            $('#refreshActivity').click();
+                            //alert('posted');
                         }
                         else
                             alert(data);
