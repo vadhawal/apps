@@ -116,9 +116,9 @@
                 var add_link = $(this);
                 $.post(add_link.attr('href'), {}, function(data) {
                     if (data.result === '1') {
-                        var followerCount = $('#followerCount').html();
+                        var followerCount = $('#followerCountBox').html();
                         var followerCount = parseInt(followerCount) + 1;
-                        $('#followerCount').html(followerCount);
+                        $('#followerCountBox').html(followerCount);
                         $('.stat-followers').html(followerCount);
                         var newFollower = '<a href="{{ request.user.get_absolute_url }}">{{ request.user.username }}</a>';
                         $('#followerList').append(newFollower);
@@ -137,9 +137,9 @@
                 $.post(add_link.attr('href'), {}, function(data) {
                     if (data.result === '1') {
                     	showSnazzySuccessMessage("Success, you're not following your friend anymore.");
-                        var followerCount = $('#followerCount').html();
+                        var followerCount = $('#followerCountBox').html();
                         var followerCount = parseInt(followerCount) - 1;
-                        $('#followerCount').html(followerCount);
+                        $('#followerCountBox').html(followerCount);
                         $('.stat-followers').html(followerCount);
                         FollowUnfollow();
                     } else {
@@ -271,15 +271,17 @@ function showSnazzySuccessMessage(text)
     <span class="tiny-text" id="member-since" style="color:#E9E6E6;">Last Login: <span class="join-date" style="color:#E9E6E6;">{{profile_user.last_login}}</span></span>
   </div> <!-- #user-stats -->
 
-
-<p>Followers: <span id="followerCount">{{ profile_user.relationships.followers.count }}</span> 
+<!--p>Followers: <span id="followerCount">{{ profile_user.relationships.followers.count }}</span> 
+{#
 <span id="followerList">
+
 {% for follower in profile_user.relationships.followers %}
 <a href="{{follower.get_absolute_url}}">
 {{ follower }}
 </a>
 {% endfor %}
 </span>
+
 </p>
 <p>Following: <span id="followingCount">{{ profile_user.relationships.following.count }}</span> 
 <span id="followingList">
@@ -289,8 +291,9 @@ function showSnazzySuccessMessage(text)
 </a>
 {% endfor %}
 </span>
-</p>
-
+#}
+</p-->
+</br>
 {% if request.user.is_authenticated %}
 {% if profile_user == request.user %}
 {% for sa in request.user.social_auth.all %}
