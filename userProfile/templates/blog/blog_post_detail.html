@@ -211,13 +211,12 @@
     <a id="follow-btn" href="{% follow_url blog_post %}" class="form-button form-button-follow form-button-small form-button-default form-button-left-icon form-button-icon-follow">Follow</a>
     <a class="form-button form-button-following form-button-small form-button-light-and-grey form-button-left-icon form-button-icon-following">Following</a>
     <a id="unfollow-btn" href="{% follow_url blog_post %}" class="form-button form-button-unfollow form-button-small form-button-red form-button-left-icon form-button-icon-unfollow">Unfollow</a></div>  
+    <a id="vendorFollowers" href="{% vendor_follower_info_url blog_post %}">
+        {{  request.user|follower_count:blog_post }}
+    </a>
 </div>
 
 <div>
-    Followers:<a id="vendorFollowers" href="{% vendor_follower_info_url blog_post %}">
-        {{  request.user|follower_count:blog_post }}
-    </a>
-
     {#% for follower in request.user|followers:blog_post %#}
      <!--a href="{{ follower.get_absolute_url }}"> {{ follower.username }} </a-->
     {#% endfor %#}
