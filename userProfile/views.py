@@ -18,14 +18,15 @@ def broadcast(request):
 		elif _(request.POST['actor']) == "vendor":
 			
 			blog_posts = BlogPost.objects.published(
-                                     for_user=request.user).select_related()
+                                     for_user=request.user).select_related().filter(user=request.user)
 			"""
 				For now considering blog_posts as a list.
 				Going forward we will restrict the #blogposts to be one per user therefore fetching the first element only is sufficient.
 				Remove this loop then.
 			"""
-			blog_post = blog_posts[:1].get()
-			action.send(blog_post, verb=string_concat('said', ': ', _(request.POST['message'])))
+			if blog_posts:
+				blog_post = blog_posts[0]
+				action.send(blog_post, verb=string_concat('said', ': ', _(request.POST['message'])))
 
 	if request.is_ajax():
 		return HttpResponse('ok')

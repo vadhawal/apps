@@ -332,6 +332,12 @@ function showSnazzySuccessMessage(text)
     <div id="socialFriendsList"></div>
 </div>
 {% endif %}
+<div>
+{% get_owned_blog profile_user as blog %}
+{% if blog %}
+Vendor page: <a href="{{ blog.get_absolute_url }}">{{ blog }}</a>
+{% endif %}
+</div>
 <div class="container span4">
 <p> Comments delivered: {{ profile_user.comment_comments.count }} </p>
 {% for comment in profile_user.comment_comments.all %}
