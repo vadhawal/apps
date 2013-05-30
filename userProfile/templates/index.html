@@ -159,7 +159,7 @@ function viewFeed()
 
 
 {% block main %}
-
+<div class="row">
 {% if request.user.is_authenticated %}
     <form id="broadcast" action="/broadcast/" method="post" class='album-form'>
     {% csrf_token %}
@@ -182,7 +182,6 @@ function viewFeed()
     </div>
 </div>
 <span id="status" ></span><div id="loader"><img src="{{STATIC_URL}}img/ajax-loader.gif"></div>
-<div>
 
 <!--div id="scrollcontainer">  
     <div id="scrollbox" >  
@@ -208,9 +207,9 @@ function viewFeed()
     <a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
     <a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
     </div>
-{% endif %} 
-<div class="span9 right" style="border: 1px solid #d4d4d4;">
+{% endif %}
+</div>
+<div class="row" style="border: 1px solid #d4d4d4;">
 {% recent_comments %}
 </div>
-</div>   
 {% endblock %}
