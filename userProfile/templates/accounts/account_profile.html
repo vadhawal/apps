@@ -253,115 +253,145 @@ function showSnazzySuccessMessage(text)
 
 {% endblock %}
 {% block main %}
-<div style="float:left;">
-{% if profile_user.get_profile.profile_photo %}
-<img style="margin-right:20px;" src="{{ profile_user.get_profile.profile_photo.url }}">
-{% elif profile_user.get_profile.image_url %}
-<img style="margin-right:20px;" src="{{ profile_user.get_profile.image_url }}">	
-{% endif %}
-  
-  <div id="user-stats" class="left" style="background-color:#000000;color:#E9E6E6;">
-    <ul style="list-style:None;">
-      <li class="user-stat user-stat-color"><span class="user-stat-color be-font-inline">G</span>Profile Views <a href="" class="blue right bold stat-views header-link-color">{% get_hit_count for profile_user %}</a></li>
-      <li class="user-stat user-stat-color"><span class="user-stat-color be-font-inline">F</span>Appreciations <a href="" class="blue right bold stat-apps header-link-color">{{ profile_user.num_likes }}</a></li>
-      <li class="user-stat user-stat-color"><span class="user-stat-color be-font-inline">I</span>Followers <a id="followerCountBox" href="{% follower_info_url profile_user %}" class="right bold stat-followers header-link-color">{{ profile_user.relationships.followers.count }}</a></li>
-      <li class="user-stat user-stat-color"><span class="user-stat-color be-font-inline">H</span>Following <a id="followingCountBox" href="{% following_info_url profile_user %}" class="right bold stat-following header-link-color">{{ profile_user.relationships.following.count }}</a></li>
-    </ul>
-    <span class="tiny-text" id="member-since" style="color:#E9E6E6;">Member Since: <span class="join-date" style="color:#E9E6E6;">{{profile_user.date_joined}}</span></span>
-    <span class="tiny-text" id="member-since" style="color:#E9E6E6;">Last Login: <span class="join-date" style="color:#E9E6E6;">{{profile_user.last_login}}</span></span>
-  </div> <!-- #user-stats -->
+<div class="row">
 
-<!--p>Followers: <span id="followerCount">{{ profile_user.relationships.followers.count }}</span> 
-{#
-<span id="followerList">
+    <div class="row">
+        <!-- Quick Info Box -->
+        <div class="span3">
+            {% if profile_user.get_profile.profile_photo %}
+            <img style="margin-right:20px;" src="{{ profile_user.get_profile.profile_photo.url }}">
+            {% elif profile_user.get_profile.image_url %}
+            <img style="margin-right:20px;" src="{{ profile_user.get_profile.image_url }}">	
+            {% endif %}
+            <div id="user-stats" class="left" style="background-color:#000000;color:#E9E6E6;">
+                <ul style="list-style:None;">
+                    <li class="user-stat user-stat-color"><span class="user-stat-color be-font-inline">G</span>Profile Views <a href="" class="blue right bold stat-views header-link-color">{%     get_hit_count for profile_user %}</a></li>
+                    <li class="user-stat user-stat-color"><span class="user-stat-color be-font-inline">F</span>Appreciations <a href="" class="blue right bold stat-apps header-link-color">{{ profile_user.num_likes }}</a></li>
+                    <li class="user-stat user-stat-color"><span class="user-stat-color be-font-inline">I</span>Followers <a id="followerCountBox" href="{% follower_info_url profile_user %}" class="right bold stat-followers header-link-color">{{ profile_user.relationships.followers.count }}</a></li>
+                    <li class="user-stat user-stat-color"><span class="user-stat-color be-font-inline">H</span>Following <a id="followingCountBox" href="{% following_info_url profile_user %}" class="right bold stat-following header-link-color">{{ profile_user.relationships.following.count }}</a></li>
+                </ul>
+                <span class="tiny-text" id="member-since" style="color:#E9E6E6;">Member Since: <span class="join-date" style="color:#E9E6E6;">{{profile_user.date_joined}}</span></span>
+                <span class="tiny-text" id="member-since" style="color:#E9E6E6;">Last Login: <span class="join-date" style="color:#E9E6E6;">{{profile_user.last_login}}</span></span>
+            </div> <!-- #user-stats -->
 
-{% for follower in profile_user.relationships.followers %}
-<a href="{{follower.get_absolute_url}}">
-{{ follower }}
-</a>
-{% endfor %}
-</span>
+            <!--p>Followers: <span id="followerCount">{{ profile_user.relationships.followers.count }}</span> 
+            {#
+            <span id="followerList">
 
-</p>
-<p>Following: <span id="followingCount">{{ profile_user.relationships.following.count }}</span> 
-<span id="followingList">
-{% for following in profile_user.relationships.following %}
-<a href="{{following.get_absolute_url}}">
-{{ following }}
-</a>
-{% endfor %}
-</span>
-#}
-</p-->
-</br>
-{% if request.user.is_authenticated %}
-{% if profile_user == request.user %}
-{% for sa in request.user.social_auth.all %}
-    {% if sa.provider == "facebook" %}
-        Invite Friends: <a id="sendInvitesFB" href="#" ><img src="{{ STATIC_URL }}img/fb_login.png"></a>
-    {% elif sa.provider == "twitter" %}
-        <!-- TBD for twitter/google -->
-    {% endif %}
-{% endfor %}
-<br><br><a class="btn btn-primary" style="" href="{% url "profile_update" %}">{% trans "Edit profile" %}</a>
-{% else %}
+            {% for follower in profile_user.relationships.followers %}
+            <a href="{{follower.get_absolute_url}}">
+            {{ follower }}
+            </a>
+            {% endfor %}
+            </span>
 
-<div id="followContainer" class="follow-button-container action-follow-user" >
-    <a id="follow-btn" href="{{ profile_user|add_relationship_url:"following" }}" class="form-button form-button-follow form-button-small form-button-default form-button-left-icon form-button-icon-follow">Follow</a>
-    <a class="form-button form-button-following form-button-small form-button-light-and-grey form-button-left-icon form-button-icon-following">Following</a>
-    <a id="unfollow-btn" href="{{ profile_user|remove_relationship_url:"following" }}" class="form-button form-button-unfollow form-button-small form-button-red form-button-left-icon form-button-icon-unfollow">Unfollow</a></div>  
+            </p>
+            <p>Following: <span id="followingCount">{{ profile_user.relationships.following.count }}</span> 
+            <span id="followingList">
+            {% for following in profile_user.relationships.following %}
+            <a href="{{following.get_absolute_url}}">
+            {{ following }}
+            </a>
+            {% endfor %}
+            </span>
+            #}
+            </p-->
 
-  {% if_relationship request.user profile_user "following" %}
+            </br>
+            {% if request.user.is_authenticated %}
+                {% if profile_user == request.user %}
+                    {% for sa in request.user.social_auth.all %}
+                        {% if sa.provider == "facebook" %}
+                            Invite Friends: <a id="sendInvitesFB" href="#" ><img src="{{ STATIC_URL }}img/fb_login.png"></a>
+                        {% elif sa.provider == "twitter" %}
+                            <!-- TBD for twitter/google -->
+                        {% endif %}
+                    {% endfor %}
+                    <br><br><a class="btn btn-primary" style="" href="{% url "profile_update" %}">{% trans "Edit profile" %}</a>
+                {% else %}
+                    <div id="followContainer" class="follow-button-container action-follow-user" >
+                        <a id="follow-btn" href="{{ profile_user|add_relationship_url:"following" }}" class="form-button form-button-follow form-button-small form-button-default form-button-left-icon form-button-icon-follow">Follow</a>
+                        <a class="form-button form-button-following form-button-small form-button-light-and-grey form-button-left-icon form-button-icon-following">Following</a>
+                        <a id="unfollow-btn" href="{{ profile_user|remove_relationship_url:"following" }}" class="form-button form-button-unfollow form-button-small form-button-red form-button-left-icon form-button-icon-unfollow">Unfollow</a>
+                    </div>  
+                    {% if_relationship request.user profile_user "following" %}
+                    {% endif_relationship %}
+                {% endif %}
 
-  {% endif_relationship %}
-{% endif %}
+            {% endif %}
+        </div>
+        <!-- Quick Info Box End -->
 
-{% endif %}
-</div>
+        <!-- Profile Details -->
+        <div class="span6">
+            <h2>{{ profile_user.get_full_name }}</h2>
+            <div>
+                {% for field, value in profile_user|profile_fields %}
+                <p>{{ field }}: {{ value|linebreaksbr }}</p>
+                {% endfor %}
+            </div>
 
-<h2>{{ profile_user.get_full_name }}</h2>
-<div style="float:left;">
-{% for field, value in profile_user|profile_fields %}
-<p>{{ field }}: {{ value|linebreaksbr }}</p>
-{% endfor %}
-</div>
+            {% if request.user.is_authenticated and profile_user == request.user   %}
+            <div>
+                <a id="getSocialFriends" style="" href="{% url "friend_list" %}"></a>
+                <div id="socialFriendsList"></div>
+            </div>
+            {% endif %}
 
-{% if request.user.is_authenticated and profile_user == request.user   %}
-<div>
-    <a id="getSocialFriends" style="" href="{% url "friend_list" %}"></a>
-    <div id="socialFriendsList"></div>
-</div>
-{% endif %}
-<div>
-{% get_owned_blog profile_user as blog %}
-{% if blog %}
-Vendor page: <a href="{{ blog.get_absolute_url }}">{{ blog }}</a>
-{% endif %}
-</div>
-<div class="container span4">
-<p> Comments delivered: {{ profile_user.comment_comments.count }} </p>
-{% for comment in profile_user.comment_comments.all %}
-<p>{{ comment }}
- <span class="timespan">{{ comment.submit_date|timesince }} {% trans "ago" %}</span></p>
- For {{ comment.content_object }}</p>
-{% endfor %}
-</div>
-{% if request.user.is_authenticated and profile_user != request.user   %}
-<div>
-    <a href="{% url "messages_compose_to" profile_user.username %}"><img src="{{STATIC_URL}}img/send.png"></a>
-</div>
-{% endif %}
-{% if profile_user == request.user and request.user.is_authenticated %}
-<div>
-    <a href="{% url "messages_inbox" %}"><img src="{{STATIC_URL}}img/inbox.png"></a>{{ messages_inbox_count }}
-</div>
-<div class="section-scroll" style="border-style:solid;
-border-width:medium;border-color:#00A3EF;">
-    <div id="load-feeds" class="content">
+            <div>
+                {% get_owned_blog profile_user as blog %}
+                {% if blog %}
+                    Vendor page: <a href="{{ blog.get_absolute_url }}">{{ blog }}</a>
+                {% endif %}
+            </div>
+            
+            {% if request.user.is_authenticated %}
+                {% if profile_user != request.user %}
+                    <div>
+                        <a href="{% url "messages_compose_to" profile_user.username %}"><img src="{{STATIC_URL}}img/send.png"></a>
+                    </div>
+                {% else %}
+                    <div>
+                        <a href="{% url "messages_inbox" %}"><img src="{{STATIC_URL}}img/inbox.png"></a>{{ messages_inbox_count }}
+                    </div>
+                {% endif %}
+            {% endif %}
+        </div>
+        <!-- Profile Details end-->
     </div>
+
+    <div class="row">
+        <!-- Reviews Written -->
+        <div class="span9">
+            <h4> Reviews Written: {{ profile_user.comment_comments.count }} </h4>
+            {% for comment in profile_user.comment_comments.all %}
+                <h5>Review for {{ comment.content_object }}: </h5>
+                <p>
+                    {{ comment }}
+                    <span class="timespan">{{ comment.submit_date|timesince }} {% trans "ago" %}</span>
+                </p>
+            {% endfor %}
+        </div>
+        <!-- Reviews Written End -->
+    </div>
+    
+    {% if profile_user == request.user and request.user.is_authenticated %}
+        <div class = "row">
+            <!-- Logged In User Feed -->
+            <div class="span9">
+                    <div class="section-scroll" style="border-style:solid;border-width:medium;border-color:#00A3EF;">
+                        <div id="load-feeds" class="content">
+                        </div>
+                    </div>
+                    <span id="status" ></span>
+                    <div id="loader">
+                        <a id="refreshActorCache" href="{% activity_actor_refresh_cache request.user %}"></a>
+                    </div>
+                    <!--div id="load-feeds" class="container span4 right"></div-->
+            </div>
+            <!-- Logged In User Feed End -->
+        </div>
+    {% endif %}
+
 </div>
-<span id="status" ></span><div id="loader">
-<a id="refreshActorCache" href="{% activity_actor_refresh_cache request.user %}"></a>
- <!--div id="load-feeds" class="container span4 right"></div-->
- {% endif %}
 {% endblock %}
