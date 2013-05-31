@@ -159,7 +159,7 @@ function viewFeed()
 
 
 {% block main %}
-
+<div class="row">
 {% if request.user.is_authenticated %}
     <form id="broadcast" action="/broadcast/" method="post" class='album-form'>
     {% csrf_token %}
@@ -173,16 +173,14 @@ function viewFeed()
     <input type="submit" value="{% trans "Send" %}" class='btn btn-success'>
     </form>
 <!--input id="viewFeed" type="button" class="button button-primary btn-sucess" value="Feed"></input-->
-<div class="container">
-<div class="span9 middle">
 <a id="refreshCache" href="{% activity_refresh_cache request.user %}"></a>
 <a id="refreshActivity" href="{% activity_dynamic_update request.user %}"></a>
+<h2>Activity Feed</h2>
 <div class="section-scroll" style="border-style:solid;border-width:medium;border-color:#00A3EF;">
     <div id="load-feeds" class="content">
     </div>
 </div>
 <span id="status" ></span><div id="loader"><img src="{{STATIC_URL}}img/ajax-loader.gif"></div>
-<div>
 
 <!--div id="scrollcontainer">  
     <div id="scrollbox" >  
@@ -208,9 +206,9 @@ function viewFeed()
     <a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
     <a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
     </div>
-{% endif %} 
-<div class="span9 right" style="border: 1px solid #d4d4d4;">
+{% endif %}
+</div>
+<div class="row" style="border: 1px solid #d4d4d4;">
 {% recent_comments %}
 </div>
-</div>   
 {% endblock %}
