@@ -151,14 +151,13 @@
             var getFeed = function(){
                 {% if request.user.is_authenticated %}
                     $('#load-feeds').html("");
-                    {% actor_url_subset request.user 0 10 as feed %}
+                    {% actor_url_subset profile_user 0 10 as feed %}
                     var link = "{{feed}}";
                     $.get(link, {}, function(data) {
                         $('#load-feeds').html(data);
                     });
                 {% endif %}    
-            } 
-            {% if profile_user == request.user %}
+            }
             getFeed();   
           
             updatestatus(); 
@@ -196,7 +195,6 @@
 
                 }
                 $('.section-scroll').bind('scroll', scroll_handler);
-                {% endif %}
         });
 	});
 
@@ -375,23 +373,21 @@ function showSnazzySuccessMessage(text)
         <!-- Reviews Written End -->
     </div>
     
-    {% if profile_user == request.user and request.user.is_authenticated %}
-        <div class = "row">
-            <!-- Logged In User Feed -->
-            <div class="span9">
-                    <div class="section-scroll" style="border-style:solid;border-width:medium;border-color:#00A3EF;">
-                        <div id="load-feeds" class="content">
-                        </div>
+    <div class = "row">
+        <!-- Logged In User Feed -->
+        <div class="span9">
+                <div class="section-scroll" style="border-style:solid;border-width:medium;border-color:#00A3EF;">
+                    <div id="load-feeds" class="content">
                     </div>
-                    <span id="status" ></span>
-                    <div id="loader">
-                        <a id="refreshActorCache" href="{% activity_actor_refresh_cache request.user %}"></a>
-                    </div>
-                    <!--div id="load-feeds" class="container span4 right"></div-->
-            </div>
-            <!-- Logged In User Feed End -->
+                </div>
+                <span id="status" ></span>
+                <div id="loader">
+                    <a id="refreshActorCache" href="{% activity_actor_refresh_cache request.user %}"></a>
+                </div>
+                <!--div id="load-feeds" class="container span4 right"></div-->
         </div>
-    {% endif %}
+        <!-- Logged In User Feed End -->
+    </div>
 
 </div>
 {% endblock %}
