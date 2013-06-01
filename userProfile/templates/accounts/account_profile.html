@@ -372,7 +372,8 @@ function showSnazzySuccessMessage(text)
         </div>
         <!-- Reviews Written End -->
     </div>
-    
+  
+{% if request.user.is_authenticated %}  
     <div class = "row">
         <!-- Logged In User Feed -->
         <div class="span9">
@@ -381,13 +382,15 @@ function showSnazzySuccessMessage(text)
                     </div>
                 </div>
                 <span id="status" ></span>
+
                 <div id="loader">
                     <a id="refreshActorCache" href="{% activity_actor_refresh_cache request.user %}"></a>
                 </div>
+                
                 <!--div id="load-feeds" class="container span4 right"></div-->
         </div>
         <!-- Logged In User Feed End -->
     </div>
-
+{% endif %}
 </div>
 {% endblock %}

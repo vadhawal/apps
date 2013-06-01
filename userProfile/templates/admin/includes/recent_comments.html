@@ -3,7 +3,7 @@
 <link rel="stylesheet" href="{{ STATIC_URL }}css/dashboard.css">
 {% endcompress %}
 <div class="module" id="comments-module">
-    <h1>{% trans "Recent Comments" %}</h1>
+    <h1>{% trans "Recent Reviews" %}</h1>
     {% if settings.COMMENTS_DISQUS_SHORTNAME %}
     <script src="http://{{ settings.COMMENTS_DISQUS_SHORTNAME }}.disqus.com/recent_comments_widget.js?num_items={{ settings.COMMENTS_NUM_LATEST }}&hide_avatars=0&avatar_size=32&excerpt_length=200"></script>
     {% else %}
@@ -25,20 +25,20 @@
                 {{ comment.user_name }}
             </a>
             <p>
-            <span id="truncComment{{forloop.counter}}">{{ comment.intro }}</span>
+            <span id="truncCommentRecent{{forloop.counter}}">{{ comment.intro }}</span>
             {%  if comment.comment != comment.intro %}
-            <span id="expComment{{forloop.counter}}">{{ comment.comment }}</span>
+            <span id="expCommentRecent{{forloop.counter}}">{{ comment.comment }}</span>
             </p>
-            <a href="javascript:void(0);" id="moreComment{{forloop.counter}}">More...</a>
+            <a href="javascript:void(0);" id="moreCommentRecent{{forloop.counter}}">More...</a>
             <script type="text/javascript">
-                $('#expComment{{forloop.counter}}').hide();
-                $('#moreComment{{forloop.counter}}').click(function(){
-                    $('#truncComment{{forloop.counter}}').toggle();
-                    $('#expComment{{forloop.counter}}').toggle();
-                    if($('#moreComment{{forloop.counter}}').html() == "More...")
-                        $('#moreComment{{forloop.counter}}').html("Less...");
+                $('#expCommentRecent{{forloop.counter}}').hide();
+                $('#moreCommentRecent{{forloop.counter}}').click(function(){
+                    $('#truncCommentRecent{{forloop.counter}}').toggle();
+                    $('#expCommentRecent{{forloop.counter}}').toggle();
+                    if($('#moreCommentRecent{{forloop.counter}}').html() == "More...")
+                        $('#moreCommentRecent{{forloop.counter}}').html("Less...");
                     else
-                        $('#moreComment{{forloop.counter}}').html("More...");
+                        $('#moreCommentRecent{{forloop.counter}}').html("More...");
 
                     return false;
                 });
