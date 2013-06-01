@@ -164,15 +164,6 @@
 
         {% endif %}
         {% endeditable %}
-        {% comment_thread comment %}
-        <a href="{% comments_for_obj_url comment %}" OnClick="
-                var add_link = $(this);
-                $.get(add_link.attr('href'), {}, function(data) {
-                    $('#subcomments{{comment.id}}').html(data);
-                });
-                return false;">comments</a>
-        <div id="subcomments{{comment.id}}"></div>
-        {% comments_for_review comment %}
     </li>
     {% endfor %}
     {% if no_comments %}
