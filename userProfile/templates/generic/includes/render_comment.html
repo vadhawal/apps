@@ -1,53 +1,27 @@
 {% load i18n mezzanine_tags comment_tags rating_tags %}
 
-<ul class="unstyled">
+<ul class="unstyled" style="border:1px solid #666666;padding: 10px;">
     <li id="comment-{{ comment.id }}"
         {% if comment.by_author %}class="comment-author"{% endif %}>
+
         {% editable comment.is_public comment.is_removed %}
         {% if not comment.is_removed and comment.is_public %}
 
-        <strong>
-            {% if comment.url %}
-            <a href="{{ comment.url }}">
-                <img src="{% gravatar_url comment.email %}">
-                {{ comment.user_name }}
-            </a>
-            {% else %}
-            <img src="{% gravatar_url comment.email %}">
-            {{ comment.user_name }}
-            {% endif %}
-        </strong>
-        <span class="timespan">{% blocktrans with sometime=comment.submit_date|timesince %}{{ sometime }} ago{% endblocktrans %}</span>
         <p>{{ comment.comment|comment_filter }}</p>
 
-        {% else %}
-
-        {% if request.user.is_staff %}
-        <strong>
-            {% if comment.url %}
-            <a href="{{ comment.url }}">
-                <img src="{% gravatar_url comment.email %}">
-                {{ comment.user_name }}
-            </a>
-            {% else %}
-            <img src="{% gravatar_url comment.email %}">
-            {{ comment.user_name }}
-            {% endif %}
-        </strong>
-        <span class="timespan">{% blocktrans with sometime=comment.submit_date|timesince %}{{ sometime }} ago{% endblocktrans %}</span>
-        <p>{{ comment.comment|comment_filter }}</p>
         {% endif %}
-
-        <p>
-            {% if comment.is_removed %}
-            {% trans "Comment deleted" %}
+        By:
+             <a href="{{ comment.user.get_absolute_url }}" %}">
+            {% if comment.user.get_profile.profile_photo %}
+            <img src="{{ comment.user.get_profile.profile_photo.url }}">
+            {% elif comment.user.get_profile.image_url %}
+            <img src="{{ comment.user.get_profile.image_url }}">
             {% else %}
-            {% trans "Comment awaiting approval" %}
+            <img src="{% gravatar_url comment.email %}">
             {% endif %}
+            </a>
+            {{ comment.user.username }} on <a href="{{ comment.content_object.get_absolute_url }}">{{ comment.content_object }}</a>
             <span class="timespan">{% blocktrans with sometime=comment.submit_date|timesince %}{{ sometime }} ago{% endblocktrans %}</span>
-        </p>
-
-        {% endif %}
         {% endeditable %}
     </li>
 </ul>
