@@ -4,6 +4,7 @@
 {% load activity_tags %}
 {% load hitcount_tags %}
 {% load userProfile_tags %}
+{% load follow_tags %}
 
 {% block meta_title %}{{ profile_user.username }}{% endblock %}
 {% block title %}<p> Profile </p>{% endblock %}
@@ -49,7 +50,7 @@
 
 
 		  $(document).ready(function() {
-            $('#followerCountBox').add('#followingCountBox').click(function() {
+            $('#followerCountBox').add('#followingCountBox').add('#followingVendorCountBox').click(function() {
                 var w = 700;
                 var h = 500;
                 var left = 100;
@@ -265,8 +266,9 @@ function showSnazzySuccessMessage(text)
                 <ul style="list-style:None;">
                     <li class="user-stat user-stat-color"><span class="user-stat-color be-font-inline">G</span>Profile Views <a href="" class="blue right bold stat-views header-link-color">{%     get_hit_count for profile_user %}</a></li>
                     <li class="user-stat user-stat-color"><span class="user-stat-color be-font-inline">F</span>Appreciations <a href="" class="blue right bold stat-apps header-link-color">{{ profile_user.num_likes }}</a></li>
-                    <li class="user-stat user-stat-color"><span class="user-stat-color be-font-inline">I</span>Followers <a id="followerCountBox" href="{% follower_info_url profile_user %}" class="right bold stat-followers header-link-color">{{ profile_user.relationships.followers.count }}</a></li>
-                    <li class="user-stat user-stat-color"><span class="user-stat-color be-font-inline">H</span>Following <a id="followingCountBox" href="{% following_info_url profile_user %}" class="right bold stat-following header-link-color">{{ profile_user.relationships.following.count }}</a></li>
+                    <li class="user-stat user-stat-color"><span class="user-stat-color be-font-inline">I</span>Follower Friends <a id="followerCountBox" href="{% follower_info_url profile_user %}" class="right bold stat-followers header-link-color">{{ profile_user.relationships.followers.count }}</a></li>
+                    <li class="user-stat user-stat-color"><span class="user-stat-color be-font-inline">H</span>Following Friends <a id="followingCountBox" href="{% following_info_url profile_user %}" class="right bold stat-following header-link-color">{{ profile_user.relationships.following.count }}</a></li>
+                    <li class="user-stat user-stat-color"><span class="user-stat-color be-font-inline">H</span>Following Vendors <a id="followingVendorCountBox" href="{% vendor_following_info_url profile_user %}" class="right bold stat-following header-link-color">{{ profile_user|vendor_following_count }}</a></li>
                 </ul>
                 <span class="tiny-text" id="member-since" style="color:#E9E6E6;">Member Since: <span class="join-date" style="color:#E9E6E6;">{{profile_user.date_joined}}</span></span>
                 <span class="tiny-text" id="member-since" style="color:#E9E6E6;">Last Login: <span class="join-date" style="color:#E9E6E6;">{{profile_user.last_login}}</span></span>
