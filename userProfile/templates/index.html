@@ -165,10 +165,12 @@ function viewFeed()
     {% csrf_token %}
     {{ form.as_p }}
     <textarea style="width:100%;height:60px" name="message"  placeholder="Broadcast to the world..."></textarea>
-    {% get_owned_blog request.user as blog %}
-    {% if blog %}   
-        <input type="radio" name="actor" value="user" checked="checked">As You<br>
+    {% get_owned_blog request.user as blog %} 
+    {% if blog %} 
+        <input id="asyou" type="radio" name="actor" value="user" checked="checked">As You<br> 
         <input type="radio" name="actor" value="vendor">As {{ blog }}<br><br>
+    {% else %}
+        <input id="asyou" style="display:none;" type="radio" name="actor" value="user" checked="checked"><br> 
     {% endif %}
     <input type="submit" value="{% trans "Send" %}" class='btn btn-success'>
     </form>
