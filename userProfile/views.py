@@ -1,6 +1,6 @@
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-from userProfile.models import BroadcastForm
+from userProfile.models import BroadcastForm, Broadcast
 from django.http import HttpResponse
 from django.shortcuts import render
 from actstream import action
@@ -14,7 +14,8 @@ def close_login_popup(request):
 def broadcast(request):
 	if request.method == "POST":
 		if _(request.POST['actor']) == "user":
-			action.send(request.user, verb=string_concat('said', ': ', _(request.POST['message'])))
+			broadcast = Broadcast.objects.create_broadcast_object( _(request.POST['message']), request.user)
+			action.send(request.user, verb='said:', action_object=broadcast)
 		elif _(request.POST['actor']) == "vendor":
 			
 			blog_posts = BlogPost.objects.published(
@@ -26,7 +27,8 @@ def broadcast(request):
 			"""
 			if blog_posts:
 				blog_post = blog_posts[0]
-				action.send(blog_post, verb=string_concat('said', ': ', _(request.POST['message'])))
+				broadcast = Broadcast.objects.create_broadcast_object( _(request.POST['message']), request.user)
+				action.send(blog_post, verb='said:', action_object=broadcast)
 
 	if request.is_ajax():
 		return HttpResponse('ok')
