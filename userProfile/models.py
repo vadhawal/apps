@@ -11,6 +11,9 @@ from django_resized import ResizedImageField
 from django.utils.translation import ugettext_lazy as _
 from django import forms
 
+from mezzanine.conf import settings
+MESSAGE_MAX_LENGTH = getattr(settings,'MESSAGE_MAX_LENGTH',3000)
+
 def get_image_path(instance, filename):
     return os.path.join('users', str(instance.id), filename)
 
@@ -87,6 +90,22 @@ def new_users_handler(sender, user, response, details, **kwargs):
     
     return False
  
+
+class BroadcastManager(models.Manager):
+    def create_broadcast_object(self, message, user):
+        broadcast = self.create(message=message, user=user)
+        return broadcast
+
+class Broadcast(models.Model):
+    message = models.TextField(_('message'), max_length=MESSAGE_MAX_LENGTH)
+    user    = models.ForeignKey(User, verbose_name=_('user'),
+                    blank=True, null=True, related_name="%(class)s_messages")
+
+    objects = BroadcastManager()
+
+    def __unicode__(self):
+        return self.message 
+
 User.profile = property(lambda u: UserProfile.objects.get_or_create(user=u)[0]) 
 pre_update.connect(new_users_handler, sender=FacebookBackend)
 pre_update.connect(new_users_handler, sender=TwitterBackend)
