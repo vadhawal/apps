@@ -12,7 +12,9 @@ $(function() {
 });
 </script>
 <style>.input_id_honeypot {display:none !important;}</style>
+{% if object_for_comments|get_class_name != "Album" and object_for_comments|get_class_name != "Image"%}
 {% comment_thread object_for_comments %}
+{% endif %}
         {% if request.user.get_profile.profile_photo %}
             <img style="margin-right:20px;" src="{{ request.user.get_profile.profile_photo.url }}">
         {% elif request.user.get_profile.image_url %}
@@ -20,6 +22,7 @@ $(function() {
         {% else %}
             <img src='{{ STATIC_URL }}img/defaultProfilePic.gif'>
         {% endif %}
+
 <form method="post" id="comment" action="{{ comment_url }}#comment">
 
     {% if object_for_comments|get_class_name == "BlogPost" %}
@@ -28,7 +31,7 @@ $(function() {
         {% else %}
             {% fields_for_comment unposted_comment_form %}
         {% endif %}
-    {% elif object_for_comments|get_class_name == "ThreadedComment" %}
+    {% elif object_for_comments|get_class_name == "ThreadedComment" or object_for_comments|get_class_name == "Album" or object_for_comments|get_class_name == "Image"%}
         {% if not request.POST.replied_to %}
             {% fields_for posted_comment_form %}
         {% else %}
