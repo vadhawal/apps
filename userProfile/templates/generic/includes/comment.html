@@ -165,15 +165,15 @@
         {% endif %}
         {% endeditable %}
         {% comment_thread comment %}
-        {% if comment.content_object|get_class_name == "ThreadedComment" %}
+        {% if comment.content_object|get_class_name == "BlogPost" %}
             <a href="{% comments_for_obj_url comment %}" OnClick="
                     var add_link = $(this);
                     $.get(add_link.attr('href'), {}, function(data) {
-                        $('#subcomments{{comment.id}}').html(data);
+                        $('#reviewcomments{{comment.id}}').html(data);
                     });
                     return false;">comments</a>
+            <div id="reviewcomments{{comment.id}}"></div>
         {% endif %}
-        <div id="subcomments{{comment.id}}"></div>
         {% comments_for_review comment %}
     </li>
     {% endfor %}
