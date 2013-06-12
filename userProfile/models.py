@@ -11,8 +11,10 @@ from django_resized import ResizedImageField
 from django.utils.translation import ugettext_lazy as _
 from django import forms
 
+from mezzanine.blog.models import BlogCategory
 from mezzanine.conf import settings
 MESSAGE_MAX_LENGTH = getattr(settings,'MESSAGE_MAX_LENGTH',3000)
+PREFIX_MESSAGE_MAX_LENGTH = getattr(settings,'PREFIX_MESSAGE_MAX_LENGTH',256)
 
 def get_image_path(instance, filename):
     return os.path.join('users', str(instance.id), filename)
@@ -105,6 +107,22 @@ class Broadcast(models.Model):
 
     def __unicode__(self):
         return self.message 
+
+class UserWishRadioManager(models.Manager):
+    def create_user_wishradio_object(self, user, prefix_message, blog_category, message ):
+        broadcast = self.create(user=user, prefix_message=prefix_message, blog_category=blog_category, message=message)
+        return broadcast
+
+class UserWishRadio(Broadcast):
+    prefix_message = models.TextField(_('message'), max_length=PREFIX_MESSAGE_MAX_LENGTH)
+    blog_category = models.ForeignKey(BlogCategory,
+                                        verbose_name=_("Category"),
+                                        blank=True, related_name="broadcast_blogcategory", null=True)
+
+    objects = UserWishRadioManager()
+
+    def __unicode__(self):
+        return self.prefix_message + " " + self.blog_category.slug + " " + self.message  
 
 User.profile = property(lambda u: UserProfile.objects.get_or_create(user=u)[0]) 
 pre_update.connect(new_users_handler, sender=FacebookBackend)
