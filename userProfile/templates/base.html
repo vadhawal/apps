@@ -57,7 +57,7 @@
     {% if settings.SITE_TITLE %}<a class="brand" href="/">{{ settings.SITE_TITLE }}</a>{% endif %}
     {% if settings.SITE_TAGLINE %}<p class="navbar-text customTagLine">{{ settings.SITE_TAGLINE }}</p>{% endif %}
     <div class="nav-collapse customsearchbox">
-        {% search_form "all" %}
+        {% search_form "blog.BlogPost" %}
         {% page_menu "pages/menus/dropdown.html" %}
     </div>
     <a href="/admin" style="background:#FF9900;" class="btn btn-primary">Add a Store</a>
