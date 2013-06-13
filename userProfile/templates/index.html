@@ -3,6 +3,7 @@
 {% load activity_tags %}
 {% load comment_tags %}
 {% load userProfile_tags %}
+{% load blog_tags %}
 
 {% block meta_title %}{% trans "Home" %}{% endblock %}
 {% block title %}{% trans "Home" %}{% endblock %}
@@ -161,17 +162,37 @@ function viewFeed()
 {% block main %}
 <div class="row">
 {% if request.user.is_authenticated %}
-    <form id="broadcast" action="/broadcast/" method="post" class='album-form'>
+    <form id="broadcast" action="/userwish/" method="post" class='album-form'>
     {% csrf_token %}
     {{ form.as_p }}
-    <textarea style="width:100%;height:60px" name="message"  placeholder="Broadcast to the world..."></textarea>
+    <input id="userwish" type="text" name="userwish" value="I wish to buy" readonly>
+    <input id="vendorwish" type="text" name="vendorwish" value="I have a deal for" readonly style="display:None;">
+    {% blog_categories_abs as categories %}
+    {% if categories %}
+        <select name="blog_category">
+            <ul class="unstyled">
+                {% for category in categories %}
+                    <option value="{{ category }}">{{ category }}</option>
+                {% endfor %}
+            </ul>
+        </select>
+    {% endif %}
+    </br>
+    <textarea style="width:100%;height:60px" name="message"  placeholder="Wish details..."></textarea>
+
     {% get_owned_blog request.user as blog %} 
     {% if blog %} 
-        <input id="asyou" type="radio" name="actor" value="user" checked="checked">As You<br> 
-        <input type="radio" name="actor" value="vendor">As {{ blog }}<br><br>
+        <input id="asyou" type="radio" name="actor" value="user" checked="checked" onclick="
+        $('#userwish').toggle();
+        $('#vendorwish').toggle();"
+        >As You<br> 
+        <input type="radio" name="actor" value="vendor" onclick="
+        $('#userwish').toggle();
+        $('#vendorwish').toggle();">As {{ blog }}<br><br>
     {% else %}
         <input id="asyou" style="display:none;" type="radio" name="actor" value="user" checked="checked"><br> 
     {% endif %}
+
     <input type="submit" value="{% trans "Send" %}" class='btn btn-success'>
     </form>
 <!--input id="viewFeed" type="button" class="button button-primary btn-sucess" value="Feed"></input-->
