@@ -205,16 +205,15 @@
 {% set_short_url_for blog_post %}
 <a class="btn small primary share-twitter" target="_blank" href="http://twitter.com/home?status={{ blog_post.short_url|urlencode }}%20{{ blog_post.title|urlencode }}">{% trans "Share on Twitter" %}</a>
 <a class="btn small primary share-facebook" target="_blank" href="http://facebook.com/sharer.php?u={{ request.build_absolute_uri }}&amp;t={{ blog_post.title|urlencode }}">{% trans "Share on Facebook" %}</a>
-{% endblock %}
-
 <div id="followContainer" class="follow-button-container action-follow-user" >
     <a id="follow-btn" href="{% follow_url blog_post %}" class="form-button form-button-follow form-button-small form-button-default form-button-left-icon form-button-icon-follow">Follow</a>
     <a class="form-button form-button-following form-button-small form-button-light-and-grey form-button-left-icon form-button-icon-following">Following</a>
-    <a id="unfollow-btn" href="{% follow_url blog_post %}" class="form-button form-button-unfollow form-button-small form-button-red form-button-left-icon form-button-icon-unfollow">Unfollow</a></div>  
+    <a id="unfollow-btn" href="{% follow_url blog_post %}" class="form-button form-button-unfollow form-button-small form-button-red form-button-left-icon form-button-icon-unfollow">Unfollow</a>
     <a id="vendorFollowers" href="{% vendor_follower_info_url blog_post %}">
         {{  request.user|follower_count:blog_post }}
     </a>
 </div>
+{% endblock %}
 
 <div>
     {#% for follower in request.user|followers:blog_post %#}
