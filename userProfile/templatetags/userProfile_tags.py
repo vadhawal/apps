@@ -4,6 +4,10 @@ from django.contrib.contenttypes.models import ContentType
 from mezzanine.blog.models import BlogPost
 from mezzanine.generic.models import ThreadedComment
 
+from django.contrib.contenttypes.models import ContentType
+from django.template import Node, TemplateSyntaxError
+from django.core.urlresolvers import reverse
+
 register = template.Library()
 
 # settings value
@@ -102,5 +106,67 @@ def render_wish(context, wish):
         "wish": wish,
     })
     return context
+
+class AsNode(Node):
+    """
+    Base template Node class for template tags that takes a predefined number
+    of arguments, ending in an optional 'as var' section.
+    """
+    args_count = 3
+
+    @classmethod
+    def handle_token(cls, parser, token):
+        """
+        Class method to parse and return a Node.
+        """
+        bits = token.split_contents()
+        args_count = len(bits) - 1
+        if args_count >= 2 and bits[-2] == 'as':
+            as_var = bits[-1]
+            args_count -= 2
+        else:
+            as_var = None
+        if args_count != cls.args_count:
+            arg_list = ' '.join(['[arg]' * cls.args_count])
+            raise TemplateSyntaxError("Accepted formats {%% %(tagname)s "
+                "%(args)s %%} or {%% %(tagname)s %(args)s as [var] %%}" %
+                {'tagname': bits[0], 'args': arg_list})
+        args = [parser.compile_filter(token) for token in
+            bits[1:args_count + 1]]
+        return cls(args, varname=as_var)
+
+    def __init__(self, args, varname=None):
+        self.args = args
+        self.varname = varname
+
+    def render(self, context):
+        result = self.render_result(context)
+        if self.varname is not None:
+            context[self.varname] = result
+            return ''
+        return result
+
+    def render_result(self, context):
+        raise NotImplementedError("Must be implemented by a subclass")
+
+class GetWishListUrl(AsNode):
+    def render_result(self, context):
+        object_instance = self.args[0].resolve(context)
+        sIndex = self.args[1].resolve(context)
+        lIndex = self.args[2].resolve(context)
+        content_type = ContentType.objects.get_for_model(object_instance).pk
+        
+        return reverse('get_wishlist', kwargs={
+            'content_type_id': content_type, 'object_id': object_instance.pk, 'sIndex':sIndex, 'lIndex':lIndex})
+
+def get_wishlist_url(parser, token):
+    bits = token.split_contents()
+    if len(bits) != 6:
+        raise TemplateSyntaxError("Accepted format "
+                                  "{% get_wishlist_url [object_instance] sIndex lIndex as wishlisturl %}")
+    else:
+        return GetWishListUrl.handle_token(parser, token)
+
+register.tag(get_wishlist_url)
 
 

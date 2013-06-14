@@ -1,6 +1,7 @@
 {% extends "blog/blog_post_list.html" %}
 {% load mezzanine_tags comment_tags keyword_tags rating_tags i18n future disqus_tags %}
 {% load follow_tags %}
+{% load userProfile_tags %}
 {% block meta_title %}{{ blog_post.meta_title }}{% endblock %}
 
 {% block meta_keywords %}{% metablock %}
@@ -52,6 +53,18 @@
             });     
     });    
     $(document).ready(function() {
+            var getDealList = function(){
+                {% if request.user.is_authenticated %}
+                    $('#load-deals').html("");
+                    {% get_wishlist_url blog_post 0 10 as wishlisturl %}
+                    var link = "{{wishlisturl}}";
+                    $.get(link, {}, function(data) {
+                        $('#load-deals').html(data);
+                    });
+                {% endif %}    
+            }
+            getDealList(); 
+
             $('#vendorFollowers').click(function() {
                 var w = 700;
                 var h = 500;
@@ -265,7 +278,13 @@
 </div>   
 
 
-
+<div class="span9">
+        <h3>Deals</h3>
+        <div class="section-scroll" style="border-style:solid;border-width:medium;border-color:#00A3EF;">
+            <div id="load-deals" class="content">
+            </div>
+        </div>
+</div>
 
 {% block blog_post_detail_comments %}
 {% if blog_post.allow_comments %}

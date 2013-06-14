@@ -47,9 +47,8 @@
                  }
             });
 
-
-
 		  $(document).ready(function() {
+
             $('#followerCountBox').add('#followingCountBox').add('#followingVendorCountBox').click(function() {
                 var w = 700;
                 var h = 500;
@@ -160,7 +159,17 @@
                 {% endif %}    
             }
             getFeed();   
-          
+            var getWishList = function(){
+                {% if request.user.is_authenticated %}
+                    $('#load-wish').html("");
+                    {% get_wishlist_url profile_user 0 10 as wishlisturl %}
+                    var link = "{{wishlisturl}}";
+                    $.get(link, {}, function(data) {
+                        $('#load-wish').html(data);
+                    });
+                {% endif %}    
+            }
+            getWishList();  
             updatestatus(); 
             var element = $('.section-scroll').jScrollPane({
                     horizontalGutter:5,
@@ -405,10 +414,18 @@ function showSnazzySuccessMessage(text)
                 <div id="loader">
                     <a id="refreshActorCache" href="{% activity_actor_refresh_cache request.user %}"></a>
                 </div>
-                
+                <span id="status" ></span>
                 <!--div id="load-feeds" class="container span4 right"></div-->
         </div>
         <!-- Logged In User Feed End -->
+        <div class="span9">
+                <h3>Wishes</h3>
+                <div class="wish-section-scroll" style="border-style:solid;border-width:medium;border-color:#00A3EF;">
+                    <div id="load-wish" class="content">
+                    </div>
+                </div>
+                <span id="wish-status" >
+        </div>
     </div>
 {% endif %}
 </div>

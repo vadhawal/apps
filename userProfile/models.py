@@ -14,6 +14,13 @@ from django import forms
 from mezzanine.blog.models import BlogCategory
 from mezzanine.conf import settings
 from mezzanine.generic.fields import CommentsField
+from django.contrib.contenttypes.models import ContentType
+try:
+    from django.utils import timezone
+    now = timezone.now
+except ImportError:
+    from datetime import datetime
+    now = datetime.now
 
 MESSAGE_MAX_LENGTH = getattr(settings,'MESSAGE_MAX_LENGTH',3000)
 PREFIX_MESSAGE_MAX_LENGTH = getattr(settings,'PREFIX_MESSAGE_MAX_LENGTH',256)
@@ -111,8 +118,8 @@ class Broadcast(models.Model):
         return self.message 
 
 class UserWishRadioManager(models.Manager):
-    def create_user_wishradio_object(self, user, prefix_message, blog_category, message ):
-        broadcast = self.create(user=user, prefix_message=prefix_message, blog_category=blog_category, message=message)
+    def create_user_wishradio_object(self, user, prefix_message, blog_category, message, content_type, object_id  ):
+        broadcast = self.create(user=user, prefix_message=prefix_message, blog_category=blog_category, message=message, content_type=content_type, object_id=object_id)
         return broadcast
 
 class UserWishRadio(Broadcast):
@@ -121,6 +128,9 @@ class UserWishRadio(Broadcast):
                                         verbose_name=_("Category"),
                                         blank=True, related_name="broadcast_blogcategory", null=True)
     comments = CommentsField(verbose_name=_("Comments"))
+    content_type = models.ForeignKey(ContentType)
+    object_id = models.CharField(max_length=255)
+    timestamp = models.DateTimeField(default=now)
     objects = UserWishRadioManager()
 
     def __unicode__(self):

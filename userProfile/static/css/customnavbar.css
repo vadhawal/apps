@@ -190,7 +190,12 @@ background-color:#FFFFFF;
     height:800px;
     overflow: auto;
     }
-	
+.wish-section-scroll{
+    width:800px;
+    height:800px;
+    overflow: auto;
+    }
+
 .content{
     width:360px;
     height: 800px;

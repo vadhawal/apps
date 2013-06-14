@@ -8,6 +8,8 @@ from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import string_concat
 from django.template.defaultfilters import slugify
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+from django.contrib.contenttypes.models import ContentType
 from mezzanine.blog.models import BlogPost, BlogCategory
 
 from userProfile.models import UserWishRadio
@@ -43,10 +45,10 @@ def userwish(request):
 	if request.method == "POST":
 		blog_category = get_object_or_404(BlogCategory, slug=slugify(_(request.POST['blog_category'])))
 		if _(request.POST['actor']) == "user":
-			broadcast = UserWishRadio.objects.create_user_wishradio_object(request.user, _(request.POST['userwish']), blog_category , _(request.POST['message']) )
+			ctype = ContentType.objects.get_for_model(User)
+			broadcast = UserWishRadio.objects.create_user_wishradio_object(request.user, _(request.POST['userwish']), blog_category , _(request.POST['message']), ctype, request.user.pk )
 			action.send(request.user, verb='said:', action_object=broadcast)
 		elif _(request.POST['actor']) == "vendor":
-			
 			blog_posts = BlogPost.objects.published(
                                      for_user=request.user).select_related().filter(user=request.user)
 			"""
@@ -56,7 +58,8 @@ def userwish(request):
 			"""
 			if blog_posts:
 				blog_post = blog_posts[0]
-				broadcast = UserWishRadio.objects.create_user_wishradio_object(request.user, _(request.POST['vendorwish']), blog_category, _(request.POST['message']) )
+				ctype = ContentType.objects.get_for_model(BlogPost)
+				broadcast = UserWishRadio.objects.create_user_wishradio_object(request.user, _(request.POST['vendorwish']), blog_category, _(request.POST['message']), ctype, request.user.pk)
 				action.send(blog_post, verb='said:', action_object=broadcast)
 
 	if request.is_ajax():
@@ -71,3 +74,28 @@ def view_wish(request, wish_id, template_name='wish/view_wish.html'):
         'wish': wish,
     }, context_instance=RequestContext(request))
 view_wish = login_required(view_wish)
+
+from django.utils import simplejson
+from django.http import Http404, HttpResponse
+
+def json_error_response(error_message):
+    return HttpResponse(simplejson.dumps(dict(success=False,
+                                              error_message=error_message)))
+def get_wishlist(request, content_type_id, object_id, sIndex, lIndex):
+
+	from itertools import chain
+	import operator
+
+	ctype = get_object_or_404(ContentType, pk=content_type_id)
+	wishset = UserWishRadio.objects.all().filter(content_type=ctype, object_id=object_id)
+	wishlist = list(wishset)
+
+	wishlist =  sorted(wishlist, key=operator.attrgetter('timestamp'), reverse=True)
+
+	s = (int)(""+sIndex)
+	l = (int)(""+lIndex)
+	wishlist = wishlist[s:l]
+	return render_to_response('wish/wishlist.html', {
+		'wish_list': wishlist,
+		'ctype': ctype, 'sIndex':s
+	}, context_instance=RequestContext(request))

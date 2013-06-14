@@ -1,0 +1,98 @@
+{% load i18n %}
+{% load userProfile_tags %}
+{% load comment_tags %}
+{% load voting_tags %}
+{% block extra_head %}
+<script type="text/javascript">
+       $(function() {
+            $.ajaxSetup({
+                 beforeSend: function(xhr, settings) {
+                     function getCookie(name) {
+                         var cookieValue = null;
+                         if (document.cookie && document.cookie != '') {
+                             var cookies = document.cookie.split(';');
+                             for (var i = 0; i < cookies.length; i++) {
+                                 var cookie = jQuery.trim(cookies[i]);
+                                 // Does this cookie string begin with the name we want?
+                             if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                                 cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                                 break;
+                             }
+                         }
+                     }
+                     return cookieValue;
+                     }
+                     if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) {
+                         // Only send the token to relative URLs i.e. locally.
+                         xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+                     }
+                 }
+            });
+    });
+$(document).ready(function(){
+{% for wish in wish_list %}
+    $('#wishlistitem{{forloop.counter|add:sIndex}}').linkify();
+    var upSelector = $('#upwishlistitem{{forloop.counter|add:sIndex}}');  
+    var downSelector =  $('#downwishlistitem{{forloop.counter|add:sIndex }}');
+    var clearSelector = $('#clearwishlistitem{{forloop.counter|add:sIndex }}');
+
+    var handler = function() {
+        var add_link = $(this);
+    $.post(add_link.attr('href'),{HTTP_X_REQUESTED:'XMLHttpRequest'},
+           function(data) {
+               if (data.success == true) {
+                   $('#pScorewishlistitem{{forloop.counter|add:sIndex}}').text(data.score.num_up_votes);
+                   $('#nScorewishlistitem{{forloop.counter|add:sIndex}}').text((data.score.num_down_votes));
+               } else {
+                   alert('ERROR: ' + data.error_message);
+               }
+           }, 'json');
+    return false;    
+    }
+    upSelector.click(handler); 
+    downSelector.click(handler);
+    clearSelector.click(handler); 
+    $('#pScorewishlistitem{{forloop.counter|add:sIndex }}').click(function() {
+        var w = 700;
+        var h = 500;
+        var left = 100;
+        var top = 100;
+        var name="Friends";
+        var settings = 'height=' + h + ',width=' + w + ',left=' + left + ',top=' + top + ',resizable=yes,scrollbars=yes,toolbar=no,menubar=no,location=yes,directories=no,status=yes';
+        var url = $(this).attr("href");
+        window.open(url, name, settings);
+        return false;
+    });  
+{% endfor %}
+});
+</script>
+<ul>
+{% for wish in wish_list %}
+<li>
+<span id="wishlistitem{{forloop.counter|add:sIndex}}"> {% render_wish wish %} </span>
+{{wish.timestamp}}
+        <a id="upwishlistitem{{forloop.counter|add:sIndex}}" href="/broadcast/{{ wish.id }}/up/vote/">
+        <img src="{{ STATIC_URL }}img/like.png">
+        </a>
+        {% score_for_object  wish as score %}
+        {% voters_for_object wish as voters %}
+        <span><a id="pScorewishlistitem{{forloop.counter|add:sIndex}}" href="{{ voters }}">{{score.num_up_votes}}</a></span>
+        <a id="downwishlistitem{{forloop.counter|add:sIndex}}" href="/broadcast/{{ wish.id }}/down/vote/"><img src="{{ STATIC_URL }}img/dislike.png"></a>
+        <span id="nScorewishlistitem{{forloop.counter|add:sIndex}}">{{score.num_down_votes}}</span>
+        <a id="clearwishlistitem{{forloop.counter|add:sIndex}}" href="/broadcast/{{ wish.id }}/clear/vote/">Clear</a>
+
+        <a href="{% comments_for_obj_url wish %}" OnClick="
+                var add_link = $(this);
+                $.get(add_link.attr('href'), {}, function(data) {
+                    $('#subcommentswishlistitem{{forloop.counter|add:sIndex}}').html(data);
+                });
+                return false;">get comments</a>
+        <div id="subcommentswishlistitem{{forloop.counter|add:sIndex}}"></div>
+        {% comments_for_review wish %}
+</li>
+{% empty %}
+{% trans "No wishes yet" %}
+{% endfor %}
+</ul>
+{% endblock %}
+
