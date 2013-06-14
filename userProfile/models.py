@@ -13,6 +13,8 @@ from django import forms
 
 from mezzanine.blog.models import BlogCategory
 from mezzanine.conf import settings
+from mezzanine.generic.fields import CommentsField
+
 MESSAGE_MAX_LENGTH = getattr(settings,'MESSAGE_MAX_LENGTH',3000)
 PREFIX_MESSAGE_MAX_LENGTH = getattr(settings,'PREFIX_MESSAGE_MAX_LENGTH',256)
 
@@ -118,11 +120,15 @@ class UserWishRadio(Broadcast):
     blog_category = models.ForeignKey(BlogCategory,
                                         verbose_name=_("Category"),
                                         blank=True, related_name="broadcast_blogcategory", null=True)
-
+    comments = CommentsField(verbose_name=_("Comments"))
     objects = UserWishRadioManager()
 
     def __unicode__(self):
-        return self.prefix_message + " " + self.blog_category.slug + " " + self.message  
+        return self.prefix_message + " " + self.blog_category.slug + " " + self.message
+
+    def get_absolute_url(self):
+        return ('view_wish', [self.id])
+    get_absolute_url = models.permalink(get_absolute_url)  
 
 User.profile = property(lambda u: UserProfile.objects.get_or_create(user=u)[0]) 
 pre_update.connect(new_users_handler, sender=FacebookBackend)

@@ -1,0 +1,10 @@
+{% load i18n %}
+
+<ul class="unstyled" style="border:1px solid #666666;padding: 10px;">
+    <li>
+        {{wish.prefix_message}}
+             <a href="{{ wish.blog_category.get_absolute_url }}"> {{wish.blog_category}} </a> </br>
+        {{ wish.message }}
+    </li>
+</ul>
+

@@ -7,7 +7,10 @@ from actstream import action
 from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import string_concat
 from django.template.defaultfilters import slugify
+from django.contrib.auth.decorators import login_required
 from mezzanine.blog.models import BlogPost, BlogCategory
+
+from userProfile.models import UserWishRadio
 
 def close_login_popup(request):
     return render_to_response('close_popup.html', {}, RequestContext(request))
@@ -60,3 +63,11 @@ def userwish(request):
 		return HttpResponse('ok')
 	else:
 		return render_to_response('broadcast_success.html', {}, RequestContext(request))
+
+def view_wish(request, wish_id, template_name='wish/view_wish.html'):
+    wish = get_object_or_404(UserWishRadio, id=wish_id)
+
+    return render_to_response(template_name, {
+        'wish': wish,
+    }, context_instance=RequestContext(request))
+view_wish = login_required(view_wish)

@@ -96,4 +96,11 @@ def get_reviews_by_user(parser, token):
         raise template.TemplateSyntaxError("second argument to '%s' tag must be 'as'" % bits[0])
     return ReviewsByUser(bits[1], bits[3])
 
+@register.inclusion_tag("wish/render_wish.html", takes_context=True)
+def render_wish(context, wish):
+    context.update({
+        "wish": wish,
+    })
+    return context
+
 
