@@ -13,6 +13,7 @@ from django.contrib.contenttypes.models import ContentType
 from mezzanine.blog.models import BlogPost, BlogCategory
 
 from userProfile.models import UserWishRadio
+from actstream.models import Action
 
 def close_login_popup(request):
     return render_to_response('close_popup.html', {}, RequestContext(request))
@@ -99,3 +100,17 @@ def get_wishlist(request, content_type_id, object_id, sIndex, lIndex):
 		'wish_list': wishlist,
 		'ctype': ctype, 'sIndex':s
 	}, context_instance=RequestContext(request))
+
+def shareWish(request, wish_id):
+	wishObject = get_object_or_404(UserWishRadio, pk=wish_id)
+	ctype = ContentType.objects.get_for_model(wishObject)
+
+	actionObject = Action.objects.get(actor_content_type=wishObject.content_type, actor_object_id=wishObject.object_id,verb=u'said:', action_object_content_type=ctype, action_object_object_id=wishObject.pk)
+
+	action.send(request.user, verb=_('shared'), target=actionObject)
+	if request.is_ajax():
+		return HttpResponse('ok') 
+	else:
+		return render_to_response(('actstream/detail.html', 'activity/detail.html'), {
+				'action': actionObject
+			}, context_instance=RequestContext(request))    

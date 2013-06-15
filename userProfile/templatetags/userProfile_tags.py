@@ -167,6 +167,20 @@ def get_wishlist_url(parser, token):
     else:
         return GetWishListUrl.handle_token(parser, token)
 
+class ShareWishUrl(Node):
+    def __init__(self, wish):
+        self.wish = template.Variable(wish)
+
+    def render(self, context):
+        wish_instance = self.wish.resolve(context)
+        return reverse('shareWish', kwargs={
+            'wish_id':wish_instance.pk})
+
+def share_wish_url(parser, token):
+    bits = token.split_contents()
+    return ShareWishUrl(*bits[1:])
+
+register.tag(share_wish_url)
 register.tag(get_wishlist_url)
 
 

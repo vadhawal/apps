@@ -80,6 +80,16 @@ $(document).ready(function(){
         <a id="downwishlistitem{{forloop.counter|add:sIndex}}" href="/broadcast/{{ wish.id }}/down/vote/"><img src="{{ STATIC_URL }}img/dislike.png"></a>
         <span id="nScorewishlistitem{{forloop.counter|add:sIndex}}">{{score.num_down_votes}}</span>
         <a id="clearwishlistitem{{forloop.counter|add:sIndex}}" href="/broadcast/{{ wish.id }}/clear/vote/">Clear</a>
+         <a id="shareWish{{forloop.counter|add:sIndex}}" href="{% share_wish_url wish %}" onclick="
+                    var add_link = $(this);
+                    var link = add_link.attr('href');
+                    $.get(link, {}, function(data) {
+                        if(data == 'ok')
+                          alert('shared');
+                    });
+                    return false;
+        ">share</a>
+
 
         <a href="{% comments_for_obj_url wish %}" OnClick="
                 var add_link = $(this);
