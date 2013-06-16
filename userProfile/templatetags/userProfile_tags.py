@@ -7,6 +7,13 @@ from mezzanine.generic.models import ThreadedComment
 from django.contrib.contenttypes.models import ContentType
 from django.template import Node, TemplateSyntaxError
 from django.core.urlresolvers import reverse
+from userProfile.models import UserWishRadio
+from django.http import HttpResponse
+from django.utils import simplejson
+
+def json_error_response(error_message):
+    return HttpResponse(simplejson.dumps(dict(success=False,
+                                              error_message=error_message)))
 
 register = template.Library()
 
@@ -179,6 +186,44 @@ class ShareWishUrl(Node):
 def share_wish_url(parser, token):
     bits = token.split_contents()
     return ShareWishUrl(*bits[1:])
+
+@register.inclusion_tag("wish/wishlist.html",
+    takes_context=True)
+def recent_deals(context):
+    """
+    Dashboard widget for displaying recent deals.
+    """
+    import operator
+    deals = []
+    latest = context["settings"].COMMENTS_NUM_LATEST
+    ctype = ContentType.objects.get_for_model(BlogPost)
+    deals_queryset = UserWishRadio.objects.all().filter(content_type=ctype)
+    deals_queryset = sorted(deals_queryset, key=operator.attrgetter('timestamp'), reverse=True)
+    for deal in deals_queryset:
+        deals.append(deal) 
+    context["wish_list"] = deals
+    context["sIndex"] = 0
+    return context
+
+@register.tag
+def get_wish_owner(parser, token):
+    bits = token.contents.split()
+    if len(bits) != 4:
+        raise template.TemplateSyntaxError("'%s' tag takes exactly three arguments" % bits[0])
+    if bits[2] != 'as':
+        raise template.TemplateSyntaxError("second argument to '%s' tag must be 'as'" % bits[0])
+    return DealsOwner(bits[1], bits[3])
+
+class DealsOwner(template.Node):
+    def __init__(self, wish, context_var):
+        self.wish = template.Variable(wish)
+        self.context_var = context_var
+
+    def render(self, context):
+        wish_instance = self.wish.resolve(context)
+        obj = wish_instance.content_type.get_object_for_this_type(pk=wish_instance.object_id)
+        context[self.context_var] = obj
+        return ''
 
 register.tag(share_wish_url)
 register.tag(get_wishlist_url)

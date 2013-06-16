@@ -234,4 +234,13 @@ function viewFeed()
 <div class="row" style="border: 1px solid #d4d4d4;">
 {% recent_reviews %}
 </div>
+<div class="span9">
+        <h3>Recent Deals</h3>
+        <div class="section-scroll" style="border-style:solid;border-width:medium;border-color:#00A3EF;">
+            <div id="load-wish" class="content">
+                {% recent_deals %}
+            </div>
+        </div>
+        <span id="wish-status" >
+</div>
 {% endblock %}
