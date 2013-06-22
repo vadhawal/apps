@@ -20,7 +20,12 @@
             <img src="{% gravatar_url comment.email %}">
             {% endif %}
             </a>
-            {{ comment.user.username }} on <a href="{{ comment.content_object.get_absolute_url }}">{{ comment.content_object }}</a>
+            {% if comment.user|get_class_name == "User" %}
+                {{ comment.user.username }} 
+            {% else %}
+                {% trans "Anonymous" %}
+            {% endif %}
+                on <a href="{{ comment.content_object.get_absolute_url }}">{{ comment.content_object }}</a>
             <span class="timespan">{% blocktrans with sometime=comment.submit_date|timesince %}{{ sometime }} ago{% endblocktrans %}</span>
         {% endeditable %}
     </li>
