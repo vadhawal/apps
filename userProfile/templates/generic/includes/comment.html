@@ -23,8 +23,7 @@
                 {% else %}
                 <img src="{% gravatar_url comment.email %}">
                 {% endif %}
-            </a>    
-            {{ comment.user_name }} bought a {{comment.bought_category}}
+            </a>
             {% else %}
             <a href="{{ profile_url }}" %}">
             {% if comment.user.get_profile.profile_photo %}
@@ -37,6 +36,21 @@
             </a>
             {% if comment.bought_category%}
             {{ comment.user_name }} bought a {{comment.bought_category}}
+            {% endif %}
+            {% if comment.price_value%}
+            <p>{{ comment.user_name }} Rated Price as  {{comment.price_value}}</p>
+            {% endif %}
+            {% if comment.variety_value%}
+            <p>{{ comment.user_name }} Rated Variety as  {{comment.variety_value}}</p>
+            {% endif %}
+            {% if comment.quality_value%}
+            <p>{{ comment.user_name }} Rated Quality as  {{comment.quality_value}}</p>
+            {% endif %}
+            {% if comment.service_value%}
+            <p>{{ comment.user_name }} Rated Customer Service as  {{comment.service_value}}</p>
+            {% endif %}
+            {% if comment.exchange_value%}
+            <p>{{ comment.user_name }} Rated Exchange Experience as  {{comment.exchange_value}}</p>
             {% endif %}
             {% endif %}
         </strong>
@@ -122,13 +136,13 @@
            {% if replied_to == comment.id %}
                 {% if object_for_comments|get_class_name == "BlogPost" %}
                     {% fields_for_comment posted_comment_form %}
-                {% elif  object_for_comments|get_class_name == "ThreadedComment" %}
+                {% elif  object_for_comments|get_class_name == "Review" %}
                     {% fields_for posted_comment_form %}
                 {% endif%}
             {% else %}
                 {% if object_for_comments|get_class_name == "BlogPost" %}
                     {% fields_for_comment unposted_comment_form %}
-                {% elif  object_for_comments|get_class_name == "ThreadedComment" %}
+                {% elif  object_for_comments|get_class_name == "Review" %}
                     {% fields_for unposted_comment_form %}
                 {% endif%}
             {% endif %}
@@ -165,6 +179,9 @@
 
         {% endif %}
         {% endeditable %}
+        {% if settings.COMMENTS_USE_RATINGS %}
+        {% rating_for comment %}
+        {% endif %}
         {% comment_thread comment %}
 
         {% if comment.author != request.user %}

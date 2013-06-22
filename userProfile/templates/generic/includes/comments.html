@@ -24,22 +24,21 @@ $(function() {
         {% endif %}
 
 <form method="post" id="comment" action="{{ comment_url }}#comment">
-
     {% if object_for_comments|get_class_name == "BlogPost" %}
         {% if not request.POST.replied_to %}
             {% fields_for_comment posted_comment_form %}
         {% else %}
             {% fields_for_comment unposted_comment_form %}
         {% endif %}
-    {% elif object_for_comments|get_class_name == "ThreadedComment" or object_for_comments|get_class_name == "Album" or object_for_comments|get_class_name == "Image" or object_for_comments|get_class_name == "UserWishRadio" %}
+    {% elif object_for_comments|get_class_name == "Review" or object_for_comments|get_class_name == "Album" or object_for_comments|get_class_name == "Image" or object_for_comments|get_class_name == "UserWishRadio" %}
         {% if not request.POST.replied_to %}
             {% fields_for posted_comment_form %}
         {% else %}
             {% fields_for unposted_comment_form %}
         {% endif %}
     {% endif %}
-    <div class="form-actions">
-        <input class="btn" type="submit" value="{% trans "Comment" %}">
+    <div class="form-actions">     
+       <input class="btn" type="submit" value="{% trans "Comment" %}">
     </div>
 </form>
 {% endif %}
