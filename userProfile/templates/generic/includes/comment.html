@@ -1,6 +1,7 @@
 {% load i18n mezzanine_tags comment_tags rating_tags %}
 {% load mezzanine_tags i18n future %}
 {% load voting_tags %}
+{% load inbox %}
 
 <ul class="unstyled">
     {% for comment in comments_for_thread %}
@@ -165,6 +166,19 @@
         {% endif %}
         {% endeditable %}
         {% comment_thread comment %}
+
+        {% if comment.author != request.user %}
+            <div id="reportSpam">
+            <a href="{% report_spam_url comment %}" onclick="var add_link = $(this);
+                        var link = add_link.attr('href');
+                        $.get(link, {}, function(data) {
+                            if(data == 'ok')
+                              alert('Reported');
+                        });
+                        return false;"><img title="Flag as spam" src="{{STATIC_URL}}img/flag_blue.ico"></img></a>
+            </div>
+        {% endif %}
+
         {% if comment.content_object|get_class_name == "BlogPost" %}
             <a href="{% comments_for_obj_url comment %}" OnClick="
                     var add_link = $(this);
