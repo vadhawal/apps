@@ -59,7 +59,7 @@
 
         {% score_for_object comment as score %}
         {% voters_for_object comment as voters %}
-        <a id="up{{comment.id}}" href="/comments/{{ comment.id }}/up/vote/" onClick=" var add_link = $(this);
+        <a id="up{{comment.id}}" href="/review/{{ comment.id }}/up/vote/" onClick=" var add_link = $(this);
             $.post(add_link.attr('href'),{HTTP_X_REQUESTED:'XMLHttpRequest'},
                    function(data) {
                        if (data.success == true) {
@@ -86,7 +86,7 @@
                 {{score.num_up_votes}}
             </a>
         </span>
-        <a id="down{{comment.id}}" href="/comments/{{ comment.id }}/down/vote/" onClick=" var add_link = $(this);
+        <a id="down{{comment.id}}" href="/review/{{ comment.id }}/down/vote/" onClick=" var add_link = $(this);
             $.post(add_link.attr('href'),{HTTP_X_REQUESTED:'XMLHttpRequest'},
                    function(data) {
                        if (data.success == true) {
@@ -99,7 +99,7 @@
             return false;">
         <img src="{{ STATIC_URL }}img/dislike.png"></a>
         <span id="nScore{{comment.id}}">{{score.num_down_votes}}</span>
-        <a id="clear{{comment.id}}" href="/comments/{{ comment.id }}/clear/vote/" onClick=" var add_link = $(this);
+        <a id="clear{{comment.id}}" href="/review/{{ comment.id }}/clear/vote/" onClick=" var add_link = $(this);
             $.post(add_link.attr('href'),{HTTP_X_REQUESTED:'XMLHttpRequest'},
                    function(data) {
                        if (data.success == true) {
