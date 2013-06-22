@@ -34,28 +34,10 @@
             <img src="{% gravatar_url comment.email %}">
             {% endif %}
             </a>
-            {% if comment.bought_category%}
-            {{ comment.user_name }} bought a {{comment.bought_category}}
-            {% endif %}
             {% endif %}
         </strong>
         <span class="timespan">{% blocktrans with sometime=comment.submit_date|timesince %}{{ sometime }} ago{% endblocktrans %}</span>
-        {% if comment.get_rating_parameters  %}
-        	<div class="panel rating">
-       			<strong>{% trans "Ratings" %}</strong><br />
-        		{% for ratingParameter in comment.get_rating_parameters  %}
-        		<p>{{ratingParameter}}: 
-        			{% for ratingValue in comment.get_rating_values %} 
-        				{% if forloop.counter == forloop.parentloop.counter %}
-        				{{ratingValue}}
-        				{% endif %}
-        			{% endfor %}
-        		</p><br />
-        		{% endfor %}
-        	</div>
-        {% else %}
-        		<p></p>
-       {% endif %}
+        
         <p>{{ comment.comment|comment_filter }}</p>
 
         {% score_for_object comment as score %}
@@ -113,23 +95,21 @@
             return false;">Clear</a>
 
         
-        <a href="{{ request.path }}#comment-{{ comment.id }}">{% trans "Link" %}</a> {% if blog_post.allow_reply_to_comments %} / {%endif%}
-        <a href="#reply-{{ comment.id }}" class="reply" {% if blog_post.allow_reply_to_comments != TRUE %}style="display:none;"{% endif %} >{% trans "Reply" %}</a>
+        <a href="{{ request.path }}#comment-{{ comment.id }}">{% trans "Link" %}</a> 
+        {% if request.user.is_staff %} / 
+            <a href="#reply-{{ comment.id }}" class="reply">{% trans "Reply" %}</a>
+        {% endif %}
         <form class="reply-form" method="post" id="reply-{{ comment.id }}"
             action="{{ comment_url }}#reply-{{ comment.id }}"
             {% if replied_to != comment.id %}style="display:none;"{% endif %}>
            {% if replied_to == comment.id %}
-                {% if object_for_comments|get_class_name == "BlogPost" %}
-                    {% fields_for_comment posted_comment_form %}
-                {% elif  object_for_comments|get_class_name == "ThreadedComment" %}
+                {% if  object_for_comments|get_class_name == "ThreadedComment" %}
                     {% fields_for posted_comment_form %}
-                {% endif%}
+                {% endif %}
             {% else %}
-                {% if object_for_comments|get_class_name == "BlogPost" %}
-                    {% fields_for_comment unposted_comment_form %}
-                {% elif  object_for_comments|get_class_name == "ThreadedComment" %}
+                {% if  object_for_comments|get_class_name == "ThreadedComment" %}
                     {% fields_for unposted_comment_form %}
-                {% endif%}
+                {% endif %}
             {% endif %}
             <input type="hidden" name="replied_to" value="{{ comment.id }}">
             <input class="btn btn-primary btn-large" type="submit" value="{% trans "Reply" %}">
