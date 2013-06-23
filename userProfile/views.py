@@ -45,9 +45,12 @@ def broadcast(request):
 def userwish(request):
 	if request.method == "POST":
 		blog_category = get_object_or_404(BlogCategory, slug=slugify(_(request.POST['blog_category'])))
+		wishimgeobj = None
+		if 'wishimage' in request.FILES:
+			wishimgeobj = request.FILES['wishimage']
 		if _(request.POST['actor']) == "user":
 			ctype = ContentType.objects.get_for_model(User)
-			broadcast = UserWishRadio.objects.create_user_wishradio_object(request.user, _(request.POST['userwish']), blog_category , _(request.POST['message']), ctype, request.user.pk )
+			broadcast = UserWishRadio.objects.create_user_wishradio_object(request.user, _(request.POST['userwish']), blog_category , _(request.POST['message']), ctype, request.user.pk, wishimgeobj )
 			action.send(request.user, verb='said:', action_object=broadcast)
 		elif _(request.POST['actor']) == "vendor":
 			blog_posts = BlogPost.objects.published(
@@ -60,7 +63,7 @@ def userwish(request):
 			if blog_posts:
 				blog_post = blog_posts[0]
 				ctype = ContentType.objects.get_for_model(BlogPost)
-				broadcast = UserWishRadio.objects.create_user_wishradio_object(request.user, _(request.POST['vendorwish']), blog_category, _(request.POST['message']), ctype, request.user.pk)
+				broadcast = UserWishRadio.objects.create_user_wishradio_object(request.user, _(request.POST['vendorwish']), blog_category, _(request.POST['message']), ctype, request.user.pk, wishimgeobj)
 				action.send(blog_post, verb='said:', action_object=broadcast)
 
 	if request.is_ajax():
