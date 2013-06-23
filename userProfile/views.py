@@ -51,7 +51,6 @@ def userwish(request):
 		if _(request.POST['actor']) == "user":
 			ctype = ContentType.objects.get_for_model(User)
 			broadcast = UserWishRadio.objects.create_user_wishradio_object(request.user, _(request.POST['userwish']), blog_category , _(request.POST['message']), ctype, request.user.pk, wishimgeobj )
-			broadcast.save()
 			action.send(request.user, verb='said:', action_object=broadcast)
 		elif _(request.POST['actor']) == "vendor":
 			blog_posts = BlogPost.objects.published(
