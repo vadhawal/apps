@@ -1,0 +1,45 @@
+{% load reviewrating_tags i18n future %}
+
+<div class="panel rating">
+
+<div id="reviewrating-{{ reviewrating_object.id }}">
+	<p>
+    {% if price_average %}
+    {% trans "Current Price rating" %}: {{ price_average|floatformat }}
+    {% else %}
+    {% trans "Currently unrated on Price" %}
+    {% endif %}
+    </p>
+    	<p>
+    {% if variety_average %}
+    {% trans "Current Variety rating" %}: {{ variety_average|floatformat }}
+    {% else %}
+    {% trans "Currently unrated on Variety" %}
+    {% endif %}
+    </p>
+    <p>
+    {% if quality_average %}
+    {% trans "Current Quality rating" %}: {{ quality_average|floatformat }}
+    {% else %}
+    {% trans "Currently unrated on Quality" %}
+    {% endif %}
+    </p>
+    <p>
+    {% if service_average %}
+    {% trans "Current Service rating" %}: {{ service_average|floatformat }}
+    {% else %}
+    {% trans "Currently unrated on Service" %}
+    {% endif %}
+    </p>
+    <p>
+    {% if exchange_average %}
+    {% trans "Current Exchange rating" %}: {{ exchange_average|floatformat }}
+    {% else %}
+    {% trans "Currently unrated on Exchange" %}
+    {% endif %}
+    </p>
+</div>
+
+<br style="clear:both">
+
+</div>

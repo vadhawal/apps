@@ -1,5 +1,5 @@
 {% extends "blog/blog_post_list.html" %}
-{% load mezzanine_tags comment_tags keyword_tags rating_tags i18n future disqus_tags %}
+{% load mezzanine_tags comment_tags keyword_tags rating_tags reviewrating_tags i18n future disqus_tags %}
 {% load follow_tags %}
 {% load userProfile_tags %}
 {% block meta_title %}{{ blog_post.meta_title }}{% endblock %}
@@ -213,6 +213,7 @@
 {% endblock %}
 
 {% rating_for blog_post %}
+{% reviewrating_for blog_post %}
 
 {% block blog_post_detail_sharebuttons %}
 {% set_short_url_for blog_post %}
