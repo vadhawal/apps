@@ -40,6 +40,9 @@ var lIndex = 5;
                     alert("Posted Successfully"); 
                 }); */
             //});
+            $('#createwish').click(function() {
+               $(this).height(90);
+            });
             $('#fakeselect').bind("click" , function () {
                 $('#wishimage').click();
             });
@@ -243,7 +246,8 @@ function viewFeed()
         </select>
     {% endif %}
     </br>
-    <textarea id="createwish" style="width:100%;height:80px" name="message" placeholder="Wish details..."></textarea>
+    <div style="border:1px solid #1769ff;">
+    <textarea class="boxsizingBorder" id="createwish" style="width:100%;height:50px;border: none;resize: none;" name="message" placeholder="Wish details..."></textarea>
     <input style="display:none;" type="file" id="wishimage", name="wishimage" aria-label="Add photos to your post" >
     <input id="fakeselect" type="button"  style="background-image: url({{STATIC_URL}}img/photo.ico); 
                                                                     background-color: transparent;
@@ -256,6 +260,7 @@ function viewFeed()
                                                                     padding-left: 16px;    
                                                                     vertical-align: middle;"/>
     <output id="previewimg"></output>
+    </div>
     </br>
 
     {% get_owned_blog request.user as blog %} 
