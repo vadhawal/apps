@@ -118,9 +118,13 @@ class Broadcast(models.Model):
         return self.message 
 
 class UserWishRadioManager(models.Manager):
-    def create_user_wishradio_object(self, user, prefix_message, blog_category, message, content_type, object_id  ):
-        broadcast = self.create(user=user, prefix_message=prefix_message, blog_category=blog_category, message=message, content_type=content_type, object_id=object_id)
+    def create_user_wishradio_object(self, user, prefix_message, blog_category, message, content_type, object_id, wishimage  ):
+        broadcast = self.create(user=user, prefix_message=prefix_message, blog_category=blog_category, message=message, content_type=content_type, object_id=object_id, wishimage=wishimage)
         return broadcast
+
+def get_wishimage_upload_path(instance, filename):
+    return os.path.join(
+      "users/user_%d/" % instance.user.id, filename)
 
 class UserWishRadio(Broadcast):
     prefix_message = models.TextField(_('message'), max_length=PREFIX_MESSAGE_MAX_LENGTH)
@@ -131,6 +135,8 @@ class UserWishRadio(Broadcast):
     content_type = models.ForeignKey(ContentType)
     object_id = models.CharField(max_length=255)
     timestamp = models.DateTimeField(default=now)
+    wishimage = ResizedImageField(upload_to=get_wishimage_upload_path, blank=True, null=True)
+
     objects = UserWishRadioManager()
 
     def __unicode__(self):
