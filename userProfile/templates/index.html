@@ -14,13 +14,11 @@
 <script src="{{ STATIC_URL }}js/jquery.jscrollpane.min.js"></script>
 <script src="{{ STATIC_URL }}js/jquery.mousewheel.js"></script>
 <script src="{{ STATIC_URL }}js/jquery.form.js"></script>
-<script type="text/javascript" src="{{ STATIC_URL }}js/linkPreview.js" ></script> 
 {% endblock %}
 
 {% block extra_head %}
 <link rel="stylesheet" href="{{ STATIC_URL }}css/jquery.jscrollpane.css">
 <link rel="stylesheet" class="cssStatics" type="text/css" href="{{ STATIC_URL }}css/stylesheet.css" />
-<link rel="stylesheet" class="cssButtons" type="text/css" href="{{ STATIC_URL }}css/linkPreview.css" />
 <script type="text/javascript">
 var sIndex = 0;
 var lIndex = 5;
@@ -33,7 +31,6 @@ var lIndex = 5;
                 });
                 return false;
     	    });
-            $('.linkPreview').linkPreview();
             // $('#broadcast').submit(function() {
                /* $.post($(this).attr('action'), $(this).serialize(), function(data, textStatus, jqXHR){
                         if(data == 'ok')
@@ -84,7 +81,7 @@ var lIndex = 5;
                 var percent = $('.percent');
                 var status = $('#status');
                    
-                $('#broadcast1').ajaxForm({
+                $('#broadcast').ajaxForm({
                     beforeSend: function() {
                         $('.progress').toggle();
                         status.empty();
