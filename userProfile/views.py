@@ -14,6 +14,8 @@ from mezzanine.blog.models import BlogPost, BlogCategory
 
 from userProfile.models import UserWishRadio
 from actstream.models import Action
+from itertools import chain
+from mezzanine.conf import settings
 
 def close_login_popup(request):
     return render_to_response('close_popup.html', {}, RequestContext(request))
@@ -118,4 +120,26 @@ def shareWish(request, wish_id):
 	else:
 		return render_to_response(('actstream/detail.html', 'activity/detail.html'), {
 				'action': actionObject
-			}, context_instance=RequestContext(request))    
+			}, context_instance=RequestContext(request)) 
+
+def getTopReviewsForBlogCategory(request, category_slug):
+	import operator
+	blog_category = None
+	if BlogCategory.objects.all().exists():
+		blog_category = get_object_or_404(BlogCategory, slug=slugify(category_slug))
+	
+	blog_posts = BlogPost.objects.published().filter(categories=blog_category)
+	
+	reviews = []
+	latest = settings.REVIEWS_NUM_LATEST
+
+	for blog_post in blog_posts:
+		comments_queryset = blog_post.comments.visible().order_by('-id')[:latest]
+		reviews = list(chain(reviews, list(comments_queryset)))
+
+	reviews = sorted(reviews, key=operator.attrgetter('submit_date'), reverse=True)
+	latestReviews = reviews[:latest]
+
+	return render_to_response('generic/top_reviews.html', {
+				'comments': latestReviews
+			}, context_instance=RequestContext(request))

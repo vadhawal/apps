@@ -13,16 +13,27 @@
 {% block extra_js %}
 <script src="{{ STATIC_URL }}js/jquery.jscrollpane.min.js"></script>
 <script src="{{ STATIC_URL }}js/jquery.mousewheel.js"></script>
-<script src="{{ STATIC_URL }}js/jquery.form.js"></script> 
+<script src="{{ STATIC_URL }}js/jquery.form.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/linkPreview.js" ></script> 
 {% endblock %}
 
 {% block extra_head %}
 <link rel="stylesheet" href="{{ STATIC_URL }}css/jquery.jscrollpane.css">
+<link rel="stylesheet" class="cssStatics" type="text/css" href="{{ STATIC_URL }}css/stylesheet.css" />
+<link rel="stylesheet" class="cssButtons" type="text/css" href="{{ STATIC_URL }}css/linkPreview.css" />
 <script type="text/javascript">
 var sIndex = 0;
 var lIndex = 5;
 {% if request.user.is_authenticated %}
           $(document).ready(function() {
+	    $('#blog-category').change(function(){
+		var slug = $(this).find("option:selected").text();
+                $.get('/latestReviews/category/'+slug, {}, function(data) {
+			$('#topReviewsForCategory').html(data);
+                });
+                return false;
+    	    });
+            $('.linkPreview').linkPreview();
             // $('#broadcast').submit(function() {
                /* $.post($(this).attr('action'), $(this).serialize(), function(data, textStatus, jqXHR){
                         if(data == 'ok')
@@ -73,7 +84,7 @@ var lIndex = 5;
                 var percent = $('.percent');
                 var status = $('#status');
                    
-                $('#broadcast').ajaxForm({
+                $('#broadcast1').ajaxForm({
                     beforeSend: function() {
                         $('.progress').toggle();
                         status.empty();
@@ -237,7 +248,7 @@ function viewFeed()
     <input id="vendorwish" type="text" name="vendorwish" value="I have a deal for" readonly style="display:None;">
     {% blog_categories_abs as categories %}
     {% if categories %}
-        <select name="blog_category">
+        <select id="blog-category" name="blog_category">
             <ul class="unstyled">
                 {% for category in categories %}
                     <option value="{{ category }}">{{ category }}</option>
@@ -331,6 +342,14 @@ function viewFeed()
                 {% recent_deals %}
             </div>
         </div>
-        <span id="wish-status" >
+        <span id="wish-status" ></span>
+</div>
+
+<div class="span9">
+        <h3>Top Reviews for selected category</h3>
+        <div class="section-scroll" style="border-style:solid;border-width:medium;border-color:#00A3EF;">
+            <div id="topReviewsForCategory" class="content">
+            </div>
+        </div>
 </div>
 {% endblock %}
