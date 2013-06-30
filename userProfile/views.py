@@ -123,7 +123,7 @@ def shareWish(request, wish_id):
 				'action': actionObject
 			}, context_instance=RequestContext(request)) 
 
-def getTopReviewsForBlogCategory(request, category_slug):
+def getTopReviewsForStoreCategory(request, category_slug):
 	import operator
 	
 	latest = settings.REVIEWS_NUM_LATEST
@@ -133,4 +133,16 @@ def getTopReviewsForBlogCategory(request, category_slug):
 
 	return render_to_response('generic/top_reviews.html', {
 				'comments': reviews
+			}, context_instance=RequestContext(request))
+
+def getTopStoresForStoreCategory(request, category_slug):
+	import operator
+	blog_category = None
+	if BlogCategory.objects.all().exists():
+		blog_category = get_object_or_404(BlogCategory, slug=slugify(category_slug))
+	
+	vendors = BlogPost.objects.published().filter(categories=blog_category).extra(select={'fieldsum':'price_average + variety_average + quality_average + service_average + exchange_average'},order_by=('-fieldsum',))
+
+	return render_to_response('generic/vendor_list.html', {
+				'vendors': vendors
 			}, context_instance=RequestContext(request))
