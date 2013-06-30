@@ -98,7 +98,7 @@ var lIndex = 5;
                     },
                     uploadProgress: function(event, position, total, percentComplete) {
                         var percentVal = percentComplete + '%';
-                        bar.width(percentVal)
+                        bar.width(percentVal);
                         percent.html(percentVal);
                     },
                     success: function() {

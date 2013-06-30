@@ -336,7 +336,9 @@ function showSnazzySuccessMessage(text)
             <h2>{{ profile_user.get_full_name }}</h2>
             <div>
                 {% for field, value in profile_user|profile_fields %}
-                <p>{{ field }}: {{ value|linebreaksbr }}</p>
+                {% if field != "Imageurl" %}
+                        <p>{{ field }}: {{ value|linebreaksbr }}</p>
+                {% endif %}
                 {% endfor %}
             </div>
 

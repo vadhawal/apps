@@ -43,7 +43,7 @@ class UserProfile(models.Model):
         )
     profile_photo = ResizedImageField(upload_to="users/", max_width=100, max_height=80, blank=True, null=True)
     gender = models.CharField(max_length=10, blank=True, choices=GENDER_CHOICES, verbose_name=_("Gender"))
-    image_url = models.URLField(blank=True, verbose_name=_("Avatar Picture"))
+    image_url = models.URLField(blank=True, verbose_name=_("Imageurl"), editable=False)
     description = models.TextField(blank=True, verbose_name=_("Description"), help_text=_("Tell us about yourself!"))
     def __str__(self):  
         return "%s's profile" % self.user  
@@ -140,7 +140,10 @@ class UserWishRadio(Broadcast):
     objects = UserWishRadioManager()
 
     def __unicode__(self):
-        return self.prefix_message + " " + self.blog_category.slug + " " + self.message
+        message = self.prefix_message
+        if self.blog_category:
+            message += " " + self.blog_category.slug
+        message += " "+self.message
 
     def get_absolute_url(self):
         return ('view_wish', [self.id])
