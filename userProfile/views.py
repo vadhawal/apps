@@ -138,10 +138,11 @@ def getTopReviewsForStoreCategory(request, category_slug):
 def getTopStoresForStoreCategory(request, category_slug):
 	import operator
 	blog_category = None
+	latest = settings.REVIEWS_NUM_LATEST
 	if BlogCategory.objects.all().exists():
 		blog_category = get_object_or_404(BlogCategory, slug=slugify(category_slug))
 	
-	vendors = BlogPost.objects.published().filter(categories=blog_category).extra(select={'fieldsum':'price_average + variety_average + quality_average + service_average + exchange_average'},order_by=('-fieldsum',))
+	vendors = BlogPost.objects.published().filter(categories=blog_category).extra(select={'fieldsum':'price_average + variety_average + quality_average + service_average + exchange_average'},order_by=('-fieldsum',))[:latest]
 
 	return render_to_response('generic/vendor_list.html', {
 				'vendors': vendors
@@ -156,7 +157,7 @@ def getTopDealsForStoreCategory(request, category_slug):
 	deals = []
 	latest = settings.REVIEWS_NUM_LATEST
 	ctype = ContentType.objects.get_for_model(BlogPost)
-	deals_queryset = UserWishRadio.objects.all().filter(content_type=ctype, blog_category=blog_category)
+	deals_queryset = UserWishRadio.objects.all().filter(content_type=ctype, blog_category=blog_category)[:latest]
 	deals_queryset = sorted(deals_queryset, key=operator.attrgetter('timestamp'), reverse=True)
 	for deal in deals_queryset:
 	    deals.append(deal) 
