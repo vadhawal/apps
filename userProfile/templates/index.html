@@ -31,7 +31,11 @@ var lIndex = 5;
                 });
                 $.get('/topStores/category/'+slug, {}, function(data) {
                      $('#topStoresForStoreCategory').html(data);
-                });                
+                });    
+                $.get('/topDeals/category/'+slug, {}, function(data) {
+                     $('#topDealsForStoreCategory').html(data);
+                });
+                            
                 return false;
     	    });
             // $('#broadcast').submit(function() {
@@ -359,4 +363,13 @@ function viewFeed()
             </div>
         </div>
 </div>
+<div class="span9">
+        <h3>Top Deals or selected category</h3>
+        <div class="section-scroll" style="border-style:solid;border-width:medium;border-color:#00A3EF;">
+            <div id="topDealsForStoreCategory" class="content">
+            </div>
+        </div>
+        <span id="wish-status" ></span>
+</div>
 {% endblock %}
+

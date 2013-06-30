@@ -146,3 +146,22 @@ def getTopStoresForStoreCategory(request, category_slug):
 	return render_to_response('generic/vendor_list.html', {
 				'vendors': vendors
 			}, context_instance=RequestContext(request))
+
+def getTopDealsForStoreCategory(request, category_slug):
+	import operator
+	blog_category = None
+	if BlogCategory.objects.all().exists():
+		blog_category = get_object_or_404(BlogCategory, slug=slugify(category_slug))
+	
+	deals = []
+	latest = settings.REVIEWS_NUM_LATEST
+	ctype = ContentType.objects.get_for_model(BlogPost)
+	deals_queryset = UserWishRadio.objects.all().filter(content_type=ctype, blog_category=blog_category)
+	deals_queryset = sorted(deals_queryset, key=operator.attrgetter('timestamp'), reverse=True)
+	for deal in deals_queryset:
+	    deals.append(deal) 
+
+	return render_to_response('generic/wishlist.html', {
+				'wish_list': deals,
+				'sIndex':0
+			}, context_instance=RequestContext(request))
