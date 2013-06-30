@@ -11,6 +11,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
 from mezzanine.blog.models import BlogPost, BlogCategory
+from mezzanine.generic.models import Review
 
 from userProfile.models import UserWishRadio
 from actstream.models import Action
@@ -124,22 +125,12 @@ def shareWish(request, wish_id):
 
 def getTopReviewsForBlogCategory(request, category_slug):
 	import operator
-	blog_category = None
-	if BlogCategory.objects.all().exists():
-		blog_category = get_object_or_404(BlogCategory, slug=slugify(category_slug))
 	
-	blog_posts = BlogPost.objects.published().filter(categories=blog_category)
-	
-	reviews = []
 	latest = settings.REVIEWS_NUM_LATEST
-
-	for blog_post in blog_posts:
-		comments_queryset = blog_post.comments.visible().order_by('-id')[:latest]
-		reviews = list(chain(reviews, list(comments_queryset)))
-
+	
+	reviews = Review.objects.all().filter(bought_category=category_slug)[:latest]
 	reviews = sorted(reviews, key=operator.attrgetter('submit_date'), reverse=True)
-	latestReviews = reviews[:latest]
 
 	return render_to_response('generic/top_reviews.html', {
-				'comments': latestReviews
+				'comments': reviews
 			}, context_instance=RequestContext(request))
