@@ -15,43 +15,46 @@
         <strong>
             {% url "profile" comment.user as profile_url %}
             {% if comment.url %}
-            <a href="{{ profile_url }}">
-                {% if comment.user.get_profile.profile_photo %}
-                <img src="{{ comment.user.get_profile.profile_photo.url }}">
-                {% elif comment.user.get_profile.image_url %}
-                <img src="{{ comment.user.get_profile.image_url }}">
-                {% else %}
-                <img src="{% gravatar_url comment.email %}">
-                {% endif %}
-            </a>
+	            <a href="{{ profile_url }}">
+	                {% if comment.user.get_profile.profile_photo %}
+	                <img src="{{ comment.user.get_profile.profile_photo.url }}">
+	                {% elif comment.user.get_profile.image_url %}
+	                <img src="{{ comment.user.get_profile.image_url }}">
+	                {% else %}
+	                <img src="{% gravatar_url comment.email %}">
+	                {% endif %}
+	            </a>
             {% else %}
-            <a href="{{ profile_url }}" %}">
-            {% if comment.user.get_profile.profile_photo %}
-            <img src="{{ comment.user.get_profile.profile_photo.url }}">
-            {% elif comment.user.get_profile.image_url %}
-            <img src="{{ comment.user.get_profile.image_url }}">
-            {% else %}
-            <img src="{% gravatar_url comment.email %}">
-            {% endif %}
-            </a>
-            {% if comment.bought_category%}
-            {{ comment.user_name }} bought a {{comment.bought_category}}
-            {% endif %}
-            {% if comment.price_value%}
-            <p>{{ comment.user_name }} Rated Price as  {{comment.price_value}}</p>
-            {% endif %}
-            {% if comment.variety_value%}
-            <p>{{ comment.user_name }} Rated Variety as  {{comment.variety_value}}</p>
-            {% endif %}
-            {% if comment.quality_value%}
-            <p>{{ comment.user_name }} Rated Quality as  {{comment.quality_value}}</p>
-            {% endif %}
-            {% if comment.service_value%}
-            <p>{{ comment.user_name }} Rated Customer Service as  {{comment.service_value}}</p>
-            {% endif %}
-            {% if comment.exchange_value%}
-            <p>{{ comment.user_name }} Rated Exchange Experience as  {{comment.exchange_value}}</p>
-            {% endif %}
+	            <a href="{{ profile_url }}" %}">
+	            {% if comment.user.get_profile.profile_photo %}
+	            	<img src="{{ comment.user.get_profile.profile_photo.url }}">
+	            {% elif comment.user.get_profile.image_url %}
+	           		<img src="{{ comment.user.get_profile.image_url }}">
+	            {% else %}
+	            	<img src="{% gravatar_url comment.email %}">
+	            {% endif %}
+	            </a>
+	            {% if comment.bought_category%}
+	            	{{ comment.user_name }} bought a {{comment.bought_category}}
+	            {% endif %}
+	            {% if comment.overall_value%}
+	           		<p>{{ comment.user_name }} Rated Overall as  {{comment.overall_value}}</p>
+	            {% endif %}
+	            {% if comment.price_value%}
+	            	<p>{{ comment.user_name }} Rated Price as  {{comment.price_value}}</p>
+	            {% endif %}
+	            {% if comment.variety_value%}
+	            	<p>{{ comment.user_name }} Rated Variety as  {{comment.variety_value}}</p>
+	            {% endif %}
+	            {% if comment.quality_value%}
+	            	<p>{{ comment.user_name }} Rated Quality as  {{comment.quality_value}}</p>
+	            {% endif %}
+	            {% if comment.service_value%}
+	            	<p>{{ comment.user_name }} Rated Customer Service as  {{comment.service_value}}</p>
+	            {% endif %}
+	            {% if comment.exchange_value%}
+	            	<p>{{ comment.user_name }} Rated Exchange Experience as  {{comment.exchange_value}}</p>
+	            {% endif %}
             {% endif %}
         </strong>
         <span class="timespan">{% blocktrans with sometime=comment.submit_date|timesince %}{{ sometime }} ago{% endblocktrans %}</span>
