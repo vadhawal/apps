@@ -62,6 +62,8 @@ def userwish(request):
 			ctype = ContentType.objects.get_for_model(User)
 			broadcast = UserWishRadio.objects.create_user_wishradio_object(request.user, _(request.POST['userwish']), blog_category , _(request.POST['message']), ctype, request.user.pk, wishimgeobj, urlPreviewContent )
 			action.send(request.user, verb='said:', action_object=broadcast)
+			actions.follow(request.user, broadcast, send_action=False, actor_only=False) 
+			Follow.objects.get_or_create(request.user, broadcast)
 			#blog_posts = BlogPost.objects.all().filter(categories=blog_category)
 			#for blog_post in blog_posts:
 			#	actions.follow(blog_post.user, broadcast, send_action=False, actor_only=False)
@@ -79,7 +81,8 @@ def userwish(request):
 				ctype = ContentType.objects.get_for_model(BlogPost)
 				broadcast = UserWishRadio.objects.create_user_wishradio_object(request.user, _(request.POST['vendorwish']), blog_category, _(request.POST['message']), ctype, request.user.pk, wishimgeobj, urlPreviewContent)
 				action.send(blog_post, verb='said:', action_object=broadcast)
-
+				actions.follow(request.user, broadcast, send_action=False, actor_only=False) 
+				Follow.objects.get_or_create(request.user, broadcast)
 	if request.is_ajax():
 		return HttpResponse('ok')
 	else:
