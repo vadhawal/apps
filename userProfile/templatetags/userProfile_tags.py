@@ -10,6 +10,7 @@ from django.core.urlresolvers import reverse
 from userProfile.models import UserWishRadio
 from django.http import HttpResponse
 from django.utils import simplejson
+from follow.models import Follow
 
 def json_error_response(error_message):
     return HttpResponse(simplejson.dumps(dict(success=False,
@@ -227,5 +228,9 @@ class DealsOwner(template.Node):
 
 register.tag(share_wish_url)
 register.tag(get_wishlist_url)
+
+@register.filter
+def is_following_post(user, obj):
+    return Follow.objects.is_following(user, obj)
 
 

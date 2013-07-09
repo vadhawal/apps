@@ -17,6 +17,8 @@ from userProfile.models import UserWishRadio
 from actstream.models import Action
 from itertools import chain
 from mezzanine.conf import settings
+from actstream import actions
+from follow.models import Follow
 
 def close_login_popup(request):
     return render_to_response('close_popup.html', {}, RequestContext(request))
@@ -53,10 +55,17 @@ def userwish(request):
 		wishimgeobj = None
 		if 'wishimage' in request.FILES:
 			wishimgeobj = request.FILES['wishimage']
+
+		urlPreviewContent = request.POST.get("urlPreviewContent","")
+
 		if _(request.POST['actor']) == "user":
 			ctype = ContentType.objects.get_for_model(User)
-			broadcast = UserWishRadio.objects.create_user_wishradio_object(request.user, _(request.POST['userwish']), blog_category , _(request.POST['message']), ctype, request.user.pk, wishimgeobj )
+			broadcast = UserWishRadio.objects.create_user_wishradio_object(request.user, _(request.POST['userwish']), blog_category , _(request.POST['message']), ctype, request.user.pk, wishimgeobj, urlPreviewContent )
 			action.send(request.user, verb='said:', action_object=broadcast)
+			#blog_posts = BlogPost.objects.all().filter(categories=blog_category)
+			#for blog_post in blog_posts:
+			#	actions.follow(blog_post.user, broadcast, send_action=False, actor_only=False)
+
 		elif _(request.POST['actor']) == "vendor":
 			blog_posts = BlogPost.objects.published(
                                      for_user=request.user).select_related().filter(user=request.user)
@@ -68,7 +77,7 @@ def userwish(request):
 			if blog_posts:
 				blog_post = blog_posts[0]
 				ctype = ContentType.objects.get_for_model(BlogPost)
-				broadcast = UserWishRadio.objects.create_user_wishradio_object(request.user, _(request.POST['vendorwish']), blog_category, _(request.POST['message']), ctype, request.user.pk, wishimgeobj)
+				broadcast = UserWishRadio.objects.create_user_wishradio_object(request.user, _(request.POST['vendorwish']), blog_category, _(request.POST['message']), ctype, request.user.pk, wishimgeobj, urlPreviewContent)
 				action.send(blog_post, verb='said:', action_object=broadcast)
 
 	if request.is_ajax():
@@ -122,6 +131,21 @@ def shareWish(request, wish_id):
 		return render_to_response(('actstream/detail.html', 'activity/detail.html'), {
 				'action': actionObject
 			}, context_instance=RequestContext(request)) 
+
+def followWish(request, wish_id):
+	wishObject = get_object_or_404(UserWishRadio, pk=wish_id)
+	ctype = ContentType.objects.get_for_model(wishObject)
+	Follow.objects.get_or_create(request.user, wishObject)
+	actions.follow(request.user, wishObject, send_action=False, actor_only=False)
+	return HttpResponse('ok')
+
+def unfollowWish(request, wish_id):
+	wishObject = get_object_or_404(UserWishRadio, pk=wish_id)
+	ctype = ContentType.objects.get_for_model(wishObject)
+	follow = Follow.objects.get_follows(wishObject).get(user=request.user)
+	follow.delete()
+	actions.unfollow(request.user, wishObject, send_action=False)
+	return HttpResponse('ok')
 
 def getTopReviewsForStoreCategory(request, category_slug):
 	import operator

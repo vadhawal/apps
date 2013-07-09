@@ -22,6 +22,8 @@ except ImportError:
     from datetime import datetime
     now = datetime.now
 
+from follow import utils
+
 MESSAGE_MAX_LENGTH = getattr(settings,'MESSAGE_MAX_LENGTH',3000)
 PREFIX_MESSAGE_MAX_LENGTH = getattr(settings,'PREFIX_MESSAGE_MAX_LENGTH',256)
 
@@ -118,8 +120,8 @@ class Broadcast(models.Model):
         return self.message 
 
 class UserWishRadioManager(models.Manager):
-    def create_user_wishradio_object(self, user, prefix_message, blog_category, message, content_type, object_id, wishimage  ):
-        broadcast = self.create(user=user, prefix_message=prefix_message, blog_category=blog_category, message=message, content_type=content_type, object_id=object_id, wishimage=wishimage)
+    def create_user_wishradio_object(self, user, prefix_message, blog_category, message, content_type, object_id, wishimage, urlPreviewContent ):
+        broadcast = self.create(user=user, prefix_message=prefix_message, blog_category=blog_category, message=message, content_type=content_type, object_id=object_id, wishimage=wishimage, urlPreviewContent=urlPreviewContent)
         return broadcast
 
 def get_wishimage_upload_path(instance, filename):
@@ -136,6 +138,7 @@ class UserWishRadio(Broadcast):
     object_id = models.CharField(max_length=255)
     timestamp = models.DateTimeField(default=now)
     wishimage = ResizedImageField(upload_to=get_wishimage_upload_path, blank=True, null=True)
+    urlPreviewContent = models.TextField(blank=True, verbose_name=_("UrlPreview"))
 
     objects = UserWishRadioManager()
 
@@ -152,3 +155,5 @@ class UserWishRadio(Broadcast):
 User.profile = property(lambda u: UserProfile.objects.get_or_create(user=u)[0]) 
 pre_update.connect(new_users_handler, sender=FacebookBackend)
 pre_update.connect(new_users_handler, sender=TwitterBackend)
+
+utils.register(UserWishRadio)

@@ -223,7 +223,8 @@
     <a id="follow-btn" href="{% follow_url blog_post %}" class="form-button form-button-follow form-button-small form-button-default form-button-left-icon form-button-icon-follow">Follow</a>
     <a class="form-button form-button-following form-button-small form-button-light-and-grey form-button-left-icon form-button-icon-following">Following</a>
     <a id="unfollow-btn" href="{% follow_url blog_post %}" class="form-button form-button-unfollow form-button-small form-button-red form-button-left-icon form-button-icon-unfollow">Unfollow</a>
-    <a id="vendorFollowers" href="{% vendor_follower_info_url blog_post %}">
+    {% vendor_follower_subset_info_url blog_post 0 request.user|follower_count:blog_post as subset_follower_url %}
+    <a id="vendorFollowers" href="{{subset_follower_url}}">
         {{  request.user|follower_count:blog_post }}
     </a>
 </div>

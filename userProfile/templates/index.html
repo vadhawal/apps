@@ -14,6 +14,7 @@
 <script src="{{ STATIC_URL }}js/jquery.jscrollpane.min.js"></script>
 <script src="{{ STATIC_URL }}js/jquery.mousewheel.js"></script>
 <script src="{{ STATIC_URL }}js/jquery.form.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/linkPreview.js" ></script> 
 {% endblock %}
 
 {% block extra_head %}
@@ -24,6 +25,7 @@ var sIndex = 0;
 var lIndex = 5;
 {% if request.user.is_authenticated %}
           $(document).ready(function() {
+		   $('.linkPreview').linkPreview();
 	       $('#blog-category').change(function(){
 		        var slug = $(this).find("option:selected").text();
                 $.get('/topReviews/category/'+slug, {}, function(data) {
@@ -55,7 +57,7 @@ var lIndex = 5;
                     alert("Posted Successfully"); 
                 }); */
             //});
-            $('#createwish').click(function() {
+            $('#text').click(function() {
                $(this).height(90);
             });
             $('#fakeselect').bind("click" , function () {
@@ -133,13 +135,15 @@ var lIndex = 5;
                 });
                 return false;
             });
+            
             $('#refreshCache').click();
-                viewFeed(); 
-                scrollalert();
-                updatestatus(); 
-                setInterval(function () {
-                    checkAnyLatestActivity();
-                }, 10000); 
+
+            viewFeed(); 
+            scrollalert();
+            updatestatus(); 
+            setInterval(function () {
+                checkAnyLatestActivity();
+            }, 10000); 
 
                 /*var element = $('.section-scroll').jScrollPane({
                     horizontalGutter:5,
@@ -260,11 +264,26 @@ function viewFeed()
             </ul>
         </select>
     {% endif %}
-    </br>
+    <div id="previewLoading"></div>
+    {% get_owned_blog request.user as blog %} 
+    {% if blog %} 
+        <input id="asyou" type="radio" name="actor" value="user" checked="checked" onclick="
+        $('#userwish').toggle();
+        $('#vendorwish').toggle();"
+        >As You
+        <input type="radio" name="actor" value="vendor" onclick="
+        $('#userwish').toggle();
+        $('#vendorwish').toggle();">As {{ blog }}<br><br>
+    {% else %}
+        <input id="asyou" style="display:none;" type="radio" name="actor" value="user" checked="checked"><br> 
+    {% endif %}
     <div style="border:1px solid #1769ff;">
-    <textarea class="boxsizingBorder" id="createwish" style="width:100%;height:50px;border: none;resize: none;" name="message" placeholder="Wish details..."></textarea>
-    <input style="display:none;" type="file" id="wishimage", name="wishimage" aria-label="Add photos to your post" >
-    <input id="fakeselect" type="button"  style="background-image: url({{STATIC_URL}}img/photo.ico); 
+        <textarea class="boxsizingBorder" id="text" style="width:100%;height:50px;border: none;resize: none;" name="message" placeholder="What's on your mind?"></textarea>
+    <!--textarea class="boxsizingBorder" id="createwish" style="width:100%;height:50px;border: none;resize: none;" name="message" placeholder="Wish details..."></textarea-->
+    <output id="previewimg"></output>
+    <div style="width:100%;margin-bottom:0px;" >
+        <input style="display:none;" type="file" id="wishimage", name="wishimage" aria-label="Add photos to your post" >
+        <input id="fakeselect" type="button"  style="background-image: url({{STATIC_URL}}img/photo.ico); 
                                                                     background-color: transparent;
                                                                     background-repeat: no-repeat;
                                                                     background-position: 0px 0px;
@@ -274,24 +293,31 @@ function viewFeed()
                                                                     width:36px;        
                                                                     padding-left: 16px;    
                                                                     vertical-align: middle;"/>
-    <output id="previewimg"></output>
+        <input id="submitwithouturl" class="postPreviewButton"  type="submit" value="{% trans "Post" %}" />
+        <input id="submitwithurl" class="postPreviewButton"  style="display:None;" type="button" value="{% trans "Post" %}" />
     </div>
-    </br>
-
-    {% get_owned_blog request.user as blog %} 
-    {% if blog %} 
-        <input id="asyou" type="radio" name="actor" value="user" checked="checked" onclick="
-        $('#userwish').toggle();
-        $('#vendorwish').toggle();"
-        >As You<br> 
-        <input type="radio" name="actor" value="vendor" onclick="
-        $('#userwish').toggle();
-        $('#vendorwish').toggle();">As {{ blog }}<br><br>
-    {% else %}
-        <input id="asyou" style="display:none;" type="radio" name="actor" value="user" checked="checked"><br> 
-    {% endif %}
-
-    <input type="submit" value="{% trans "Send" %}" class='btn btn-success'>
+        <input type="hidden" name="urlPreviewContent" id="urlPreviewContent" value="" />
+                <div id="preview">
+                    <div id="previewImages">
+                        <div id="previewImage"><img src='{{STATIC_URL}}img/loader.gif' style='margin-left: 43%; margin-top: 39%;' ></img></div>
+                        <input type="hidden" id="photoNumber" value="0" />
+                    </div>
+                    <div id="previewContent">
+                        <div id="closePreview" title="Remove" ></div>
+                        <div id="previewTitle"></div>
+                        <div id="previewUrl"></div>
+                        <div id="previewDescription"></div>
+                        <div id="hiddenDescription"></div>
+                        <div id="previewButtons" >
+                            <div id='previewPreviousImg' class="buttonLeftDeactive" ></div><div id='previewNextImg' class="buttonRightDeactive"  ></div>  <div class="photoNumbers" ></div> <div class="chooseThumbnail">Choose a thumbnail</div>
+                        </div>
+                        <input type="checkbox" id="noThumb" class="noThumbCb" />
+                        <div class="nT"  ><span id="noThumbDiv" >No thumbnail</span></div>
+                    </div>
+                    <div style="clear: both"></div>
+                </div>
+    <div class="previewPostedList"></div>
+    </div>
     </form>
 
     <div class="progress" style="display:None;position:relative;">

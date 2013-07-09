@@ -85,6 +85,9 @@ $(document).ready(function(){
 {% endif %}
 </a>
 <span id="wishlistitem{{forloop.counter|add:sIndex}}"> {% render_wish wish %} </span>
+        {% autoescape off %}
+            {{wish.urlPreviewContent}}
+        {% endautoescape %}
 {{wish.timestamp}}
         <a id="upwishlistitem{{forloop.counter|add:sIndex}}" href="/broadcast/{{ wish.id }}/up/vote/">
         <img src="{{ STATIC_URL }}img/like.png">
