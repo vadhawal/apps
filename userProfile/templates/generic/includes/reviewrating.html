@@ -4,13 +4,28 @@
 
 <div id="reviewrating-{{ reviewrating_object.id }}">
 	<p>
+	Total Ratings: {{overall_count}} <br/>
+	Excellent : {{overall_excellentR}} / {{overall_count}} <br/>
+	Very Good : {{overall_verygoodR}} / {{overall_count}} <br/>
+	Average : {{overall_averageR}} / {{overall_count}} <br/>
+	Poor : {{overall_poorR}} / {{overall_count}} <br/>
+	Terrible : {{overall_terribleR}} / {{overall_count}} <br/>
+    </p>
+	<p>
+    {% if overall_average %}
+    {% trans "Current Overall rating" %}: {{ overall_average|floatformat }}
+    {% else %}
+    {% trans "Currently unrated Overall" %}
+    {% endif %}
+    </p>
+	<p>
     {% if price_average %}
     {% trans "Current Price rating" %}: {{ price_average|floatformat }}
     {% else %}
     {% trans "Currently unrated on Price" %}
     {% endif %}
     </p>
-    	<p>
+    <p>
     {% if variety_average %}
     {% trans "Current Variety rating" %}: {{ variety_average|floatformat }}
     {% else %}
