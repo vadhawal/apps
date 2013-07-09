@@ -80,7 +80,9 @@
 					$('#previewButtons').hide();
 					$('#previewLoading').html("<img src='http://leocardz.com/img/littleLoader.gif' ></img>");
 					$('#photoNumber').val(0);
-					$.get('textCrawler.php', {text: text}, function(answer) {
+					$.get('php/textCrawler.php', {text: text}, function(answer) {
+						$('#submitwithurl').show();
+						$('#submitwithouturl').hide();
 						if(answer.url == null) answer.url = "";
 						if(answer.pageUrl == null) answer.pageUrl = "";
 						if(answer.title == null) answer.title = answer.titleEsc;
@@ -279,7 +281,7 @@
 						endOfCrawling = true;
 						if(firstPosting == false){
 							firstPosting = true;
-							$('#postPreview').click(function(){
+							$('#submitwithurl').click(function(){
 								var allowPosting = false;
 								imageId = "";
 								pTP = "";
@@ -292,7 +294,7 @@
 									allowPosting = true;
 								}
 								if((trim(text) != "" && endOfCrawling == true) || allowPosting == true){
-									$.get('searchUrls.php', {text: text, description: description}, function(urls) {
+									$.get('php/searchUrls.php', {text: text, description: description}, function(urls) {
 										if($('#noThumb').attr("checked") == "checked" || images.length == 0){
 											contentWidth = 495;
 											leftSideContent = "";
@@ -315,7 +317,7 @@
 											}
 										}
 										content = '<div class="previewPosted">'+
-														'<div class="previewTextPosted">'+urls.urls+'</div>'+
+														//'<div class="previewTextPosted">'+urls.urls+'</div>'+
 														videoIframe+
 														'<div class="previewImagesPosted">'+
 															'<div class="previewImagePosted">'+leftSideContent+'</div>'+
@@ -327,7 +329,8 @@
 														'</div>'+
 														'<div style="clear: both"></div>'+
 													'</div>';
-										
+										$('input[name=urlPreviewContent]').val(content);
+										$('#broadcast').submit();
 										$('#preview').fadeOut("fast", function(){
 											$('#text').css({"border": "1px solid #b3b3b3", "border-bottom": "1px solid #e6e6e6"});
 											$('#text').val("");
@@ -335,7 +338,8 @@
 											$('#previewTitle').html("");
 											$('#previewUrl').html("");
 											$('#previewDescription').html("");
-											$(content).hide().prependTo('.previewPostedList').fadeIn("fast");
+											//$(content).hide().prependTo('.previewPostedList').fadeIn("fast");
+
 											$(".imgIframe").click(function(){
 												var oldId = $(this).attr("id");
 												var currentId = oldId.substring(3);
