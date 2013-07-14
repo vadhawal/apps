@@ -57,7 +57,6 @@
 }
 .buttonLeftActive{
 	background-image: url('../img/selectionButtons.gif');
-	background-repeat: no-repeat;
 	background-position: 0 -83px;
 	width: 25px;
 	height: 22px;
@@ -66,7 +65,6 @@
 }
 .buttonRightActive{
 	background-image: url('../img/selectionButtons.gif');
-	background-repeat: no-repeat;
 	width: 25px;
 	height: 22px;
 	margin-right: 10px;
