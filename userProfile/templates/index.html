@@ -27,7 +27,7 @@ $(document).ready(function() {
 			$('#getvendors').click(function(){
 				var parent_category_slug = $('#blog_parentcategories').find("option:selected").text();
 				var sub_category_slug = $('#blog_subcategories').find("option:selected").text();
-				var url = "/getvendors/?pc="+parent_category_slug+"&sc="+sub_category_slug;
+                var url = "/getvendors/"+parent_category_slug+"/"+sub_category_slug+"/";
 				document.location.href = url;
 			});
             $('#blog_parentcategories').change(function(){

@@ -52,13 +52,13 @@ $(document).ready(function() {
         {% endif %}
         </a>
     {% endif %}
-    <a href="{% url "logout" %}?next={{ request.path }}"
+    <a href="{% url "logout" %}?next={{ request.get_full_path }}"
         class="btn btn-small btn-danger btn-account">{% trans "Log out" %}</a>
 {% else %}
-    <a href="{% url "login" %}?next={{ request.path }}"
+    <a href="{% url "login" %}?next={{ request.get_full_path }}"
         class="btn btn-small btn-account btn-success">{% trans " Log in" %}</a>
     <a id="fblogin" href="{% url "socialauth_begin" "facebook" %}"><img src="{{ STATIC_URL }}img/fb_login.png"> </a>
     <a id="twitterlogin" href="{% url "socialauth_begin" "twitter" %}" ><img src="{{ STATIC_URL }}img/twitter.png"></a></br>
-    <a href="{% url "signup" %}?next={{ request.path }}"
+    <a href="{% url "signup" %}?next={{ request.get_full_path }}"
         class="btn btn-small btn-account btn-success">{% trans "Sign up" %}</a>
 {% endif %}
