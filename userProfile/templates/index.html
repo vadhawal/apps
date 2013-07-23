@@ -23,6 +23,27 @@
 <script type="text/javascript">
 var sIndex = 0;
 var lIndex = 5;
+$(document).ready(function() {
+			$('#getvendors').click(function(){
+				var parent_category_slug = $('#blog_parentcategories').find("option:selected").text();
+				var sub_category_slug = $('#blog_subcategories').find("option:selected").text();
+				var url = "/getvendors/?pc="+parent_category_slug+"&sc="+sub_category_slug;
+				document.location.href = url;
+			});
+            $('#blog_parentcategories').change(function(){
+                var slug = $(this).find("option:selected").text();
+                $.get('/subcategories/'+slug, {}, function(data) {
+                    $('#blog_subcategories').empty();
+                    var objJSON = eval("(function(){return " + data + ";})()");
+                    for(var i=0;i<objJSON.length;i++)
+                    {
+                        var option = '<option value="'+i+'">'+objJSON[i]+'</option>';
+                        $('#blog_subcategories').append(option);
+
+                    }
+                });             
+            });
+});
 {% if request.user.is_authenticated %}
           $(document).ready(function() {
 		   $('.linkPreview').linkPreview();
@@ -248,6 +269,32 @@ function viewFeed()
 
 {% block main %}
 <div class="row">
+    {% csrf_token %}
+    {{form.as_p}}
+    {% blog_parentcategories_abs as parent_categories %}
+    {% if parent_categories %}
+        <select id="blog_parentcategories" name="blog_parentcategories">
+            <ul class="unstyled">
+                {% for category in parent_categories %}
+                    <option value="{{ category }}">{{ category }}</option>
+                {% endfor %}
+            </ul>
+        </select>
+    {% endif %}
+    {% with parent_categories|first as first_parent_category %}
+    	{% blog_subcategories first_parent_category as sub_categories %}
+    	{% if sub_categories %}
+         	<select id="blog_subcategories" name="blog_subcategories">
+           		<ul class="unstyled">
+                	{% for category in sub_categories %}
+                    	<option value="{{ category }}">{{ category }}</option>
+                	{% endfor %}
+            	</ul>
+       		</select>   	
+    	{% endif %}
+    {% endwith %}
+    <a id="getvendors" href="#" class="postPreviewButton"  type="button"> {% trans "Go" %} </a>
+
 {% if request.user.is_authenticated %}
     <form id="broadcast" action="/userwish/" method="post" class='album-form' enctype="multipart/form-data">
     {% csrf_token %}
