@@ -147,6 +147,7 @@ class UserWishRadio(Broadcast):
         if self.blog_category:
             message += " " + self.blog_category.slug
         message += " "+self.message
+        return message
 
     def get_absolute_url(self):
         return ('view_wish', [self.id])
