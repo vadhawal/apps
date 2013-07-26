@@ -1,12 +1,15 @@
 .search-result {
 	background-color: #fff;
+	padding: 
 }
 
 .rank {
 	background-color: orange;
 	border-radius: 50% 50%;
 	text-align: center;
-	width: 20px;
+	width: 30px;
+	height: 30px;
+	line-height: 30px;
 }
 
 .vendorName {
@@ -81,5 +84,9 @@
 }
 
 .dotted {
-	border: 1px dotted #ff0000; border-style: none none dotted; color: #fff; background-color: #fff; margin-top: 5px;
+	border: 1px dotted #ff0000; border-style: none none dotted; color: #fff; background-color: #fff;margin-bottom: 15px; width: 95%;margin-left: 2.5%;
+}
+
+.vendorInfo {
+	margin-bottom: 5px;
 }
