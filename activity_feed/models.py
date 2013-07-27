@@ -16,22 +16,22 @@ def comment_action(sender, comment=None, target=None, **kwargs):
             	target=comment.content_object)
         elif isinstance(comment.content_object, ThreadedComment):
         	action.send(comment.user, verb=u'has commented on review', action_object=comment, 
-            	target=comment.content_object)
+            	target=comment.content_object, batch_time_minutes=30, is_batchable=True)
         elif isinstance(comment.content_object, Album):
         	action.send(comment.user, verb=u'has commented on the album', action_object=comment, 
-            	target=comment.content_object)
+            	target=comment.content_object, batch_time_minutes=30, is_batchable=True)
         elif isinstance(comment.content_object, Image):
             action.send(comment.user, verb=u'has commented on the image', action_object=comment, 
-                target=comment.content_object)
+                target=comment.content_object, batch_time_minutes=30, is_batchable=True)
         elif isinstance(comment.content_object, UserWishRadio):
             obj = comment.content_object
             owner = obj.content_type.get_object_for_this_type(pk=obj.object_id)
             if isinstance(owner, BlogPost):
                 action.send(comment.user, verb=u'has commented on the deal', action_object=comment, 
-                    target=comment.content_object)
+                    target=comment.content_object, batch_time_minutes=30, is_batchable=True)
             elif isinstance(owner, User):
                 action.send(comment.user, verb=u'has commented on the wish', action_object=comment, 
-                    target=comment.content_object)
+                    target=comment.content_object, batch_time_minutes=30, is_batchable=True)
             else:
                 """
                 Do Nothing
