@@ -51,7 +51,7 @@ def userwish(request):
 	if request.method == "POST":
 		blog_category = None
 		if BlogCategory.objects.all().exists():
-			blog_category = get_object_or_404(BlogCategory, slug=slugify(_(request.POST['blog_category'])))
+			blog_category = get_object_or_404(BlogCategory, slug=slugify(_(request.POST['radio_category'])))
 		wishimgeobj = None
 		if 'wishimage' in request.FILES:
 			wishimgeobj = request.FILES['wishimage']

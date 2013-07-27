@@ -82,7 +82,7 @@
 	font-style: italic;
 }
 
-.dotted {
+.dottedSeparator {
 	border: 1px dotted #ff0000; border-style: none none dotted; color: #fff; background-color: #fff;margin-bottom: 15px; width: 95%;margin-left: 2.5%;
 }
 
