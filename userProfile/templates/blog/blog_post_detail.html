@@ -2,6 +2,7 @@
 {% load mezzanine_tags comment_tags keyword_tags rating_tags reviewrating_tags i18n future disqus_tags %}
 {% load follow_tags %}
 {% load userProfile_tags %}
+{% load hitcount_tags %}
 {% block meta_title %}{{ blog_post.meta_title }}{% endblock %}
 
 {% block meta_keywords %}{% metablock %}
@@ -53,6 +54,8 @@
             });     
     });    
     $(document).ready(function() {
+            {% get_hit_count_javascript for blog_post %}
+
             var getDealList = function(){
                 {% if request.user.is_authenticated %}
                     $('#load-deals').html("");
@@ -228,6 +231,10 @@
         {{  request.user|follower_count:blog_post }}
     </a>
 </div>
+<span class="cover-stat cover-stat-views">
+      <span class="stat-label be-font-inline">G</span>
+      <span class="stat-value">{% get_hit_count for blog_post %}</span>
+</span>
 {% endblock %}
 
 <div>
