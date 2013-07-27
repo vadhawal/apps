@@ -28,8 +28,11 @@ var sIndex = 0;
 var lIndex = 5;
 $(document).ready(function() {
             {% if request.user.is_authenticated %}
-            {% else %}
-            $("#radio-category").mcDropdown("#radioCategory");
+                  {% get_owned_blog request.user as blog %} 
+                  {% if blog %}
+                  {% else %}
+                    $("#radio-category").mcDropdown("#radioCategory");
+                  {% endif %}
             {% endif %}
                   
 			$('#getvendors').click(function(){
