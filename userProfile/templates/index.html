@@ -401,68 +401,61 @@ function viewFeed()
 {% endif %}
 </div>
 <div class="row">
-    {% blog_parentcategories_abs as parent_categories %}
-    {% if parent_categories %}
-    <select id="blog_parentcategories" name="blog_parentcategories">
-        <ul class="unstyled">
-            {% for category in parent_categories %}
-            <option value="{{ category }}">{{ category }}</option>
-            {% endfor %}
-        </ul>
-    </select>
-    {% endif %}
-    {% with parent_categories|first as first_parent_category %}
-    {% if first_parent_category %}
-    {% blog_subcategories first_parent_category as sub_categories %}
-    {% if sub_categories %}
-    <select id="blog_subcategories" name="blog_subcategories">
-        <ul class="unstyled">
-            {% for category in sub_categories %}
-            <option value="{{ category }}">{{ category }}</option>
-            {% endfor %}
-        </ul>
-    </select>	
-    {% endif %}
-    {% endif %}
-    {% endwith %}
-    {% if parent_categories %}
-    <a id="getvendors" href="#" class="postPreviewButton"  type="button"> {% trans "Go" %} </a>   
-    {% endif %}
-</div>
-<div class="row" style="border: 1px solid #d4d4d4;">
-{% recent_reviews %}
-</div>
-<div class="row">
-        <h1>Recent Deals</h1>
-        <div class="section-scroll" style="border-style:solid;border-width:medium;border-color:#00A3EF;">
-            <div id="load-wish" class="content">
-                {% recent_deals %}
-            </div>
-        </div>
-        <span id="wish-status" ></span>
-</div>
-
-<div class="row">
-        <h1>Top Reviews for selected category</h1>
-        <div class="section-scroll" style="border-style:solid;border-width:medium;border-color:#00A3EF;">
-            <div id="topReviewsForStoreCategory" class="content">
-            </div>
-        </div>
+    <div class="span9">
+        {% blog_parentcategories_abs as parent_categories %}
+        {% if parent_categories %}
+        <select id="blog_parentcategories" name="blog_parentcategories">
+            <ul class="unstyled">
+                {% for category in parent_categories %}
+                <option value="{{ category }}">{{ category }}</option>
+                {% endfor %}
+            </ul>
+        </select>
+        {% endif %}
+        {% with parent_categories|first as first_parent_category %}
+        {% if first_parent_category %}
+        {% blog_subcategories first_parent_category as sub_categories %}
+        {% if sub_categories %}
+        <select id="blog_subcategories" name="blog_subcategories">
+            <ul class="unstyled">
+                {% for category in sub_categories %}
+                <option value="{{ category }}">{{ category }}</option>
+                {% endfor %}
+            </ul>
+        </select>	
+        {% endif %}
+        {% endif %}
+        {% endwith %}
+        {% if parent_categories %}
+        <a id="getvendors" href="#" class="postPreviewButton"  type="button"> {% trans "Go" %} </a>   
+        {% endif %}
+    </div>
 </div>
 <div class="row">
-        <h1>Top Stores for selected category</h1>
+    <div class="span5">
+        <h6>Top Stores for selected category</h6>
         <div class="section-scroll" style="border-style:solid;border-width:medium;border-color:#00A3EF;">
             <div id="topStoresForStoreCategory" class="content">
             </div>
         </div>
+    </div>
+    <div class="span4">
+            <h6>Top Reviews for selected category</h6>
+            <div class="section-scroll" style="border-style:solid;border-width:medium;border-color:#00A3EF;">
+                <div id="topReviewsForStoreCategory" class="content">
+                </div>
+            </div>
+    </div>
 </div>
 <div class="row">
-        <h1>Top Deals for selected category</h1>
+    <div class="span9">
+        <h6>Top Deals for selected category</h6>
         <div class="section-scroll" style="border-style:solid;border-width:medium;border-color:#00A3EF;">
             <div id="topDealsForStoreCategory" class="content">
             </div>
         </div>
         <span id="wish-status" ></span>
+    </div>
 </div>
 {% endblock %}
 
