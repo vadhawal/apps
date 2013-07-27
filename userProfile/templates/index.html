@@ -60,13 +60,12 @@ $(document).ready(function() {
         var slug = $(this).find("option:selected").text();
         $.get('/' + slug + '/subcategories', {}, function(data) {
             var $subCSelect = $('#blog_subcategories');
-            $subCSelect.empty();
+            $('#blog_subcategories').empty();
             var objJSON = eval("(function(){return " + data + ";})()");
             for(var i=0;i<objJSON.length;i++) {
-                var option = '<option value="'+i+'">'+objJSON[i]+'</option>';
-                $subCSelect.append(option);
+                var option = '<option value="'+objJSON[i]+'">'+objJSON[i]+'</option>';
+                $('#blog_subcategories').append(option);
             }
-            $subCSelect.val(0);
         });             
     });
 });
@@ -293,7 +292,7 @@ function viewFeed()
     {% if blog %}
         {% blog_subcategories_for_blog blog as sub_categories_blog %}
         {% if sub_categories_blog %}
-            <select id="blog_subcategories" name="radio_category">
+            <select id="sub_categories_blog" name="radio_category">
                 <ul class="unstyled">
                     {% for blog_category in sub_categories_blog %}
                     <option value="{{ blog_category }}">{{ blog_category }}</option>
@@ -302,13 +301,9 @@ function viewFeed()
             </select>
         {% endif %}
         
-        <input id="asyou" type="radio" name="actor" value="user" checked="checked" onclick="
-        $('#userwish').toggle();
-        $('#vendorwish').toggle();">As You
-        <input type="radio" name="actor" value="vendor" onclick="
-        $('#userwish').toggle();
-        $('#vendorwish').toggle();">As {{ blog }}<br><br>
-{% else %}
+        <input id="asyou" type="radio" name="actor" value="user" checked="checked" onclick="$('#userwish').toggle();$('#vendorwish').toggle();">As You
+        <input type="radio" name="actor" value="vendor" onclick="$('#userwish').toggle();$('#vendorwish').toggle();">As {{ blog }}<br><br>
+    {% else %}
         <input id="radio-category" name="radio_category">
         {% blog_parentcategories_abs as parent_categories %}
         {% if parent_categories %}
