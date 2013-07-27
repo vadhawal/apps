@@ -27,51 +27,48 @@
 var sIndex = 0;
 var lIndex = 5;
 $(document).ready(function() {
-            {% if request.user.is_authenticated %}
-                  {% get_owned_blog request.user as blog %} 
-                  {% if blog %}
-                  {% else %}
-                    $("#radio-category").mcDropdown("#radioCategory");
-                  {% endif %}
-            {% endif %}
-                  
-			$('#getvendors').click(function(){
-				var parent_category_slug = $('#blog_parentcategories').find("option:selected").text();
-				var sub_category_slug = $('#blog_subcategories').find("option:selected").text();
-                if(parent_category_slug && sub_category_slug)
-                    var url = "/getvendors/"+parent_category_slug+"/"+sub_category_slug+"/";
-                else if(parent_category_slug && !sub_category_slug)
-                    var url = "/getvendors/"+parent_category_slug+"/all/";
-				document.location.href = url;
-			});
-            $('#blog_parentcategories').change(function(){
-                var slug = $(this).find("option:selected").text();
-                $.get('/' + slug + '/subcategories', {}, function(data) {
-                    var $subCSelect = $('#blog_subcategories');
-                    $subCSelect.empty();
-                    var objJSON = eval("(function(){return " + data + ";})()");
-                    for(var i=0;i<objJSON.length;i++) {
-                        var option = '<option value="'+i+'">'+objJSON[i]+'</option>';
-                        $subCSelect.append(option);
-                    }
-                    $subCSelect.val(0);
-                    $subCSelect.change();
-                });             
-            });
-            $('#blog_subcategories').change(function(){
-                var slug = $(this).find("option:selected").text();
-                $.get('/topReviews/category/'+slug, {}, function(data) {
-                        $('#topReviewsForStoreCategory').html(data);
-                    });
-                $.get('/topStores/category/'+slug, {}, function(data) {
-                        $('#topStoresForStoreCategory').html(data);
-                    });    
-                $.get('/topDeals/category/'+slug, {}, function(data) {
-                        $('#topDealsForStoreCategory').html(data);
-                    });
-                  
-                return false
-            });
+    {% if request.user.is_authenticated %}
+          {% get_owned_blog request.user as blog %} 
+          {% if blog %}
+          {% else %}
+            $("#radio-category").mcDropdown("#radioCategory");
+          {% endif %}
+    {% endif %}
+    $('#updateTrends').click(function(){
+         var slug = $('#blog_subcategories').find("option:selected").text();
+         $.get('/topReviews/category/'+slug, {}, function(data) {
+               $('#topReviewsForStoreCategory').html(data);
+               });
+         $.get('/topStores/category/'+slug, {}, function(data) {
+               $('#topStoresForStoreCategory').html(data);
+               });    
+         $.get('/topDeals/category/'+slug, {}, function(data) {
+               $('#topDealsForStoreCategory').html(data);
+               });
+        return false;
+    });
+    $('#getvendors').click(function(){
+        var parent_category_slug = $('#blog_parentcategories').find("option:selected").text();
+        var sub_category_slug = $('#blog_subcategories').find("option:selected").text();
+        if(parent_category_slug && sub_category_slug)
+            var url = "/getvendors/"+parent_category_slug+"/"+sub_category_slug+"/";
+        else if(parent_category_slug && !sub_category_slug)
+            var url = "/getvendors/"+parent_category_slug+"/all/";
+        document.location.href = url;
+    });
+    $('#blog_parentcategories').change(function(){
+        var slug = $(this).find("option:selected").text();
+        $.get('/' + slug + '/subcategories', {}, function(data) {
+            var $subCSelect = $('#blog_subcategories');
+            $subCSelect.empty();
+            var objJSON = eval("(function(){return " + data + ";})()");
+            for(var i=0;i<objJSON.length;i++) {
+                var option = '<option value="'+i+'">'+objJSON[i]+'</option>';
+                $subCSelect.append(option);
+            }
+            $subCSelect.val(0);
+        });             
+    });
 });
 {% if request.user.is_authenticated %}
           $(document).ready(function() {
@@ -430,7 +427,8 @@ function viewFeed()
         {% endif %}
         {% endwith %}
         {% if parent_categories %}
-        <a id="getvendors" href="#" class="postPreviewButton"  type="button"> {% trans "Go" %} </a>   
+        <a id="updateTrends" href="#" class="postPreviewButton"  type="button"> {% trans "Update Trends" %} </a>   
+        <a id="getvendors" href="#" class="postPreviewButton"  type="button"> {% trans "Search" %} </a>   
         {% endif %}
     </div>
 </div>
