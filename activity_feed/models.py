@@ -11,9 +11,11 @@ from follow.models import Follow
 
 def comment_action(sender, comment=None, target=None, **kwargs):
     if comment.user:
-    	if isinstance(comment.content_object, BlogPost):
-        	action.send(comment.user, verb=u'has posted a review on', action_object=comment, 
-            	target=comment.content_object)
+        if isinstance(comment.content_object, BlogPost):
+            action.send(comment.user, verb=u'has posted a review on', action_object=comment, 
+                target=comment.content_object)
+            Follow.objects.get_or_create(comment.user, comment)
+            actions.follow(comment.user, comment, send_action=False, actor_only=False) 
         elif isinstance(comment.content_object, ThreadedComment):
         	action.send(comment.user, verb=u'has commented on review', action_object=comment, 
             	target=comment.content_object, batch_time_minutes=30, is_batchable=True)
@@ -38,4 +40,5 @@ def comment_action(sender, comment=None, target=None, **kwargs):
                 """
             Follow.objects.get_or_create(comment.user, comment.content_object)
             actions.follow(comment.user, comment.content_object, send_action=False, actor_only=False) 
+
 comment_was_posted.connect(comment_action)
