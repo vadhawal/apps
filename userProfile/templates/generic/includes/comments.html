@@ -1,4 +1,6 @@
 {% load i18n mezzanine_tags comment_tags %}
+{% load thumbnail %}
+
 <div id="comments">
 {% if settings.COMMENTS_DISQUS_SHORTNAME %}
 {% include "generic/includes/disqus_comments.html" %}
@@ -11,12 +13,23 @@ $(function() {
     });
 });
 </script>
-<style>.input_id_honeypot {display:none !important;}</style>
+<style>.input_id_honeypot {display:none !important;}
+.comment_on_review{
+    resize: none; 
+    height: 40px;
+    width:  580px;
+    background-color: #f5f5f5;
+    box-shadow: 1px 1px 0 #DDDDDD;
+}
+</style>
 {% if object_for_comments|get_class_name != "Album" and object_for_comments|get_class_name != "Image" and object_for_comments|get_class_name != "UserWishRadio" %}
 {% comment_thread object_for_comments %}
 {% endif %}
         {% if request.user.get_profile.profile_photo %}
-            <img style="margin-right:20px;" src="{{ request.user.get_profile.profile_photo.url }}">
+                {% thumbnail request.user.get_profile.profile_photo  "60x60" as img %} 
+                    <img style="margin-right:20px;" src="{{ MEDIA_URL }}{{img}}">
+                {% endthumbnail %}
+            <!--img style="margin-right:20px;" src="{{ request.user.get_profile.profile_photo.url }}"-->
         {% elif request.user.get_profile.image_url %}
             <img style="margin-right:20px;" src="{{ request.user.get_profile.image_url }}"> 
         {% else %}
@@ -29,9 +42,9 @@ $(function() {
     {% else %}
         {% fields_for unposted_comment_form %}
     {% endif %}
-    <div class="form-actions">     
+    <!--div class="form-actions"-->     
        <input class="btn" type="submit" value="{% trans "Comment" %}">
-    </div>
+    <!--/div-->
 </form>
 {% endif %}
 </div>

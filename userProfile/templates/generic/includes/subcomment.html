@@ -1,7 +1,7 @@
 {% load i18n mezzanine_tags comment_tags rating_tags %}
 {% load mezzanine_tags i18n future %}
 {% load voting_tags %}
-
+{% load thumbnail %}
 <ul class="unstyled">
     {% for comment in comments_for_thread %}
 
@@ -16,7 +16,10 @@
             {% if comment.url %}
             <a href="{{ profile_url }}">
                 {% if comment.user.get_profile.profile_photo %}
-                <img src="{{ comment.user.get_profile.profile_photo.url }}">
+                  {% thumbnail comment.user.get_profile.profile_photo "60x60" as img %} 
+                    <img style="margin-right:20px;" src="{{ MEDIA_URL }}{{img}}">
+                  {% endthumbnail %}
+                <!--img src="{{ comment.user.get_profile.profile_photo.url }}"-->
                 {% elif comment.user.get_profile.image_url %}
                 <img src="{{ comment.user.get_profile.image_url }}">
                 {% else %}
@@ -25,9 +28,12 @@
             </a>    
             {{ comment.user_name }} bought a {{comment.bought_category}}
             {% else %}
-            <a href="{{ profile_url }}" %}">
+            <a href="{{ profile_url }}">
             {% if comment.user.get_profile.profile_photo %}
-            <img src="{{ comment.user.get_profile.profile_photo.url }}">
+                {% thumbnail comment.user.get_profile.profile_photo "60x60" as img %} 
+                    <img style="margin-right:20px;" src="{{ MEDIA_URL }}{{img}}">
+                {% endthumbnail %}
+            <!--img src="{{ comment.user.get_profile.profile_photo.url }}"-->
             {% elif comment.user.get_profile.image_url %}
             <img src="{{ comment.user.get_profile.image_url }}">
             {% else %}
