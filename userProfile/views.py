@@ -154,7 +154,7 @@ def unfollowWish(request, wish_id):
 	return HttpResponse('ok')
 
 def getTrendingReviews(request, parent_category, sub_category):
-	import operator
+
 	if request.method == "GET" and request.is_ajax():
 		latest = settings.REVIEWS_NUM_LATEST
 		blog_parentcategory = None
@@ -169,20 +169,20 @@ def getTrendingReviews(request, parent_category, sub_category):
 			blog_subcategory = get_object_or_404(BlogCategory, slug=slugify(blog_subcategory_slug))
 
 		if blog_parentcategory_slug.lower() == "all" and blog_subcategory_slug.lower() == "all":
-			reviews = Review.objects.all()[:latest]
+			reviews = Review.objects.all().order_by('-submit_date')[:latest]
 		elif blog_parentcategory_slug.lower() != "all" and blog_subcategory_slug.lower() == "all":
 			if blog_parentcategory:
 				blog_subcategories = BlogCategory.objects.all().filter(parent_category=blog_parentcategory)
-				reviews = Review.objects.all().filter(bought_category__in=blog_subcategories)[:latest]
+				reviews = Review.objects.all().filter(bought_category__in=blog_subcategories).order_by('-submit_date')[:latest]
 		else:
 			if blog_subcategory and blog_parentcategory:
-				reviews = Review.objects.all().filter(bought_category=blog_subcategory)[:latest]
+				reviews = Review.objects.all().filter(bought_category=blog_subcategory).order_by('-submit_date')[:latest]
 			else:
 				"""
 					raise 404 error, in case categories are not present.
 				"""
 				raise Http404()
-		reviews = sorted(reviews, key=operator.attrgetter('submit_date'), reverse=True)
+
 		return render_to_response('generic/top_reviews.html', {
 				'comments': reviews
 			}, context_instance=RequestContext(request))
@@ -190,7 +190,6 @@ def getTrendingReviews(request, parent_category, sub_category):
 		raise Http404()
 
 def getTrendingDeals(request, parent_category, sub_category):
-	import operator
 	if request.method == "GET" and request.is_ajax():
 		ctype = ContentType.objects.get_for_model(BlogPost)
 		latest = settings.REVIEWS_NUM_LATEST
@@ -208,33 +207,29 @@ def getTrendingDeals(request, parent_category, sub_category):
 			blog_subcategory = get_object_or_404(BlogCategory, slug=slugify(blog_subcategory_slug))
 
 		if blog_parentcategory_slug.lower() == "all" and blog_subcategory_slug.lower() == "all":
-			deals_queryset = UserWishRadio.objects.all().filter(content_type=ctype)[:latest]
+			deals_queryset = UserWishRadio.objects.all().filter(content_type=ctype).order_by('-timestamp')[:latest]
 		elif blog_parentcategory_slug.lower() != "all" and blog_subcategory_slug.lower() == "all":
 			if blog_parentcategory:
 				blog_subcategories = BlogCategory.objects.all().filter(parent_category=blog_parentcategory)
-				deals_queryset = UserWishRadio.objects.all().filter(content_type=ctype, blog_category__in=blog_subcategories).distinct()[:latest]
+				deals_queryset = UserWishRadio.objects.all().filter(content_type=ctype, blog_category__in=blog_subcategories).order_by('-timestamp').distinct()[:latest]
 		else:
 			if blog_subcategory and blog_parentcategory:
-				deals_queryset = UserWishRadio.objects.all().filter(blog_category=blog_subcategory)[:latest]
+				deals_queryset = UserWishRadio.objects.all().filter(blog_category=blog_subcategory).order_by('-timestamp')[:latest]
 			else:
 				"""
 					raise 404 error, in case categories are not present.
 				"""
 				raise Http404()
-	
-		deals_queryset = sorted(deals_queryset, key=operator.attrgetter('timestamp'), reverse=True)
-		for deal in deals_queryset:
-			deals.append(deal)
 
 		return render_to_response('generic/wishlist.html', {
-					'wish_list': deals,
+					'wish_list': deals_queryset,
 					'sIndex':0
 				}, context_instance=RequestContext(request))
 	else:
 		raise Http404()
 
 def getTrendingStores(request, parent_category, sub_category):
-	#if request.method == "GET" and request.is_ajax():
+	if request.method == "GET" and request.is_ajax():
 		latest = settings.REVIEWS_NUM_LATEST
 		blog_parentcategory = None
 		result = None
@@ -269,5 +264,5 @@ def getTrendingStores(request, parent_category, sub_category):
 		return render_to_response('generic/vendor_list.html', {
 				'vendors': result
 			}, context_instance=RequestContext(request))
-	#else:
-	#	raise Http404()
+	else:
+		raise Http404()
