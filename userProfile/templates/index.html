@@ -35,14 +35,15 @@ $(document).ready(function() {
           {% endif %}
     {% endif %}
     $('#updateTrends').click(function(){
-         var slug = $('#blog_subcategories').find("option:selected").text();
-         $.get('/topReviews/category/'+slug, {}, function(data) {
+        var parent_category = $('#blog_parentcategories').find("option:selected").text()
+        var sub_category = $('#blog_subcategories').find("option:selected").text();
+        $.get('/' + parent_category + '/'+ sub_category + '/trendingreviews', {}, function(data) {
                $('#topReviewsForStoreCategory').html(data);
                });
-         $.get('/topStores/category/'+slug, {}, function(data) {
+        $.get('/' + parent_category + '/'+ sub_category + '/trendingstores', {}, function(data) {
                $('#topStoresForStoreCategory').html(data);
                });    
-         $.get('/topDeals/category/'+slug, {}, function(data) {
+        $.get('/' + parent_category + '/'+ sub_category + '/trendingdeals', {}, function(data) {
                $('#topDealsForStoreCategory').html(data);
                });
         return false;
@@ -402,6 +403,7 @@ function viewFeed()
         {% if parent_categories %}
         <select id="blog_parentcategories" name="blog_parentcategories">
             <ul class="unstyled">
+                <option value="all">{% trans "All" %}</option>
                 {% for category in parent_categories %}
                 <option value="{{ category }}">{{ category }}</option>
                 {% endfor %}
@@ -414,6 +416,7 @@ function viewFeed()
         {% if sub_categories %}
         <select id="blog_subcategories" name="blog_subcategories">
             <ul class="unstyled">
+                <option value="all">{% trans "All" %}</option>
                 {% for category in sub_categories %}
                 <option value="{{ category }}">{{ category }}</option>
                 {% endfor %}
