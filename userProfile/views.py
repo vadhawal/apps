@@ -234,7 +234,7 @@ def getTrendingDeals(request, parent_category, sub_category):
 		raise Http404()
 
 def getTrendingStores(request, parent_category, sub_category):
-	if request.method == "GET" and request.is_ajax():
+	#if request.method == "GET" and request.is_ajax():
 		latest = settings.REVIEWS_NUM_LATEST
 		blog_parentcategory = None
 		result = None
@@ -252,14 +252,14 @@ def getTrendingStores(request, parent_category, sub_category):
 			blog_subcategory = get_object_or_404(BlogCategory, slug=slugify(blog_subcategory_slug))
 
 		if blog_parentcategory_slug.lower() == "all" and blog_subcategory_slug.lower() == "all":
-			result = BlogPost.objects.published().order_by('-overall_average')[:latest]
+			result = BlogPost.objects.published().extra(select={'fieldsum':'price_average + variety_average + quality_average + service_average + exchange_average + overall_average'},order_by=('-fieldsum',))[:latest]
 		elif blog_parentcategory_slug.lower() != "all" and blog_subcategory_slug.lower() == "all":
 			if blog_parentcategory:
 				blog_subcategories = BlogCategory.objects.all().filter(parent_category=blog_parentcategory)
-				result = BlogPost.objects.published().filter(categories__in=blog_subcategories).distinct().order_by('-overall_average')[:latest]
+				result = BlogPost.objects.published().filter(categories__in=blog_subcategories).extra(select={'fieldsum':'price_average + variety_average + quality_average + service_average + exchange_average + overall_average'},order_by=('-fieldsum',)).distinct()[:latest]
 		else:
 			if blog_subcategory and blog_parentcategory:
-				result = BlogPost.objects.published().filter(categories=blog_subcategory).order_by('-overall_average')[:latest]
+				result = BlogPost.objects.published().filter(categories=blog_subcategory).extra(select={'fieldsum':'price_average + variety_average + quality_average + service_average + exchange_average + overall_average'},order_by=('-fieldsum',))[:latest]
 			else:
 				"""
 					raise 404 error, in case categories are not present.
@@ -269,5 +269,5 @@ def getTrendingStores(request, parent_category, sub_category):
 		return render_to_response('generic/vendor_list.html', {
 				'vendors': result
 			}, context_instance=RequestContext(request))
-	else:
-		raise Http404()
+	#else:
+	#	raise Http404()
