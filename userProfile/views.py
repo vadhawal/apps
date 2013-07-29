@@ -10,7 +10,7 @@ from django.template.defaultfilters import slugify
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
-from mezzanine.blog.models import BlogPost, BlogCategory
+from mezzanine.blog.models import BlogPost, BlogCategory, BlogParentCategory
 from mezzanine.generic.models import Review
 
 from userProfile.models import UserWishRadio
@@ -50,8 +50,11 @@ def broadcast(request):
 def userwish(request):
 	if request.method == "POST":
 		blog_category = None
+		blog_parentcategory = None
 		if BlogCategory.objects.all().exists():
 			blog_category = get_object_or_404(BlogCategory, slug=slugify(_(request.POST['radio_category'])))
+		if BlogParentCategory.objects.all().exists():
+			blog_parentcategory = blog_category.parent_category
 		wishimgeobj = None
 		if 'wishimage' in request.FILES:
 			wishimgeobj = request.FILES['wishimage']
@@ -60,7 +63,7 @@ def userwish(request):
 
 		if _(request.POST['actor']) == "user":
 			ctype = ContentType.objects.get_for_model(User)
-			broadcast = UserWishRadio.objects.create_user_wishradio_object(request.user, _(request.POST['userwish']), blog_category , _(request.POST['message']), ctype, request.user.pk, wishimgeobj, urlPreviewContent )
+			broadcast = UserWishRadio.objects.create_user_wishradio_object(request.user, _(request.POST['userwish']), blog_category , blog_parentcategory, _(request.POST['message']), ctype, request.user.pk, wishimgeobj, urlPreviewContent )
 			action.send(request.user, verb='said:', action_object=broadcast)
 			actions.follow(request.user, broadcast, send_action=False, actor_only=False) 
 			Follow.objects.get_or_create(request.user, broadcast)
@@ -79,7 +82,7 @@ def userwish(request):
 			if blog_posts:
 				blog_post = blog_posts[0]
 				ctype = ContentType.objects.get_for_model(BlogPost)
-				broadcast = UserWishRadio.objects.create_user_wishradio_object(request.user, _(request.POST['vendorwish']), blog_category, _(request.POST['message']), ctype, request.user.pk, wishimgeobj, urlPreviewContent)
+				broadcast = UserWishRadio.objects.create_user_wishradio_object(request.user, _(request.POST['vendorwish']), blog_category, blog_parentcategory, _(request.POST['message']), ctype, request.user.pk, wishimgeobj, urlPreviewContent)
 				action.send(blog_post, verb='said:', action_object=broadcast)
 				actions.follow(request.user, broadcast, send_action=False, actor_only=False) 
 				Follow.objects.get_or_create(request.user, broadcast)
@@ -150,46 +153,121 @@ def unfollowWish(request, wish_id):
 	actions.unfollow(request.user, wishObject, send_action=False)
 	return HttpResponse('ok')
 
-def getTopReviewsForStoreCategory(request, category_slug):
+def getTrendingReviews(request, parent_category, sub_category):
 	import operator
-	
-	latest = settings.REVIEWS_NUM_LATEST
-	
-	reviews = Review.objects.all().filter(bought_category=category_slug)[:latest]
-	reviews = sorted(reviews, key=operator.attrgetter('submit_date'), reverse=True)
+	if request.method == "GET" and request.is_ajax():
+		latest = settings.REVIEWS_NUM_LATEST
+		blog_parentcategory = None
+		
+		blog_parentcategory_slug = parent_category
+		if blog_parentcategory_slug.lower() != "all" and BlogParentCategory.objects.all().exists():
+			blog_parentcategory = get_object_or_404(BlogParentCategory, slug=slugify(blog_parentcategory_slug))
 
-	return render_to_response('generic/top_reviews.html', {
+		blog_subcategory = None
+		blog_subcategory_slug = sub_category
+		if blog_subcategory_slug.lower() != "all" and BlogCategory.objects.all().exists():
+			blog_subcategory = get_object_or_404(BlogCategory, slug=slugify(blog_subcategory_slug))
+
+		if blog_parentcategory_slug.lower() == "all" and blog_subcategory_slug.lower() == "all":
+			reviews = Review.objects.all()[:latest]
+		elif blog_parentcategory_slug.lower() != "all" and blog_subcategory_slug.lower() == "all":
+			if blog_parentcategory:
+				blog_subcategories = BlogCategory.objects.all().filter(parent_category=blog_parentcategory)
+				reviews = Review.objects.all().filter(bought_category__in=blog_subcategories)[:latest]
+		else:
+			if blog_subcategory and blog_parentcategory:
+				reviews = Review.objects.all().filter(bought_category=blog_subcategory)[:latest]
+			else:
+				"""
+					raise 404 error, in case categories are not present.
+				"""
+				raise Http404()
+		reviews = sorted(reviews, key=operator.attrgetter('submit_date'), reverse=True)
+		return render_to_response('generic/top_reviews.html', {
 				'comments': reviews
 			}, context_instance=RequestContext(request))
+	else:
+		raise Http404()
 
-def getTopStoresForStoreCategory(request, category_slug):
+def getTrendingDeals(request, parent_category, sub_category):
 	import operator
-	blog_category = None
-	latest = settings.REVIEWS_NUM_LATEST
-	if BlogCategory.objects.all().exists():
-		blog_category = get_object_or_404(BlogCategory, slug=slugify(category_slug))
+	if request.method == "GET" and request.is_ajax():
+		ctype = ContentType.objects.get_for_model(BlogPost)
+		latest = settings.REVIEWS_NUM_LATEST
+		deals = []
+		blog_parentcategory = None
+		deals_queryset = None
+		
+		blog_parentcategory_slug = parent_category
+		if blog_parentcategory_slug.lower() != "all" and BlogParentCategory.objects.all().exists():
+			blog_parentcategory = get_object_or_404(BlogParentCategory, slug=slugify(blog_parentcategory_slug))
+
+		blog_subcategory = None
+		blog_subcategory_slug = sub_category
+		if blog_subcategory_slug.lower() != "all" and BlogCategory.objects.all().exists():
+			blog_subcategory = get_object_or_404(BlogCategory, slug=slugify(blog_subcategory_slug))
+
+		if blog_parentcategory_slug.lower() == "all" and blog_subcategory_slug.lower() == "all":
+			deals_queryset = UserWishRadio.objects.all().filter(content_type=ctype)[:latest]
+		elif blog_parentcategory_slug.lower() != "all" and blog_subcategory_slug.lower() == "all":
+			if blog_parentcategory:
+				blog_subcategories = BlogCategory.objects.all().filter(parent_category=blog_parentcategory)
+				deals_queryset = UserWishRadio.objects.all().filter(content_type=ctype, blog_category__in=blog_subcategories).distinct()[:latest]
+		else:
+			if blog_subcategory and blog_parentcategory:
+				deals_queryset = UserWishRadio.objects.all().filter(blog_category=blog_subcategory)[:latest]
+			else:
+				"""
+					raise 404 error, in case categories are not present.
+				"""
+				raise Http404()
 	
-	vendors = BlogPost.objects.published().filter(categories=blog_category).extra(select={'fieldsum':'price_average + variety_average + quality_average + service_average + exchange_average'},order_by=('-fieldsum',))[:latest]
+		deals_queryset = sorted(deals_queryset, key=operator.attrgetter('timestamp'), reverse=True)
+		for deal in deals_queryset:
+			deals.append(deal)
 
-	return render_to_response('generic/vendor_list.html', {
-				'vendors': vendors
+		return render_to_response('generic/wishlist.html', {
+					'wish_list': deals,
+					'sIndex':0
+				}, context_instance=RequestContext(request))
+	else:
+		raise Http404()
+
+def getTrendingStores(request, parent_category, sub_category):
+	if request.method == "GET" and request.is_ajax():
+		latest = settings.REVIEWS_NUM_LATEST
+		blog_parentcategory = None
+		result = None
+		"""
+		/xyz/abc/ will return a list ["","xyz",abc",""] after parsing.
+		2nd and 3rd element from last will be sub_category and parent_category respectively.
+		"""
+		blog_parentcategory_slug = parent_category
+		if blog_parentcategory_slug.lower() != "all" and BlogParentCategory.objects.all().exists():
+			blog_parentcategory = get_object_or_404(BlogParentCategory, slug=slugify(blog_parentcategory_slug))
+
+		blog_subcategory = None
+		blog_subcategory_slug = sub_category
+		if blog_subcategory_slug.lower() != "all" and BlogCategory.objects.all().exists():
+			blog_subcategory = get_object_or_404(BlogCategory, slug=slugify(blog_subcategory_slug))
+
+		if blog_parentcategory_slug.lower() == "all" and blog_subcategory_slug.lower() == "all":
+			result = BlogPost.objects.published().order_by('-overall_average')[:latest]
+		elif blog_parentcategory_slug.lower() != "all" and blog_subcategory_slug.lower() == "all":
+			if blog_parentcategory:
+				blog_subcategories = BlogCategory.objects.all().filter(parent_category=blog_parentcategory)
+				result = BlogPost.objects.published().filter(categories__in=blog_subcategories).distinct().order_by('-overall_average')[:latest]
+		else:
+			if blog_subcategory and blog_parentcategory:
+				result = BlogPost.objects.published().filter(categories=blog_subcategory).order_by('-overall_average')[:latest]
+			else:
+				"""
+					raise 404 error, in case categories are not present.
+				"""
+				raise Http404()
+
+		return render_to_response('generic/vendor_list.html', {
+				'vendors': result
 			}, context_instance=RequestContext(request))
-
-def getTopDealsForStoreCategory(request, category_slug):
-	import operator
-	blog_category = None
-	if BlogCategory.objects.all().exists():
-		blog_category = get_object_or_404(BlogCategory, slug=slugify(category_slug))
-	
-	deals = []
-	latest = settings.REVIEWS_NUM_LATEST
-	ctype = ContentType.objects.get_for_model(BlogPost)
-	deals_queryset = UserWishRadio.objects.all().filter(content_type=ctype, blog_category=blog_category)[:latest]
-	deals_queryset = sorted(deals_queryset, key=operator.attrgetter('timestamp'), reverse=True)
-	for deal in deals_queryset:
-	    deals.append(deal) 
-
-	return render_to_response('generic/wishlist.html', {
-				'wish_list': deals,
-				'sIndex':0
-			}, context_instance=RequestContext(request))
+	else:
+		raise Http404()

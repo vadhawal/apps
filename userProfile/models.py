@@ -11,7 +11,7 @@ from django_resized import ResizedImageField
 from django.utils.translation import ugettext_lazy as _
 from django import forms
 
-from mezzanine.blog.models import BlogCategory
+from mezzanine.blog.models import BlogCategory, BlogParentCategory
 from mezzanine.conf import settings
 from mezzanine.generic.fields import CommentsField
 from django.contrib.contenttypes.models import ContentType
@@ -120,8 +120,8 @@ class Broadcast(models.Model):
         return self.message 
 
 class UserWishRadioManager(models.Manager):
-    def create_user_wishradio_object(self, user, prefix_message, blog_category, message, content_type, object_id, wishimage, urlPreviewContent ):
-        broadcast = self.create(user=user, prefix_message=prefix_message, blog_category=blog_category, message=message, content_type=content_type, object_id=object_id, wishimage=wishimage, urlPreviewContent=urlPreviewContent)
+    def create_user_wishradio_object(self, user, prefix_message, blog_category, blog_parentcategory, message, content_type, object_id, wishimage, urlPreviewContent ):
+        broadcast = self.create(user=user, prefix_message=prefix_message, blog_category=blog_category, blog_parentcategory=blog_parentcategory, message=message, content_type=content_type, object_id=object_id, wishimage=wishimage, urlPreviewContent=urlPreviewContent)
         return broadcast
 
 def get_wishimage_upload_path(instance, filename):
@@ -133,6 +133,9 @@ class UserWishRadio(Broadcast):
     blog_category = models.ForeignKey(BlogCategory,
                                         verbose_name=_("Category"),
                                         blank=True, related_name="broadcast_blogcategory", null=True)
+    blog_parentcategory = models.ForeignKey(BlogParentCategory,
+                                        verbose_name=_("ParentCategory"),
+                                        blank=True, related_name="broadcast_blogparentcategory", null=True)
     comments = CommentsField(verbose_name=_("Comments"))
     content_type = models.ForeignKey(ContentType)
     object_id = models.CharField(max_length=255)
