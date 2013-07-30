@@ -23,12 +23,16 @@ except ImportError:
     now = datetime.now
 
 from follow import utils
+import uuid
 
 MESSAGE_MAX_LENGTH = getattr(settings,'MESSAGE_MAX_LENGTH',3000)
 PREFIX_MESSAGE_MAX_LENGTH = getattr(settings,'PREFIX_MESSAGE_MAX_LENGTH',256)
 
 def get_image_path(instance, filename):
-    return os.path.join('users', str(instance.id), filename)
+    ext = filename.split('.')[-1]
+    filename = "%s.%s" % (uuid.uuid4(), ext)
+    Path = os.path.join('profiles/', "user_%d/%s" % (instance.user.id, filename))
+    return Path
 
 class BroadcastForm(forms.Form):
     message = forms.CharField(max_length=100)
@@ -43,7 +47,7 @@ class UserProfile(models.Model):
         (_('other'), _('Other')),
         ('', '')
         )
-    profile_photo = ResizedImageField(upload_to="users/", max_width=100, max_height=80, blank=True, null=True)
+    profile_photo = ResizedImageField(upload_to=get_image_path, max_width=1000, max_height=800, blank=True, null=True)
     gender = models.CharField(max_length=10, blank=True, choices=GENDER_CHOICES, verbose_name=_("Gender"))
     image_url = models.URLField(blank=True, verbose_name=_("Imageurl"), editable=False)
     description = models.TextField(blank=True, verbose_name=_("Description"), help_text=_("Tell us about yourself!"))
