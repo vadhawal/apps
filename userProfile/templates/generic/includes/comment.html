@@ -25,7 +25,7 @@
 	                {% endif %}
 	            </a>
             {% else %}
-	            <a href="{{ profile_url }}" %}">
+	            <a href="{{ profile_url }}">
 	            {% if comment.user.get_profile.profile_photo %}
 	            	<img src="{{ comment.user.get_profile.profile_photo.url }}">
 	            {% elif comment.user.get_profile.image_url %}
