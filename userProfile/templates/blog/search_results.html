@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% load i18n future mezzanine_tags %}
+{% load i18n future mezzanine_tags static %}
 {% load follow_tags %}
 {% load hitcount_tags %}
 {% block meta_title %}{% trans "Search Results" %}{% endblock %}
@@ -15,8 +15,8 @@
 {% endblock %}
 
 {% block main %}
-<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/searchresults.css">
-<link rel="stylesheet" href="{{ STATIC_URL }}css/navigation.css">
+<link rel="stylesheet" type="text/css" href="{% static "css/searchresults.css" %}"/>
+<link rel="stylesheet" href="{% static "css/navigation.css" %}"/>
 <p>
 {% if results.paginator.count == 0 %}
 {% blocktrans %}
