@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load i18n %}
+{% load i18n static %}
 {% load activity_tags %}
 {% load comment_tags %}
 {% load userProfile_tags %}
@@ -17,6 +17,7 @@
 <script type="text/javascript" src="{{ STATIC_URL }}js/linkPreview.js" ></script>
 <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.mcdropdown.min.js" ></script>
 <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.bgiframe.js" ></script>
+<script src="{% static "js/voting.handlers.js" %}"></script>
 {% endblock %}
 
 {% block extra_head %}
@@ -264,7 +265,8 @@ function scrollalert(){
               //alert("No actions yet");
             }    
             $('#load-feeds').append(data);
-            updatestatus(); 
+            updatestatus();
+            $('.upvote').add('.downvote').add('.clearvote').off("click").on("click", voting_handlers); 
         }); 
     }     
     setTimeout('scrollalert();', 1000); 
@@ -278,6 +280,8 @@ function viewFeed()
     var link="{{feed}}";
     $.get(link, {}, function(data) {
         $('#load-feeds').html(data);
+        $('.upvote').add('.downvote').add('.clearvote').off("click").on("click", voting_handlers);
+
     });
 }
 {% endif %}
