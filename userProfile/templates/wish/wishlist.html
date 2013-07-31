@@ -32,7 +32,7 @@
     });
 $(document).ready(function(){
 {% for wish in wish_list %}
-    $('#wishlistitem{{forloop.counter|add:sIndex}}').linkify();
+    $('#wishlistitem{{forloop.counter|add:sIndex}}').find('.message').linkify();
     var upSelector = $('#upwishlistitem{{forloop.counter|add:sIndex}}');  
     var downSelector =  $('#downwishlistitem{{forloop.counter|add:sIndex }}');
     var clearSelector = $('#clearwishlistitem{{forloop.counter|add:sIndex }}');
@@ -85,10 +85,7 @@ $(document).ready(function(){
 {% endif %}
 </a>
 <span id="wishlistitem{{forloop.counter|add:sIndex}}"> {% render_wish wish %} </span>
-        {% autoescape off %}
-            {{wish.urlPreviewContent}}
-        {% endautoescape %}
-{{wish.timestamp}}
+        {{wish.timestamp}}
         <a id="upwishlistitem{{forloop.counter|add:sIndex}}" href="/broadcast/{{ wish.id }}/up/vote/">
         <img src="{{ STATIC_URL }}img/like.png">
         </a>

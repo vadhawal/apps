@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load i18n %}
+{% load i18n static %}
 {% load activity_tags %}
 {% load comment_tags %}
 {% load userProfile_tags %}
@@ -19,6 +19,8 @@
 <script type="text/javascript" src="{{ STATIC_URL }}js/linkPreview.js" ></script>
 <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.mcdropdown.min.js" ></script>
 <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.bgiframe.js" ></script>
+<script src="{% static "js/voting.handlers.js" %}"></script>
+<script src="{% static "js/action.handlers.js" %}"></script>
 {% endblock %}
 
 {% block extra_head %}
@@ -244,6 +246,13 @@ function updatestatus(){
      $('#loader').hide();
 }
 
+function install_action_handlers(){
+    $('.upvote').add('.downvote').add('.clearvote').off("click").on("click", voting_handlers);
+    $('.deleteAction').off("click").on("click", delete_action_handler);
+    $('.pScore').add('.broadcasters').off("click").on("click", display_popup_handler);
+    $('.shareaction').off("click").on("click", share_action_handler);
+}
+
 function scrollalert(){ 
     var scrolltop=$('.section-scroll')[0].scrollTop; //$('.section-scroll').attr('scrollTop'); 
     var scrollheight=$('.section-scroll')[0].scrollHeight;//$('.section-scroll').attr('scrollHeight');  
@@ -270,7 +279,8 @@ function scrollalert(){
               //alert("No actions yet");
             }    
             $('#load-feeds').append(data);
-            updatestatus(); 
+            updatestatus();
+            install_action_handlers();
         }); 
     }     
     setTimeout('scrollalert();', 1000); 
@@ -284,6 +294,7 @@ function viewFeed()
     var link="{{feed}}";
     $.get(link, {}, function(data) {
         $('#load-feeds').html(data);
+        install_action_handlers();
     });
 }
 {% endif %}
