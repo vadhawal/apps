@@ -11,20 +11,26 @@
 <li class="active">{% trans "Home" %}</li>
 {% endblock %}
 {% block extra_js %}
-<script src="{{ STATIC_URL }}js/jquery.jscrollpane.min.js"></script>
-<script src="{{ STATIC_URL }}js/jquery.mousewheel.js"></script>
-<script src="{{ STATIC_URL }}js/jquery.form.js"></script>
-<script type="text/javascript" src="{{ STATIC_URL }}js/linkPreview.js" ></script>
-<script type="text/javascript" src="{{ STATIC_URL }}js/jquery.mcdropdown.min.js" ></script>
-<script type="text/javascript" src="{{ STATIC_URL }}js/jquery.bgiframe.js" ></script>
+<script type="text/javascript" src="{% static "js/jquery.lightbox-0.5.js" %}"></script>
+<script src="{% static "js/jquery.linkify.js" %}"></script>
+<script src="{% static "js/jquery.jscrollpane.min.js" %}"></script>
+<script src="{% static "js/jquery.mousewheel.js" %}"></script>
+<script src="{% static "js/jquery.form.js" %}"></script>
+<script type="text/javascript" src="{% static "js/linkPreview.js" %}"></script>
+<script type="text/javascript" src="{% static "js/jquery.mcdropdown.min.js" %}"></script>
+<script type="text/javascript" src="{% static "js/jquery.bgiframe.js" %}"></script>
 <script src="{% static "js/voting.handlers.js" %}"></script>
 <script src="{% static "js/action.handlers.js" %}"></script>
 {% endblock %}
 
 {% block extra_head %}
-<link rel="stylesheet" href="{{ STATIC_URL }}css/jquery.jscrollpane.css">
-<link rel="stylesheet" class="cssStatics" type="text/css" href="{{ STATIC_URL }}css/stylesheet.css" />
-<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/jquery.mcdropdown.min.css" />
+<link rel="stylesheet" href="{% static "css/customnavbar.css" %}"/>
+<link rel="stylesheet" type="text/css" href="{% static "css/imagestore.css" %}"/>
+<link rel="stylesheet" href="{% static "css/jquery.lightbox-0.5.css" %}"/>
+<link rel="stylesheet" class="cssButtons" type="text/css" href="{% static "css/linkPreview.css" %}"/>
+<link rel="stylesheet" href="{% static "css/jquery.jscrollpane.css" %}">
+<link rel="stylesheet" class="cssStatics" href="{% static "css/stylesheet.css" %}"/>
+<link rel="stylesheet" href="{% static "css/jquery.mcdropdown.min.css" %}"/>
 <script type="text/javascript">
 var sIndex = 0;
 var lIndex = 5;

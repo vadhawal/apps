@@ -92,11 +92,11 @@ def userwish(request):
 		return render_to_response('broadcast_success.html', {}, RequestContext(request))
 
 def view_wish(request, wish_id, template_name='wish/view_wish.html'):
-    wish = get_object_or_404(UserWishRadio, id=wish_id)
+	wish = get_object_or_404(UserWishRadio, id=wish_id)
 
-    return render_to_response(template_name, {
-        'wish': wish,
-    }, context_instance=RequestContext(request))
+	return render_to_response(template_name, {
+		'wish': wish,
+     }, context_instance=RequestContext(request))
 view_wish = login_required(view_wish)
 
 from django.utils import simplejson
