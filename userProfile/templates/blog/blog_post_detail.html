@@ -1,5 +1,5 @@
 {% extends "blog/blog_post_list.html" %}
-{% load mezzanine_tags comment_tags keyword_tags rating_tags reviewrating_tags i18n future disqus_tags %}
+{% load mezzanine_tags comment_tags keyword_tags rating_tags reviewrating_tags i18n future disqus_tags static %}
 {% load follow_tags %}
 {% load userProfile_tags %}
 {% load hitcount_tags %}
@@ -24,8 +24,13 @@
 {% endblock %}
 
 {% block extra_js %}
-<link rel="stylesheet" href="{{ STATIC_URL }}css/creative.css">
-<link rel="stylesheet" href="{{ STATIC_URL }}css/navigation.css">
+<script type="text/javascript" src="{% static "js/jquery.lightbox-0.5.js" %}"></script>
+<script src="{% static "js/jquery.linkify.js" %}"></script>
+<link rel="stylesheet" href="{% static "css/customnavbar.css" %}"/>
+<link rel="stylesheet" type="text/css" href="{% static "css/imagestore.css" %}"/>
+<link rel="stylesheet" type="text/css" href="{% static "css/jquery.lightbox-0.5.css" %}"/>
+<link rel="stylesheet" href="{% static "css/creative.css" %}">
+<link rel="stylesheet" href="{% static "css/navigation.css" %}">
 
     <script type="text/javascript">
        $(function() {

@@ -1,7 +1,8 @@
 {% extends "base.html" %}
 
-{% load i18n future mezzanine_tags %}
+{% load i18n future mezzanine_tags static %}
 {% load follow_tags %}
+{% load hitcount_tags %}
 {% block meta_title %}{% trans "Search Results" %}{% endblock %}
 {% block title %}{% trans "Search Results" %}{% endblock %}
 
@@ -14,8 +15,8 @@
 {% endblock %}
 
 {% block main %}
-<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/searchresults.css">
-<link rel="stylesheet" href="{{ STATIC_URL }}css/navigation.css">
+<link rel="stylesheet" type="text/css" href="{% static "css/searchresults.css" %}"/>
+<link rel="stylesheet" href="{% static "css/navigation.css" %}"/>
 <p>
 {% if results.paginator.count == 0 %}
 {% blocktrans %}
@@ -55,12 +56,16 @@ Showing {{ start }} to {{ end }} of {{ total }} results in {{ search_type }} mat
 		    	<span class="infoItem">
 		    		{% vendor_follower_subset_info_url result 0 request.user|follower_count:result as subset_follower_url %}
 			        <a id="vendor{{ forloop.counter0|add:results.start_index }}" class="vendorFollowers" href="{{subset_follower_url}}">{{ request.user|follower_count:result }}  Follower{{ request.user|follower_count:result|pluralize }}</a>
-				    <div class="followContainer follow-button-container action-follow-user {% if request.user|is_following:result %} following {% endif %}" >
-					    <a href="{% follow_url result %}" data-id="vendor{{ forloop.counter0|add:results.start_index }}" class="follow-btn form-button form-button-follow form-button-small form-button-default form-button-left-icon form-button-icon-follow">Follow</a>
-					    <a class="form-button form-button-following form-button-small form-button-light-and-grey form-button-left-icon form-button-icon-following">Following</a>
-					    <a href="{% follow_url result %}" data-id="vendor{{ forloop.counter0|add:results.start_index }}" class="unfollow-btn form-button form-button-unfollow form-button-small form-button-red form-button-left-icon form-button-icon-unfollow">Unfollow</a>
-					</div>
 			    </span>
+			    <span class ="infoItem cover-stat cover-stat-views">
+			        <span class="stat-label be-font-inline">G</span>
+      				<span class="stat-value">{% get_hit_count for result %}</span>
+			    </span>
+				<div class="followContainer follow-button-container action-follow-user {% if request.user|is_following:result %} following {% endif %}" >
+					<a href="{% follow_url result %}" data-id="vendor{{ forloop.counter0|add:results.start_index }}" class="follow-btn form-button form-button-follow form-button-small form-button-default form-button-left-icon form-button-icon-follow">Follow</a>
+				    <a class="form-button form-button-following form-button-small form-button-light-and-grey form-button-left-icon form-button-icon-following">Following</a>
+				    <a href="{% follow_url result %}" data-id="vendor{{ forloop.counter0|add:results.start_index }}" class="unfollow-btn form-button form-button-unfollow form-button-small form-button-red form-button-left-icon form-button-icon-unfollow">Unfollow</a>
+				</div>
 			</div>
 		</div>
 		<hr class="dottedSeparator">

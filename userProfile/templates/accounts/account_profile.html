@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load i18n future mezzanine_tags accounts_tags %}
+{% load i18n future mezzanine_tags accounts_tags static %}
 {% load relationship_tags %}
 {% load activity_tags %}
 {% load hitcount_tags %}
@@ -10,15 +10,19 @@
 {% block title %}<p> Profile </p>{% endblock %}
 {% block body_id %}account{% endblock %}
 {% block extra_js %}
+<link rel="stylesheet" href="{% static "css/customnavbar.css" %}"/>
+<link rel="stylesheet" type="text/css" href="{% static "css/imagestore.css" %}"/>
+<link rel="stylesheet" type="text/css" href="{% static "css/jquery.lightbox-0.5.css" %}"/>
+<link rel="stylesheet" href="{% static "css/creative.css" %}"/>
+<link rel="stylesheet" href="{% static "css/navigation.css" %}"/>
 
-<link rel="stylesheet" href="{{ STATIC_URL }}css/creative.css">
-<link rel="stylesheet" href="{{ STATIC_URL }}css/navigation.css">
-
-<script src="{{ STATIC_URL }}js/jquery.jscrollpane.min.js"></script>
-<script src="{{ STATIC_URL }}js/jquery.mousewheel.js"></script>
+<script type="text/javascript" src="{% static "js/jquery.lightbox-0.5.js" %}"></script>
+<script src="{% static "js/jquery.linkify.js" %}"></script>
+<script src="{% static "js/jquery.jscrollpane.min.js" %}"></script>
+<script src="{% static "js/jquery.mousewheel.js" %}"></script>
 <script src="http://connect.facebook.net/en_US/all.js"></script>
 
-<link rel="stylesheet" href="{{ STATIC_URL }}css/jquery.jscrollpane.css">
+<link rel="stylesheet" href="{% static "css/jquery.jscrollpane.css" %}">
     <script type="text/javascript">
                 var sIndex = 0;
                 var lIndex = 10;
