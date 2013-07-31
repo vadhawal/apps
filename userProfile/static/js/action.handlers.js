@@ -35,3 +35,37 @@ var share_action_handler = function(event) {
 	event.preventDefault();
     return false;
 };
+
+var follow_post_handler = function(event) {
+    var add_link = $(this);
+    var link = add_link.attr('href');
+    $.get(link, {}, function(data) {
+        if(data == 'ok')
+        {
+          $href = add_link.attr('href')
+          $newhref = $href.replace("follow", "unfollow");
+          add_link.attr('href', $newhref);
+          add_link.html("unfollow post");
+        }
+    });
+    event.stopPropagation();
+    event.preventDefault();
+    return false;
+};
+
+var unfollow_post_handler = function(event) {
+    var add_link = $(this);
+    var link = add_link.attr('href');
+    $.get(link, {}, function(data) {
+        if(data == 'ok')
+        {
+          $href = add_link.attr('href')
+          $newhref = $href.replace("unfollow", "follow");
+          add_link.attr('href', $newhref);
+          add_link.html("follow post");
+        }
+    });
+    event.stopPropagation();
+    event.preventDefault();
+    return false;
+};

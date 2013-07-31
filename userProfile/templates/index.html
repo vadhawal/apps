@@ -245,6 +245,14 @@ function install_action_handlers(){
     $('.deleteAction').off("click").on("click", delete_action_handler);
     $('.pScore').add('.broadcasters').off("click").on("click", display_popup_handler);
     $('.shareaction').off("click").on("click", share_action_handler);
+    $('.followpost').off("click").on("click", follow_post_handler);
+    $('.unfollowpost').off("click").on("click", unfollow_post_handler);
+    $('a.thumb').each(function(){
+        $(this).lightBox();
+    });
+    $('a.album_in_feed').each(function(){
+        $(this).lightBox();
+    });
 }
 
 function scrollalert(){ 

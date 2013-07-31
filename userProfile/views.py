@@ -27,7 +27,7 @@ def broadcast(request):
 	if request.method == "POST":
 		if _(request.POST['actor']) == "user":
 			broadcast = Broadcast.objects.create_broadcast_object( _(request.POST['message']), request.user)
-			action.send(request.user, verb='said:', action_object=broadcast)
+			action.send(request.user, verb='said:', target=broadcast)
 		elif _(request.POST['actor']) == "vendor":
 			
 			blog_posts = BlogPost.objects.published(
@@ -40,7 +40,7 @@ def broadcast(request):
 			if blog_posts:
 				blog_post = blog_posts[0]
 				broadcast = Broadcast.objects.create_broadcast_object( _(request.POST['message']), request.user)
-				action.send(blog_post, verb='said:', action_object=broadcast)
+				action.send(blog_post, verb='said:', target=broadcast)
 
 	if request.is_ajax():
 		return HttpResponse('ok')
@@ -64,7 +64,7 @@ def userwish(request):
 		if _(request.POST['actor']) == "user":
 			ctype = ContentType.objects.get_for_model(User)
 			broadcast = UserWishRadio.objects.create_user_wishradio_object(request.user, _(request.POST['userwish']), blog_category , blog_parentcategory, _(request.POST['message']), ctype, request.user.pk, wishimgeobj, urlPreviewContent )
-			action.send(request.user, verb='said:', action_object=broadcast)
+			action.send(request.user, verb='said:', target=broadcast)
 			actions.follow(request.user, broadcast, send_action=False, actor_only=False) 
 			Follow.objects.get_or_create(request.user, broadcast)
 			#blog_posts = BlogPost.objects.all().filter(categories=blog_category)
@@ -83,7 +83,7 @@ def userwish(request):
 				blog_post = blog_posts[0]
 				ctype = ContentType.objects.get_for_model(BlogPost)
 				broadcast = UserWishRadio.objects.create_user_wishradio_object(request.user, _(request.POST['vendorwish']), blog_category, blog_parentcategory, _(request.POST['message']), ctype, request.user.pk, wishimgeobj, urlPreviewContent)
-				action.send(blog_post, verb='said:', action_object=broadcast)
+				action.send(blog_post, verb='said:', target=broadcast)
 				actions.follow(request.user, broadcast, send_action=False, actor_only=False) 
 				Follow.objects.get_or_create(request.user, broadcast)
 	if request.is_ajax():
