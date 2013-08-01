@@ -84,9 +84,8 @@ var img_iframe_handler =  function(){
 };
 
 var install_action_handlers = function(){
-    $('.upvote').add('.downvote').add('.clearvote').off("click").on("click", voting_handlers);
+    install_voting_handlers();
     $('.deleteAction').off("click").on("click", delete_action_handler);
-    $('.pScore').add('.broadcasters').off("click").on("click", display_popup_handler);
     $('.shareaction').off("click").on("click", share_action_handler);
     $('.followpost').off("click").on("click", follow_post_handler);
     $('.unfollowpost').off("click").on("click", unfollow_post_handler);
@@ -98,5 +97,10 @@ var install_action_handlers = function(){
     });
     $(".imgIframe").off("click").on("click", img_iframe_handler);
     $('.previewPosted').width('100%');
+}
+
+var install_voting_handlers = function(){
+    $('.upvote').add('.downvote').add('.clearvote').off("click").on("click", voting_handlers);
+    $('.pScore').add('.broadcasters').off("click").on("click", display_popup_handler);
 }
 
