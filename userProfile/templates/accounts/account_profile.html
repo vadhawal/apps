@@ -21,7 +21,8 @@
 <script src="{% static "js/jquery.jscrollpane.min.js" %}"></script>
 <script src="{% static "js/jquery.mousewheel.js" %}"></script>
 <script src="http://connect.facebook.net/en_US/all.js"></script>
-
+<script src="{% static "js/voting.handlers.js" %}"></script>
+<script src="{% static "js/action.handlers.js" %}"></script>
 <link rel="stylesheet" href="{% static "css/jquery.jscrollpane.css" %}">
     <script type="text/javascript">
                 var sIndex = 0;
@@ -159,6 +160,7 @@
                     var link = "{{feed}}";
                     $.get(link, {}, function(data) {
                         $('#load-feeds').html(data);
+                         install_action_handlers();
                     });
                 {% endif %}    
             }
@@ -239,6 +241,7 @@ function scrollalert(){
             }    
             $('#load-feeds').append(data);
             updatestatus(); 
+            install_action_handlers();
         }); 
     /*}     
     setTimeout('scrollalert();', 1500); */ 

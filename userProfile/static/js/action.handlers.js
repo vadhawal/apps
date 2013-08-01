@@ -69,3 +69,34 @@ var unfollow_post_handler = function(event) {
     event.preventDefault();
     return false;
 };
+
+var img_iframe_handler =  function(){
+    var oldId = $(this).attr("id");
+    var currentId = oldId.substring(3);
+    pTP = "pTP"+currentId;
+    pDP = "pDP"+currentId;
+    oldId = "#"+oldId;
+    currentId = "#"+currentId;
+    $(oldId).css({'display': 'none'});
+    $(currentId).css({'display': 'block'});
+    $('#'+pTP).css({'width': '495px'});
+    $('#'+pDP).css({'width': '495px'});
+};
+
+var install_action_handlers = function(){
+    $('.upvote').add('.downvote').add('.clearvote').off("click").on("click", voting_handlers);
+    $('.deleteAction').off("click").on("click", delete_action_handler);
+    $('.pScore').add('.broadcasters').off("click").on("click", display_popup_handler);
+    $('.shareaction').off("click").on("click", share_action_handler);
+    $('.followpost').off("click").on("click", follow_post_handler);
+    $('.unfollowpost').off("click").on("click", unfollow_post_handler);
+    $('a.thumb').each(function(){
+        $(this).lightBox();
+    });
+    $('a.album_in_feed').each(function(){
+        $(this).lightBox();
+    });
+    $(".imgIframe").off("click").on("click", img_iframe_handler);
+    $('.previewPosted').width('100%');
+}
+
