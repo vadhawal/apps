@@ -1,17 +1,16 @@
-  #action{
-    border:1px solid #1769ff;
-    padding:3px 16px 0 16px;
-    text-overflow:ellipsis;
-    font-size:13px;
-    line-height:1.4;
-    font:normal 13px arial,sans-serif;
-    margin:10px;
-    width:600px;
-  }
-  #timestamp{
-    color: #999;
-    font-family:'lucida grande',tahoma,verdana,arial,sans-serif;
-    direction:ltr;
-    line-height:1.28;
-    text-align: right;
-  }
+.actionDetails{
+  border:1px solid #1769ff;
+  text-overflow:ellipsis;
+  font-size:13px;
+  line-height:1.4;
+  font:normal 13px arial,sans-serif;
+  margin-bottom: 10px
+}
+
+#timestamp{
+  color: #999;
+  font-family:'lucida grande',tahoma,verdana,arial,sans-serif;
+  direction:ltr;
+  line-height:1.28;
+  text-align: right;
+}
