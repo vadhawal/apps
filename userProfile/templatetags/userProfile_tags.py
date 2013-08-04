@@ -236,7 +236,7 @@ def is_following_post(user, obj):
 @register.simple_tag
 def get_full_name(user):
 	if user:
-		return user.first_name + " " + user.last_name
+		return (user.first_name + " " + user.last_name).title()
 	return ""	
 
 
