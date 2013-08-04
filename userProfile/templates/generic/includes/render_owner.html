@@ -1,0 +1,35 @@
+{% load i18n %}
+{% load thumbnail userProfile_tags %}
+
+{% if owner %}
+	{% if owner.get_absolute_url %}
+		<a href="{{ owner.get_absolute_url }}">
+			{% if owner|get_class_name == "User" %}
+			  	{% if owner.get_profile.profile_photo %}
+
+				    {% thumbnail owner.get_profile.profile_photo "90x90" as img %} 
+				      <img style="margin-right:20px;" src="{{ MEDIA_URL }}{{img}}">
+				    {% endthumbnail %}
+
+			  	{% elif owner.get_profile.image_url %}
+			    	<img style="margin-right:20px;" src="{{ owner.get_profile.image_url }}">
+
+			  	{% else %}
+			    	<img style="margin-right:20px;height=80px;width:80px;" src="{{ STATIC_URL }}img/defaultProfilePic.gif"> 
+
+			  	{% endif %}
+
+			{% elif owner|get_class_name == "BlogPost" %}
+
+			  {% thumbnail owner.featured_image "90x90" as img %} 
+			    	<img style="margin-right:20px;" src="{{ MEDIA_URL }}{{img}}">
+			  {% endthumbnail %}
+
+			{% else %}
+				{{owner}}
+			{% endif %}
+		</a>
+	{% else %}
+		{{owner}}
+	{% endif %}
+{% endif %}

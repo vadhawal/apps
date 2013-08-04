@@ -30,7 +30,7 @@ var display_popup_handler = function(event) {
         loadUrl:$(this).attr("href"),
         zIndex: 2,
         onClose: function(){ $('#pop_up').remove(); },
-        modalColor:'blackwhite', scrollBar:true
+        scrollBar:'true'
     });
 };
 
