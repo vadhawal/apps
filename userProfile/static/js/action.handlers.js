@@ -11,7 +11,7 @@ var delete_action_handler = function(event) {
 };
 
 var display_popup_handler = function(event) {
-    var w = 700;
+    /*var w = 700;
     var h = 500;
     var left = 100;
     var top = 100;
@@ -21,7 +21,17 @@ var display_popup_handler = function(event) {
     window.open(url, name, settings);
     event.stopPropagation();
 	event.preventDefault();
-    return false;
+    return false;*/
+
+    event.preventDefault();
+    $("<div id='pop_up'><span class='button b-close'><span>X</span></span></div>").appendTo("body").addClass('popup');
+    $('#pop_up').bPopup({
+        content:'ajax',
+        loadUrl:$(this).attr("href"),
+        zIndex: 2,
+        onClose: function(){ $('#pop_up').remove(); },
+        modalColor:'blackwhite', scrollBar:true
+    });
 };
 
 var share_action_handler = function(event) {

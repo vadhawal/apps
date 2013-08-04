@@ -12,7 +12,6 @@
 {% endblock %}
 {% block extra_js %}
 <script type="text/javascript" src="{% static "js/jquery.lightbox-0.5.js" %}"></script>
-<script src="{% static "js/jquery.linkify.js" %}"></script>
 <script src="{% static "js/jquery.jscrollpane.min.js" %}"></script>
 <script src="{% static "js/jquery.mousewheel.js" %}"></script>
 <script src="{% static "js/jquery.form.js" %}"></script>
@@ -179,6 +178,7 @@ $(document).ready(function() {
                 $.get(add_link.attr('href'), {}, function(data) {
                     if(data.indexOf("No actions yet") < 0)
                         $('#load-feeds').prepend(data);
+                    	install_action_handlers();
                 });
                 return false;
             });
