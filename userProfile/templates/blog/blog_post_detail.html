@@ -26,38 +26,14 @@
 {% block extra_js %}
 <script type="text/javascript" src="{% static "js/jquery.lightbox-0.5.js" %}"></script>
 <script src="{% static "js/jquery.linkify.js" %}"></script>
+<script src="{% static "js/album.handlers.js" %}"></script>
 <link rel="stylesheet" href="{% static "css/customnavbar.css" %}"/>
 <link rel="stylesheet" type="text/css" href="{% static "css/imagestore.css" %}"/>
 <link rel="stylesheet" type="text/css" href="{% static "css/jquery.lightbox-0.5.css" %}"/>
 <link rel="stylesheet" href="{% static "css/creative.css" %}">
 <link rel="stylesheet" href="{% static "css/navigation.css" %}">
 
-    <script type="text/javascript">
-       $(function() {
-            $.ajaxSetup({
-                 beforeSend: function(xhr, settings) {
-                     function getCookie(name) {
-                         var cookieValue = null;
-                         if (document.cookie && document.cookie != '') {
-                             var cookies = document.cookie.split(';');
-                             for (var i = 0; i < cookies.length; i++) {
-                                 var cookie = jQuery.trim(cookies[i]);
-                                 // Does this cookie string begin with the name we want?
-                             if (cookie.substring(0, name.length + 1) == (name + '=')) {
-                                 cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                                 break;
-                             }
-                         }
-                     }
-                     return cookieValue;
-                     }
-                     if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) {
-                         // Only send the token to relative URLs i.e. locally.
-                         xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
-                     }
-                 }
-            });     
-    });    
+    <script type="text/javascript">   
     $(document).ready(function() {
             {% get_hit_count_javascript for blog_post %}
 
@@ -86,12 +62,12 @@
                 return false;
             });
         $('#viewAlbum').click(function() {
-
             var add_link = $(this);
             $('#vendorAlbum').html("");
             var link = add_link.attr('href');
             $.get(link, {}, function(data) {
-                $('#vendorAlbum').html(data);
+                document.getElementById("vendorAlbum").innerHTML = data;
+                install_album_handlers();
             });
             return false;
         });
@@ -156,6 +132,7 @@
                 });
                 return false;
             });
+            install_album_handlers();
     });
     </script>
 {% endblock %}

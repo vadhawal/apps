@@ -7,9 +7,23 @@
 
         {% editable comment.is_public comment.is_removed %}
         {% if not comment.is_removed and comment.is_public %}
+            <span id="truncComment{{ random }}">{{ comment.intro }}</span>
+            
+            {%  if comment != comment.intro %}
+                  <span id="expComment{{ random }}" style="display:none;">{{ comment.comment }}</span>
+                  
+                  <a href="javascript:void(0);" id="moreComment{{ random }}" onClick="
 
-        <p>{{ comment.comment|comment_filter }}</p>
+                      $('#truncComment{{ random }}').toggle();
+                      $('#expComment{{ random }}').toggle();
 
+                      if($(this).html() == 'More...')
+                        $(this).html('Less...');
+                      else
+                        $(this).html('More...');
+                      return false;">More...</a>
+
+            {% endif %}
         {% endif %}
         By:
              <a href="{{ comment.user.get_absolute_url }}">

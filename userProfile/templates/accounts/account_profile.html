@@ -159,6 +159,7 @@
                     var link = "{{feed}}";
                     $.get(link, {}, function(data) {
                         $('#load-feeds').html(data);
+                         install_action_handlers();
                     });
                 {% endif %}    
             }
@@ -239,6 +240,7 @@ function scrollalert(){
             }    
             $('#load-feeds').append(data);
             updatestatus(); 
+            install_action_handlers();
         }); 
     /*}     
     setTimeout('scrollalert();', 1500); */ 

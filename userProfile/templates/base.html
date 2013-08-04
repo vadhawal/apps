@@ -19,6 +19,9 @@
 <link rel="stylesheet" href="{% static "css/bootstrap.css" %}">
 <link rel="stylesheet" href="{% static "css/mezzanine.css" %}">
 <link rel="stylesheet" href="{% static "css/bootstrap-responsive.css" %}">
+<link rel="stylesheet" href="{% static "css/action.template.css" %}">
+<link rel="stylesheet" href="{{ STATIC_URL }}css/creative.css">
+<link rel="stylesheet" href="{{ STATIC_URL }}css/navigation.css">
 {% if LANGUAGE_BIDI %}
 <link rel="stylesheet" href="{% static "css/rtl.css" %}">
 {% endif %}
@@ -45,7 +48,8 @@
 <!-- <script src="{{ STATIC_URL }}js/jquery.linkify.js"></script> -->
 <script src="{{ STATIC_URL }}js/wishradiobase.js"></script>
 <script src="{% static "js/ajax.csrf.js" %}"></script>
-
+<script src="{% static "js/voting.handlers.js" %}"></script>
+<script src="{% static "js/action.handlers.js" %}"></script>
 {% block extra_js %}{% endblock %}
 {% endcompress %}
 <!--[if lt IE 9]>

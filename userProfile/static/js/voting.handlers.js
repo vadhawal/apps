@@ -4,7 +4,20 @@ var voting_handlers = function(event){
 	       function(data) {
 	           if (data.success == true) {
 	               add_link.parent().find('a.pScore').text(data.score.num_up_votes);
-	               add_link.parent().find('span.nScore').text(data.score.num_down_votes);
+	               if(add_link.hasClass('upvote'))
+	               {
+	               		add_link.removeClass('upvote').addClass('clearvote');
+	               		add_link.text('Unlike');
+	               		$newhref = add_link.attr('href').replace('up', 'clear');
+	               		add_link.attr('href', $newhref);
+	               }
+	               else if(add_link.hasClass('clearvote'))
+	               {
+	               		add_link.removeClass('clearvote').addClass('upvote');
+	               		add_link.text('Like');
+	               		$newhref = add_link.attr('href').replace('clear', 'up');
+	               		add_link.attr('href', $newhref);
+	               }
 	           } else {
 	               alert('ERROR: ' + data.error_message);
 	           }
@@ -13,3 +26,5 @@ var voting_handlers = function(event){
 		event.preventDefault();
 		return false;  
 };
+
+
