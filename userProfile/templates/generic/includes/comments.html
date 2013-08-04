@@ -25,16 +25,7 @@ $(function() {
 {% if object_for_comments|get_class_name != "Album" and object_for_comments|get_class_name != "Image" and object_for_comments|get_class_name != "UserWishRadio" %}
 {% comment_thread object_for_comments %}
 {% endif %}
-        {% if request.user.get_profile.profile_photo %}
-                {% thumbnail request.user.get_profile.profile_photo  "60x60" as img %} 
-                    <img style="margin-right:20px;" src="{{ MEDIA_URL }}{{img}}">
-                {% endthumbnail %}
-            <!--img style="margin-right:20px;" src="{{ request.user.get_profile.profile_photo.url }}"-->
-        {% elif request.user.get_profile.image_url %}
-            <img style="margin-right:20px;" src="{{ request.user.get_profile.image_url }}"> 
-        {% else %}
-            <img src='{{ STATIC_URL }}img/defaultProfilePic.gif'>
-        {% endif %}
+{% include "generic/includes/render_owner.html" with owner=request.user %}
 
 <form method="post" id="comment" action="{{ comment_url }}#comment">
     {% if not request.POST.replied_to %}

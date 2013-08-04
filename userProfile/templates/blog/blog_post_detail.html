@@ -78,6 +78,7 @@
             var link = add_link.attr('href');
             $.get(link, {}, function(data) {
                 $('#commentContainer').html(data);
+                install_voting_handlers();
             });
             return false;
         });
