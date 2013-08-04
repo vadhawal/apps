@@ -233,4 +233,10 @@ register.tag(get_wishlist_url)
 def is_following_post(user, obj):
     return Follow.objects.is_following(user, obj)
 
+@register.simple_tag
+def get_full_name(user):
+	if user:
+		return user.first_name + " " + user.last_name
+	return ""	
+
 
