@@ -1,10 +1,8 @@
 {% load i18n mezzanine_tags comment_tags rating_tags %}
 {% load thumbnail %}
 
-<ul class="unstyled" style="border:1px solid #666666;padding: 10px;">
+<ul class="unstyled">
     <li id="comment-{{ comment.id }}"
-        {% if comment.by_author %}class="comment-author"{% endif %}>
-
         {% editable comment.is_public comment.is_removed %}
         {% if not comment.is_removed and comment.is_public %}
             <span id="truncComment{{ random }}">{{ comment.intro }}</span>
