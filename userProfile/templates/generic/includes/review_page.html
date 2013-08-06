@@ -1,20 +1,29 @@
+{% extends "base.html" %}
+
 {% load i18n mezzanine_tags comment_tags rating_tags %}
 {% load mezzanine_tags i18n future %}
 {% load voting_tags %}
-{% load inbox thumbnail %}
+{% load inbox %}
+{% load thumbnail %}
 
-<ul class="unstyled">
-    {% for comment in comments_for_thread %}
+{% block extra_js %}
+<script type="text/javascript">
+$(document).ready(function() {
+    install_voting_handlers();
+});
+</script>
+{% endblock %}
+{% block main %}
 
-    <li id="comment-{{ comment.id }}"
+<div class="row-fluid">
+    <div id="comment-{{ comment.id }}"
         {% url "commentProfile" comment.author as profile_url%}
-        {# {% if comment.by_author %}class="comment-author"{% endif %} #}
         >
         {% editable comment.is_public comment.is_removed %}
         {% if not comment.is_removed and comment.is_public %}
         <strong>
             {% url "profile" comment.user as profile_url %}
-            <a href="{{ profile_url }}">
+	            <a href="{{ profile_url }}">
                 {% if comment.user.get_profile.profile_photo %}
                     {% thumbnail comment.user.get_profile.profile_photo "90x90" as img %} 
                     <img style="margin-right:20px;" src="{{ MEDIA_URL }}{{img}}">
@@ -24,31 +33,32 @@
                 {% else %}
                     <img style="margin-right:20px;height=80px;width:80px;" src="{{ STATIC_URL }}img/defaultProfilePic.gif"> 
                 {% endif %}
-            </a>
-            {% if comment.bought_category%}
-            	{{ comment.user_name }} bought a {{comment.bought_category}}
-            {% endif %}
-            {% if comment.overall_value%}
-           		<p>{{ comment.user_name }} Rated Overall as  {{comment.overall_value}}</p>
-            {% endif %}
-            {% if comment.price_value%}
-            	<p>{{ comment.user_name }} Rated Price as  {{comment.price_value}}</p>
-            {% endif %}
-            {% if comment.variety_value%}
-            	<p>{{ comment.user_name }} Rated Variety as  {{comment.variety_value}}</p>
-            {% endif %}
-            {% if comment.quality_value%}
-            	<p>{{ comment.user_name }} Rated Quality as  {{comment.quality_value}}</p>
-            {% endif %}
-            {% if comment.service_value%}
-            	<p>{{ comment.user_name }} Rated Customer Service as  {{comment.service_value}}</p>
-            {% endif %}
-            {% if comment.exchange_value%}
-            	<p>{{ comment.user_name }} Rated Exchange Experience as  {{comment.exchange_value}}</p>
-            {% endif %}
+	            </a>
+	            {% if comment.bought_category%}
+	            	{{ comment.user_name }} bought a {{comment.bought_category}}
+	            {% endif %}
+	            {% if comment.overall_value%}
+	           		<p>{{ comment.user_name }} Rated Overall as  {{comment.overall_value}}</p>
+	            {% endif %}
+	            {% if comment.price_value%}
+	            	<p>{{ comment.user_name }} Rated Price as  {{comment.price_value}}</p>
+	            {% endif %}
+	            {% if comment.variety_value%}
+	            	<p>{{ comment.user_name }} Rated Variety as  {{comment.variety_value}}</p>
+	            {% endif %}
+	            {% if comment.quality_value%}
+	            	<p>{{ comment.user_name }} Rated Quality as  {{comment.quality_value}}</p>
+	            {% endif %}
+	            {% if comment.service_value%}
+	            	<p>{{ comment.user_name }} Rated Customer Service as  {{comment.service_value}}</p>
+	            {% endif %}
+	            {% if comment.exchange_value%}
+	            	<p>{{ comment.user_name }} Rated Exchange Experience as  {{comment.exchange_value}}</p>
+	            {% endif %}
         </strong>
 
         <p>{{ comment.comment|comment_filter }}</p>
+        <p>On <a href="{{ blog_post.get_absolute_url }}">{{blog_post}}</a></p>
         {% include 'generic/includes/render_voting.html' with object=comment %}
         {% include 'actstream/render_subcomments.html' with object=comment %}
 
@@ -91,10 +101,9 @@
         {% include 'actstream/render_spam_report.html' with object=comment %}
         {% endif %}
         <span class="timespan">{% blocktrans with sometime=comment.submit_date|timesince %}{{ sometime }} ago{% endblocktrans %}</span>
-    </li>
-    {% endfor %}
-    {% if no_comments %}
-    <li>{% trans "There are currently no comments" %}</li>
-    {% endif %}
-</ul>
+    </div>
+</div>
+{% endblock %}
+    
+
 

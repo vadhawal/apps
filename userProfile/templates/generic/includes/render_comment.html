@@ -1,4 +1,4 @@
-{% load i18n mezzanine_tags comment_tags rating_tags %}
+{% load i18n mezzanine_tags comment_tags rating_tags userProfile_tags %}
 {% load thumbnail %}
 
 <ul class="unstyled">
@@ -7,7 +7,7 @@
         {% if not comment.is_removed and comment.is_public %}
             <span id="truncComment{{ random }}">{{ comment.intro }}</span>
             
-            {%  if comment != comment.intro %}
+            {%  if comment.comment != comment.intro %}
                   <span id="expComment{{ random }}" style="display:none;">{{ comment.comment }}</span>
                   
                   <a href="javascript:void(0);" id="moreComment{{ random }}" onClick="
@@ -24,20 +24,10 @@
             {% endif %}
         {% endif %}
         By:
-             <a href="{{ comment.user.get_absolute_url }}">
-            {% if comment.user.get_profile.profile_photo %}
-                            {% thumbnail comment.user.get_profile.profile_photo "60x60" as img %} 
-                                <img style="margin-right:20px;" src="{{ MEDIA_URL }}{{img}}">
-                            {% endthumbnail %}
-            <!--img src="{{ comment.user.get_profile.profile_photo.url }}"-->
-            {% elif comment.user.get_profile.image_url %}
-            <img src="{{ comment.user.get_profile.image_url }}">
-            {% else %}
-            <img src="{% gravatar_url comment.email %}">
-            {% endif %}
-            </a>
             {% if comment.user|get_class_name == "User" %}
-                {{ comment.user.username }} 
+                <a href="{{ comment.user.get_absolute_url }}">
+                  {% get_full_name comment.user %}
+                </a> 
             {% else %}
                 {% trans "Anonymous" %}
             {% endif %}

@@ -31,7 +31,11 @@ var display_popup_handler = function(event) {
         zIndex: 2,
         onClose: function(){ $('#pop_up').remove(); },
         scrollBar:'true'
+    },
+    function() {
+            install_follow_handlers();
     });
+    
 };
 
 var share_action_handler = function(event) {

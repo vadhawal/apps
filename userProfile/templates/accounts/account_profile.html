@@ -13,8 +13,6 @@
 <link rel="stylesheet" href="{% static "css/customnavbar.css" %}"/>
 <link rel="stylesheet" type="text/css" href="{% static "css/imagestore.css" %}"/>
 <link rel="stylesheet" type="text/css" href="{% static "css/jquery.lightbox-0.5.css" %}"/>
-<link rel="stylesheet" href="{% static "css/creative.css" %}"/>
-<link rel="stylesheet" href="{% static "css/navigation.css" %}"/>
 
 <script type="text/javascript" src="{% static "js/jquery.lightbox-0.5.js" %}"></script>
 <script src="{% static "js/jquery.linkify.js" %}"></script>
@@ -52,6 +50,7 @@
             });
 
 		  $(document).ready(function() {
+            
 			$('#followerCountBox').add('#followingCountBox').add('#followingVendorCountBox').on("click", display_popup_handler);
 
             $('#sendInvitesFB').click(function() {
@@ -82,64 +81,8 @@
             });
             $('#getSocialFriends').click();
             $('#refreshActorCache').click();
-            var FollowUnfollow = function() {
-                var element = $("#followContainer");
-                var classes = element.attr('class');
-                if (classes.indexOf('following') == -1) {
-
-                    classes+= ' following';
-                }
-                else {
-                    classes = classes.replace('following', '');
-                }
-                element.attr('class', classes); 
-            }
             
-            {% if_relationship request.user profile_user "following" %}
-            var element = $("#followContainer");
-            var classes = element.attr('class');
-            if (classes.indexOf('following') == -1) {
-                    classes+= ' following';
-                }
-            element.attr('class', classes); 
-            {% endif_relationship %}
 
-            $('#follow-btn').click(function() {
-                var add_link = $(this);
-                $.post(add_link.attr('href'), {}, function(data) {
-                    if (data.result === '1') {
-                        var followerCount = $('#followerCountBox').html();
-                        var followerCount = parseInt(followerCount) + 1;
-                        $('#followerCountBox').html(followerCount);
-                        $('.stat-followers').html(followerCount);
-                        var newFollower = '<a href="{{ request.user.get_absolute_url }}">{{ request.user.username }}</a>';
-                        $('#followerList').append(newFollower);
-
- 						showSnazzySuccessMessage("Success, you're now following your friend.");
-                        FollowUnfollow();
-                    } else {
-                        showSnazzySuccessMessage("Something went wrong!");
-                    }
-                });
-                return false;
-            });
-
-            $('#unfollow-btn').click(function() {
-                var add_link = $(this);
-                $.post(add_link.attr('href'), {}, function(data) {
-                    if (data.result === '1') {
-                    	showSnazzySuccessMessage("Success, you're not following your friend anymore.");
-                        var followerCount = $('#followerCountBox').html();
-                        var followerCount = parseInt(followerCount) - 1;
-                        $('#followerCountBox').html(followerCount);
-                        $('.stat-followers').html(followerCount);
-                        FollowUnfollow();
-                    } else {
-                        showSnazzySuccessMessage("Something went wrong!");
-                    }
-                });
-                return false;
-            });
             var getFeed = function(){
                 {% if request.user.is_authenticated %}
                     $('#load-feeds').html("");
@@ -234,23 +177,6 @@ function scrollalert(){
     setTimeout('scrollalert();', 1500); */ 
 }
 
-function showSnazzySuccessMessage(text)
-{
-    if($("#successMessage").length < 1)
-    {
-        //If the message div doesn't exist, create it
-        $("body").append("<div id='successMessage' style='text-align:center;vertical-align:middle;width:400px;position:absolute;top:100px;left:200px;border:2px solid black;background:blue;margin:20px;display:none'>" + text + "</div>");
-    }
-    else
-    {
-        //Else, update the text
-        $("#successMessage").html(text);
-    }
-    //Fade message in
-    $("#successMessage").show('slow');
-    //Fade message out in 5 seconds
-    setTimeout('$("#successMessage").hide("slow")',5000);
-}
     </script>
 
 {% endblock %}
@@ -315,10 +241,15 @@ function showSnazzySuccessMessage(text)
                     {% endfor %}
                     <br><br><a class="btn btn-primary" style="" href="{% url "profile_update" %}">{% trans "Edit profile" %}</a>
                 {% else %}
-                    <div id="followContainer" class="follow-button-container action-follow-user" >
-                        <a id="follow-btn" href="{{ profile_user|add_relationship_url:"following" }}" class="form-button form-button-follow form-button-small form-button-default form-button-left-icon form-button-icon-follow">Follow</a>
+                    <div id="followContainer" {% if_relationship request.user profile_user "following" %}
+                                                    class="following follow-button-container action-follow-user"
+                                              {% else %}
+                                                    class="follow-button-container action-follow-user" 
+                                              {% endif_relationship %}
+                                              >
+                        <a  href="{{ profile_user|add_relationship_url:"following" }}" class="follow-btn form-button form-button-follow form-button-small form-button-default form-button-left-icon form-button-icon-follow">Follow</a>
                         <a class="form-button form-button-following form-button-small form-button-light-and-grey form-button-left-icon form-button-icon-following">Following</a>
-                        <a id="unfollow-btn" href="{{ profile_user|remove_relationship_url:"following" }}" class="form-button form-button-unfollow form-button-small form-button-red form-button-left-icon form-button-icon-unfollow">Unfollow</a>
+                        <a  href="{{ profile_user|remove_relationship_url:"following" }}" class="unfollow-btn form-button form-button-unfollow form-button-small form-button-red form-button-left-icon form-button-icon-unfollow">Unfollow</a>
                     </div>  
                     {% if_relationship request.user profile_user "following" %}
                     {% endif_relationship %}
