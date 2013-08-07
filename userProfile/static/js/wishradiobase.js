@@ -1,5 +1,3 @@
-
-
 var vendor_followers_handler = function(event) {
     var w = 700;
     var h = 500;
@@ -27,8 +25,8 @@ var FollowUnfollow = function($elementClicked, added) {
     var $followerCountElement = $("#" + $elementClicked.data("id"));
     if ($followerCountElement) {
         var followerCount = $followerCountElement.html();
-        followerCount = added ? parseInt(followerCount) + 1 : parseInt(followerCount) - 1;;
-        var newHTML = (followerCount == 1) ? followerCount + " Follower" : followerCount + " Followers";
+        followerCount = added ? parseInt(followerCount) + 1 : parseInt(followerCount) - 1;
+        var newHTML = followerCount;
         $followerCountElement.html(newHTML);
     }
 }
@@ -65,6 +63,8 @@ var install_follow_handlers = function() {
     $('.follow-btn').off("click").on("click", follow_handler);
     $('.unfollow-btn').off("click").on("click", unfollow_handler);
 }
-install_follow_handlers();
-$('.vendorFollowers').on("click", vendor_followers_handler);
+$(document).ready(function() {
+	install_follow_handlers();
+	$('.vendorFollowers').on("click", vendor_followers_handler);
+});
 

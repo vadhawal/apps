@@ -22,33 +22,8 @@
 
 <link rel="stylesheet" href="{% static "css/jquery.jscrollpane.css" %}">
     <script type="text/javascript">
-                var sIndex = 0;
-                var lIndex = 10;
-        $(function() {
-            $.ajaxSetup({
-                 beforeSend: function(xhr, settings) {
-                     function getCookie(name) {
-                         var cookieValue = null;
-                         if (document.cookie && document.cookie != '') {
-                             var cookies = document.cookie.split(';');
-                             for (var i = 0; i < cookies.length; i++) {
-                                 var cookie = jQuery.trim(cookies[i]);
-                                 // Does this cookie string begin with the name we want?
-                             if (cookie.substring(0, name.length + 1) == (name + '=')) {
-                                 cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                                 break;
-                             }
-                         }
-                     }
-                     return cookieValue;
-                     }
-                     if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) {
-                         // Only send the token to relative URLs i.e. locally.
-                         xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
-                     }
-                 }
-            });
-
+          var sIndex = 0;
+          var lIndex = 10;
 		  $(document).ready(function() {
             
 			$('#followerCountBox').add('#followingCountBox').add('#followingVendorCountBox').on("click", display_popup_handler);
@@ -142,7 +117,6 @@
                 }
                 $('.section-scroll').bind('scroll', scroll_handler);
         });
-	});
 
 function updatestatus(){  
     //Show number of loaded items  
@@ -195,9 +169,9 @@ function scrollalert(){
                 <ul style="list-style:None;">
                     <li class="user-stat user-stat-color"><span class="user-stat-color be-font-inline">G</span>Profile Views <a href="" class="blue right bold stat-views header-link-color">{%     get_hit_count for profile_user %}</a></li>
                     <li class="user-stat user-stat-color"><span class="user-stat-color be-font-inline">F</span>Appreciations <a href="" class="blue right bold stat-apps header-link-color">{{ profile_user.num_likes }}</a></li>
-                    {% follower_subset_url profile_user 0 profile_user.relationships.followers.count as follower_url %}
+                    {% follower_subset_url profile_user 0 10 as follower_url %}
                     <li class="user-stat user-stat-color"><span class="user-stat-color be-font-inline">I</span>Follower Friends <a id="followerCountBox" href="{{follower_url}}" class="right bold stat-followers header-link-color">{{ profile_user.relationships.followers.count }}</a></li>
-                    {% following_subset_url profile_user 0 profile_user.relationships.following.count as following_url %}
+                    {% following_subset_url profile_user 0 10 as following_url %}
                     <li class="user-stat user-stat-color"><span class="user-stat-color be-font-inline">H</span>Following Friends <a id="followingCountBox" href="{{following_url}}" class="right bold stat-following header-link-color">{{ profile_user.relationships.following.count }}</a></li>
                     {% vendor_following_subset_info_url profile_user 0 profile_user|vendor_following_count as vendor_subset_url %}
                     <li class="user-stat user-stat-color"><span class="user-stat-color be-font-inline">H</span>Following Vendors <a id="followingVendorCountBox" href="{{vendor_subset_url}}" class="right bold stat-following header-link-color">{{ profile_user|vendor_following_count }}</a></li>
@@ -241,15 +215,10 @@ function scrollalert(){
                     {% endfor %}
                     <br><br><a class="btn btn-primary" style="" href="{% url "profile_update" %}">{% trans "Edit profile" %}</a>
                 {% else %}
-                    <div id="followContainer" {% if_relationship request.user profile_user "following" %}
-                                                    class="following follow-button-container action-follow-user"
-                                              {% else %}
-                                                    class="follow-button-container action-follow-user" 
-                                              {% endif_relationship %}
-                                              >
-                        <a  href="{{ profile_user|add_relationship_url:"following" }}" class="follow-btn form-button form-button-follow form-button-small form-button-default form-button-left-icon form-button-icon-follow">Follow</a>
+                    <div id="followContainer" class="follow-button-container action-follow-user {% if_relationship request.user profile_user "following" %} following {% endif_relationship %}" >
+                        <a  href="{{ profile_user|add_relationship_url:"following" }}" class="follow-btn form-button form-button-follow form-button-small form-button-default form-button-left-icon form-button-icon-follow" data-id="followerCountBox">Follow</a>
                         <a class="form-button form-button-following form-button-small form-button-light-and-grey form-button-left-icon form-button-icon-following">Following</a>
-                        <a  href="{{ profile_user|remove_relationship_url:"following" }}" class="unfollow-btn form-button form-button-unfollow form-button-small form-button-red form-button-left-icon form-button-icon-unfollow">Unfollow</a>
+                        <a  href="{{ profile_user|remove_relationship_url:"following" }}" class="unfollow-btn form-button form-button-unfollow form-button-small form-button-red form-button-left-icon form-button-icon-unfollow" data-id="followerCountBox">Unfollow</a>
                     </div>  
                     {% if_relationship request.user profile_user "following" %}
                     {% endif_relationship %}
