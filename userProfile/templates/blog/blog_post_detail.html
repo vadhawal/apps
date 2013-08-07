@@ -26,7 +26,6 @@
 {% block extra_js %}
 <script type="text/javascript" src="{% static "js/jquery.lightbox-0.5.js" %}"></script>
 <script src="{% static "js/jquery.linkify.js" %}"></script>
-<script src="{% static "js/album.handlers.js" %}"></script>
 <link rel="stylesheet" href="{% static "css/customnavbar.css" %}"/>
 <link rel="stylesheet" type="text/css" href="{% static "css/imagestore.css" %}"/>
 <link rel="stylesheet" type="text/css" href="{% static "css/jquery.lightbox-0.5.css" %}"/>
@@ -66,7 +65,7 @@
             $('#vendorAlbum').html("");
             var link = add_link.attr('href');
             $.get(link, {}, function(data) {
-                document.getElementById("vendorAlbum").innerHTML = data;
+                $("#vendorAlbum").html(data);
                 install_album_handlers();
             });
             return false;
