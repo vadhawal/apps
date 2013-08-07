@@ -2,6 +2,7 @@
 {% compress css %}
 <link rel="stylesheet" href="{{ STATIC_URL }}css/dashboard.css">
 {% endcompress %}
+
 <div class="module" id="top-comments-module">
     <h1>{% trans "Top Reviews" %}</h1>
     {% if settings.COMMENTS_DISQUS_SHORTNAME %}
@@ -10,48 +11,24 @@
     <ul>
         {% for comment in comments %}
         <li>
-            <!--a href="mailto:{{ comment.email }}">
-                <img src="{% gravatar_url comment.email %}">
-                {{ comment.user_name }}
-            </a-->
-            <a href="{{ comment.user.get_absolute_url }}">
-                {% if comment.user.get_profile.profile_photo %}
-                <img src="{{ comment.user.get_profile.profile_photo.url }}">
-                {% elif comment.user.get_profile.image_url %}
-                <img src="{{ comment.user.get_profile.image_url }}">
-                {% else %}
-                <img src="{% gravatar_url comment.email %}">
-                {% endif %}
-                {{ comment.user_name }}
-            </a>
-            <p>
-            <span id="truncTopComment{{forloop.counter}}">{{ comment.intro }}</span>
-            {%  if comment.comment != comment.intro %}
-            <span id="expTopComment{{forloop.counter}}">{{ comment.comment }}</span>
-            </p>
-            <a href="javascript:void(0);" id="moreTopComment{{forloop.counter}}">More...</a>
-            <script type="text/javascript">
-                $('#expTopComment{{forloop.counter}}').hide();
-                $('#moreTopComment{{forloop.counter}}').click(function(){
-                    $('#truncTopComment{{forloop.counter}}').toggle();
-                    $('#expTopComment{{forloop.counter}}').toggle();
-                    if($('#moreTopComment{{forloop.counter}}').html() == "More...")
-                        $('#moreTopComment{{forloop.counter}}').html("Less...");
-                    else
-                        $('#moreTopComment{{forloop.counter}}').html("More...");
+            {% include 'generic/includes/render_owner.html' with owner=comment.user %}
 
-                    return false;
-                });
-            </script>
-            {% endif %}
-            <p>
+            <span>
+                <span class="trunc-comment">{{ comment.intro }}</span>
+                {% if comment.comment != comment.intro %}
+                    <span class="exp-comment" style="display:none;">{{ comment.comment }}</span>
+                    <a class="toggle-comment" style="cursor: pointer;">More...</a>
+                {% endif %}
+            </span>
+            <p> On
                 <a href="{{ comment.content_object.get_absolute_url }}">
                     {{ comment.content_object }}
                 </a>
-                &middot;
+                
                 <a href="{{ comment.get_absolute_url }}">
                     {% blocktrans with sometime=comment.submit_date|timesince %}{{ sometime }} ago{% endblocktrans %}
                 </a>
+                <a href="{% url render_review comment.content_object.slug comment.id %}">Full Review</a>
             </p>
         </li>
         {% endfor %}

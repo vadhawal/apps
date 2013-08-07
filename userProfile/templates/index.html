@@ -44,6 +44,7 @@ $(document).ready(function() {
         var sub_category = $('#blog_subcategories').find("option:selected").text();
         $.get('/' + parent_category + '/'+ sub_category + '/trendingreviews', {}, function(data) {
                $('#topReviewsForStoreCategory').html(data);
+               install_toggle_comment_handler();
                });
         $.get('/' + parent_category + '/'+ sub_category + '/trendingstores', {}, function(data) {
                $('#topStoresForStoreCategory').html(data);
