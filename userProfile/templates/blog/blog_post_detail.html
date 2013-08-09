@@ -48,18 +48,6 @@
             }
             getDealList(); 
 
-            $('#vendorFollowers').click(function() {
-                var w = 700;
-                var h = 500;
-                var left = 100;
-                var top = 100;
-                var name="Friends";
-                var settings = 'height=' + h + ',width=' + w + ',left=' + left + ',top=' + top + ',resizable=yes,scrollbars=yes,toolbar=no,menubar=no,location=yes,directories=no,status=yes';
-                var url = $(this).attr("href");
-                window.open(url, name, settings);
-
-                return false;
-            });
         $('#viewAlbum').click(function() {
             var add_link = $(this);
             $('#vendorAlbum').html("");
@@ -82,57 +70,8 @@
             return false;
         });
         $('#getComments').click();
-            var FollowUnfollow = function() {
-                var element = $("#followContainer");
-                var classes = element.attr('class');
-                if (classes.indexOf('following') == -1) {
-                    classes+= ' following';
-                }
-                else {
-                    classes = classes.replace('following', '');
-                }
-                element.attr('class', classes); 
-            }
-            
-            {% if request.user|is_following:blog_post %}
-                var element = $("#followContainer");
-                var classes = element.attr('class');
-                if (classes.indexOf('following') == -1) {
-                        classes+= ' following';
-                    }
-                element.attr('class', classes); 
-            {% endif %}
 
-            $('#follow-btn').click(function() {
-                var add_link = $(this);
-                $.post(add_link.attr('href'), {}, function(data) {
-                    if (data  == 'ok') {
-                        FollowUnfollow();
-                        var followerCount = $('#vendorFollowers').html();
-                        var followerCount = parseInt(followerCount) + 1;
-                        $('#vendorFollowers').html(followerCount);
-                    } else {
-                        //showSnazzySuccessMessage("Something went wrong!");
-                    }
-                });
-                return false;
-            });
-
-            $('#unfollow-btn').click(function() {
-                var add_link = $(this);
-                $.post(add_link.attr('href'), {}, function(data) {
-                    if (data == 'ok') {
-                        FollowUnfollow();
-                        var followerCount = $('#vendorFollowers').html();
-                        var followerCount = parseInt(followerCount) - 1;
-                        $('#vendorFollowers').html(followerCount);
-                    } else {
-                        //showSnazzySuccessMessage("Something went wrong!");
-                    }
-                });
-                return false;
-            });
-            install_album_handlers();
+        install_album_handlers();
     });
     </script>
 {% endblock %}
@@ -204,15 +143,19 @@
 {% set_short_url_for blog_post %}
 <a class="btn small primary share-twitter" target="_blank" href="http://twitter.com/home?status={{ blog_post.short_url|urlencode }}%20{{ blog_post.title|urlencode }}">{% trans "Share on Twitter" %}</a>
 <a class="btn small primary share-facebook" target="_blank" href="http://facebook.com/sharer.php?u={{ request.build_absolute_uri }}&amp;t={{ blog_post.title|urlencode }}">{% trans "Share on Facebook" %}</a>
-<div id="followContainer" class="follow-button-container action-follow-user" >
-    <a id="follow-btn" href="{% follow_url blog_post %}" class="form-button form-button-follow form-button-small form-button-default form-button-left-icon form-button-icon-follow">Follow</a>
-    <a class="form-button form-button-following form-button-small form-button-light-and-grey form-button-left-icon form-button-icon-following">Following</a>
-    <a id="unfollow-btn" href="{% follow_url blog_post %}" class="form-button form-button-unfollow form-button-small form-button-red form-button-left-icon form-button-icon-unfollow">Unfollow</a>
+
+<div id="vendorFollowContainer" class="follow-button-container action-follow-user {% if request.user|is_following:blog_post %}following{% endif %}" >
+    <a href="{% follow_url blog_post %}" class="follow-btn form-button form-button-follow form-button-small form-button-default form-button-left-icon form-button-icon-follow" data-id="vendor_followers">Follow</a>
+
+    <a class="form-button form-button-following form-button-small form-button-light-and-grey form-button-left-icon form-button-icon-following" data-id="vendor_followers">Following</a>
+    
+    <a href="{% follow_url blog_post %}" class="unfollow-btn form-button form-button-unfollow form-button-small form-button-red form-button-left-icon form-button-icon-unfollow" data-id="vendor_followers" >Unfollow</a>
+</div>
     {% vendor_follower_subset_info_url blog_post 0 request.user|follower_count:blog_post as subset_follower_url %}
-    <a id="vendorFollowers" href="{{subset_follower_url}}">
+    <a id="vendor_followers" class="vendorFollowers" href="{{subset_follower_url}}">
         {{  request.user|follower_count:blog_post }}
     </a>
-</div>
+
 <span class="cover-stat cover-stat-views">
       <span class="stat-label be-font-inline">G</span>
       <span class="stat-value">{% get_hit_count for blog_post %}</span>
