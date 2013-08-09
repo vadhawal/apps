@@ -27,7 +27,8 @@ $(function() {
 {% endif %}
 {% include "generic/includes/render_owner.html" with owner=request.user %}
 
-<form method="post" id="comment" action="{{ comment_url }}#comment">
+<form class="
+{% if object_for_comments|get_class_name == "BlogPost" %} review_on_object {% else %} comment_on_object {% endif %}" method="post" id="comment" action="{{ comment_url }}">
     {% if not request.POST.replied_to %}
         {% fields_for posted_comment_form %}
     {% else %}

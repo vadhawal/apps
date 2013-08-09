@@ -5,103 +5,23 @@
 <ul class="unstyled">
     {% for comment in comments_for_thread %}
 
-    <li id="comment-{{ comment.id }}"
-        {% url "commentProfile" comment.author as profile_url%}
-        {# {% if comment.by_author %}class="comment-author"{% endif %} #}
-        >
+    <li id="comment-{{ comment.id }}">
         {% editable comment.is_public comment.is_removed %}
-        {% if not comment.is_removed and comment.is_public %}
-        <strong>
-            {% url "profile" comment.user as profile_url %}
-            {% if comment.url %}
-            <a href="{{ profile_url }}">
-                {% if comment.user.get_profile.profile_photo %}
-                  {% thumbnail comment.user.get_profile.profile_photo "60x60" as img %} 
-                    <img style="margin-right:20px;" src="{{ MEDIA_URL }}{{img}}">
-                  {% endthumbnail %}
-                <!--img src="{{ comment.user.get_profile.profile_photo.url }}"-->
-                {% elif comment.user.get_profile.image_url %}
-                <img src="{{ comment.user.get_profile.image_url }}">
-                {% else %}
-                <img src="{% gravatar_url comment.email %}">
-                {% endif %}
-            </a>    
-            {{ comment.user_name }} bought a {{comment.bought_category}}
-            {% else %}
-            <a href="{{ profile_url }}">
-            {% if comment.user.get_profile.profile_photo %}
-                {% thumbnail comment.user.get_profile.profile_photo "60x60" as img %} 
-                    <img style="margin-right:20px;" src="{{ MEDIA_URL }}{{img}}">
-                {% endthumbnail %}
-            <!--img src="{{ comment.user.get_profile.profile_photo.url }}"-->
-            {% elif comment.user.get_profile.image_url %}
-            <img src="{{ comment.user.get_profile.image_url }}">
-            {% else %}
-            <img src="{% gravatar_url comment.email %}">
+            {% if not comment.is_removed and comment.is_public %}
+                <strong>
+                    {% include 'generic/includes/render_owner.html' with owner=comment.user %}   
+                </strong>
+            
+                <p>{{ comment.comment|comment_filter }}</p>
+
+                {% include 'generic/includes/render_voting.html' with object=comment %}
+                <span class="timespan">{% blocktrans with sometime=comment.submit_date|timesince %}{{ sometime }} ago{% endblocktrans %}</span>
             {% endif %}
-            </a>
-            {% endif %}
-        </strong>
-        <span class="timespan">{% blocktrans with sometime=comment.submit_date|timesince %}{{ sometime }} ago{% endblocktrans %}</span>
-        
-        <p>{{ comment.comment|comment_filter }}</p>
-
-        {% include 'generic/includes/render_voting.html' with object=comment %}
-
-        
-        <a href="{{ request.path }}#comment-{{ comment.id }}">{% trans "Link" %}</a> 
-        {% if request.user.is_superuser %} / 
-            <a href="#reply-{{ comment.id }}" class="reply">{% trans "Reply" %}</a>
-        {% endif %}
-        <form class="reply-form" method="post" id="reply-{{ comment.id }}"
-            action="{{ comment_url }}#reply-{{ comment.id }}"
-            {% if replied_to != comment.id %}style="display:none;"{% endif %}>
-           {% if replied_to == comment.id %}
-                {% if  object_for_comments|get_class_name == "ThreadedComment" %}
-                    {% fields_for posted_comment_form %}
-                {% endif %}
-            {% else %}
-                {% if  object_for_comments|get_class_name == "ThreadedComment" %}
-                    {% fields_for unposted_comment_form %}
-                {% endif %}
-            {% endif %}
-            <input type="hidden" name="replied_to" value="{{ comment.id }}">
-            <input class="btn btn-primary btn-large" type="submit" value="{% trans "Reply" %}">
-        </form>
-
-        {% else %}
-
-        {% if request.user.is_staff %}
-        <strong>
-            {% if comment.url %}
-            <a href="{{ comment.url }}">
-                <img src="{% gravatar_url comment.email %}">
-                {{ comment.user_name }}
-            </a>
-            {% else %}
-            <img src="{% gravatar_url comment.email %}">
-            {{ comment.user_name }}
-            {% endif %}
-        </strong>
-        <span class="timespan">{% blocktrans with sometime=comment.submit_date|timesince %}{{ sometime }} ago{% endblocktrans %}</span>
-        <p>{{ comment.comment|comment_filter }}</p>
-        {% endif %}
-
-        <p>
-            {% if comment.is_removed %}
-            {% trans "Comment deleted" %}
-            {% else %}
-            {% trans "Comment awaiting approval" %}
-            {% endif %}
-            <span class="timespan">{{ comment.submit_date|timesince }} {% trans "ago" %}</span>
-        </p>
-
-        {% endif %}
         {% endeditable %}
     </li>
     {% endfor %}
     {% if no_comments %}
-    <li>{% trans "There are currently no comments" %}</li>
+        <li>{% trans "There are currently no comments" %}</li>
     {% endif %}
 </ul>
 
