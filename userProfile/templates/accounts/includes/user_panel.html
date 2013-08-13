@@ -27,7 +27,8 @@ $(document).ready(function() {
     {% trans "Logged in as: " %}
     {% url "profile" request.user.username as profile_url %}
     {% if profile_url %}
-        <a href="{{ profile_url }}">{{ request.user.username }}</a><br>
+            {% include 'actstream/render_actor_name.html' with actor=request.user %}
+        <br>
         {% if request.user.is_authenticated %}
         <a href="{{profile_url}}">
         {% if request.user.get_profile.profile_photo%}
