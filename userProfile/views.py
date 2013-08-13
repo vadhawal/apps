@@ -1,7 +1,7 @@
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from userProfile.models import BroadcastForm, Broadcast, UserWishRadio
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from actstream import action
 from django.utils.translation import ugettext_lazy as _
@@ -266,3 +266,17 @@ def getTrendingStores(request, parent_category, sub_category):
 			}, context_instance=RequestContext(request))
 	else:
 		raise Http404()
+
+def get_profile_image(request, username=None):
+	user = None
+
+	if username:
+		try:
+			user = User.objects.get(username=username)
+		except:
+			raise Http404()
+		if user.get_profile().profile_photo:
+			return HttpResponseRedirect(user.get_profile().profile_photo.url)
+		elif user.get_profile().image_url:
+			return HttpResponseRedirect(user.get_profile().image_url)
+	raise Http404()
