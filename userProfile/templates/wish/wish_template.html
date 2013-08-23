@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load userProfile_tags %}
+{% block main %}
+    {% get_wish_owner wish as owner %}
+        <div class="span1">
+            {% include 'generic/includes/render_owner.html' with owner=owner %}
+        </div>
+        <div class="span7">
+            {% include 'wish/render_wish.html' with wish=wish %}
+        </div>
+        </br>
+        <div style="float:left;">
+            {% include 'actstream/render_voting.html' with object=wish %}
+            {% include 'actstream/render_subcomments.html' with object=wish %}
+        </div>
+{% endblock %}
+

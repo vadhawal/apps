@@ -280,3 +280,14 @@ def get_profile_image(request, username=None):
 		elif user.get_profile().image_url:
 			return HttpResponseRedirect(user.get_profile().image_url)
 	raise Http404()
+
+def render_wish(request, wish_id, template="wish/wish_template.html"):
+    """
+    renders the wish in a page with dedicated url. Can be used to share in social networks.
+    """
+    wish =  UserWishRadio.objects.get(id=wish_id)
+    context = RequestContext(request)
+
+    return render_to_response('wish/wish_template.html', {
+       'wish': wish, 
+    }, context_instance=context)

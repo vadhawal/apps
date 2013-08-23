@@ -119,3 +119,7 @@ var install_voting_handlers = function(){
     $('.pScore').add('.broadcasters').off("click").on("click", display_popup_handler);
 }
 
+$(document).ready(function(){
+    install_voting_handlers();  
+});
+
