@@ -90,6 +90,8 @@ $(document).ready(function() {
         {% include 'actstream/render_spam_report.html' with object=comment %}
         {% endif %}
         <span class="timespan">{% blocktrans with sometime=comment.submit_date|timesince %}{{ sometime }} ago{% endblocktrans %}</span>
+        <a class="btn small primary share-twitter" target="_blank" href="http://twitter.com/home?status={{ request.build_absolute_uri }}">Share on Twitter</a>
+        <a class="btn small primary share-facebook" target="_blank" href="http://facebook.com/sharer.php?u={{ request.build_absolute_uri }}&amp;t=review">{% trans "Share on Facebook" %}</a>
     </div>
 </div>
 {% endblock %}
