@@ -323,8 +323,10 @@ function viewFeed()
             </select>
         {% endif %}
         
-        <input id="asyou" type="radio" name="actor" value="user" checked="checked" onclick="$('#userwish').toggle();$('#vendorwish').toggle();">As You
-        <input type="radio" name="actor" value="vendor" onclick="$('#userwish').toggle();$('#vendorwish').toggle();">As {{ blog }}<br><br>
+        <input id="asyou" type="radio" name="actor" value="user" checked="checked" onclick="$('#userwish').toggle();$('#vendorwish').toggle();$('#expiry_date').toggle();">As You
+        <input type="radio" name="actor" value="vendor" onclick="$('#userwish').toggle();$('#vendorwish').toggle();$('#expiry_date').toggle();">As {{ blog }}<br><br>
+        
+        <input style="display:none;" type="date" id="expiry_date" name="expiry_date">
     {% else %}
         <input id="radio-category" name="radio_category">
         {% blog_parentcategories_abs as parent_categories %}

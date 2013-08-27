@@ -82,7 +82,8 @@ def userwish(request):
 			if blog_posts:
 				blog_post = blog_posts[0]
 				ctype = ContentType.objects.get_for_model(BlogPost)
-				broadcast = UserWishRadio.objects.create_user_wishradio_object(request.user, _(request.POST['vendorwish']), blog_category, blog_parentcategory, _(request.POST['message']), ctype, request.user.pk, wishimgeobj, urlPreviewContent)
+				deal_expiry_date = request.POST.get('expiry_date',None)
+				broadcast = UserWishRadio.objects.create_user_wishradio_object(request.user, _(request.POST['vendorwish']), blog_category, blog_parentcategory, _(request.POST['message']), ctype, request.user.pk, wishimgeobj, urlPreviewContent, deal_expiry_date)
 				action.send(blog_post, verb='said:', target=broadcast)
 				actions.follow(request.user, broadcast, send_action=False, actor_only=False) 
 				Follow.objects.get_or_create(request.user, broadcast)

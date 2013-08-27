@@ -22,6 +22,7 @@ except ImportError:
     from datetime import datetime
     now = datetime.now
 
+import datetime as datetime_
 from follow import utils
 import uuid
 
@@ -124,8 +125,8 @@ class Broadcast(models.Model):
         return self.message 
 
 class UserWishRadioManager(models.Manager):
-    def create_user_wishradio_object(self, user, prefix_message, blog_category, blog_parentcategory, message, content_type, object_id, wishimage, urlPreviewContent ):
-        broadcast = self.create(user=user, prefix_message=prefix_message, blog_category=blog_category, blog_parentcategory=blog_parentcategory, message=message, content_type=content_type, object_id=object_id, wishimage=wishimage, urlPreviewContent=urlPreviewContent)
+    def create_user_wishradio_object(self, user, prefix_message, blog_category, blog_parentcategory, message, content_type, object_id, wishimage, urlPreviewContent, expiry_date=None ):
+        broadcast = self.create(user=user, prefix_message=prefix_message, blog_category=blog_category, blog_parentcategory=blog_parentcategory, message=message, content_type=content_type, object_id=object_id, wishimage=wishimage, urlPreviewContent=urlPreviewContent, expiry_date=expiry_date)
         return broadcast
 
 def get_wishimage_upload_path(instance, filename):
@@ -144,6 +145,7 @@ class UserWishRadio(Broadcast):
     content_type = models.ForeignKey(ContentType)
     object_id = models.CharField(max_length=255)
     timestamp = models.DateTimeField(default=now)
+    expiry_date = models.DateField(_("expiry_date"), default=datetime_.date.today, null=True)
     wishimage = ResizedImageField(upload_to=get_wishimage_upload_path, blank=True, null=True)
     urlPreviewContent = models.TextField(blank=True, verbose_name=_("UrlPreview"))
 

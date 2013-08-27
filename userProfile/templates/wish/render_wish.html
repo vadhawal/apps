@@ -24,6 +24,9 @@
     {% autoescape off %}
             {{wish.urlPreviewContent}}
     {% endautoescape %}
+    {% if wish.expiry_date %}
+        Expires on: {{wish.expiry_date}}
+    {% endif %}
     </li>
 </ul>
 
