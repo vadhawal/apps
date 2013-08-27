@@ -127,10 +127,13 @@ def get_wishlist(request, content_type_id, object_id, sIndex, lIndex):
 def shareWish(request, wish_id):
 	wishObject = get_object_or_404(UserWishRadio, pk=wish_id)
 	ctype = ContentType.objects.get_for_model(wishObject)
-
-	actionObject = Action.objects.get(actor_content_type=wishObject.content_type, actor_object_id=wishObject.object_id,verb=u'said:', action_object_content_type=ctype, action_object_object_id=wishObject.pk)
-
-	action.send(request.user, verb=_('shared'), target=actionObject)
+	actionObject = None
+	try:
+		actionObject = Action.objects.get(actor_content_type=wishObject.content_type, actor_object_id=wishObject.object_id,verb=u'said:', target_content_type=ctype, target_object_id=wishObject.pk)
+	except:
+		pass
+	if actionObject:
+		action.send(request.user, verb=_('shared'), target=actionObject)
 	if request.is_ajax():
 		return HttpResponse('ok') 
 	else:

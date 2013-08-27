@@ -65,6 +65,17 @@ var install_follow_handlers = function() {
     $('.follow-btn').off("click").on("click", follow_handler);
     $('.unfollow-btn').off("click").on("click", unfollow_handler);
 }
+
+var sharewish_handler = function() {
+    var add_link = $(this);
+    var link = add_link.attr('href');
+    $.get(link, {}, function(data) {
+    if(data == 'ok')
+      alert('shared');
+    });
+    return false;
+}
+
 $(document).ready(function() {
     install_follow_handlers();
     $('.vendorFollowers').on("click", display_popup_handler);

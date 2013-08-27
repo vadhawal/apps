@@ -11,21 +11,13 @@
 {% get_wish_owner wish as wish_owner %}
 {% include 'generic/includes/render_owner.html' with owner=wish_owner %}
 
-<span id="wishlistitem{{forloop.counter|add:sIndex}}"> {% render_wish wish %} </span>
-        {{wish.timestamp}}
-        {% include 'generic/includes/render_voting.html' with object=wish %}
+{% render_wish wish %}
+{{wish.timestamp}}
+{% include 'generic/includes/render_voting.html' with object=wish %}
 
-        {% include 'actstream/render_subcomments.html' with object=wish %}
+{% include 'actstream/render_subcomments.html' with object=wish %}
 
-        <a id="shareWish{{forloop.counter|add:sIndex}}" href="{% share_wish_url wish %}" onclick="
-                    var add_link = $(this);
-                    var link = add_link.attr('href');
-                    $.get(link, {}, function(data) {
-                        if(data == 'ok')
-                          alert('shared');
-                    });
-                    return false;
-        ">share</a>
+<a class="shareWish" href="{% share_wish_url wish %}" >share</a>
 </li>
 {% empty %}
 {% trans "No wishes yet" %}

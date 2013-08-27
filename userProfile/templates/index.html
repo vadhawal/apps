@@ -32,6 +32,7 @@
 var sIndex = 0;
 var lIndex = 5;
 $(document).ready(function() {
+	$('.message').linkify();
     {% if request.user.is_authenticated %}
           {% get_owned_blog request.user as blog %} 
           {% if blog %}
@@ -51,7 +52,10 @@ $(document).ready(function() {
                });    
         $.get('/' + parent_category + '/'+ sub_category + '/trendingdeals', {}, function(data) {
                $('#topDealsForStoreCategory').html(data);
+               		install_voting_handlers();
+                    $('.shareWish').on('click', sharewish_handler);
                });
+
         return false;
     });
     $('#getvendors').click(function(){
