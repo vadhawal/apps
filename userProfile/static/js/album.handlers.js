@@ -64,7 +64,7 @@ var install_album_handlers = function(){
 	install_voting_handlers();  //Assumed inheritance from action.handler.js
 	$('.delete_album').off('click').on('click', delete_album_handler);
 	$('.back_to_album').off('click').on('click', back_to_album_handler);
-	$('.album_photos').off('click').on('click', show_album_handler);
+	//$('.album_photos').off('click').on('click', show_album_handler);  //disabling the ajax for now. will land to dedicated page instead.
     $('.upload_album').off('click').on('click', upload_album_handler);
     $('.create_album').off('click').on('click', create_album_handler);
 };
