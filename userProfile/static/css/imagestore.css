@@ -62,13 +62,18 @@ img.current {
     color: #CCC;
 }
 
-.album-head {
+.album_photos_ex {
     height: 150px;
     width: 150px;
     display: table-cell;
     vertical-align: middle;
-    text-align: center;
+    text-align: center;   
 }
+
+.album-head {
+    display: table-cell;
+}
+
 .album-head a {
     text-align: center;
 }

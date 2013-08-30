@@ -10,6 +10,7 @@ from django.template.defaultfilters import slugify
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
+
 from mezzanine.blog.models import BlogPost, BlogCategory, BlogParentCategory
 from mezzanine.generic.models import Review
 
@@ -27,7 +28,7 @@ def broadcast(request):
 	if request.method == "POST":
 		if _(request.POST['actor']) == "user":
 			broadcast = Broadcast.objects.create_broadcast_object( _(request.POST['message']), request.user)
-			action.send(request.user, verb='said:', target=broadcast)
+			action.send(request.user, verb=settings.SAID_VERB, target=broadcast)
 		elif _(request.POST['actor']) == "vendor":
 			
 			blog_posts = BlogPost.objects.published(
@@ -40,7 +41,7 @@ def broadcast(request):
 			if blog_posts:
 				blog_post = blog_posts[0]
 				broadcast = Broadcast.objects.create_broadcast_object( _(request.POST['message']), request.user)
-				action.send(blog_post, verb='said:', target=broadcast)
+				action.send(blog_post, verb=settings.SAID_VERB, target=broadcast)
 
 	if request.is_ajax():
 		return HttpResponse('ok')
@@ -64,7 +65,7 @@ def userwish(request):
 		if _(request.POST['actor']) == "user":
 			ctype = ContentType.objects.get_for_model(User)
 			broadcast = UserWishRadio.objects.create_user_wishradio_object(request.user, _(request.POST['userwish']), blog_category , blog_parentcategory, _(request.POST['message']), ctype, request.user.pk, wishimgeobj, urlPreviewContent )
-			action.send(request.user, verb='said:', target=broadcast)
+			action.send(request.user, verb=settings.SAID_VERB, target=broadcast)
 			actions.follow(request.user, broadcast, send_action=False, actor_only=False) 
 			Follow.objects.get_or_create(request.user, broadcast)
 			#blog_posts = BlogPost.objects.all().filter(categories=blog_category)
@@ -84,7 +85,7 @@ def userwish(request):
 				ctype = ContentType.objects.get_for_model(BlogPost)
 				deal_expiry_date = request.POST.get('expiry_date',None)
 				broadcast = UserWishRadio.objects.create_user_wishradio_object(request.user, _(request.POST['vendorwish']), blog_category, blog_parentcategory, _(request.POST['message']), ctype, request.user.pk, wishimgeobj, urlPreviewContent, deal_expiry_date)
-				action.send(blog_post, verb='said:', target=broadcast)
+				action.send(blog_post, verb=settings.SAID_VERB, target=broadcast)
 				actions.follow(request.user, broadcast, send_action=False, actor_only=False) 
 				Follow.objects.get_or_create(request.user, broadcast)
 	if request.is_ajax():
@@ -130,11 +131,11 @@ def shareWish(request, wish_id):
 	ctype = ContentType.objects.get_for_model(wishObject)
 	actionObject = None
 	try:
-		actionObject = Action.objects.get(actor_content_type=wishObject.content_type, actor_object_id=wishObject.object_id,verb=u'said:', target_content_type=ctype, target_object_id=wishObject.pk)
+		actionObject = Action.objects.get(actor_content_type=wishObject.content_type, actor_object_id=wishObject.object_id,verb=settings.SAID_VERB, target_content_type=ctype, target_object_id=wishObject.pk)
 	except:
 		pass
 	if actionObject:
-		action.send(request.user, verb=_('shared'), target=actionObject)
+		action.send(request.user, verb=settings.SHARE_VERB, target=actionObject)
 	if request.is_ajax():
 		return HttpResponse('ok') 
 	else:
