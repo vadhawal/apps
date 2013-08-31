@@ -107,9 +107,7 @@ var install_action_handlers = function(){
     $('a.thumb').each(function(){
         $(this).lightBox();
     });
-    $('a.album_in_feed').each(function(){
-        $(this).lightBox();
-    });
+    $('a.album_in_feed').off('click').on('click', album_in_feed_handler);
     $(".imgIframe").off("click").on("click", img_iframe_handler);
     $('.previewPosted').width('100%');
 }
@@ -117,6 +115,18 @@ var install_action_handlers = function(){
 var install_voting_handlers = function(){
     $('.upvote').add('.downvote').add('.clearvote').off("click").on("click", voting_handlers);
     $('.pScore').add('.broadcasters').off("click").on("click", display_popup_handler);
+}
+
+var album_in_feed_handler = function(){
+    var $element_clicked = $(this);
+    var album_url = $element_clicked.data("album-url");
+    $.get(album_url, {}, function(data) {
+        $element_clicked.closest('div[class^="album-feed-container"]').append(data);
+        $element_clicked.off('click');
+        $element_clicked.closest('div[class^="album-feed-container"]').find('a.album_in_feed').lightBox();
+        $element_clicked.click();
+    });
+    return false;    
 }
 
 $(document).ready(function(){
