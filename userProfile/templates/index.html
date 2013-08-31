@@ -254,7 +254,7 @@ function scrollalert(){
     var windowheight=$('.section-scroll')[0].clientHeight;//$('.section-scroll').attr('clientHeight');  
     var scrolloffset=20; 
 
-    if(scrolltop>=(scrollheight-(windowheight+scrolloffset)))  
+    if(scrolltop > 0 && scrolltop>=(scrollheight-(windowheight+scrolloffset)))  
     {  
         //fetch new items 
         $('#status').text('Loading more items...');
