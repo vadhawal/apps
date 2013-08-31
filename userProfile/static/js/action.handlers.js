@@ -104,9 +104,6 @@ var install_action_handlers = function(){
     $('.shareaction').off("click").on("click", share_action_handler);
     $('.followpost').off("click").on("click", follow_post_handler);
     $('.unfollowpost').off("click").on("click", unfollow_post_handler);
-    $('a.thumb').each(function(){
-        $(this).lightBox();
-    });
     $('a.album_in_feed').off('click').on('click', album_in_feed_handler);
     $(".imgIframe").off("click").on("click", img_iframe_handler);
     $('.previewPosted').width('100%');
