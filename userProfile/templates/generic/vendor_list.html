@@ -35,7 +35,7 @@
                         {% endspaceless %}
                     </a>
                         {% vendor_follower_subset_info_url vendor 0 request.user|follower_count:vendor as subset_follower_url %}
-                    <a class="infoSpace searchResultSubText" href="{{subset_follower_url}}">{{ request.user|follower_count:vendor }} follower{{ request.user|follower_count:vendor|pluralize }}
+                    <a class="infoSpace searchResultSubText vendorFollowers" href="{{subset_follower_url}}">{{ request.user|follower_count:vendor }} follower{{ request.user|follower_count:vendor|pluralize }}
                     </a>
                     <span class="infoSpace">
                         {% get_hit_count for vendor %} views
