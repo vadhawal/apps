@@ -16,7 +16,7 @@
 .searchResultRating {
 	cursor: default;
 	margin-left: 30px;
-	padding: 1px;
+	padding: 0px;
 	padding-left: 3px;
 	padding-right: 3px;
 }

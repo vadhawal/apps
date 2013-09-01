@@ -1,6 +1,6 @@
 {% load i18n mezzanine_tags %}
 {% load thumbnail userProfile_tags %}
-{% load relationship_tags %}
+{% load relationship_tags static %}
 {% for review in comments %}
 <div class="row topReviews">
     <div class="span1 text-center">
@@ -10,16 +10,16 @@
             <img style="vertical-align:middle;display:inline-block" height="55px" width="55px" src="{{ MEDIA_URL }}{{img}}">
             {% endthumbnail %}
         {% elif review.user.get_profile.image_url %}
-            <img style="vertical-align:middle;display:inline-block" height="55px" width="55px" src="{{ owner.get_profile.image_url }}">
+            <img style="vertical-align:middle;display:inline-block" height="55px" width="55px" src="{{ review.user.get_profile.image_url }}">
         {% else %}
-            <img sstyle="vertical-align:middle;display:inline-block" height="55px" width="55px" src="{{ STATIC_URL }}img/defaultProfilePic.gif"> 
+            <img sstyle="vertical-align:middle;display:inline-block" height="55px" width="55px" src="{% static 'img/defaultProfilePic.gif' %}"> 
         {% endif %}
         </a>
     </div>
     <div class="span3 noGutter">
         <div class="searchResultSubTextBig">
             <a class="searchResultSubTextBig darken" href="{{review.user.get_absolute_url}}">{% get_full_name review.user %}</a>
-            <span style="float:right"> <span class="searchResultSubText">for </span>
+            <span class="pull-right"> <span class="searchResultSubText">for </span>
                 <a class="searchResultSubTextBig darken" href="{{ review.content_object.get_absolute_url }}">
                     {{ review.content_object }}
                 </a>
@@ -37,13 +37,13 @@
         </div>
         <div class="searchResultSubTextBig">
             {{review.comment}}
-            <span class="searchResultRating searchResultRatingScheme searchResultRatingText rating-{{review.overall_value|floatformat:"0"}}" style="margin-left:0; float:right">
+            <span class="searchResultRating searchResultRatingScheme searchResultRatingText rating-{{review.overall_value|floatformat:"0"}} pull-right" style="margin-left:0;">
                 {{review.overall_value|floatformat:"1"}}
             </span>
         </div>
-        <div class="searchResultSubText">
+        <div class="searchResultSubText" style="margin-top:1px;">
             <a class="searchResultSubText darken" href="{% url render_review review.content_object.slug review.id %}">Read Review</a>
-            <span style="float:right">
+            <span class="pull-right">
                 {% blocktrans with sometime=review.submit_date|timesince %}{{ sometime }} ago{% endblocktrans %}
             </span>
         </div>
