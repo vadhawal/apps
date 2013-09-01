@@ -20,9 +20,9 @@
 <link rel="stylesheet" href="{% static "css/mezzanine.css" %}">
 <link rel="stylesheet" href="{% static "css/bootstrap-responsive.css" %}">
 <link rel="stylesheet" href="{% static "css/action.template.css" %}">
-<link rel="stylesheet" href="{% static "css/creative.css" %}"/>
-<link rel="stylesheet" href="{% static "css/navigation.css" %}"/>
 <link rel="stylesheet" href="{% static "css/jquery.lightbox-0.5.css" %}"/>
+<link rel="stylesheet" href="{% static "css/basetemp.css" %}"/>
+<link rel="stylesheet" href="{% static "css/base.css" %}"/>
 {% if LANGUAGE_BIDI %}
 <link rel="stylesheet" href="{% static "css/rtl.css" %}">
 {% endif %}
@@ -110,8 +110,9 @@
     {% endblock %}
 </div>
 -->
-<div class="span9">
+<div class="offset1 span10">
     {% block main %}{% endblock %}
+</div>
 </div>
 
 <div class="span3">
@@ -120,7 +121,6 @@
     {% endnevercache %}
 </div>
 
-</div>
 </div>
 
 <footer>

@@ -1,25 +1,47 @@
-{#% extends "base.html" %#}
+{# % extends "base.html" % #}
 {% load i18n %}
 {% load thumbnail %}
 {% load follow_tags %}
-{#% block title %}{% trans "vendors" %}{% endblock %#}
+{% load hitcount_tags %}
+{# % block title %}{% trans "vendors" %}{% endblock % #}
 
 {% block content %}
-
-<ul>
-                {% for vendor in vendors %}
-                    <li style='list-style-type:None;display: inline;float:left;border-width:2px;border-style:inset;padding:4px;margin:4px;'>
-                        <a href='{{vendor.get_absolute_url}}'>
-                            {{ vendor}}
+    {% for vendor in vendors %}
+        <div class="row vendorResult">
+            <div class="span1 text-center">
+                {% if vendor|get_class_name == "BlogPost" and vendor.featured_image %}
+                        {% thumbnail vendor.featured_image "30x30" as img %} 
+                        <a style="vertical-align:middle;" href='{{vendor.get_absolute_url}}'>
+                            <img style="vertical-align:middle;display:inline-block" src="{{ MEDIA_URL }}{{img}}">
                         </a>
-							{% if vendor|get_class_name == "BlogPost" and vendor.featured_image %}
-	  							{% thumbnail vendor.featured_image "90x90" as img %} 
-	    							<img style="margin-right:20px;" src="{{ MEDIA_URL }}{{img}}">
-	    					  	{% endthumbnail %}
-	    					{% endif %}
-                    </li>
-                {% endfor %}
+                        {% endthumbnail %}
+                {% else %}
+                    IMAGE
+                {% endif %}
+            </div>
+            <div class="span2 noGutter">
+                <div class="radioColor searchResultRatingText">
+                    {{ forloop.counter}}.
+                    <a class="radioColor" href='{{vendor.get_absolute_url}}'>
+                        {{ vendor }}
+                    </a>
+                     <span class="searchResultRating searchResultRatingScheme rating-{{vendor.overall_average|floatformat:"0"}} " >{{vendor.overall_average|floatformat:"1"}}</span>
+                </div>
 
-</ul>
-
+                <div class="searchResultSubText">
+                    <a class="infoSpace searchResultSubText" href="{{ vendor.get_absolute_url }}#comments">{% spaceless %}
+                        {% blocktrans count vendor.comments_count as comments_count %}1 review{% plural %}{{ comments_count }} reviews{% endblocktrans %}
+                        {% endspaceless %}
+                    </a>
+                        {% vendor_follower_subset_info_url vendor 0 request.user|follower_count:vendor as subset_follower_url %}
+                    <a class="infoSpace searchResultSubText" href="{{subset_follower_url}}">{{ request.user|follower_count:vendor }} follower{{ request.user|follower_count:vendor|pluralize }}
+                    </a>
+                    <span class="infoSpace">
+                        {% get_hit_count for vendor %} views
+                    </span>
+                </div>
+            </div>
+        </div>
+        <hr class="dottedSeparator">
+    {% endfor %}
 {% endblock %}

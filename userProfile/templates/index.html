@@ -21,12 +21,13 @@
 {% endblock %}
 
 {% block extra_head %}
-<link rel="stylesheet" href="{% static "css/customnavbar.css" %}"/>
 <link rel="stylesheet" type="text/css" href="{% static "css/imagestore.css" %}"/>
 <link rel="stylesheet" class="cssButtons" type="text/css" href="{% static "css/linkPreview.css" %}"/>
 <link rel="stylesheet" href="{% static "css/jquery.jscrollpane.css" %}">
 <link rel="stylesheet" class="cssStatics" href="{% static "css/stylesheet.css" %}"/>
 <link rel="stylesheet" href="{% static "css/jquery.mcdropdown.min.css" %}"/>
+<link rel="stylesheet" href="{% static "css/index.css" %}"/>
+<link rel="stylesheet" href="{% static "css/searchresults.css" %}"/>
 <script type="text/javascript">
 var sIndex = 0;
 var lIndex = 5;
@@ -347,7 +348,7 @@ function viewFeed()
                                                                     background-repeat: no-repeat;
                                                                     background-position: 0px 0px;
                                                                     border: none;     
-                                                                    cursor: pointer;       
+                                                                    customrsor: pointer;       
                                                                     height: 36px;   
                                                                     width:36px;        
                                                                     padding-left: 16px;    
@@ -407,7 +408,7 @@ function viewFeed()
 {% endif %}
 </div>
 <div class="row">
-    <div class="span9">
+    <div class="span10">
         {% blog_parentcategories_abs as parent_categories %}
         {% if parent_categories %}
         <select id="blog_parentcategories" name="blog_parentcategories">
@@ -441,26 +442,55 @@ function viewFeed()
     </div>
 </div>
 <div class="row">
-    <div class="span5">
-        <h6>Top Stores for selected category</h6>
-        <div class="section-scroll" style="border-style:solid;border-width:medium;border-color:#00A3EF;">
-            <div id="topStoresForStoreCategory" class="content">
+    <div class="span3"> 
+        <div class="outerBox whiteBox">
+            <div class="row">
+                <div class="span3">
+                    <div class="boxTitle">
+                        <h6>CATEGORIES</h6>
+                        <hr class="yellowLine"/>
+                    </div>
+                    <p>images for categories</p>
+                </div>
             </div>
         </div>
     </div>
-    <div class="span4">
-            <h6>Top Reviews for selected category</h6>
-            <div class="section-scroll" style="border-style:solid;border-width:medium;border-color:#00A3EF;">
-                <div id="topReviewsForStoreCategory" class="content">
+    <div class="span7">
+        <div class="outerBox whiteBox">
+            <div class="row">
+                <div class="span3">
+                    <div class="boxTitle">
+                        <h6>TOP STORES</h6>
+                        <hr class="yellowLine"/>
+                    </div>
+                    <div class="innerBox whiteBox">
+                        <div id="topStoresForStoreCategory">
+                        </div>
+                    </div>
+                </div>
+                <div class="span4">
+                    <div class="boxTitle">
+                        <h6>STORE REVIEWS</h6>
+                        <hr class="yellowLine"/>
+                    </div>
+                    <div class="innerBox whiteBox">
+                        <div id="topReviewsForStoreCategory">
+                        </div>
+                    </div>
                 </div>
             </div>
+        </div>
     </div>
 </div>
+
 <div class="row">
-    <div class="span9">
-        <h6>Top Deals for selected category</h6>
-        <div class="section-scroll" style="border-style:solid;border-width:medium;border-color:#00A3EF;">
-            <div id="topDealsForStoreCategory" class="content">
+    <div class="span10">
+        <div class="boxTitle">
+                <h6>HOT DEALS</h6>
+                <hr class="yellowLine"/>
+        </div>
+        <div class="outerBox dealBox whitebox">
+            <div id="topDealsForStoreCategory">
             </div>
         </div>
         <span id="wish-status" ></span>

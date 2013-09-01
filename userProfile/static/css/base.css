@@ -1,0 +1,10 @@
+.noGutter {
+	margin-left: 0px;
+}
+a:hover {
+	text-decoration: none;
+}
+.radioColor{
+	color : #029795;
+	color : rgb(2, 151, 149);
+}

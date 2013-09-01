@@ -1,0 +1,34 @@
+.whiteBox {
+	background : #FFFFFF;
+	background : rgba(255, 255, 255, 1);
+	-webkit-box-shadow : 1.25px 1.25px 1.25px rgba(132,125,125,0.75);
+	box-shadow : 1.25px 1.25px 1.25px rgba(132, 125, 125, 0.75);
+	filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=1.25, OffY=1.25, Color='#847D7D') ;
+}
+.outerBox {
+	height: 300px;
+	width: 100%;
+}
+.innerBox {
+	height: 240px;
+	overflow: auto;
+}
+.dealBox {
+	height: 250px;
+}
+.boxTitle{
+	width: 100%;
+	display: table;
+}
+.boxTitle h6 {
+	display: table-cell;
+}
+.yellowLine {
+	margin: 10px 10px 0px 0px;
+	border:0;
+	border-top: 2px solid #F9DF1E;
+	border-bottom: 2px solid #F9DF1E;
+	height: 0px;
+	line-height: 0px;
+	font-size: 0px;
+}

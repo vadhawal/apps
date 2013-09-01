@@ -33,7 +33,7 @@ Showing {{ start }} to {{ end }} of {{ total }} results in {{ search_type }} mat
 <div class="row">
 <div id="search-results" class="span6">
     {% for result in results.object_list %}
-    <div class="search-result row">
+    <div class="vendorResult row">
     	<div class="span1">
 		{% if settings.BLOG_USE_FEATURED_IMAGE and result.featured_image %}
 			<img src="{{ MEDIA_URL }}{% thumbnail result.featured_image 100 0 %}">
@@ -41,7 +41,7 @@ Showing {{ start }} to {{ end }} of {{ total }} results in {{ search_type }} mat
 			IMAGE
 		{% endif %}
 		</div>
-		<div class="span8">
+		<div class="span9">
 		    <div>
 		    	<div class="rank">{{ forloop.counter0|add:results.start_index }}</div>
 		        <a class="vendorName" href="{{ result.get_absolute_url }}">{{ result }}</a>
@@ -50,16 +50,16 @@ Showing {{ start }} to {{ end }} of {{ total }} results in {{ search_type }} mat
 		    <p class="resultDesc">{{ result.description|truncatewords_html:20|safe }}</p>
 		    <a href="{{ result.get_absolute_url }}">{% trans "read more" %}</a>
 		   	<div class="vendorInfo">
-		    	<span class="infoItem">
+		    	<span class="infoStyle infoSpace">
 		    	<a href="{{ result.get_absolute_url }}#comments">{% spaceless %}
 		            {% blocktrans count result.comments_count as comments_count %}1 review{% plural %}{{ comments_count }} reviews{% endblocktrans %}
 		            {% endspaceless %}</a>
 		        </span>
-		    	<span class="infoItem">
+		    	<span class="infoStyle infoSpace">
 		    		{% vendor_follower_subset_info_url result 0 request.user|follower_count:result as subset_follower_url %}
 			        <a id="vendor{{ forloop.counter0|add:results.start_index }}" class="vendorFollowers" href="{{subset_follower_url}}">{{ request.user|follower_count:result }}</a>  Follower{{ request.user|follower_count:result|pluralize }}
 			    </span>
-			    <span class ="infoItem cover-stat cover-stat-views">
+			    <span class ="infoStyle infoSpace cover-stat cover-stat-views">
 			        <span class="stat-label be-font-inline">G</span>
       				<span class="stat-value">{% get_hit_count for result %}</span>
 			    </span>
@@ -70,7 +70,7 @@ Showing {{ start }} to {{ end }} of {{ total }} results in {{ search_type }} mat
 				</div>
 			</div>
 		</div>
-		<hr class="dottedSeparator">
+		<hr class="dottedSeparator span10">
 	 </div>
     {% endfor %}
 </div>
