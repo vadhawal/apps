@@ -197,7 +197,7 @@ def getTrendingReviews(request, parent_category, sub_category):
 def getTrendingDeals(request, parent_category, sub_category):
 	if request.method == "GET" and request.is_ajax():
 		ctype = ContentType.objects.get_for_model(BlogPost)
-		latest = settings.REVIEWS_NUM_LATEST
+		latest = settings.DEALS_NUM_LATEST
 		deals = []
 		blog_parentcategory = None
 		deals_queryset = None
@@ -235,7 +235,7 @@ def getTrendingDeals(request, parent_category, sub_category):
 
 def getTrendingStores(request, parent_category, sub_category):
 	if request.method == "GET" and request.is_ajax():
-		latest = settings.REVIEWS_NUM_LATEST
+		latest = settings.STORES_NUM_LATEST
 		blog_parentcategory = None
 		result = None
 		"""

@@ -74,7 +74,6 @@ $(document).ready(function() {
         }
          
     });
-    $('#updateTrends').click();
 });
 {% if request.user.is_authenticated %}
           $(document).ready(function() {
@@ -465,6 +464,7 @@ function viewFeed()
                     </div>
                     <div class="innerBox whiteBox">
                         <div id="topStoresForStoreCategory">
+                        	{% render_stores_for_categories 'All' 'All' 'MIN_STORES_HOME_PAGE'|settings_value %}
                         </div>
                     </div>
                 </div>
@@ -475,6 +475,7 @@ function viewFeed()
                     </div>
                     <div class="innerBox whiteBox">
                         <div id="topReviewsForStoreCategory">
+                        {% render_reviews_for_categories 'All' 'All' 'MIN_REVIEWS_HOME_PAGE'|settings_value %}
                         </div>
                     </div>
                 </div>
@@ -491,6 +492,7 @@ function viewFeed()
         </div>
         <div class="outerBox dealBox whitebox">
             <div id="topDealsForStoreCategory">
+            	{% render_deals_for_categories 'All' 'All'  'MIN_DEALS_HOME_PAGE'|settings_value %}
             </div>
         </div>
         <span id="wish-status" ></span>
