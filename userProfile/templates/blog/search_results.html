@@ -3,6 +3,7 @@
 {% load i18n future mezzanine_tags static %}
 {% load follow_tags %}
 {% load hitcount_tags %}
+{% load userProfile_tags %}
 {% block meta_title %}{% trans "Search Results" %}{% endblock %}
 {% block title %}{% trans "Search Results" %}{% endblock %}
 
@@ -29,7 +30,8 @@ Showing {{ start }} to {{ end }} of {{ total }} results in {{ search_type }} mat
 {% endif %}
 </p>
 
-<div id="search-results">
+<div class="row">
+<div id="search-results" class="span6">
     {% for result in results.object_list %}
     <div class="vendorResult row">
     	<div class="span1">
@@ -71,6 +73,15 @@ Showing {{ start }} to {{ end }} of {{ total }} results in {{ search_type }} mat
 		<hr class="dottedSeparator span10">
 	 </div>
     {% endfor %}
+</div>
+<div class="span3">
+    <h6>Top Deals for selected category</h6>
+    <div class="section-scroll" style="border-style:solid;border-width:medium;border-color:#00A3EF;">
+        <div id="topDealsForStoreCategory" class="content">
+        	{% render_deals_for_categories parent_category sub_category %}
+        </div>
+    </div>
+</div>
 </div>
 
 {% pagination_for results %}
