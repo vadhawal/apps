@@ -3,25 +3,6 @@
 {% compress css %}
 <link rel="stylesheet" href="{{ STATIC_URL }}css/social_login.css">
 {% endcompress %}
-{% block extra_js %}
-<script type="text/javascript">
-$(document).ready(function() {
-    $('#fblogin').add('#twitterlogin').click(function() {
-        var w = 700;
-        var h = 500;
-        var left = 100;
-        var top = 100;
-        var name="Facebook Login";
-        var settings = 'height=' + h + ',width=' + w + ',left=' + left + ',top=' + top + ',resizable=yes,scrollbars=yes,toolbar=no,menubar=no,location=yes,directories=no,status=yes';
-        var url = $(this).attr("href");
-        url += "?next={% url "login_popup_close" %}";
-        window.open(url, name, settings)
-
-        return false;
-    });
-});
-</script>
-{% endblock %}
 
 {% if request.user.is_authenticated %}
     {% trans "Logged in as: " %}
