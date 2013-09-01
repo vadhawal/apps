@@ -79,5 +79,7 @@ var sharewish_handler = function() {
 $(document).ready(function() {
     install_follow_handlers();
     $('.vendorFollowers').on("click", display_popup_handler);
+    $('.shareaction').off("click").on("click", share_action_handler);
+    $(".imgIframe").off("click").on("click", img_iframe_handler);
 });
 

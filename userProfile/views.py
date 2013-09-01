@@ -84,7 +84,7 @@ def userwish(request):
 				blog_post = blog_posts[0]
 				ctype = ContentType.objects.get_for_model(BlogPost)
 				deal_expiry_date = request.POST.get('expiry_date',None)
-				broadcast = UserWishRadio.objects.create_user_wishradio_object(request.user, _(request.POST['vendorwish']), blog_category, blog_parentcategory, _(request.POST['message']), ctype, request.user.pk, wishimgeobj, urlPreviewContent, deal_expiry_date)
+				broadcast = UserWishRadio.objects.create_user_wishradio_object(request.user, _(request.POST['vendorwish']), blog_category, blog_parentcategory, _(request.POST['message']), ctype, blog_post.pk, wishimgeobj, urlPreviewContent, deal_expiry_date)
 				action.send(blog_post, verb=settings.SAID_VERB, target=broadcast)
 				actions.follow(request.user, broadcast, send_action=False, actor_only=False) 
 				Follow.objects.get_or_create(request.user, broadcast)
@@ -177,7 +177,7 @@ def getTrendingReviews(request, parent_category, sub_category):
 			reviews = Review.objects.all().order_by('-submit_date')[:latest]
 		elif blog_parentcategory_slug.lower() != "all" and blog_subcategory_slug.lower() == "all":
 			if blog_parentcategory:
-				blog_subcategories = BlogCategory.objects.all().filter(parent_category=blog_parentcategory)
+				blog_subcategories = list(BlogCategory.objects.all().filter(parent_category=blog_parentcategory))
 				reviews = Review.objects.all().filter(bought_category__in=blog_subcategories).order_by('-submit_date')[:latest]
 		else:
 			if blog_subcategory and blog_parentcategory:
@@ -215,7 +215,7 @@ def getTrendingDeals(request, parent_category, sub_category):
 			deals_queryset = UserWishRadio.objects.all().filter(content_type=ctype).order_by('-timestamp')[:latest]
 		elif blog_parentcategory_slug.lower() != "all" and blog_subcategory_slug.lower() == "all":
 			if blog_parentcategory:
-				blog_subcategories = BlogCategory.objects.all().filter(parent_category=blog_parentcategory)
+				blog_subcategories = list(BlogCategory.objects.all().filter(parent_category=blog_parentcategory))
 				deals_queryset = UserWishRadio.objects.all().filter(content_type=ctype, blog_category__in=blog_subcategories).order_by('-timestamp').distinct()[:latest]
 		else:
 			if blog_subcategory and blog_parentcategory:
@@ -255,7 +255,7 @@ def getTrendingStores(request, parent_category, sub_category):
 			result = BlogPost.objects.published().extra(select={'fieldsum':'price_average + variety_average + quality_average + service_average + exchange_average + overall_average'},order_by=('-fieldsum',))[:latest]
 		elif blog_parentcategory_slug.lower() != "all" and blog_subcategory_slug.lower() == "all":
 			if blog_parentcategory:
-				blog_subcategories = BlogCategory.objects.all().filter(parent_category=blog_parentcategory)
+				blog_subcategories = list(BlogCategory.objects.all().filter(parent_category=blog_parentcategory))
 				result = BlogPost.objects.published().filter(categories__in=blog_subcategories).extra(select={'fieldsum':'price_average + variety_average + quality_average + service_average + exchange_average + overall_average'},order_by=('-fieldsum',)).distinct()[:latest]
 		else:
 			if blog_subcategory and blog_parentcategory:

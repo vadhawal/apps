@@ -11,6 +11,10 @@ from userProfile.models import UserWishRadio
 from django.http import HttpResponse
 from django.utils import simplejson
 from follow.models import Follow
+from mezzanine.blog.models import BlogPost, BlogCategory, BlogParentCategory
+from mezzanine.conf import settings as _settings
+from django.shortcuts import render, get_object_or_404
+from django.template.defaultfilters import slugify
 
 def json_error_response(error_message):
     return HttpResponse(simplejson.dumps(dict(success=False,
@@ -237,6 +241,40 @@ def is_following_post(user, obj):
 def get_full_name(user):
 	if user:
 		return (user.first_name + " " + user.last_name).title()
-	return ""	
+	return ""
+
+@register.inclusion_tag("generic/wishlist.html", takes_context=True)
+def render_deals_for_categories(context, parent_category, sub_category):
+        ctype = ContentType.objects.get_for_model(BlogPost)
+        latest = _settings.REVIEWS_NUM_LATEST
+        deals = []
+        blog_parentcategory = None
+        deals_queryset = None
+        
+        blog_parentcategory_slug = parent_category
+        if blog_parentcategory_slug.lower() != "all" and BlogParentCategory.objects.all().exists():
+            blog_parentcategory = get_object_or_404(BlogParentCategory, slug=slugify(blog_parentcategory_slug))
+
+        blog_subcategory = None
+        blog_subcategory_slug = sub_category
+        if blog_subcategory_slug.lower() != "all" and BlogCategory.objects.all().exists():
+            blog_subcategory = get_object_or_404(BlogCategory, slug=slugify(blog_subcategory_slug))
+
+        if blog_parentcategory_slug.lower() == "all" and blog_subcategory_slug.lower() == "all":
+            deals_queryset = UserWishRadio.objects.all().filter(content_type=ctype).order_by('-timestamp')[:latest]
+        elif blog_parentcategory_slug.lower() != "all" and blog_subcategory_slug.lower() == "all":
+            if blog_parentcategory:
+                blog_subcategories = list(BlogCategory.objects.all().filter(parent_category=blog_parentcategory))
+                deals_queryset = UserWishRadio.objects.all().filter(content_type=ctype, blog_category__in=blog_subcategories).order_by('-timestamp').distinct()[:latest]
+        else:
+            if blog_subcategory and blog_parentcategory:
+                deals_queryset = UserWishRadio.objects.all().filter(blog_category=blog_subcategory).order_by('-timestamp')[:latest]
+
+        context.update({
+            'wish_list': deals_queryset,
+            'sIndex':0
+        })
+        return context
+	
 
 
