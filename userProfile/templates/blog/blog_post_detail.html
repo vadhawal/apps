@@ -3,6 +3,7 @@
 {% load follow_tags %}
 {% load userProfile_tags %}
 {% load hitcount_tags %}
+{% load blog_tags %}
 {% block meta_title %}{{ blog_post.meta_title }}{% endblock %}
 
 {% block meta_keywords %}{% metablock %}
@@ -137,6 +138,21 @@
 {% endspaceless %}
 {% endif %}
 {% endblock %}
+
+{% block blog_post_detail_categories %}
+	{% blog_subcategories_for_blog blog_post as sub_categories_blog %}
+ 	{% if sub_categories_blog %}
+	 	{% spaceless %}
+			<ul class="unstyled tags">
+		    	<li>{% trans "Categories" %}:</li>
+		    	{% for blog_category in sub_categories_blog %}
+		    		<li><a href="{{blog_category.get_absolute_url}}">{{ blog_category }}</a></li>
+		    	{% endfor %}
+			</ul>
+		{% endspaceless %}      
+    {% endif %}
+{% endblock %}
+
 
 {% rating_for blog_post %}
 {% reviewrating_for blog_post %}
