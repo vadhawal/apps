@@ -17,6 +17,8 @@
 	cursor: default;
 	margin-left: 30px;
 	padding: 1px;
+	padding-left: 3px;
+	padding-right: 3px;
 }
 .searchResultRatingText {
 	text-shadow: none;
@@ -37,6 +39,16 @@
 	font-size : 8.44pt;
 	color : #5D5D5D;
 	color : rgb(93, 93, 93);
+	text-shadow: none;
+}
+.searchResultSubTextBig{
+	font-size : 9.12pt;
+	color : #5D5D5D;
+	color : rgb(93, 93, 93);
+	text-shadow: none;
+}
+.darken{
+	font-weight: 500;
 }
 .rating-0 {
 	background : #D1D0C1;

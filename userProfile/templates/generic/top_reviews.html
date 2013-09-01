@@ -1,37 +1,73 @@
 {% load i18n mezzanine_tags %}
-{% compress css %}
-<link rel="stylesheet" href="{{ STATIC_URL }}css/dashboard.css">
-{% endcompress %}
-
-<div class="module" id="top-comments-module">
-    <h1>{% trans "Top Reviews" %}</h1>
-    {% if settings.COMMENTS_DISQUS_SHORTNAME %}
-    <script src="http://{{ settings.COMMENTS_DISQUS_SHORTNAME }}.disqus.com/recent_comments_widget.js?num_items={{ settings.COMMENTS_NUM_LATEST }}&hide_avatars=0&avatar_size=32&excerpt_length=200"></script>
-    {% else %}
-    <ul>
-        {% for comment in comments %}
-        <li>
-            {% include 'generic/includes/render_owner.html' with owner=comment.user %}
-
-            <span>
-                <span class="trunc-comment">{{ comment.intro }}</span>
-                {% if comment.comment != comment.intro %}
-                    <span class="exp-comment" style="display:none;">{{ comment.comment }}</span>
-                    <a class="toggle-comment" style="cursor: pointer;">More...</a>
-                {% endif %}
+{% load thumbnail userProfile_tags %}
+{% load relationship_tags %}
+{% for review in comments %}
+<div class="row topReviews">
+    <div class="span1 text-center">
+        <a style="vertical-align:middle;" href='{{review.user.get_absolute_url}}'>
+        {% if review.user.get_profile.profile_photo %}    
+            {% thumbnail review.user.get_profile.profile_photo "55x55" as img %} 
+            <img style="vertical-align:middle;display:inline-block" height="55px" width="55px" src="{{ MEDIA_URL }}{{img}}">
+            {% endthumbnail %}
+        {% elif review.user.get_profile.image_url %}
+            <img style="vertical-align:middle;display:inline-block" height="55px" width="55px" src="{{ owner.get_profile.image_url }}">
+        {% else %}
+            <img sstyle="vertical-align:middle;display:inline-block" height="55px" width="55px" src="{{ STATIC_URL }}img/defaultProfilePic.gif"> 
+        {% endif %}
+        </a>
+    </div>
+    <div class="span3 noGutter">
+        <div class="searchResultSubTextBig">
+            <a class="searchResultSubTextBig darken" href="{{review.user.get_absolute_url}}">{% get_full_name review.user %}</a>
+            <span style="float:right"> <span class="searchResultSubText">for </span>
+                <a class="searchResultSubTextBig darken" href="{{ review.content_object.get_absolute_url }}">
+                    {{ review.content_object }}
+                </a>
             </span>
-            <p> On
-                <a href="{{ comment.content_object.get_absolute_url }}">
-                    {{ comment.content_object }}
+        </div>
+        <div class="searchResultSubText">
+            <span class="searchResultSubText">
+                {% get_reviews_by_user review.user as totalReviews %}
+                {{totalReviews|length}} review{{ totalReviews|length|pluralize }}
+                {% follower_subset_url review.user 0 review.user.relationships.followers.count as follower_url %}
+                <a href="{{follower_url}}" class="followerCountBox searchResultSubText">
+                    {{ review.user.relationships.followers.count }} follower{{ review.user.relationships.followers.count|pluralize }}
                 </a>
-                
-                <a href="{{ comment.get_absolute_url }}">
-                    {% blocktrans with sometime=comment.submit_date|timesince %}{{ sometime }} ago{% endblocktrans %}
-                </a>
-                <a href="{% url render_review comment.content_object.slug comment.id %}">Full Review</a>
-            </p>
-        </li>
-        {% endfor %}
-    </ul>
-    {% endif %}
+            </span>
+        </div>
+        <div class="searchResultSubTextBig">
+            {{review.comment}}
+            <span class="searchResultRating searchResultRatingScheme searchResultRatingText rating-{{review.overall_value|floatformat:"0"}}" style="margin-left:0; float:right">
+                {{review.overall_value|floatformat:"1"}}
+            </span>
+        </div>
+        <div class="searchResultSubText">
+            <a class="searchResultSubText darken" href="{% url render_review review.content_object.slug review.id %}">Read Review</a>
+            <span style="float:right">
+                {% blocktrans with sometime=review.submit_date|timesince %}{{ sometime }} ago{% endblocktrans %}
+            </span>
+        </div>
+    </div>
 </div>
+<hr class="dottedSeparator">
+<!-- 
+    <span>
+        <span class="trunc-comment">{{ review.intro }}</span>
+        {% if review.comment != review.intro %}
+            <span class="exp-comment" style="display:none;">{{ review.comment }}</span>
+            <a class="toggle-comment" style="cursor: pointer;">More...</a>
+        {% endif %}
+    </span>
+    <p> On
+        <a href="{{ review.content_object.get_absolute_url }}">
+            {{ review.content_object }}
+        </a>
+        
+        <a href="{{ review.get_absolute_url }}">
+            {% blocktrans with sometime=review.submit_date|timesince %}{{ sometime }} ago{% endblocktrans %}
+        </a>
+        <a href="{% url render_review review.content_object.slug review.id %}">Full Review</a>
+    </p>
+ -->
+
+{% endfor %}

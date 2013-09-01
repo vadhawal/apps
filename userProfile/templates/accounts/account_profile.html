@@ -170,9 +170,9 @@ function scrollalert(){
                 <ul style="list-style:None;">
                     <li class="user-stat user-stat-color"><span class="user-stat-color be-font-inline">G</span>Profile Views <a href="" class="blue right bold stat-views header-link-color">{%     get_hit_count for profile_user %}</a></li>
                     <li class="user-stat user-stat-color"><span class="user-stat-color be-font-inline">F</span>Appreciations <a href="" class="blue right bold stat-apps header-link-color">{{ profile_user.num_likes }}</a></li>
-                    {% follower_subset_url profile_user 0 10 as follower_url %}
+                    {% follower_subset_url profile_user 0 profile_user.relationships.followers.count as follower_url %}
                     <li class="user-stat user-stat-color"><span class="user-stat-color be-font-inline">I</span>Follower Friends <a id="followerCountBox" href="{{follower_url}}" class="right bold stat-followers header-link-color">{{ profile_user.relationships.followers.count }}</a></li>
-                    {% following_subset_url profile_user 0 10 as following_url %}
+                    {% following_subset_url profile_user 0 profile_user.relationships.following.count as following_url %}
                     <li class="user-stat user-stat-color"><span class="user-stat-color be-font-inline">H</span>Following Friends <a id="followingCountBox" href="{{following_url}}" class="right bold stat-following header-link-color">{{ profile_user.relationships.following.count }}</a></li>
                     {% vendor_following_subset_info_url profile_user 0 profile_user|vendor_following_count as vendor_subset_url %}
                     <li class="user-stat user-stat-color"><span class="user-stat-color be-font-inline">H</span>Following Vendors <a id="followingVendorCountBox" href="{{vendor_subset_url}}" class="right bold stat-following header-link-color">{{ profile_user|vendor_following_count }}</a></li>
