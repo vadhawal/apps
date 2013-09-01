@@ -15,6 +15,7 @@ from mezzanine.blog.models import BlogPost, BlogCategory, BlogParentCategory
 from mezzanine.conf import settings as _settings
 from django.shortcuts import render, get_object_or_404
 from django.template.defaultfilters import slugify
+from mezzanine.generic.models import Review
 
 def json_error_response(error_message):
     return HttpResponse(simplejson.dumps(dict(success=False,
@@ -24,6 +25,10 @@ register = template.Library()
 
 # settings value
 @register.simple_tag
+def settings_value(name):
+    return getattr(settings, name, "")
+
+@register.filter
 def settings_value(name):
     return getattr(settings, name, "")
 
@@ -244,9 +249,8 @@ def get_full_name(user):
 	return ""
 
 @register.inclusion_tag("generic/wishlist.html", takes_context=True)
-def render_deals_for_categories(context, parent_category, sub_category):
+def render_deals_for_categories(context, parent_category, sub_category, latest=settings.DEALS_NUM_LATEST):
         ctype = ContentType.objects.get_for_model(BlogPost)
-        latest = _settings.REVIEWS_NUM_LATEST
         deals = []
         blog_parentcategory = None
         deals_queryset = None
@@ -275,6 +279,69 @@ def render_deals_for_categories(context, parent_category, sub_category):
             'sIndex':0
         })
         return context
-	
+
+@register.inclusion_tag("generic/vendor_list.html", takes_context=True)
+def render_stores_for_categories(context, parent_category, sub_category, latest=settings.STORES_NUM_LATEST):
+        blog_parentcategory = None
+        result = None
+
+        blog_parentcategory_slug = parent_category
+        if blog_parentcategory_slug.lower() != "all" and BlogParentCategory.objects.all().exists():
+            blog_parentcategory = get_object_or_404(BlogParentCategory, slug=slugify(blog_parentcategory_slug))
+
+        blog_subcategory = None
+        blog_subcategory_slug = sub_category
+        if blog_subcategory_slug.lower() != "all" and BlogCategory.objects.all().exists():
+            blog_subcategory = get_object_or_404(BlogCategory, slug=slugify(blog_subcategory_slug))
+
+        if blog_parentcategory_slug.lower() == "all" and blog_subcategory_slug.lower() == "all":
+            result = BlogPost.objects.published().extra(select={'fieldsum':'price_average + variety_average + quality_average + service_average + exchange_average + overall_average'},order_by=('-fieldsum',))[:latest]
+        elif blog_parentcategory_slug.lower() != "all" and blog_subcategory_slug.lower() == "all":
+            if blog_parentcategory:
+                blog_subcategories = list(BlogCategory.objects.all().filter(parent_category=blog_parentcategory))
+                result = BlogPost.objects.published().filter(categories__in=blog_subcategories).extra(select={'fieldsum':'price_average + variety_average + quality_average + service_average + exchange_average + overall_average'},order_by=('-fieldsum',)).distinct()[:latest]
+        else:
+            if blog_subcategory and blog_parentcategory:
+                result = BlogPost.objects.published().filter(categories=blog_subcategory).extra(select={'fieldsum':'price_average + variety_average + quality_average + service_average + exchange_average + overall_average'},order_by=('-fieldsum',))[:latest]
+
+        context.update({
+            'vendors': result,
+            'sIndex':0
+        })
+        return context
+
+@register.inclusion_tag("generic/top_reviews.html", takes_context=True)
+def render_reviews_for_categories(context, parent_category, sub_category, latest=_settings.REVIEWS_NUM_LATEST):
+        blog_parentcategory = None
+        
+        blog_parentcategory_slug = parent_category
+        if blog_parentcategory_slug.lower() != "all" and BlogParentCategory.objects.all().exists():
+            blog_parentcategory = get_object_or_404(BlogParentCategory, slug=slugify(blog_parentcategory_slug))
+
+        blog_subcategory = None
+        blog_subcategory_slug = sub_category
+        if blog_subcategory_slug.lower() != "all" and BlogCategory.objects.all().exists():
+            blog_subcategory = get_object_or_404(BlogCategory, slug=slugify(blog_subcategory_slug))
+
+        if blog_parentcategory_slug.lower() == "all" and blog_subcategory_slug.lower() == "all":
+            reviews = Review.objects.all().order_by('-submit_date')[:latest]
+        elif blog_parentcategory_slug.lower() != "all" and blog_subcategory_slug.lower() == "all":
+            if blog_parentcategory:
+                blog_subcategories = list(BlogCategory.objects.all().filter(parent_category=blog_parentcategory))
+                reviews = Review.objects.all().filter(bought_category__in=blog_subcategories).order_by('-submit_date')[:latest]
+        else:
+            if blog_subcategory and blog_parentcategory:
+                reviews = Review.objects.all().filter(bought_category=blog_subcategory).order_by('-submit_date')[:latest]
+            else:
+                """
+                    raise 404 error, in case categories are not present.
+                """
+                raise Http404()
+        context.update({
+            'comments': reviews,
+        })
+        return context	
+
+
 
 
