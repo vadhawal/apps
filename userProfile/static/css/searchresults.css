@@ -1,7 +1,3 @@
-.search-result {
-	background-color: #fff;
-}
-
 .rank {
 	background-color: orange;
 	border-radius: 50% 50%;
@@ -10,82 +6,90 @@
 	height: 30px;
 	line-height: 30px;
 }
-
 .vendorName {
 	font-size: 2em;
 }
-
 .resultDesc {
 	word-wrap: break-word;
 	display:inline;
 }
 .searchResultRating {
 	cursor: default;
-	height: 47px;
-	line-height: 49px;
-	width: 72px;
 	margin-left: 30px;
-	padding:4px;
-	border-radius: 5px;
+	padding: 1px;
 }
-
 .searchResultRatingText {
-	font-size: 28px;
-	font-weight: normal;
-	text-align: center;
-	text-shadow: none;	
+	text-shadow: none;
+	font-family : Helvetica;
+	font-weight : bold;
+	font-size : 9.85pt;
 }
-
 .searchResultRatingScheme {
 	background-attachment: scroll;
 	background-clip: border-box;
-	background-color: 
-	rgb(91, 168, 41);
+	background-color: rgb(91, 168, 41);
 	background-image: none;
 	background-origin: padding-box;
-	color: 
-	rgb(255, 255, 255);	
+	color : #605D5A;
+  	color : rgb(96, 93, 90);
 }
-
+.searchResultSubText{
+	font-size : 8.44pt;
+	color : #5D5D5D;
+	color : rgb(93, 93, 93);
+}
 .rating-0 {
-	background-color: 
-	rgb(222, 29, 15);
+	background : #D1D0C1;
+  	background : rgba(209, 208, 193, 0.4);
+  	filter: alpha(opacity=40) progid:DXImageTransform.Microsoft.Alpha(opacity=40) ;
+	/*background-color: rgb(222, 29, 15);*/
 }
-
 .rating-1 {
-	background-color: 
-	rgb(255, 120, 0);
+	background : #D1D0C1;
+  	background : rgba(209, 208, 193, 0.4);
+  	filter: alpha(opacity=40) progid:DXImageTransform.Microsoft.Alpha(opacity=40) ;
+	/*background-color: rgb(255, 120, 0);*/
 }
-
 .rating-2 {
-	background-color: 
-	rgb(255, 186, 0);
+	background : #D1D0C1;
+  	background : rgba(209, 208, 193, 0.4);
+  	filter: alpha(opacity=40) progid:DXImageTransform.Microsoft.Alpha(opacity=40) ;
+	/*background-color: rgb(255, 186, 0);*/
 }
-
 .rating-3 {
-	background-color: 
-	rgb(154, 205, 50);
+	background : #D1D0C1;
+  	background : rgba(209, 208, 193, 0.4);
+  	filter: alpha(opacity=40) progid:DXImageTransform.Microsoft.Alpha(opacity=40) ;
+	/*background-color: rgb(154, 205, 50);*/
 }
-
 .rating-4 {
-	background-color: 
-	rgb(91, 168, 41);
+	background : #D1D0C1;
+  	background : rgba(209, 208, 193, 0.4);
+  	filter: alpha(opacity=40) progid:DXImageTransform.Microsoft.Alpha(opacity=40) ;
+	/*background-color: rgb(91, 168, 41);*/
 }
-
 .rating-5 {
-	background-color: 
-	rgb(63, 126, 0);
+	background : #D1D0C1;
+  	background : rgba(209, 208, 193, 0.4);
+  	filter: alpha(opacity=40) progid:DXImageTransform.Microsoft.Alpha(opacity=40) ;
+	/*background-color: rgb(63, 126, 0);*/
 }
-
-.infoItem {
-	margin-left: 2px;
+.infoSpace{
+	margin-right: 4px;
+}
+.infoStyle {
 	font-style: italic;
 }
-
 .dottedSeparator {
-	border: 1px dotted #ff0000; border-style: none none dotted; color: #fff; background-color: #fff;margin-bottom: 15px; width: 95%;margin-left: 2.5%;
+	border: 1px dotted #63625E; border-style: none none dotted; color: #fff; background-color: #fff;margin:0; width: 95%;margin-left: 2.5%;
+	border-color : #63625E;
+	border-color : rgba(99, 98, 94, 1);
+	opacity : 0.31;
+	filter: alpha(opacity=31) progid:DXImageTransform.Microsoft.Alpha(opacity=31) ;
+	margin-top: 4px
 }
-
-.vendorInfo {
-	margin-bottom: 5px;
+.vendorResult {
+	background-color: #fff;
+	line-height: normal;
+	margin-top: 6px;
 }
