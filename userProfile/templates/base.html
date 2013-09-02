@@ -72,12 +72,16 @@
 <div class="container customNavBar navbar navbar-fixed-top">
     <div class="row">
         <div class="offset10 span1">
-            <div class="socialLogin facebookLogin">
-            </div>
-            <div class="socialLogin googleLogin">
-            </div>
-            <div class="socialLogin twitterLogin">
-            </div>
+        	<a href="{% url "socialauth_begin" "facebook" %}">
+        		<div class="socialLogin facebookLogin">
+            	</div>
+        	</a>
+			<a href="{% url "socialauth_begin" "twitter" %}" >
+				<div class="socialLogin twitterLogin">
+            	</div>
+	        </a>
+	        <div class="socialLogin googleLogin">
+	        </div>
         </div>
     </div>
 </div>
