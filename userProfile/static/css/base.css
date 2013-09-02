@@ -8,3 +8,42 @@ a:hover {
 	color : #029795;
 	color : rgb(2, 151, 149);
 }
+.customNavBar{
+	height: 30px;;
+	background : #F9DF1E;
+	background : rgba(249, 223, 30, 1);
+}
+.socialLogin{
+	width: 20px;
+	height: 20px;
+	display: inline-block;
+	margin-top: 5px;
+}
+.facebookLogin{
+	background-image: url("/static/img/facebook.png");
+	background-size: 20px 20px;
+	background-repeat: no-repeat;
+}
+.googleLogin{
+	background-image: url("/static/img/google.png");
+	background-size: 30px 30px;
+	background-repeat: no-repeat;
+	background-position: -5px -5px;
+}
+.googleLogin:hover{
+	background-image: url("/static/img/google_hover.png");
+}
+.googleLogin:active{
+	background-image: url("/static/img/google_pressed.png");
+}
+.twitterLogin{
+	background-image: url("/static/img/twitter.png");
+	background-size: 20px 20px;
+	background-repeat: no-repeat;
+}
+.searchBar{
+	margin-top: 40px;
+	margin-bottom: 50px;
+	height: 60px;
+	background-color: rgb(2, 151, 149);
+}
