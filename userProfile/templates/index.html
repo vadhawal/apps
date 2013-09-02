@@ -419,21 +419,11 @@ function viewFeed()
             </ul>
         </select>
         {% endif %}
-        {% with parent_categories|first as first_parent_category %}
-        {% if first_parent_category %}
-        {% blog_subcategories first_parent_category as sub_categories %}
-        {% if sub_categories %}
         <select id="blog_subcategories" name="blog_subcategories">
             <ul class="unstyled">
                 <option value="all">{% trans "All" %}</option>
-                {% for category in sub_categories %}
-                <option value="{{ category }}">{{ category }}</option>
-                {% endfor %}
             </ul>
         </select>	
-        {% endif %}
-        {% endif %}
-        {% endwith %}
         {% if parent_categories %}
         <a id="updateTrends" href="#" class="postPreviewButton"  type="button"> {% trans "Update Trends" %} </a>   
         <a id="getvendors" href="#" class="postPreviewButton"  type="button"> {% trans "Search" %} </a>   

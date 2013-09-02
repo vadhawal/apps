@@ -65,33 +65,44 @@
 {% block extra_head %}{% endblock %}
 
 </head>
-<body class="bodyCustom" id="{% block body_id %}body{% endblock %}">
+<body class="bodyCustom" style="padding-top:30px;" id="{% block body_id %}body{% endblock %}">
 
-<div style="position: fixed; top: 0px; width:100%; height: 100px;" class="navbar">
-<div class="container customnavbar">
-    {% if settings.SITE_TITLE %}<a class="brand" href="/">{{ settings.SITE_TITLE }}</a>{% endif %}
-    {% if settings.SITE_TAGLINE %}<p class="navbar-text customTagLine">{{ settings.SITE_TAGLINE }}</p>{% endif %}
-    <div class="nav-collapse customsearchbox">
-        {% search_form "blog.BlogPost" %}
-        {% page_menu "pages/menus/dropdown.html" %}
+
+
+<div class="container customNavBar navbar navbar-fixed-top">
+    <div class="row">
+        <div class="offset10 span1">
+            <div class="socialLogin facebookLogin">
+            </div>
+            <div class="socialLogin googleLogin">
+            </div>
+            <div class="socialLogin twitterLogin">
+            </div>
+        </div>
     </div>
-    <a href="/admin" style="background:#FF9900;" class="btn btn-primary">Add a Store</a>
 </div>
+
+<div class="container">
+    <div class="row">
+        <div class="offset1 span10 searchBar">
+        </div>
+    </div>
 </div>
-<div style="margin-top: 100px;" class="container">
+
+<div class="container">
 <div class="container">
 
-{% nevercache %}
-{% for message in messages %}
-<div class="alert alert-{{ message.tags }}" data-alert="alert">
+{# nevercache #}
+{# for message in messages #}
+<!-- <div class="alert alert-{{ message.tags }}" data-alert="alert">
 <a class="close" href="#" onclick="$(this).parent().fadeOut('fast'); return false;">×</a>{{ message }}
-</div>
-{% endfor %}
-{% endnevercache %}
+</div> -->
+{# endfor #}
+{# endnevercache #}
 
-<div class="row">
-<h1>{% block title %}{% endblock %}</h1>
-</div>
+<!-- <div class="row">
+<h1>{# block title #}{# endblock #}</h1>
+</div> -->
 
 <!--ul class="breadcrumb">
 {% spaceless %}
