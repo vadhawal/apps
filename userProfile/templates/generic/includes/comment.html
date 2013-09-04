@@ -35,6 +35,9 @@
             {% if comment.exchange_value%}
             	<p>Rated Exchange Experience as  {{comment.exchange_value}}</p>
             {% endif %}
+            {% if comment.title %}
+                {{comment.title}}
+            {% endif %}
         </strong>
 
         <p>{{ comment.comment|comment_filter }}</p>

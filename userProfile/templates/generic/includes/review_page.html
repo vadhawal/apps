@@ -25,7 +25,7 @@ $(document).ready(function() {
             {% include 'generic/includes/render_owner.html' with owner=comment.user %}
 	            {% if comment.bought_category%}
 	            	{% include "actstream/render_actor_name.html" with actor=comment.user %} bought a {{comment.bought_category}}
-	            {% endif %}
+	            {% endif %}</br>
 	            {% if comment.overall_value%}
 	           		<p>Rated Overall as  {{comment.overall_value}}</p>
 	            {% endif %}
@@ -44,6 +44,9 @@ $(document).ready(function() {
 	            {% if comment.exchange_value%}
 	            	<p>Rated Exchange Experience as  {{comment.exchange_value}}</p>
 	            {% endif %}
+                {% if comment.title %}
+                    {{comment.title}}
+                {% endif %}
         </strong>
 
         <p>{{ comment.comment|comment_filter }}</p>
