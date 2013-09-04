@@ -40,12 +40,12 @@
             var getDealList = function(){
                 {% if request.user.is_authenticated %}
                     $('#load-deals').html("");
-                    {% get_wishlist_url blog_post 0 10 as wishlisturl %}
+                    {% get_deallist_url blog_post 0 10 as wishlisturl %}
                     var link = "{{wishlisturl}}";
                     $.get(link, {}, function(data) {
                         $('#load-deals').html(data);
                         install_voting_handlers();
-                        $('.shareWish').on('click', sharewish_handler);
+                        $('.shareDeal').on('click', sharewish_handler);
                     });
                 {% endif %}    
             }

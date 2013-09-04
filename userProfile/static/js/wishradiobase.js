@@ -81,5 +81,6 @@ $(document).ready(function() {
     $('.vendorFollowers').on("click", display_popup_handler);
     $('.shareaction').off("click").on("click", share_action_handler);
     $(".imgIframe").off("click").on("click", img_iframe_handler);
+    $('.shareDeal').on('click', sharewish_handler);
 });
 

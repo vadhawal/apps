@@ -172,10 +172,10 @@ def get_wishlist(request, content_type_id, object_id, sIndex, lIndex):
 	import operator
 
 	ctype = get_object_or_404(ContentType, pk=content_type_id)
-	wishset = BroadcastWish.objects.all().filter(content_type=ctype, object_id=object_id).order_by('timestamp')
-	#wishlist = list(wishset)
+	wishset = BroadcastWish.objects.all().filter(content_type=ctype, object_id=object_id)
+	wishlist = list(wishset)
 
-	#wishlist =  sorted(wishlist, key=operator.attrgetter('timestamp'), reverse=True)
+	wishlist =  sorted(wishlist, key=operator.attrgetter('timestamp'), reverse=True)
 
 	s = (int)(""+sIndex)
 	l = (int)(""+lIndex)
@@ -191,16 +191,17 @@ def get_deallist(request, content_type_id, object_id, sIndex, lIndex):
 	import operator
 
 	ctype = get_object_or_404(ContentType, pk=content_type_id)
-	dealset = BroadcastDeal.objects.all().filter(content_type=ctype, object_id=object_id).order_by('timestamp')
-	#wishlist = list(wishset)
+	dealset = BroadcastDeal.objects.all().filter(content_type=ctype, object_id=object_id)
+	deallist = list(dealset)
 
-	#wishlist =  sorted(wishlist, key=operator.attrgetter('timestamp'), reverse=True)
+	deallist =  sorted(deallist, key=operator.attrgetter('timestamp'), reverse=True)
 
 	s = (int)(""+sIndex)
 	l = (int)(""+lIndex)
-	wishlist = wishlist[s:l]
+
+	deallist = deallist[s:l]
 	return render_to_response('wish/deallist.html', {
-		'deal_list': dealset,
+		'deal_list': deallist,
 		'ctype': ctype, 'sIndex':s
 	}, context_instance=RequestContext(request))
 

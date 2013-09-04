@@ -197,6 +197,24 @@ def get_wishlist_url(parser, token):
     else:
         return GetWishListUrl.handle_token(parser, token)
 
+class GetDealListUrl(AsNode):
+    def render_result(self, context):
+        object_instance = self.args[0].resolve(context)
+        sIndex = self.args[1].resolve(context)
+        lIndex = self.args[2].resolve(context)
+        content_type = ContentType.objects.get_for_model(object_instance).pk
+        
+        return reverse('get_deallist', kwargs={
+            'content_type_id': content_type, 'object_id': object_instance.pk, 'sIndex':sIndex, 'lIndex':lIndex})
+
+def get_deallist_url(parser, token):
+    bits = token.split_contents()
+    if len(bits) != 6:
+        raise TemplateSyntaxError("Accepted format "
+                                  "{% get_deallist_url [object_instance] sIndex lIndex as wishlisturl %}")
+    else:
+        return GetDealListUrl.handle_token(parser, token)
+
 class ShareWishUrl(Node):
     def __init__(self, wish):
         self.wish = template.Variable(wish)
@@ -209,6 +227,19 @@ class ShareWishUrl(Node):
 def share_wish_url(parser, token):
     bits = token.split_contents()
     return ShareWishUrl(*bits[1:])
+
+class ShareDealUrl(Node):
+    def __init__(self, deal):
+        self.deal = template.Variable(deal)
+
+    def render(self, context):
+        deal_instance = self.deal.resolve(context)
+        return reverse('shareDeal', kwargs={
+            'deal_id':deal_instance.pk})
+
+def share_deal_url(parser, token):
+    bits = token.split_contents()
+    return ShareDealUrl(*bits[1:])
 
 @register.inclusion_tag("wish/wishlist.html",
     takes_context=True)
@@ -249,7 +280,9 @@ class DealsOwner(template.Node):
         return ''
 
 register.tag(share_wish_url)
+register.tag(share_deal_url)
 register.tag(get_wishlist_url)
+register.tag(get_deallist_url)
 
 @register.filter
 def is_following_post(user, obj):
@@ -261,7 +294,7 @@ def get_full_name(user):
 		return (user.first_name + " " + user.last_name).title()
 	return ""
 
-@register.inclusion_tag("generic/wishlist.html", takes_context=True)
+@register.inclusion_tag("wish/deallist.html", takes_context=True)
 def render_deals_for_categories(context, parent_category, sub_category, latest=settings.DEALS_NUM_LATEST):
         ctype = ContentType.objects.get_for_model(BlogPost)
         deals = []
@@ -288,7 +321,7 @@ def render_deals_for_categories(context, parent_category, sub_category, latest=s
                 deals_queryset = BroadcastDeal.objects.all().filter(blog_category=blog_subcategory).order_by('-timestamp')[:latest]
 
         context.update({
-            'wish_list': deals_queryset,
+            'deal_list': deals_queryset,
             'sIndex':0
         })
         return context
