@@ -33,11 +33,54 @@ var sIndex = 0;
 var lIndex = 5;
 $(document).ready(function() {
 	$('.message').linkify();
-
+    {% if request.user.is_authenticated %}
+          {% get_owned_blog request.user as blog %} 
+          {% if blog %}
+          {% else %}
+            $("#radio-category").mcDropdown("#radioCategory");
+          {% endif %}
+    {% endif %}
     $('#updateTrends').click(function(){
         update_trends_handler();
         return false;
     });
+<<<<<<< Updated upstream
+    
+    $('#getvendors').click(function(){
+        var $blog_parentcategories = $(this).parent().find('.blog_parentcategories');
+        var $blog_subcategories = $(this).parent().find('.blog_subcategories');
+
+        var parent_category_slug = $blog_parentcategories.find("option:selected").text();
+
+        var sub_category_slug = $blog_subcategories.find("option:selected").text();
+        if(parent_category_slug && sub_category_slug)
+            var url = "/getvendors/"+parent_category_slug+"/"+sub_category_slug+"/";
+        else if(parent_category_slug && !sub_category_slug)
+            var url = "/getvendors/"+parent_category_slug+"/all/";
+        document.location.href = url;
+    });
+    $('.blog_parentcategories').change(function(){
+        var slug = $(this).find("option:selected").text();
+        var $blog_subcategory = $(this).parent().find('.blog_subcategories');
+        if(slug.toLowerCase() == "all") {
+            $blog_subcategory.empty();
+            var option = '<option value="all">All</option>';
+            $blog_subcategory.append(option);
+        } else {
+            $.get('/' + slug + '/subcategories', {}, function(data) {
+                var $subCSelect = $blog_subcategory;
+                $blog_subcategory.empty();
+                var objJSON = eval("(function(){return " + data + ";})()");
+                for(var i=0;i<objJSON.length;i++) {
+                    var option = '<option value="'+objJSON[i]+'">'+objJSON[i]+'</option>';
+                    $blog_subcategory.append(option);
+                }
+            });     
+        }
+         
+    });
+=======
+>>>>>>> Stashed changes
 });
 {% if request.user.is_authenticated %}
           $(document).ready(function() {
@@ -378,7 +421,7 @@ function viewFeed()
 
 {% endif %}
 </div>
-<!-- <a id="updateTrends" href="#" class="postPreviewButton"  type="button"> {% trans "Update Trends" %} </a> -->
+<a id="updateTrends" href="#" class="postPreviewButton"  type="button"> {% trans "Update Trends" %} </a>
 <div class="row">
     <div class="span3"> 
         <div class="outerBox whiteBox">

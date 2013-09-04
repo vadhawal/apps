@@ -1,0 +1,57 @@
+{% load future %}
+{% load i18n static %}
+{% load blog_tags %}
+
+<div class="container customNavBar navbar navbar-fixed-top">
+    <div class="row yellowBar">
+        <div class="offset10 span1">
+            <a href="{% url "socialauth_begin" "facebook" %}">
+                <div class="socialLogin facebookLogin">
+                </div>
+            </a>
+            <a href="{% url "socialauth_begin" "twitter" %}" >
+                <div class="socialLogin twitterLogin">
+                </div>
+            </a>
+            <a href="#google">
+               <div class="socialLogin googleLogin">
+               </div>
+            </a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="offset8 span2 whiteSpace rightMargin">
+            Login | Signup
+        </div>
+    </div>
+    <div class="row">
+        <div class="offset1 span10 searchBar">
+            <div class="row" style="margin-top:auto;margin-bottom:auto;">
+                <div class="span2 logo whiteBox">
+                    <a href="/"><img src="/static/img/wishRadioLogo.png"/></a>
+                </div>
+                <div class="span8">
+                    <span class="rightMargin wantText">
+                        I WANT
+                    </span>
+                    {% blog_parentcategories_abs as parent_categories %}
+                    {% if parent_categories %}
+                        <select name="blog_parentcategories" class="rightMargin blog_parentcategories">
+                            <option value='empty' selected disabled>By Category</option>
+                            <option value="all">{% trans "All" %}</option>
+                            {% for category in parent_categories %}
+                            <option value="{{ category }}">{{ category }}</option>
+                            {% endfor %}
+                        </select>
+                        <select name="blog_subcategories" class="rightMargin blog_subcategories">
+                            <option value='empty' selected disabled>By Sub-category</option>
+                        </select>
+                    {% endif %}
+                    <div id="getvendorsdiv" style="display:inline-block;">
+                        <a id="getvendors" href="#"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
