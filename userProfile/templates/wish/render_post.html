@@ -15,6 +15,16 @@
                 </script> 
             {% endthumbnail %}
         {% endif %}
+        {% if post.wishimage %}
+            {% thumbnail post.wishimage "500x400" crop="center" as img %} 
+                <a class="wishimg{{post.id}}" href="{{  post.wishimage.url }}">
+                    <img style="margin-right:20px;" src="{{ MEDIA_URL }}{{img}}">
+                </a> 
+                <script type="text/javascript">
+                      $('a.wishimg{{post.id}}').lightBox();
+                </script> 
+            {% endthumbnail %}
+        {% endif %}
     </span>
     <p>
     {% autoescape off %}

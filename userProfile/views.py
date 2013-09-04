@@ -72,18 +72,19 @@ def userwish(request):
 
 
 		if actor and actor == "vendor":
-			blog_category_slug = request.POST.get('radio_category', None)
-			if BlogCategory.objects.all().exists() and blog_category_slug:
-				blog_category = get_object_or_404(BlogCategory, slug=slugify(blog_category_slug))
-			if BlogParentCategory.objects.all().exists() and blog_category:
-				blog_parentcategory = blog_category.parent_category			
 			post_as_deal = request.POST.get('post-as-deal', False)
-			if post_as_deal and not wishimgeobj:
-				err_message.append('Image is required for deals.')
-			if post_as_deal and not deal_expiry_date:
-				err_message.append('Expiry Date is required for the deals.')
-			if post_as_deal and not blog_category:
-				err_message.append('Sub Category is required for the deals.')
+			if post_as_deal:
+				blog_category_slug = request.POST.get('radio_category', None)
+				if BlogCategory.objects.all().exists() and blog_category_slug:
+					blog_category = get_object_or_404(BlogCategory, slug=slugify(blog_category_slug))
+				if BlogParentCategory.objects.all().exists() and blog_category:
+					blog_parentcategory = blog_category.parent_category			
+				if not wishimgeobj:
+					err_message.append('Image is required for deals.')
+				if not deal_expiry_date:
+					err_message.append('Expiry Date is required for the deals.')
+				if not blog_category:
+					err_message.append('Sub Category is required for the deals.')
 
 			if err_message:
 				return json_error_response(err_message)
@@ -110,15 +111,15 @@ def userwish(request):
 					Follow.objects.get_or_create(request.user, broadcast_obj)
 
 		elif actor and actor == "user":
-			blog_category_slug = request.POST.get('blog_subcategories', None)
-			if BlogCategory.objects.all().exists() and blog_category_slug:
-				blog_category = get_object_or_404(BlogCategory, slug=slugify(blog_category_slug))
-			if BlogParentCategory.objects.all().exists() and blog_category:
-				blog_parentcategory = blog_category.parent_category	
-
 			post_as_wish = request.POST.get('post-as-wish', False)
-			if post_as_wish and not blog_category:
-				err_message.append('Category is required to post a wish.')
+			if post_as_wish:
+				blog_category_slug = request.POST.get('blog_subcategories', None)
+				if BlogCategory.objects.all().exists() and blog_category_slug:
+					blog_category = get_object_or_404(BlogCategory, slug=slugify(blog_category_slug))
+				if BlogParentCategory.objects.all().exists() and blog_category:
+					blog_parentcategory = blog_category.parent_category	
+				if not blog_category:
+					err_message.append('Category is required to post a wish.')
 			if err_message:
 				return json_error_response(err_message)
 			else:

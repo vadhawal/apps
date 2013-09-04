@@ -41,11 +41,11 @@ $(document).ready(function() {
     
     $('#getvendors').click(function(){
         var $blog_parentcategories = $(this).parent().find('.blog_parentcategories');
-        var $blog_parentcategories = $(this).parent().find('.blog_subcategories');
+        var $blog_subcategories = $(this).parent().find('.blog_subcategories');
 
         var parent_category_slug = $blog_parentcategories.find("option:selected").text();
 
-        var sub_category_slug = $blog_parentcategories.find("option:selected").text();
+        var sub_category_slug = $blog_subcategories.find("option:selected").text();
         if(parent_category_slug && sub_category_slug)
             var url = "/getvendors/"+parent_category_slug+"/"+sub_category_slug+"/";
         else if(parent_category_slug && !sub_category_slug)
