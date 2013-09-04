@@ -27,7 +27,6 @@ from follow import utils
 import uuid
 
 MESSAGE_MAX_LENGTH = getattr(settings,'MESSAGE_MAX_LENGTH',3000)
-PREFIX_MESSAGE_MAX_LENGTH = getattr(settings,'PREFIX_MESSAGE_MAX_LENGTH',256)
 
 def get_image_path(instance, filename):
     ext = filename.split('.')[-1]
@@ -124,46 +123,77 @@ class Broadcast(models.Model):
     def __unicode__(self):
         return self.message 
 
-class UserWishRadioManager(models.Manager):
-    def create_user_wishradio_object(self, user, prefix_message, blog_category, blog_parentcategory, message, content_type, object_id, wishimage, urlPreviewContent, expiry_date=None ):
-        broadcast = self.create(user=user, prefix_message=prefix_message, blog_category=blog_category, blog_parentcategory=blog_parentcategory, message=message, content_type=content_type, object_id=object_id, wishimage=wishimage, urlPreviewContent=urlPreviewContent, expiry_date=expiry_date)
+class GenericWishManager(models.Manager):
+    def create_generic_wish_object(self, user, message, content_type, object_id, wishimage, urlPreviewContent):
+        broadcast = self.create(user=user, message=message, content_type=content_type, object_id=object_id, wishimage=wishimage, urlPreviewContent=urlPreviewContent)
+        return broadcast
+
+class BroadcastWishManager(models.Manager):
+    def create_user_wish_object(self, user, blog_category, blog_parentcategory, message, content_type, object_id, wishimage, urlPreviewContent):
+        broadcast = self.create(user=user, blog_category=blog_category, blog_parentcategory=blog_parentcategory, message=message, content_type=content_type, object_id=object_id, wishimage=wishimage, urlPreviewContent=urlPreviewContent)
+        return broadcast
+
+class BroadcastDealManager(models.Manager):
+    def create_vendor_deal_object(self, user, blog_category, blog_parentcategory, message, content_type, object_id, wishimage, urlPreviewContent, expiry_date=None ):
+        broadcast = self.create(user=user, blog_category=blog_category, blog_parentcategory=blog_parentcategory, message=message, content_type=content_type, object_id=object_id, wishimage=wishimage, urlPreviewContent=urlPreviewContent, expiry_date=expiry_date)
         return broadcast
 
 def get_wishimage_upload_path(instance, filename):
     return os.path.join(
       "users/user_%d/" % instance.user.id, filename)
 
-class UserWishRadio(Broadcast):
-    prefix_message = models.TextField(_('message'), max_length=PREFIX_MESSAGE_MAX_LENGTH)
-    blog_category = models.ForeignKey(BlogCategory,
-                                        verbose_name=_("Category"),
-                                        blank=True, related_name="broadcast_blogcategory", null=True)
-    blog_parentcategory = models.ForeignKey(BlogParentCategory,
-                                        verbose_name=_("ParentCategory"),
-                                        blank=True, related_name="broadcast_blogparentcategory", null=True)
+
+class GenericWish(Broadcast):
     comments = CommentsField(verbose_name=_("Comments"))
     content_type = models.ForeignKey(ContentType)
     object_id = models.CharField(max_length=255)
     timestamp = models.DateTimeField(default=now)
-    expiry_date = models.DateField(_("expiry_date"), default=datetime_.date.today, null=True)
-    wishimage = ResizedImageField(upload_to=get_wishimage_upload_path, blank=True, null=True)
+    wishimage = ResizedImageField(upload_to=get_wishimage_upload_path, blank=True)
     urlPreviewContent = models.TextField(blank=True, verbose_name=_("UrlPreview"))
 
-    objects = UserWishRadioManager()
+    objects = GenericWishManager()
+
+    def get_absolute_url(self):
+        return ('view_post', [self.id])
+    get_absolute_url = models.permalink(get_absolute_url)
 
     def __unicode__(self):
-        message = self.prefix_message
-        if self.blog_category:
-            message += " " + self.blog_category.slug
-        message += " "+self.message
-        return message
+        return self.message
+
+class BroadcastWish(GenericWish):
+    blog_category = models.ForeignKey(BlogCategory,
+                                        verbose_name=_("Category_wish"),
+                                        blank=True, related_name="broadcast_blogcategory_wish", null=True)
+    blog_parentcategory = models.ForeignKey(BlogParentCategory,
+                                        verbose_name=_("ParentCategory"),
+                                        blank=True, related_name="broadcast_blogparentcategory_wish", null=True)
+    objects = BroadcastWishManager()
 
     def get_absolute_url(self):
         return ('view_wish', [self.id])
-    get_absolute_url = models.permalink(get_absolute_url)  
+    get_absolute_url = models.permalink(get_absolute_url)
+
+class BroadcastDeal(GenericWish):
+    blog_category = models.ForeignKey(BlogCategory,
+                                        verbose_name=_("Category_deal"),
+                                        blank=True, related_name="broadcast_blogcategory_deal", null=True)
+    blog_parentcategory = models.ForeignKey(BlogParentCategory,
+                                        verbose_name=_("ParentCategory"),
+                                        blank=True, related_name="broadcast_blogparentcategory_deal", null=True)
+
+    expiry_date = models.DateField(_("expiry_date"), default=datetime_.date.today)
+
+    objects = BroadcastDealManager()
+
+    def get_absolute_url(self):
+        return ('view_deal', [self.id])
+    get_absolute_url = models.permalink(get_absolute_url)
+
 
 User.profile = property(lambda u: UserProfile.objects.get_or_create(user=u)[0]) 
 pre_update.connect(new_users_handler, sender=FacebookBackend)
 pre_update.connect(new_users_handler, sender=TwitterBackend)
 
-utils.register(UserWishRadio)
+utils.register(GenericWish)
+utils.register(BroadcastWish)
+utils.register(BroadcastDeal)

@@ -1,4 +1,4 @@
-var toggle_comment_handler = function(event) {
+﻿var toggle_comment_handler = function(event) {
 
     var trunc = $(this).parent().find('.trunc-comment');
     var exp = $(this).parent().find('.exp-comment');
@@ -36,7 +36,7 @@ var comment_on_object_handler = function(event){
                 subcomments_element.find('.broadcasters').off("click").on("click", display_popup_handler);
             },
             error: function(data) {
-                alert(data);
+                console.log(data);
             }
         });
 

@@ -33,13 +33,6 @@ var sIndex = 0;
 var lIndex = 5;
 $(document).ready(function() {
 	$('.message').linkify();
-    {% if request.user.is_authenticated %}
-          {% get_owned_blog request.user as blog %} 
-          {% if blog %}
-          {% else %}
-            $("#radio-category").mcDropdown("#radioCategory");
-          {% endif %}
-    {% endif %}
 
     $('#updateTrends').click(function(){
         update_trends_handler();
@@ -47,28 +40,33 @@ $(document).ready(function() {
     });
     
     $('#getvendors').click(function(){
-        var parent_category_slug = $('#blog_parentcategories').find("option:selected").text();
-        var sub_category_slug = $('#blog_subcategories').find("option:selected").text();
+        var $blog_parentcategories = $(this).parent().find('.blog_parentcategories');
+        var $blog_parentcategories = $(this).parent().find('.blog_subcategories');
+
+        var parent_category_slug = $blog_parentcategories.find("option:selected").text();
+
+        var sub_category_slug = $blog_parentcategories.find("option:selected").text();
         if(parent_category_slug && sub_category_slug)
             var url = "/getvendors/"+parent_category_slug+"/"+sub_category_slug+"/";
         else if(parent_category_slug && !sub_category_slug)
             var url = "/getvendors/"+parent_category_slug+"/all/";
         document.location.href = url;
     });
-    $('#blog_parentcategories').change(function(){
+    $('.blog_parentcategories').change(function(){
         var slug = $(this).find("option:selected").text();
+        var $blog_subcategory = $(this).parent().find('.blog_subcategories');
         if(slug.toLowerCase() == "all") {
-            $('#blog_subcategories').empty();
+            $blog_subcategory.empty();
             var option = '<option value="all">All</option>';
-            $('#blog_subcategories').append(option);
+            $blog_subcategory.append(option);
         } else {
             $.get('/' + slug + '/subcategories', {}, function(data) {
-                var $subCSelect = $('#blog_subcategories');
-                $('#blog_subcategories').empty();
+                var $subCSelect = $blog_subcategory;
+                $blog_subcategory.empty();
                 var objJSON = eval("(function(){return " + data + ";})()");
                 for(var i=0;i<objJSON.length;i++) {
                     var option = '<option value="'+objJSON[i]+'">'+objJSON[i]+'</option>';
-                    $('#blog_subcategories').append(option);
+                    $blog_subcategory.append(option);
                 }
             });     
         }
@@ -148,11 +146,17 @@ $(document).ready(function() {
                     },
                     complete: function(xhr) {
                         if(xhr.responseText != 'ok')
+                        {
                             status.html(xhr.responseText);
-                        $('#broadcast').trigger('reset');
-                        $('.progress').toggle(); 
-                        $('#refreshActivity').click();
-                        $('#previewimg').html('');
+                            $('.progress').toggle(); 
+                        }
+                        else
+                        {
+                            $('#broadcast').trigger('reset');
+                            $('.progress').toggle(); 
+                            $('#refreshActivity').click();
+                            $('#previewimg').html('');
+                        }
                     }
                 }); 
 
@@ -293,15 +297,16 @@ function viewFeed()
     <form id="broadcast" action="/userwish/" method="post" class='album-form' enctype="multipart/form-data">
     {% csrf_token %}
     {{ form.as_p }}
-    <input id="userwish" type="text" name="userwish" value="I wish to buy" readonly>
-    <input id="vendorwish" type="text" name="vendorwish" value="I have a deal for" readonly style="display:None;">
 
     <div id="previewLoading"></div>
     {% get_owned_blog request.user as blog %} 
     {% if blog %}
+        <div id="deal-input"><input id="post-as-deal" type="checkbox" name="post-as-deal" value="deal" onclick="$('#expiry_date').toggle();
+        $('#sub_categories_blog').toggle();">Post As Deal</div>
+        </br>
         {% blog_subcategories_for_blog blog as sub_categories_blog %}
         {% if sub_categories_blog %}
-            <select id="sub_categories_blog" name="radio_category">
+            <select id="sub_categories_blog" name="radio_category" style="display:none">
                 <ul class="unstyled">
                     {% for blog_category in sub_categories_blog %}
                     <option value="{{ blog_category }}">{{ blog_category }}</option>
@@ -309,33 +314,34 @@ function viewFeed()
                 </ul>
             </select>
         {% endif %}
-        
-        <input id="asyou" type="radio" name="actor" value="user" checked="checked" onclick="$('#userwish').toggle();$('#vendorwish').toggle();$('#expiry_date').toggle();">As You
-        <input type="radio" name="actor" value="vendor" onclick="$('#userwish').toggle();$('#vendorwish').toggle();$('#expiry_date').toggle();">As {{ blog }}<br><br>
-        
-        <input style="display:none;" type="date" id="expiry_date" name="expiry_date">
+
+        <input style="display:none;" type="date" id="expiry_date" name="expiry_date">       
+        <input type="hidden" name="actor" value="vendor">
     {% else %}
-        <input id="radio-category" name="radio_category">
+        <div id="deal-input"><input id="post-as-wish" type="checkbox" name="post-as-wish" value="deal" onclick="$('#categories').toggle()">Post As Wish</div></br>
+        
         {% blog_parentcategories_abs as parent_categories %}
+
         {% if parent_categories %}
-            <ul id="radioCategory" class="mcdropdown_menu">
-                {% for parent_category in parent_categories %}
-                <li rel="{{ parent_category }}">{{ parent_category }}
-                    {% blog_subcategories parent_category as sub_categories %}
-                    {% if sub_categories %}
-                    <ul>
-                        {% for sub_category in sub_categories %}
-                        <li rel="{{ sub_category }}">{{ sub_category }}</li>
+            <div id="categories" style="display:none;">
+                <select class="blog_parentcategories" name="blog_parentcategories">
+                    <ul class="unstyled">
+                        <option value="all">{% trans "All" %}</option>
+                        {% for category in parent_categories %}
+                        <option value="{{ category }}">{{ category }}</option>
                         {% endfor %}
                     </ul>
-                    {% endif %}
-                    
-                </li>
-                {% endfor %}
-            </ul>
-        {% endif %}      
-        <input id="asyou" style="display:none;" type="radio" name="actor" value="user" checked="checked"><br> 
+                </select>
+                <select class="blog_subcategories" name="blog_subcategories">
+                    <ul class="unstyled">
+                        <option value="all">{% trans "All" %}</option>
+                    </ul>
+                </select>
+            </div>
+        {% endif %}
+        <input type="hidden" name="actor" value="user">       
     {% endif %}
+
     <div style="border:1px solid #1769ff;">
         <textarea class="boxsizingBorder" id="text" style="width:100%;height:50px;border: none;resize: none;" name="message" placeholder="What's on your mind?"></textarea>
     <!--textarea class="boxsizingBorder" id="createwish" style="width:100%;height:50px;border: none;resize: none;" name="message" placeholder="Wish details..."></textarea-->
@@ -410,7 +416,7 @@ function viewFeed()
     <div class="span10">
         {% blog_parentcategories_abs as parent_categories %}
         {% if parent_categories %}
-        <select id="blog_parentcategories" name="blog_parentcategories">
+        <select class="blog_parentcategories" name="blog_parentcategories">
             <ul class="unstyled">
                 <option value="all">{% trans "All" %}</option>
                 {% for category in parent_categories %}
@@ -419,7 +425,7 @@ function viewFeed()
             </ul>
         </select>
         {% endif %}
-        <select id="blog_subcategories" name="blog_subcategories">
+        <select class="blog_subcategories" name="blog_subcategories">
             <ul class="unstyled">
                 <option value="all">{% trans "All" %}</option>
             </ul>

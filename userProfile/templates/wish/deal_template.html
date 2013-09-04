@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load userProfile_tags %}
+{% block main %}
+    {% get_wish_owner deal as owner %}
+        <div class="span1">
+            {% include 'generic/includes/render_owner.html' with owner=owner %}
+        </div>
+        <div class="span7">
+            {% include 'wish/render_deal.html' with deal=deal %}
+        </div>
+        </br>
+        <div style="float:left;">
+            {% include 'actstream/render_voting.html' with object=deal %}
+            {% include 'actstream/render_subcomments.html' with object=deal %}
+        </div>
+        <a class="btn small primary share-twitter" target="_blank" href="http://twitter.com/home?status={{ request.build_absolute_uri }}">Share on Twitter</a>
+        <a class="btn small primary share-facebook" target="_blank" href="http://facebook.com/sharer.php?u={{ request.build_absolute_uri }}&amp;t={{ deal.message|urlencode }}">{% trans "Share on Facebook" %}</a>
+{% endblock %}
+

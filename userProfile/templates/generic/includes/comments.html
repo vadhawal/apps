@@ -22,7 +22,7 @@ $(function() {
     box-shadow: 1px 1px 0 #DDDDDD;
 }
 </style>
-{% if object_for_comments|get_class_name != "Album" and object_for_comments|get_class_name != "Image" and object_for_comments|get_class_name != "UserWishRadio" %}
+{% if object_for_comments|get_class_name != "Album" and object_for_comments|get_class_name != "Image" and object_for_comments|get_class_name != "GenericWish" and object_for_comments|get_class_name != "BroadcastWish" and object_for_comments|get_class_name != "BroadcastDeal" %}
 {% comment_thread object_for_comments %}
 {% endif %}
 {% include "generic/includes/render_owner.html" with owner=request.user %}

@@ -3,7 +3,9 @@
 <ul class="unstyled">
         <li>
         <span class="message">
-            {{wish.prefix_message}}
+            {% if  wish.parent_category %}
+                <a href="{{ wish.parent_category.get_absolute_url }}"> {{wish.parent_category}} </a> </br>
+            {% endif %}
             {% if  wish.blog_category %}
                 <a href="{{ wish.blog_category.get_absolute_url }}"> {{wish.blog_category}} </a> </br>
             {% endif %}
@@ -24,9 +26,6 @@
     {% autoescape off %}
             {{wish.urlPreviewContent}}
     {% endautoescape %}
-    {% if wish.expiry_date %}
-        Expires on: {{wish.expiry_date}}
-    {% endif %}
     </li>
 </ul>
 

@@ -7,7 +7,7 @@ from mezzanine.generic.models import ThreadedComment
 from django.contrib.contenttypes.models import ContentType
 from django.template import Node, TemplateSyntaxError
 from django.core.urlresolvers import reverse
-from userProfile.models import UserWishRadio
+from userProfile.models import BroadcastDeal, BroadcastWish
 from django.http import HttpResponse
 from django.utils import simplejson
 from follow.models import Follow
@@ -117,6 +117,13 @@ def get_reviews_by_user(parser, token):
         raise template.TemplateSyntaxError("second argument to '%s' tag must be 'as'" % bits[0])
     return ReviewsByUser(bits[1], bits[3])
 
+@register.inclusion_tag("wish/render_post.html", takes_context=True)
+def render_post(context, post):
+    context.update({
+        "post": post,
+    })
+    return context
+
 @register.inclusion_tag("wish/render_wish.html", takes_context=True)
 def render_wish(context, wish):
     context.update({
@@ -124,6 +131,12 @@ def render_wish(context, wish):
     })
     return context
 
+@register.inclusion_tag("wish/render_deal.html", takes_context=True)
+def render_deal(context, deal):
+    context.update({
+        "deal": deal,
+    })
+    return context
 class AsNode(Node):
     """
     Base template Node class for template tags that takes a predefined number
@@ -207,7 +220,7 @@ def recent_deals(context):
     deals = []
     latest = context["settings"].COMMENTS_NUM_LATEST
     ctype = ContentType.objects.get_for_model(BlogPost)
-    deals_queryset = UserWishRadio.objects.all().filter(content_type=ctype)
+    deals_queryset = BroadcastDeal.objects.all().filter(content_type=ctype)
     deals_queryset = sorted(deals_queryset, key=operator.attrgetter('timestamp'), reverse=True)
     for deal in deals_queryset:
         deals.append(deal) 
@@ -265,14 +278,14 @@ def render_deals_for_categories(context, parent_category, sub_category, latest=s
             blog_subcategory = get_object_or_404(BlogCategory, slug=slugify(blog_subcategory_slug))
 
         if blog_parentcategory_slug.lower() == "all" and blog_subcategory_slug.lower() == "all":
-            deals_queryset = UserWishRadio.objects.all().filter(content_type=ctype).order_by('-timestamp')[:latest]
+            deals_queryset = BroadcastDeal.objects.all().filter(content_type=ctype).order_by('-timestamp')[:latest]
         elif blog_parentcategory_slug.lower() != "all" and blog_subcategory_slug.lower() == "all":
             if blog_parentcategory:
                 blog_subcategories = list(BlogCategory.objects.all().filter(parent_category=blog_parentcategory))
-                deals_queryset = UserWishRadio.objects.all().filter(content_type=ctype, blog_category__in=blog_subcategories).order_by('-timestamp').distinct()[:latest]
+                deals_queryset = BroadcastDeal.objects.all().filter(content_type=ctype, blog_category__in=blog_subcategories).order_by('-timestamp').distinct()[:latest]
         else:
             if blog_subcategory and blog_parentcategory:
-                deals_queryset = UserWishRadio.objects.all().filter(blog_category=blog_subcategory).order_by('-timestamp')[:latest]
+                deals_queryset = BroadcastDeal.objects.all().filter(blog_category=blog_subcategory).order_by('-timestamp')[:latest]
 
         context.update({
             'wish_list': deals_queryset,

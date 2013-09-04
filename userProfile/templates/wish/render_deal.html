@@ -1,0 +1,31 @@
+{% load i18n %}
+{% load thumbnail %}
+<ul class="unstyled">
+        <li>
+        <span class="message">
+            {% if  deal.blog_category %}
+                <a href="{{ deal.blog_category.get_absolute_url }}"> {{deal.blog_category}} </a> </br>
+            {% endif %}
+            {{ deal.message }}
+        </br>
+        {% if deal.wishimage %}
+        	{% thumbnail deal.wishimage "500x400" crop="center" as img %} 
+                <a class="wishimg{{deal.id}}" href="{{  deal.wishimage.url }}">
+                    <img style="margin-right:20px;" src="{{ MEDIA_URL }}{{img}}">
+                </a> 
+                <script type="text/javascript">
+                      $('a.wishimg{{deal.id}}').lightBox();
+                </script> 
+            {% endthumbnail %}
+        {% endif %}
+    </span>
+    <p>
+    {% autoescape off %}
+            {{deal.urlPreviewContent}}
+    {% endautoescape %}
+    {% if deal.expiry_date %}
+        Expires on: {{deal.expiry_date}}
+    {% endif %}
+    </li>
+</ul>
+
