@@ -6,7 +6,7 @@ from django.conf import settings
 from mezzanine.blog.models import BlogPost
 from mezzanine.generic.models import ThreadedComment
 from imagestore.models import Album, Image
-from userProfile.models import UserWishRadio
+from userProfile.models import GenericWish, BroadcastDeal, BroadcastWish
 
 from actstream import action, actions
 from follow.models import Follow
@@ -27,19 +27,20 @@ def comment_action(sender, comment=None, target=None, **kwargs):
         elif isinstance(comment.content_object, Image):
             action.send(comment.user, verb=settings.IMAGE_COMMENT_VERB, action_object=comment, 
                 target=comment.content_object, batch_time_minutes=30, is_batchable=True)
-        elif isinstance(comment.content_object, UserWishRadio):
-            obj = comment.content_object
-            owner = obj.content_type.get_object_for_this_type(pk=obj.object_id)
-            if isinstance(owner, BlogPost):
-                action.send(comment.user, verb=settings.DEAL_COMMENT_VERB, action_object=comment, 
+        elif isinstance(comment.content_object, BroadcastWish):
+            action.send(comment.user, verb=settings.WISH_COMMENT_VERB, action_object=comment, 
+                target=comment.content_object, batch_time_minutes=30, is_batchable=True)
+            Follow.objects.get_or_create(comment.user, comment.content_object)
+            actions.follow(comment.user, comment.content_object, send_action=False, actor_only=False)
+        elif isinstance(comment.content_object, BroadcastDeal):
+            action.send(comment.user, verb=settings.DEAL_COMMENT_VERB, action_object=comment, 
+                target=comment.content_object, batch_time_minutes=30, is_batchable=True)
+            Follow.objects.get_or_create(comment.user, comment.content_object)
+            actions.follow(comment.user, comment.content_object, send_action=False, actor_only=False)
+        elif isinstance(comment.content_object, GenericWish):
+            action.send(comment.user, verb=settings.POST_COMMENT_VERB, action_object=comment, 
                     target=comment.content_object, batch_time_minutes=30, is_batchable=True)
-            elif isinstance(owner, User):
-                action.send(comment.user, verb=settings.WISH_COMMENT_VERB, action_object=comment, 
-                    target=comment.content_object, batch_time_minutes=30, is_batchable=True)
-            else:
-                """
-                Do Nothing
-                """
+    
             Follow.objects.get_or_create(comment.user, comment.content_object)
             actions.follow(comment.user, comment.content_object, send_action=False, actor_only=False) 
 
