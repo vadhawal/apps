@@ -1,3 +1,13 @@
+@font-face
+{
+	font-family: skinny;
+	src: url('/static/fonts/TheSkinny-bold.otf');
+}
+@font-face
+{
+	font-family: titillium;
+	src: url('/static/fonts/TitilliumMaps26L.otf');
+}
 .noGutter {
 	margin-left: 0px;
 }
@@ -9,7 +19,9 @@ a:hover {
 	color : rgb(2, 151, 149);
 }
 .customNavBar{
-	height: 30px;;
+	height: 180px;
+}
+.yellowBar{
 	background : #F9DF1E;
 	background : rgba(249, 223, 30, 1);
 }
@@ -41,9 +53,98 @@ a:hover {
 	background-size: 20px 20px;
 	background-repeat: no-repeat;
 }
+.whiteSpace{
+	height: 40px;
+	line-height: 40px;
+	float: right;
+	font-family: titillium;
+	font-size: 13.38px;
+	font-weight: 500;
+	color : #595757;
+	color : rgb(89, 87, 87);
+}
 .searchBar{
-	margin-top: 40px;
-	margin-bottom: 50px;
 	height: 60px;
 	background-color: rgb(2, 151, 149);
+}
+.error{
+	border-width: 1px;
+	border-color: red;
+}
+.blog_parentcategories, .blog_subcategories{
+	font-size: 12.85px;
+	text-indent: 0.01px;
+	text-overflow: '';
+	font-family: helvetica;
+	color:rgba(89,87,87,1.00);
+	background-color:rgba(229,244,244,1.00);
+	background-image: url('/static/img/selectPointer.gif');
+	background-repeat: no-repeat;
+	background-position: 140px 8px;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	-ms-appearance: none;
+	-o-appearance: none;
+	-webkit-border-radius: 0px;
+	border-radius: 0px;
+	-webkit-padding-start: 10px;
+	-moz-padding-start: 10px;
+	height: 25px;
+	width: 160px;
+	vertical-align: top;
+	margin-top: 12px;
+	line-height: normal;
+	/*padding: 0px;*/
+}
+.rightMargin{
+	margin-right: 30px;
+}
+div span.rightMargin{
+	color:rgba(89,87,87,1.00);
+	font-family: skinny;
+	background-image: url('/static/img/searchIcon.png');
+	background-repeat: no-repeat;
+	background-position: 10px center;
+	background-size: 10px 10px;
+	display: inline-block;
+	background-color: white;
+	margin-top: 12px;
+	padding-left:30px;
+	padding-right: 10px;
+	height: 25px;
+	line-height: 25px;
+}
+#getvendorsdiv{
+	height: 52px;
+	background-image: url("/static/img/goSearch.png");
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-size: 30px 30px;
+}
+#getvendors{
+	display: inline-block;
+	width: 30px;
+	height: 30px;
+}
+.wantText{
+	width: 200px;
+}
+.whiteBox {
+	background-color : #FFFFFF;
+	background-color : rgba(255, 255, 255, 1);
+	-webkit-box-shadow : 1.25px 1.25px 1.25px rgba(132,125,125,0.75);
+	box-shadow : 1.25px 1.25px 1.25px rgba(132, 125, 125, 0.75);
+	filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=1.25, OffY=1.25, Color='#847D7D') ;
+}
+.logo{
+	height: 150px;
+	width: 150px;
+	margin-top: -70px;
+}
+
+.logo a img{
+	width: 96.25px;
+	height: 110px;
+	padding: 20px 26.875px;
+	box-shadow: 0 0 0;
 }

@@ -20,7 +20,7 @@
         <div class="searchResultSubTextBig">
             <a class="searchResultSubTextBig darken" href="{{review.user.get_absolute_url}}">{% get_full_name review.user %}</a>
             <span class="pull-right"> <span class="searchResultSubText">for </span>
-                <a class="searchResultSubTextBig darken" href="{{ review.content_object.get_absolute_url }}">
+                <a class="searchResultSubTextBig darken radioColor" href="{{ review.content_object.get_absolute_url }}">
                     {{ review.content_object }}
                 </a>
             </span>
@@ -35,15 +35,15 @@
                 </a>
             </span>
         </div>
-        <div class="searchResultSubTextBig">
+        <div class="reviewTitle">
             {{review.comment}}
             <span class="searchResultRating searchResultRatingScheme searchResultRatingText rating-{{review.overall_value|floatformat:"0"}} pull-right" style="margin-left:0;">
                 {{review.overall_value|floatformat:"1"}}
             </span>
         </div>
-        <div class="searchResultSubText" style="margin-top:1px;">
-            <a class="searchResultSubText darken" href="{% url render_review review.content_object.slug review.id %}">Read Review</a>
-            <span class="pull-right">
+        <div class="searchResultSubText">
+            <!-- <a class="searchResultSubText darken" href="{% url render_review review.content_object.slug review.id %}">Read Review</a> -->
+            <span>
                 {% blocktrans with sometime=review.submit_date|timesince %}{{ sometime }} ago{% endblocktrans %}
             </span>
         </div>

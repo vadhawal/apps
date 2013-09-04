@@ -15,7 +15,7 @@
 }
 .searchResultRating {
 	cursor: default;
-	margin-left: 30px;
+	margin-left: 15px;
 	padding: 0px;
 	padding-left: 3px;
 	padding-right: 3px;
@@ -24,7 +24,30 @@
 	text-shadow: none;
 	font-family : Helvetica;
 	font-weight : bold;
-	font-size : 9.85pt;
+	font-size : 9.85px;
+}
+.searchResultSubText{
+	font-family: titillium;
+	font-weight: 200;
+	font-size : 8.44px;
+	color : #5D5D5D;
+	color : rgb(93, 93, 93);
+	text-shadow: none;
+}
+.searchResultSubTextBig{
+	font-family: titillium;
+	font-size : 9.12px;
+	line-height: 10.26px;
+	color : #5D5D5D;
+	color : rgb(93, 93, 93);
+	text-shadow: none;
+}
+.reviewTitle{
+	font-family: helvetica;
+	font-weight: bold;
+	font-size : 9.85px;
+	color : rgb(99, 98, 91);
+	text-shadow: none;
 }
 .searchResultRatingScheme {
 	background-attachment: scroll;
@@ -34,18 +57,10 @@
 	background-origin: padding-box;
 	color : #605D5A;
   	color : rgb(96, 93, 90);
-}
-.searchResultSubText{
-	font-size : 8.44pt;
-	color : #5D5D5D;
-	color : rgb(93, 93, 93);
-	text-shadow: none;
-}
-.searchResultSubTextBig{
-	font-size : 9.12pt;
-	color : #5D5D5D;
-	color : rgb(93, 93, 93);
-	text-shadow: none;
+  	font-size : 9.12px;
+  	text-shadow: none;
+	font-family : Helvetica;
+	font-weight : bold;
 }
 .darken{
 	font-weight: 500;
@@ -104,4 +119,8 @@
 	background-color: #fff;
 	line-height: normal;
 	margin-top: 6px;
+}
+.radioColor{
+	color : #029795;
+	color : rgb(2, 151, 149);
 }
