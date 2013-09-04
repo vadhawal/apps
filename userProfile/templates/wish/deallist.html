@@ -1,0 +1,26 @@
+{% load i18n %}
+{% load userProfile_tags %}
+{% load comment_tags %}
+{% load voting_tags %}
+{% load thumbnail %}
+{% block extra_head %}
+
+<ul>
+{% for deal in deal_list %}
+<li>
+{% get_wish_owner deal as deal_owner %}
+{% include 'generic/includes/render_owner.html' with owner=deal_owner %}
+
+{% render_deal deal %}
+{{deal.timestamp}}
+{% include 'generic/includes/render_voting.html' with object=deal %}
+
+{% include 'actstream/render_subcomments.html' with object=deal %}
+
+<a class="shareDeal" href="{% share_deal_url deal %}" >share</a>
+</li>
+{% empty %}
+{% trans "No wishes yet" %}
+{% endfor %}
+</ul>
+{% endblock %}
