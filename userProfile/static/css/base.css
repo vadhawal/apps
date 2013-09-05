@@ -54,9 +54,11 @@ a:hover {
 	background-repeat: no-repeat;
 }
 .whiteSpace{
+	background-color: white;
 	height: 40px;
 	line-height: 40px;
-	float: right;
+}
+.whiteSpace a {
 	font-family: titillium;
 	font-size: 13.38px;
 	font-weight: 500;

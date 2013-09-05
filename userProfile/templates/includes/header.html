@@ -4,24 +4,60 @@
 
 <div class="container customNavBar navbar navbar-fixed-top">
     <div class="row yellowBar">
-        <div class="offset10 span1">
-            <a href="{% url "socialauth_begin" "facebook" %}">
-                <div class="socialLogin facebookLogin">
-                </div>
-            </a>
-            <a href="{% url "socialauth_begin" "twitter" %}" >
-                <div class="socialLogin twitterLogin">
-                </div>
-            </a>
-            <a href="#google">
-               <div class="socialLogin googleLogin">
-               </div>
-            </a>
-        </div>
+            {% if request.user.is_authenticated %}
+            <div class="offset9 span2">
+                {% url "profile" request.user.username as profile_url %}
+                {% if profile_url %}
+                    {% include 'actstream/render_actor_name.html' with actor=request.user %}
+                    {% if request.user.is_authenticated %}
+                    <a href="{{profile_url}}">
+                    {% if request.user.get_profile.profile_photo%}
+                        <img style="margin-right:20px;height=30px;width:30px;" src="{{ request.user.get_profile.profile_photo.url }}">
+                    {% elif request.user.get_profile.image_url %}
+                        <img style="margin-right:20px;height=30px;width:30px;" src="{{ request.user.get_profile.image_url }}">
+                    {% else %}
+                        <img style="margin-right:20px;height=30px;width:30px;" src="{{ STATIC_URL }}img/defaultProfilePic.gif">
+                    {% endif %}
+                    </a> 
+                    {% endif %}
+                    <a href="{% url "profile_update" %}" class="btn btn-small btn-account">{% trans "Update profile" %}</a>
+                {% else %}
+                    <a href="{% url "profile_update" %}">{{ request.user.username }}</a>
+                    {% if request.user.get_profile.profile_photo %}
+                        <img style="margin-right:20px;height=30px;width:30px;" src="{{ request.user.get_profile.profile_photo.url }}">
+                    {% elif request.user.get_profile.image_url %}
+                        <img style="margin-right:20px;height=30px;width:30px;" src="{{ request.user.get_profile.image_url }}">
+                    {% else %}
+                        <img style="margin-right:20px;height=30px;width:30px;" src="{{ STATIC_URL }}img/defaultProfilePic.gif">
+                    {% endif %}
+                    </a>
+                {% endif %}
+            </div>
+            {% else %}
+            <div class="offset10 span1">
+                <a href="{% url "socialauth_begin" "facebook" %}">
+                    <div class="socialLogin facebookLogin">
+                    </div>
+                </a>
+                <a href="{% url "socialauth_begin" "twitter" %}" >
+                    <div class="socialLogin twitterLogin">
+                    </div>
+                </a>
+                <a href="#google">
+                   <div class="socialLogin googleLogin">
+                   </div>
+                </a>
+            </div>
+            {% endif %}
     </div>
-    <div class="row">
-        <div class="offset8 span2 whiteSpace rightMargin">
-            Login | Signup
+    <div class="row whiteSpace">
+        <div class="offset8 span2 rightMargin pull-right">
+            {% if request.user.is_authenticated %}
+            <a href="{% url "logout" %}?next={{ request.get_full_path }}">{% trans "Log out" %}</a>
+            {% else %}
+            <a href="{% url "login" %}?next={{ request.get_full_path }}">{% trans " Log in" %}</a>
+             | <a href="{% url "signup" %}?next={{ request.get_full_path }}">{% trans "Sign up" %}</a>
+             {% endif %}
         </div>
     </div>
     <div class="row">
