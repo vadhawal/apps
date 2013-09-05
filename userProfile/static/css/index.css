@@ -15,6 +15,9 @@
 }
 .boxTitle h6 {
 	display: table-cell;
+	font-family: titillium;
+	font-size: 15px;
+	font-weight: 900;
 }
 .yellowLine {
 	margin: 10px 10px 0px 0px;
