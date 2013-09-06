@@ -1,5 +1,5 @@
 {% load i18n mezzanine_tags comment_tags rating_tags %}
-{% load mezzanine_tags i18n future %}
+{% load mezzanine_tags i18n future comment_tags %}
 {% load voting_tags %}
 {% load inbox thumbnail %}
 
@@ -39,7 +39,22 @@
                 {{comment.title}}
             {% endif %}
         </strong>
-
+            <div>
+                {% with comment|get_reviewrating_obj as review_rating_obj %}
+                    {% if review_rating_obj %}
+                            {% vote_by_user request.user on review_rating_obj as vote %}
+                            {% if not vote %}
+                                <span>Do you find this review helpful? </span>
+                                <a class="found-helpful" href="{% url 'rating_on_reviews' review_rating_obj.id 'up' %}">Yes </a>
+                                <a class="not-found-helpful" href="{% url 'rating_on_reviews' review_rating_obj.id 'down' %}">No</a>
+                            {% else %}
+                                </span>You found this review helpful.</span>
+                                <a class="clear-helpful" href="{% url 'rating_on_reviews' review_rating_obj.id 'clear' %}">Clear</a>
+                            {% endif %}
+                    {% endif %}
+                {% endwith %}
+            </div>
+            <div><span>Shop Again? </span> {% if comment.shop_again == 0%}NO{% else %}YES{% endif %}</div>
         <p>{{ comment.comment|comment_filter }}</p>
         {% include 'generic/includes/render_voting.html' with object=comment %}
         {% include 'actstream/render_subcomments.html' with object=comment %}

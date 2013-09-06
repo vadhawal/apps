@@ -111,6 +111,7 @@ var install_action_handlers = function(){
 
 var install_voting_handlers = function(){
     $('.upvote').add('.downvote').add('.clearvote').off("click").on("click", voting_handlers);
+    $('.found-helpful').add('.not-found-helpful').add('.clear-helpful').off("click").on("click", review_voting_handler);
     $('.pScore').add('.broadcasters').off("click").on("click", display_popup_handler);
 }
 
