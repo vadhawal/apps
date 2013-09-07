@@ -53,10 +53,10 @@
     <div class="row whiteSpace">
         <div class="offset8 span2 rightMargin pull-right">
             {% if request.user.is_authenticated %}
-            <a href="{% url "logout" %}?next={{ request.get_full_path }}">{% trans "Log out" %}</a>
+            <a class="fontSize13 fontTitillium" href="{% url "logout" %}?next={{ request.get_full_path }}">{% trans "Log out" %}</a>
             {% else %}
-            <a href="{% url "login" %}?next={{ request.get_full_path }}">{% trans " Log in" %}</a>
-             | <a href="{% url "signup" %}?next={{ request.get_full_path }}">{% trans "Sign up" %}</a>
+            <a class="fontSize13 fontTitillium" href="{% url "login" %}?next={{ request.get_full_path }}">{% trans " Log in" %}</a>
+             | <a class="fontSize13 fontTitillium" href="{% url "signup" %}?next={{ request.get_full_path }}">{% trans "Sign up" %}</a>
              {% endif %}
         </div>
     </div>

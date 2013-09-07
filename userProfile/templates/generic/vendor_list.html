@@ -3,6 +3,7 @@
 {% load thumbnail %}
 {% load follow_tags %}
 {% load hitcount_tags %}
+{% load userProfile_tags %}
 {# % block title %}{% trans "vendors" %}{% endblock % #}
 
 {% block content %}
@@ -10,9 +11,9 @@
         <div class="row vendorResult">
             <div class="span1 text-center">
                 {% if vendor|get_class_name == "BlogPost" and vendor.featured_image %}
-                        {% thumbnail vendor.featured_image "30x30" as img %} 
+                        {% thumbnail vendor.featured_image "45x45" as img %} 
                         <a style="vertical-align:middle;" href='{{vendor.get_absolute_url}}'>
-                            <img style="vertical-align:middle;display:inline-block" src="{{ MEDIA_URL }}{{img}}">
+                            <img style="vertical-align:middle;display:inline-block;margin-left:-7px;" src="{{ MEDIA_URL }}{{img}}">
                         </a>
                         {% endthumbnail %}
                 {% else %}
@@ -20,29 +21,31 @@
                 {% endif %}
             </div>
             <div class="span2 noGutter">
-                <div class="radioColor searchResultRatingText">
-                    {{ forloop.counter}}.
+                <div class="storeTopMargin radioColor fontHelvetica fontSize15">
+                    {# forloop.counter #}
                     <a class="radioColor" href='{{vendor.get_absolute_url}}'>
                         {{ vendor }}
                     </a>
-                     <span class="searchResultRating searchResultRatingScheme rating-{{vendor.overall_average|floatformat:"0"}}">{{vendor.overall_average|floatformat:"1"}}
+                     <span class="searchResultRating searchResultRatingScheme fontSize9 fontHelvetica weightBold rating-{{vendor.overall_average|floatformat:"0"}}">{{vendor.overall_average|floatformat:"1"}}
                      </span>
                 </div>
 
-                <div class="searchResultSubText">
-                    <a class="infoSpace searchResultSubText" href="{{ vendor.get_absolute_url }}#comments">{% spaceless %}
-                        {% blocktrans count vendor.comments_count as comments_count %}1 review{% plural %}{{ comments_count }} reviews{% endblocktrans %}
+                <div class="fontTitillium3 fontSize13 color5D">
+                    <a class="infoSpace fontTitillium3 fontSize13 color5D" href="{{ vendor.get_absolute_url }}#comments">{% spaceless %}
+                        {% blocktrans count vendor.comments_count as comments_count %}<span class="fontTitillium1">1</span> review{% plural %}<span class="fontTitillium1">{{ comments_count }}</span> reviews{% endblocktrans %}
                         {% endspaceless %}
                     </a>
                         {% vendor_follower_subset_info_url vendor 0 request.user|follower_count:vendor as subset_follower_url %}
-                    <a class="infoSpace searchResultSubText vendorFollowers" href="{{subset_follower_url}}">{{ request.user|follower_count:vendor }} follower{{ request.user|follower_count:vendor|pluralize }}
+                    <a class="infoSpace fontTitillium3 vendorFollowers fontSize13 color5D" href="{{subset_follower_url}}"><span class="fontTitillium1">{{ request.user|follower_count:vendor }}</span> follower{{ request.user|follower_count:vendor|pluralize }}
                     </a>
-                    <span class="infoSpace">
-                        {% get_hit_count for vendor %} views
-                    </span>
+<!--                     <span class="infoSpace">
+                        <span class="fontTitillium1">{# get_hit_count for vendor #}</span> views
+                    </span> -->
                 </div>
             </div>
         </div>
-        <hr class="dottedSeparator">
+        {% if forloop.counter < 'MIN_STORES_HOME_PAGE'|settings_value %}
+            <hr class="dottedSeparator">
+        {% endif %}
     {% endfor %}
 {% endblock %}

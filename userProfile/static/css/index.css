@@ -1,9 +1,9 @@
 .outerBox {
-	height: 300px;
+	height: 350px;
 	width: 100%;
 }
 .innerBox {
-	height: 240px;
+	height: 290px;
 	overflow: auto;
 }
 .dealBox {
@@ -12,12 +12,11 @@
 .boxTitle{
 	width: 100%;
 	display: table;
+	margin-top: 10px;
+	margin-bottom: 10px;
 }
 .boxTitle h6 {
 	display: table-cell;
-	font-family: titillium;
-	font-size: 15px;
-	font-weight: 900;
 }
 .yellowLine {
 	margin: 10px 10px 0px 0px;
@@ -31,5 +30,5 @@
 .topReviews{
 	background-color: #fff;
 	line-height: normal;
-	margin-top: 6px;
+	margin-top: 8px;
 }
