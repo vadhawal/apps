@@ -102,8 +102,8 @@ var install_follow_handlers = function() {
 var sharewish_handler = function() {
     if(login_required_handler())
         return false;
-    var add_link = $(this);
-    var link = add_link.attr('href');
+    var $elementClicked = $(this);
+    var link = $elementClicked.data("href");
     $.get(link, {}, function(data) {
     if(data == 'ok')
       alert('shared');

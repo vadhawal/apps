@@ -20,6 +20,8 @@ var install_toggle_comment_handler = function() {
 }
 
 var comment_on_object_handler = function(event){
+	    if(login_required_handler())
+        	return false;
         var form = $(this);
         $.ajax({
             type: form.attr('method'),

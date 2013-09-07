@@ -101,11 +101,11 @@ $(document).ready(function() {
                     {% vote_by_user request.user on review_rating_obj as vote %}
                     {% if not vote %}
                         <span>Do you find this review helpful? </span>
-                        <a class="found-helpful" href="{% url 'rating_on_reviews' review_rating_obj.id 'up' %}">Yes</a>
-                        <a class="not-found-helpful" href="{% url 'rating_on_reviews' review_rating_obj.id 'down' %}">No</a>
+                        <a class="found-helpful" href="#" data-href="{% url 'rating_on_reviews' review_rating_obj.id 'up' %}">Yes</a>
+                        <a class="not-found-helpful" href="#" data-href="{% url 'rating_on_reviews' review_rating_obj.id 'down' %}">No</a>
                     {% else %}
                         </span>You found this review helpful.</span>
-                        <a class="clear-helpful" href="{% url 'rating_on_reviews' review_rating_obj.id 'clear' %}">Clear</a>
+                        <a class="clear-helpful" href="#" data-href="{% url 'rating_on_reviews' review_rating_obj.id 'clear' %}">Clear</a>
                     {% endif %}
             {% endwith %}
         </div>

@@ -17,7 +17,7 @@
 
 {% include 'actstream/render_subcomments.html' with object=deal %}
 
-<a class="shareDeal" href="{% share_deal_url deal %}" >share</a>
+<a class="shareDeal" href="#" data-href="{% share_deal_url deal %}" >share</a>
 </li>
 {% empty %}
 {% trans "No wishes yet" %}

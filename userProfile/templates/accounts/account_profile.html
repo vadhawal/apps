@@ -58,7 +58,6 @@
             
 
             var getFeed = function(){
-                {% if request.user.is_authenticated %}
                     $('#load-feeds').html("");
                     {% actor_url_subset profile_user 0 10 as feed %}
                     var link = "{{feed}}";
@@ -66,11 +65,9 @@
                         $('#load-feeds').html(data);
                          install_action_handlers();
                     });
-                {% endif %}    
             }
             getFeed();   
             var getWishList = function(){
-                {% if request.user.is_authenticated %}
                     $('#load-wish').html("");
                     {% get_wishlist_url profile_user 0 10 as wishlisturl %}
                     var link = "{{wishlisturl}}";
@@ -78,8 +75,7 @@
                         $('#load-wish').html(data);
                             install_voting_handlers();
                             $('.shareWish').on('click', sharewish_handler);
-                    });
-                {% endif %}    
+                    });  
             }
             getWishList();  
             updatestatus(); 
@@ -239,7 +235,7 @@ function scrollalert(){
                 {% endfor %}
             </div>
 
-            {% if request.user.is_authenticated and profile_user == request.user   %}
+            {% if profile_user == request.user   %}
             <div>
                 <a id="getSocialFriends" style="" href="{% url "friend_list" %}"></a>
                 <div id="socialFriendsList"></div>
@@ -299,8 +295,7 @@ function scrollalert(){
         </div>
         <!-- Reviews Written End -->
     </div>
-  
-{% if request.user.is_authenticated %}  
+   
     <div class = "row">
         <!-- Logged In User Feed -->
         <div class="span9">
@@ -311,7 +306,7 @@ function scrollalert(){
                 <span id="status" ></span>
 
                 <div id="loader">
-                    <a id="refreshActorCache" href="{% activity_actor_refresh_cache request.user %}"></a>
+                    <a id="refreshActorCache" href="{% activity_actor_refresh_cache profile_user %}"></a>
                 </div>
                 <span id="status" ></span>
                 <!--div id="load-feeds" class="container span4 right"></div-->
@@ -326,6 +321,5 @@ function scrollalert(){
                 <span id="wish-status" >
         </div>
     </div>
-{% endif %}
 </div>
 {% endblock %}

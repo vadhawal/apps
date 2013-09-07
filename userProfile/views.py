@@ -29,6 +29,7 @@ def json_error_response(error_message):
 def close_login_popup(request):
     return render_to_response('close_popup.html', {}, RequestContext(request))
 
+@login_required
 def broadcast(request):
 	if request.method == "POST":
 		if _(request.POST['actor']) == "user":
@@ -53,6 +54,7 @@ def broadcast(request):
 	else:
 		return render_to_response('broadcast_success.html', {}, RequestContext(request))
 
+@login_required
 def userwish(request):
 	if request.method == "POST":
 		blog_category = None
@@ -142,7 +144,6 @@ def userwish(request):
 	else:
 		return render_to_response('broadcast_success.html', {}, RequestContext(request))
 
-@login_required
 def view_post(request, post_id, template_name='wish/view_post.html'):
 	post = get_object_or_404(Wish, id=post_id)
 
@@ -150,7 +151,6 @@ def view_post(request, post_id, template_name='wish/view_post.html'):
 		'post': post,
      }, context_instance=RequestContext(request))
 
-@login_required
 def view_wish(request, wish_id, template_name='wish/view_wish.html'):
 	wish = get_object_or_404(Wish, id=wish_id)
 
@@ -158,7 +158,6 @@ def view_wish(request, wish_id, template_name='wish/view_wish.html'):
 		'wish': wish,
      }, context_instance=RequestContext(request))
 
-@login_required
 def view_deal(request, deal_id, template_name='wish/view_deal.html'):
 	deal = get_object_or_404(Deal, id=deal_id)
 
@@ -206,6 +205,7 @@ def get_deallist(request, content_type_id, object_id, sIndex, lIndex):
 		'ctype': ctype, 'sIndex':s
 	}, context_instance=RequestContext(request))
 
+@login_required
 def shareWish(request, wish_id):
 	wishObject = get_object_or_404(BroadcastWish, pk=wish_id)
 	ctype = ContentType.objects.get_for_model(wishObject)
@@ -223,6 +223,7 @@ def shareWish(request, wish_id):
 				'action': actionObject
 			}, context_instance=RequestContext(request)) 
 
+@login_required
 def shareDeal(request, deal_id):
 	dealObject = get_object_or_404(BroadcastDeal, pk=deal_id)
 	ctype = ContentType.objects.get_for_model(dealObject)
@@ -242,6 +243,7 @@ def shareDeal(request, deal_id):
 				'action': actionObject
 			}, context_instance=RequestContext(request))
 
+@login_required
 def followWish(request, wish_id):
 	wishObject = get_object_or_404(BroadcastWish, pk=wish_id)
 	ctype = ContentType.objects.get_for_model(wishObject)
@@ -249,6 +251,7 @@ def followWish(request, wish_id):
 	actions.follow(request.user, wishObject, send_action=False, actor_only=False)
 	return HttpResponse('ok')
 
+@login_required
 def unfollowWish(request, wish_id):
 	wishObject = get_object_or_404(BroadcastWish, pk=wish_id)
 	ctype = ContentType.objects.get_for_model(wishObject)
@@ -257,6 +260,7 @@ def unfollowWish(request, wish_id):
 	actions.unfollow(request.user, wishObject, send_action=False)
 	return HttpResponse('ok')
 
+@login_required
 def followDeal(request, deal_id):
 	wishObject = get_object_or_404(BroadcastDeal, pk=deal_id)
 	ctype = ContentType.objects.get_for_model(wishObject)
@@ -264,6 +268,7 @@ def followDeal(request, deal_id):
 	actions.follow(request.user, wishObject, send_action=False, actor_only=False)
 	return HttpResponse('ok')
 
+@login_required
 def unfollowDeal(request, deal_id):
 	dealObject = get_object_or_404(BroadcastDeal, pk=deal_id)
 	ctype = ContentType.objects.get_for_model(dealObject)

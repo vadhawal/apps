@@ -38,7 +38,6 @@
             {% get_hit_count_javascript for blog_post %}
 
             var getDealList = function(){
-                {% if request.user.is_authenticated %}
                     $('#load-deals').html("");
                     {% get_deallist_url blog_post 0 10 as wishlisturl %}
                     var link = "{{wishlisturl}}";
@@ -46,8 +45,7 @@
                         $('#load-deals').html(data);
                         install_voting_handlers();
                         $('.shareDeal').on('click', sharewish_handler);
-                    });
-                {% endif %}    
+                    });  
             }
             getDealList(); 
 

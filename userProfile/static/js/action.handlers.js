@@ -39,10 +39,14 @@ var display_popup_handler = function(event) {
 };
 
 var share_action_handler = function(event) {
-    var add_link = $(this);
-    var link = add_link.attr('href');
+    if(login_required_handler())
+        return false;
+    
+    var $elementClicked = $(this);
+    var link =  $elementClicked.data("href");
+
     $.get(link, {}, function(data) {
-        if(data == 'ok')
+        if(data.success == true)
           alert('shared');
     });
    	event.stopPropagation();
@@ -51,15 +55,19 @@ var share_action_handler = function(event) {
 };
 
 var follow_post_handler = function(event) {
-    var add_link = $(this);
-    var link = add_link.attr('href');
+    if(login_required_handler())
+        return false;
+    
+    var $elementClicked = $(this);
+    var link =  $elementClicked.data("href");
+
     $.get(link, {}, function(data) {
         if(data == 'ok')
         {
-          $href = add_link.attr('href')
+          $href = $elementClicked.attr('href')
           $newhref = $href.replace("follow", "unfollow");
-          add_link.attr('href', $newhref);
-          add_link.html("unfollow post");
+          $elementClicked.attr('href', $newhref);
+          $elementClicked.html("unfollow post");
         }
     });
     event.stopPropagation();
@@ -68,15 +76,19 @@ var follow_post_handler = function(event) {
 };
 
 var unfollow_post_handler = function(event) {
-    var add_link = $(this);
-    var link = add_link.attr('href');
+    if(login_required_handler())
+        return false;
+    
+    var $elementClicked = $(this);
+    var link =  $elementClicked.data("href");
+    
     $.get(link, {}, function(data) {
         if(data == 'ok')
         {
-          $href = add_link.attr('href')
+          $href = $elementClicked.attr('href')
           $newhref = $href.replace("unfollow", "follow");
-          add_link.attr('href', $newhref);
-          add_link.html("follow post");
+          $elementClicked.attr('href', $newhref);
+          $elementClicked.html("follow post");
         }
     });
     event.stopPropagation();
