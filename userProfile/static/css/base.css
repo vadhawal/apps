@@ -8,15 +8,82 @@
 	font-family: titillium;
 	src: url('/static/fonts/TitilliumMaps26L.otf');
 }
-.noGutter {
-	margin-left: 0px;
+@font-face
+{
+	font-family: titillium3;
+	src: url('/static/fonts/TitilliumMaps26L003.otf');
+}
+@font-face
+{
+	font-family: titillium1;
+	src: url('/static/fonts/TitilliumMaps26L001.otf');
+}
+div p span {
+	text-shadow: none;
+}
+img {
+	box-shadow: 0 0 3px #bbb;
 }
 a:hover {
 	text-decoration: none;
 }
+.width200{
+	width:200px;
+}
+.forText {
+	color: rgb(99, 98, 91);
+}
+.fontHelvetica {
+	font-family: helvetica;
+}
+.fontTitillium {
+	font-family: titillium;
+	/*boldest*/
+}
+.fontTitillium1 {
+	font-family: titillium1;
+}
+.fontTitillium3 {
+	font-family: titillium3;
+	/*lightest*/
+}
+.weightBold{
+	font-weight: bold;
+}
+.fontSize9{
+	font-size: 9px;
+}
+.fontSize11{
+	font-size: 11px;
+}
+.fontSize12{
+	font-size: 12px;
+}
+.fontSize13{
+	font-size: 13px;
+}
+.fontSize15{
+	font-size: 15px;
+}
+.fontSize16{
+	font-size: 16px;
+}
+.storeTopMargin {
+	margin-top: 5px;
+}
+.noGutter {
+	margin-left: 0px;
+}
+.halfGutter {
+	margin-left: 12px;
+}
 .radioColor{
-	color : #029795;
-	color : rgb(2, 151, 149);
+	color: #029795;
+	color: rgb(2, 151, 149);
+}
+.color5D{
+	color: #5D5D5D;
+	color: rgb(93, 93, 93);
 }
 .customNavBar{
 	height: 180px;
@@ -59,11 +126,9 @@ a:hover {
 	line-height: 40px;
 }
 .whiteSpace a {
-	font-family: titillium;
-	font-size: 13.38px;
 	font-weight: 500;
-	color : #595757;
-	color : rgb(89, 87, 87);
+	color: #595757;
+	color: rgb(89, 87, 87);
 }
 .searchBar{
 	height: 60px;
@@ -132,8 +197,8 @@ div span.rightMargin{
 	width: 200px;
 }
 .whiteBox {
-	background-color : #FFFFFF;
-	background-color : rgba(255, 255, 255, 1);
+	background-color: #FFFFFF;
+	background-color: rgba(255, 255, 255, 1);
 	-webkit-box-shadow : 1.25px 1.25px 1.25px rgba(132,125,125,0.75);
 	box-shadow : 1.25px 1.25px 1.25px rgba(132, 125, 125, 0.75);
 	filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=1.25, OffY=1.25, Color='#847D7D') ;
