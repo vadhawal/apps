@@ -1,0 +1,6 @@
+
+{% if object %}
+	{% include 'generic/includes/render_voting.html' with object=object %}
+
+	{% include 'actstream/render_subcomments.html' with object=object %}
+{% endif %}

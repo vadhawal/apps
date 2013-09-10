@@ -99,3 +99,7 @@
 	float: right;
 	padding-bottom: 0.7em;	
 }
+.lightbox-image{
+	float:left;
+	clear:right;
+}

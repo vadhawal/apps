@@ -426,3 +426,11 @@ def render_deal(request, deal_id, template="wish/deal_template.html"):
     return render_to_response('wish/deal_template.html', {
        'deal': deal, 
     }, context_instance=context)
+
+def get_reldata(request, content_type_id, object_id):
+	ctype = get_object_or_404(ContentType, pk=content_type_id)
+	obj = get_object_or_404(ctype.model_class(), pk=object_id)
+
+	return render_to_response('generic/rel_data.html', {
+		'object': obj, 
+	}, context_instance=RequestContext(request))

@@ -33,6 +33,7 @@ var display_popup_handler = function(event) {
         scrollBar:'true'
     },
     function() {
+            $('#pop_up').css({'z-index': '100'});
             install_follow_handlers();
     });
     

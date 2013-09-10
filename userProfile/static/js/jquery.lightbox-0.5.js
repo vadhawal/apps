@@ -44,10 +44,12 @@
 			keyToNext:				'n',		// (string) (n = next) Letter to show the next image.
 			// Don´t alter these variables in any way
 			imageArray:				[],
-			activeImage:			0
+			activeImage:			0,
+			lightbox_info_container_width: 200
 		},settings);
 		// Caching the jQuery object with all elements matched
 		var jQueryMatchedObj = this; // This, in this context, refer to jQuery object
+
 		/**
 		 * Initializing the plugin calling the start function
 		 *
@@ -74,11 +76,11 @@
 			settings.activeImage = 0;
 			// We have an image set? Or just an image? Let´s see it.
 			if ( jQueryMatchedObj.length == 1 ) {
-				settings.imageArray.push(new Array(objClicked.getAttribute('href'),objClicked.getAttribute('title')));
+				settings.imageArray.push(new Array(objClicked.getAttribute('href'),objClicked.getAttribute('title'),  $(objClicked).data('reldata-url')));
 			} else {
 				// Add an Array (as many as we have), with href and title atributes, inside the Array that storage the images references		
 				for ( var i = 0; i < jQueryMatchedObj.length; i++ ) {
-					settings.imageArray.push(new Array(jQueryMatchedObj[i].getAttribute('href'),jQueryMatchedObj[i].getAttribute('title')));
+					settings.imageArray.push(new Array(jQueryMatchedObj[i].getAttribute('href'),jQueryMatchedObj[i].getAttribute('title'), $(jQueryMatchedObj[i]).data('reldata-url')));
 				}
 			}
 			while ( settings.imageArray[settings.activeImage][0] != objClicked.getAttribute('href') ) {
@@ -96,6 +98,7 @@
 				<div id="lightbox-container-image-box">
 					<div id="lightbox-container-image">
 						<img src="../fotos/XX.jpg" id="lightbox-image">
+						<div id="lightbox-info-container"></div>
 						<div id="lightbox-nav">
 							<a href="#" id="lightbox-nav-btnPrev"></a>
 							<a href="#" id="lightbox-nav-btnNext"></a>
@@ -125,7 +128,7 @@
 		 */
 		function _set_interface() {
 			// Apply the HTML markup into body tag
-			$('body').append('<div id="jquery-overlay"></div><div id="jquery-lightbox"><div id="lightbox-container-image-box"><div id="lightbox-container-image"><img id="lightbox-image"><div style="" id="lightbox-nav"><a href="#" id="lightbox-nav-btnPrev"></a><a href="#" id="lightbox-nav-btnNext"></a></div><div id="lightbox-loading"><a href="#" id="lightbox-loading-link"><img src="' + settings.imageLoading + '"></a></div></div></div><div id="lightbox-container-image-data-box"><div id="lightbox-container-image-data"><div id="lightbox-image-details"><span id="lightbox-image-details-caption"></span><span id="lightbox-image-details-currentNumber"></span></div><div id="lightbox-secNav"><a href="#" id="lightbox-secNav-btnClose"><img src="' + settings.imageBtnClose + '"></a></div></div></div></div>');	
+			$('body').append('<div id="jquery-overlay"></div><div id="jquery-lightbox"><div id="lightbox-container-image-box"><div id="lightbox-container-image"><img id="lightbox-image" class="lightbox-image"><div id="lightbox-info-container"></div><div style="" id="lightbox-nav"><a href="#" id="lightbox-nav-btnPrev"></a><a href="#" id="lightbox-nav-btnNext"></a></div><div id="lightbox-loading"><a href="#" id="lightbox-loading-link"><img src="' + settings.imageLoading + '"></a></div></div></div><div id="lightbox-container-image-data-box"><div id="lightbox-container-image-data"><div id="lightbox-image-details"><span id="lightbox-image-details-caption"></span><span id="lightbox-image-details-currentNumber"></span></div><div id="lightbox-secNav"><a href="#" id="lightbox-secNav-btnClose"><img src="' + settings.imageBtnClose + '"></a></div></div></div></div>');	
 			// Get page sizes
 			var arrPageSizes = ___getPageSize();
 			// Style overlay and show it
@@ -143,7 +146,8 @@
 				left:	arrPageScroll[0]
 			}).show();
 			// Assigning click events in elements to close overlay
-			$('#jquery-overlay,#jquery-lightbox').click(function() {
+			//$('#jquery-overlay,#jquery-lightbox').click(function() {
+			$('#jquery-overlay').click(function() {
 				_finish();									
 			});
 			// Assign the _finish function to lightbox-loading-link and lightbox-secNav-btnClose objects
@@ -187,11 +191,30 @@
 			objImagePreloader.onload = function() {
 				$('#lightbox-image').attr('src',settings.imageArray[settings.activeImage][0]);
 				// Perfomance an effect in the image container resizing it
-				_resize_container_image_box(objImagePreloader.width,objImagePreloader.height);
+				_resize_container_image_box(objImagePreloader.width + $('#lightbox-info-container').width(), objImagePreloader.height);
 				//	clear onLoad, IE behaves irratically with animated gifs otherwise
 				objImagePreloader.onload=function(){};
+				$('#lightbox-info-container').css({ 
+					'width' : $('#lightbox-info-container').width() + 'px',
+					'top'	: $('#lightbox-image').position().top,
+					'float'	: 'right',
+					'margin-top': '100px'
+				});
+				var reldata_url = settings.imageArray[settings.activeImage][2];
+				$.get(reldata_url, {}, function(data) {
+					$('#lightbox-info-container').html(data);
+					install_voting_handlers();
+				});
 			};
 			objImagePreloader.src = settings.imageArray[settings.activeImage][0];
+			$('#lightbox-nav').on("mouseenter", function(event){
+				// Enable keyboard navigation
+				_enable_keyboard_navigation();	
+			});
+			$('#lightbox-nav').on("mouseleave", function(event){
+				// Enable keyboard navigation
+				_disable_keyboard_navigation();	
+			});
 		};
 		/**
 		 * Perfomance an effect in the image container resizing it
@@ -220,6 +243,7 @@
 			} 
 			$('#lightbox-container-image-data-box').css({ width: intImageWidth });
 			$('#lightbox-nav-btnPrev,#lightbox-nav-btnNext').css({ height: intImageHeight + (settings.containerBorderSize * 2) });
+			$('#lightbox-image-details').css({ width: intImageWidth });
 		};
 		/**
 		 * Show the prepared image
@@ -254,7 +278,7 @@
 		 */
 		function _set_navigation() {
 			$('#lightbox-nav').show();
-
+			$('#lightbox-nav').css({ width: $('#lightbox-image').width() + settings.containerBorderSize });
 			// Instead to define this configuration in CSS file, we define here. And it´s need to IE. Just.
 			$('#lightbox-nav-btnPrev,#lightbox-nav-btnNext').css({ 'background' : 'transparent url(' + settings.imageBlank + ') no-repeat' });
 			
@@ -305,8 +329,6 @@
 					});
 				}
 			}
-			// Enable keyboard navigation
-			_enable_keyboard_navigation();
 		}
 		/**
 		 * Enable a support to keyboard navigation
@@ -350,7 +372,7 @@
 				if ( settings.activeImage != 0 ) {
 					settings.activeImage = settings.activeImage - 1;
 					_set_image_to_view();
-					_disable_keyboard_navigation();
+					_enable_keyboard_navigation();
 				}
 			}
 			// Verify the key to show the next image
@@ -359,7 +381,7 @@
 				if ( settings.activeImage != ( settings.imageArray.length - 1 ) ) {
 					settings.activeImage = settings.activeImage + 1;
 					_set_image_to_view();
-					_disable_keyboard_navigation();
+					_enable_keyboard_navigation();
 				}
 			}
 		}
