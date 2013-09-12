@@ -28,12 +28,11 @@ var display_popup_handler = function(event) {
     $('#pop_up').bPopup({
         content:'ajax',
         loadUrl:$(this).attr("href"),
-        zIndex: 2,
+        zIndex: 8050,
         onClose: function(){ $('#pop_up').remove(); },
         scrollBar:'true'
     },
     function() {
-            $('#pop_up').css({'z-index': '100'});
             install_follow_handlers();
     });
     

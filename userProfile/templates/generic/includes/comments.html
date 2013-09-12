@@ -25,8 +25,9 @@ $(function() {
 {% if object_for_comments|get_class_name != "Album" and object_for_comments|get_class_name != "Image" and object_for_comments|get_class_name != "GenericWish" and object_for_comments|get_class_name != "BroadcastWish" and object_for_comments|get_class_name != "BroadcastDeal" %}
 {% comment_thread object_for_comments %}
 {% endif %}
-{% include "generic/includes/render_owner.html" with owner=request.user %}
-
+<span style="float:left;position:relative;left:5px;">
+    {% include "generic/includes/render_owner.html" with owner=request.user %}
+</span>
 <form class="
 {% if object_for_comments|get_class_name == "BlogPost" %} review_on_object {% else %} comment_on_object {% endif %}" method="post" id="comment" action="{{ comment_url }}">
     {% if not request.POST.replied_to %}

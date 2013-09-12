@@ -39,3 +39,11 @@
 	min-width:450px;
 	padding:25px;
 }
+
+.comment_popup {
+	resize: none;
+	max-width: 90%;
+	height: 30px;
+	border: 2px solid #cccccc;
+	font-family: Tahoma, sans-serif;
+}
