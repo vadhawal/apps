@@ -14,6 +14,7 @@ from django.utils import simplejson
 
 from mezzanine.blog.models import BlogPost, BlogCategory, BlogParentCategory
 from mezzanine.generic.models import Review
+from mezzanine.generic.models import ThreadedComment
 
 from actstream.models import Action
 from itertools import chain
@@ -434,3 +435,18 @@ def get_reldata(request, content_type_id, object_id):
 	return render_to_response('generic/rel_data.html', {
 		'object': obj, 
 	}, context_instance=RequestContext(request))
+
+def get_reviews_by_user(request, user_id, template="generic/includes/reviews_page.html"):
+    """
+    Return a list of child comments for the given parent, storing all
+    comments in a dict in the context when first called, using parents
+    as keys for retrieval on subsequent recursive calls from the
+    comments template.
+    """
+    user_instance = User.objects.get(id=user_id)
+    ctype = ContentType.objects.get_for_model(BlogPost)
+    reviews = ThreadedComment.objects.filter(user=user_instance, content_type=ctype)
+
+    return render_to_response('generic/includes/reviews_page.html', {
+       'reviews': reviews, 
+    }, context_instance=RequestContext(request))

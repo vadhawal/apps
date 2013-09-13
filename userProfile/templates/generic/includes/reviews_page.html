@@ -4,6 +4,7 @@
 {% load mezzanine_tags i18n future %}
 {% load voting_tags %}
 {% load inbox %}
+{% load userProfile_tags %}
 {% load thumbnail %}
 
 {% block extra_js %}
@@ -15,6 +16,7 @@ $(document).ready(function() {
 {% endblock %}
 {% block main %}
 
+{% for comment in reviews %}
 <div class="row-fluid">
     <div id="comment-{{ comment.id }}"
         {% url "commentProfile" comment.author as profile_url%}
@@ -94,8 +96,8 @@ $(document).ready(function() {
         {% include 'actstream/render_spam_report.html' with object=comment %}
         {% endif %}
         <span class="timespan">{% blocktrans with sometime=comment.submit_date|timesince %}{{ sometime }} ago{% endblocktrans %}</span>
-        <a class="btn small primary share-twitter" target="_blank" href="http://twitter.com/home?status={{ request.build_absolute_uri }}">Share on Twitter</a>
-        <a class="btn small primary share-facebook" target="_blank" href="http://facebook.com/sharer.php?u={{ request.build_absolute_uri }}&amp;t=review">{% trans "Share on Facebook" %}</a>
+        <a class="btn small primary share-twitter" target="_blank" href="http://twitter.com/home?status={{'BASE_URL'|settings_value}}{% url 'render_review' comment.content_object.slug comment.id %}">Share on Twitter</a>
+        <a class="btn small primary share-facebook" target="_blank" href="http://facebook.com/sharer.php?u={{'BASE_URL'|settings_value}}{% url 'render_review' comment.content_object.slug comment.id %}&amp;t=review">{% trans "Share on Facebook" %}</a>
         <div>
             {% with comment|get_reviewrating_obj as review_rating_obj %}
                     {% vote_by_user request.user on review_rating_obj as vote %}
@@ -112,6 +114,7 @@ $(document).ready(function() {
         <div><span>Shop Again? </span> {% if comment.shop_again == 0%}NO{% else %}YES{% endif %}</div>
     </div>
 </div>
+{% endfor %}
 {% endblock %}
     
 
