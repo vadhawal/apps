@@ -1180,7 +1180,6 @@
 				wrap       = F.wrap,
 				skin       = F.skin,
 				inner      = F.inner,
-				outer      = F.outer,
 				current    = F.current,
 				width      = current.width,
 				height     = current.height,
