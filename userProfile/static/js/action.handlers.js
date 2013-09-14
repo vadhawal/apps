@@ -136,8 +136,8 @@ var album_in_feed_handler = function(){
         var elements = $element_clicked.closest('div[class^="album-feed-container"]').find('a.album_in_feed'); 
         $(elements.get()).fancybox({
             scrolling: 'yes',
-            minWidth:800,
-            minHeight:600,
+            minWidth:500,
+            minHeight:450,
             autoSize: true
         });
         $element_clicked.click();
