@@ -1169,6 +1169,7 @@
 			$.get(reldata_url, {}, function(data) {
 				$('.fancybox-data').html(data);
 				install_voting_handlers();
+				$('.shareDeal').on('click', sharewish_handler);
 			});
 		},
 

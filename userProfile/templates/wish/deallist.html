@@ -3,21 +3,41 @@
 {% load comment_tags %}
 {% load voting_tags %}
 {% load thumbnail %}
+
+{% block extra_js %}
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('a.wishimg-deal-homepage').fancybox({
+	        scrolling: 'yes',
+	        minWidth: 500,
+	        minHeight: 450,
+	        autoSize: true
+	      });
+    });
+</script>
+{% endblock %} 
+
 {% block extra_head %}
-
-<ul>
+<ul style="list-style-type:none;white-space:nowrap;overflow-x:auto;height:200px">
 {% for deal in deal_list %}
-<li>
-{% get_wish_owner deal as deal_owner %}
-{% include 'generic/includes/render_owner.html' with owner=deal_owner %}
+<li style="display:inline;">
+{#% get_wish_owner deal as deal_owner %#}
+{#% include 'generic/includes/render_owner.html' with owner=deal_owner %#}
 
-{% render_deal deal %}
-{{deal.timestamp}}
-{% include 'generic/includes/render_voting.html' with object=deal %}
+{#% render_deal deal %#}
+{#{deal.timestamp}#}
+{#% include 'generic/includes/render_voting.html' with object=deal %#}
 
-{% include 'actstream/render_subcomments.html' with object=deal %}
+{#% include 'actstream/render_subcomments.html' with object=deal %#}
 
-<a class="shareDeal" href="#" data-href="{% share_deal_url deal %}" >share</a>
+{% if deal.wishimage %}
+    {% get_reldata_url deal as rel_data_url %}
+	{% thumbnail deal.wishimage "200x150" as img %} 
+        <a class="wishimg-deal-homepage" href="{{  deal.wishimage.url }}" rel="homepage_deals" data-reldata-url="{{rel_data_url}}">
+            <img style="margin-right:20px;" src="{{ MEDIA_URL }}{{img}}">
+        </a> 
+    {% endthumbnail %}
+{% endif %}
 </li>
 {% empty %}
 {% trans "No wishes yet" %}

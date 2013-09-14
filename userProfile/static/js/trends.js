@@ -4,6 +4,12 @@ var get_trending_deals_handler = function(parent_category, sub_category)
        $('#topDealsForStoreCategory').html(data);
             install_voting_handlers();
             $('.shareWish').on('click', sharewish_handler);
+            $('a.wishimg-deal-homepage').fancybox({
+              scrolling: 'yes',
+              minWidth: 500,
+              minHeight:450,
+              autoSize: true
+            });
        });
     return false;
 }
@@ -26,7 +32,6 @@ var get_top_reviews_handler = function(parent_category, sub_category)
 }
 var update_trends_handler = function()
 {
-
   var parent_category_slug = $('#blog_parentcategories').find("option:selected").text();
   var subCategorySelect = $('#blog_subcategories');
   var sub_category_slug = subCategorySelect.find("option:selected").text();

@@ -3,9 +3,11 @@
 {% load userProfile_tags %}
 
 {% if deal %}
+{% get_wish_owner deal as deal_owner %}
+By: {% include 'generic/includes/render_owner.html' with owner=deal_owner %}
 <span class="message">
     {% if  deal.blog_category %}
-        <a href="{{ deal.blog_category.get_absolute_url }}"> {{deal.blog_category}} </a> </br>
+       For  <a href="{{ deal.blog_category.get_absolute_url }}"> {{deal.blog_category}} </a> </br>
     {% endif %}
     {{ deal.message }}
     </br>
@@ -21,4 +23,5 @@
 	{% include 'generic/includes/render_voting.html' with object=deal %}
 
 	{% include 'actstream/render_subcomments.html' with object=deal %}
+    <a class="shareDeal" href="#" data-href="{% share_deal_url deal %}" >share</a>
 {% endif %}
