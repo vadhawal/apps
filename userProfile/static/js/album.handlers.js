@@ -30,7 +30,12 @@ var show_album_handler = function(event) {
             $('#vendorAlbum').html(data);
             install_album_handlers();
 			$('a.thumb').each(function(){
-        		$(this).lightBox();
+        		$(this).fancybox({
+                        scrolling: 'yes',
+                        minWidth:800,
+                        minHeight:600,
+                        autoSize: true
+                });
     		});
         });
         event.stopPropagation();

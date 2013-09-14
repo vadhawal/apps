@@ -432,9 +432,14 @@ def get_reldata(request, content_type_id, object_id):
 	ctype = get_object_or_404(ContentType, pk=content_type_id)
 	obj = get_object_or_404(ctype.model_class(), pk=object_id)
 
-	return render_to_response('generic/rel_data.html', {
-		'object': obj, 
-	}, context_instance=RequestContext(request))
+	if isinstance(obj, BroadcastDeal):
+		return render_to_response('generic/rel_data_deal.html', {
+			'deal': obj, 
+		}, context_instance=RequestContext(request))
+	else:
+		return render_to_response('generic/rel_data.html', {
+			'object': obj, 
+		}, context_instance=RequestContext(request))
 
 def get_reviews_by_user(request, user_id, template="generic/includes/reviews_page.html"):
     """

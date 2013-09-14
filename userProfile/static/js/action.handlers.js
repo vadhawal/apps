@@ -133,7 +133,13 @@ var album_in_feed_handler = function(){
     $.get(album_url, {}, function(data) {
         $element_clicked.closest('div[class^="album-feed-container"]').append(data);
         $element_clicked.off('click');
-        $element_clicked.closest('div[class^="album-feed-container"]').find('a.album_in_feed').lightBox();
+        var elements = $element_clicked.closest('div[class^="album-feed-container"]').find('a.album_in_feed'); 
+        $(elements.get()).fancybox({
+            scrolling: 'yes',
+            minWidth:800,
+            minHeight:600,
+            autoSize: true
+        });
         $element_clicked.click();
     });
     return false;    

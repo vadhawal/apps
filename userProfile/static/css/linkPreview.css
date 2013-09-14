@@ -211,7 +211,7 @@
 
 .previewPosted{
 	padding: 5px;
-	width: 499px;
+	width: auto;
 	color: black;
 	margin-bottom: 20px;
 	font-family: "lucida grande",tahoma,verdana,arial,sans-serif;

@@ -1148,7 +1148,6 @@
 
 			// Set initial dimensions and start position
 			F._setDimension();
-
 			F.reposition();
 
 			F.isOpen = false;
@@ -1181,6 +1180,7 @@
 				wrap       = F.wrap,
 				skin       = F.skin,
 				inner      = F.inner,
+				outer      = F.outer,
 				current    = F.current,
 				width      = current.width,
 				height     = current.height,
@@ -1381,7 +1381,9 @@
 			
 			skin.width(inner.width() + $('.fancybox-data').width());
 			skin.height(inner.height());
-
+			$('.fancybox-data').css({
+				'max-height': skin.height()+'px'
+			});
 			$.extend(current, {
 				dim : {
 					width	: getValue( width_ ),

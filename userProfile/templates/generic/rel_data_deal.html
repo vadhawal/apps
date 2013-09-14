@@ -1,0 +1,24 @@
+{% load i18n %}
+{% load thumbnail %}
+{% load userProfile_tags %}
+
+{% if deal %}
+<span class="message">
+    {% if  deal.blog_category %}
+        <a href="{{ deal.blog_category.get_absolute_url }}"> {{deal.blog_category}} </a> </br>
+    {% endif %}
+    {{ deal.message }}
+    </br>
+</span>
+    <p>
+    {% autoescape off %}
+        {{deal.urlPreviewContent}}
+    {% endautoescape %}
+    {% if deal.expiry_date %}
+        Expires on: {{deal.expiry_date}}
+    {% endif %}
+    </br>
+	{% include 'generic/includes/render_voting.html' with object=deal %}
+
+	{% include 'actstream/render_subcomments.html' with object=deal %}
+{% endif %}

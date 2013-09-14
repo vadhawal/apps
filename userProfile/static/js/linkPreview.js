@@ -323,9 +323,9 @@
 															'<div class="previewImagePosted">'+leftSideContent+'</div>'+
 														'</div>'+
 														'<div class="previewContentPosted">'+
-															'<div class="previewTitlePosted" id="'+pTP+'" style="width: '+contentWidth+'px" ><a href="'+hrefUrl+'" target="_blank">'+title+'</a></div>'+
+															'<div class="previewTitlePosted" id="'+pTP+'"><a href="'+hrefUrl+'" target="_blank">'+title+'</a></div>'+
 															'<div class="previewUrlPosted">'+fancyUrl+'</div>'+
-															'<div class="previewDescriptionPosted" id="'+pDP+'" style="width: '+contentWidth+'px" >'+urls.description+'</div>'+
+															'<div class="previewDescriptionPosted" id="'+pDP+'" >'+urls.description+'</div>'+
 														'</div>'+
 														'<div style="clear: both"></div>'+
 													'</div>';
