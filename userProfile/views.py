@@ -146,21 +146,21 @@ def userwish(request):
 		return render_to_response('broadcast_success.html', {}, RequestContext(request))
 
 def view_post(request, post_id, template_name='wish/view_post.html'):
-	post = get_object_or_404(Wish, id=post_id)
+	post = get_object_or_404(GenericWish, id=post_id)
 
 	return render_to_response(template_name, {
 		'post': post,
      }, context_instance=RequestContext(request))
 
 def view_wish(request, wish_id, template_name='wish/view_wish.html'):
-	wish = get_object_or_404(Wish, id=wish_id)
+	wish = get_object_or_404(BroadcastWish, id=wish_id)
 
 	return render_to_response(template_name, {
 		'wish': wish,
      }, context_instance=RequestContext(request))
 
 def view_deal(request, deal_id, template_name='wish/view_deal.html'):
-	deal = get_object_or_404(Deal, id=deal_id)
+	deal = get_object_or_404(BroadcastDeal, id=deal_id)
 
 	return render_to_response(template_name, {
 		'deal': deal,
