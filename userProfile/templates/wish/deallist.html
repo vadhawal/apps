@@ -18,9 +18,9 @@
 {% endblock %} 
 
 {% block extra_head %}
-<ul style="list-style-type:none;white-space:nowrap;overflow-x:auto;height:200px">
+<ul style="list-style-type:none;white-space:nowrap;overflow-x:auto;">
 {% for deal in deal_list %}
-<li style="display:inline;">
+<li style="display:inline-block;">
 {#% get_wish_owner deal as deal_owner %#}
 {#% include 'generic/includes/render_owner.html' with owner=deal_owner %#}
 
@@ -32,9 +32,9 @@
 
 {% if deal.wishimage %}
     {% get_reldata_url deal as rel_data_url %}
-	{% thumbnail deal.wishimage "200x150" as img %} 
+	{% thumbnail deal.wishimage "400x400" as img %} 
         <a class="wishimg-deal-homepage" href="{{  deal.wishimage.url }}" rel="homepage_deals" data-reldata-url="{{rel_data_url}}">
-            <img style="margin-right:20px;" src="{{ MEDIA_URL }}{{img}}">
+            <img src="{{ MEDIA_URL }}{{img}}">
         </a> 
     {% endthumbnail %}
 {% endif %}

@@ -385,7 +385,9 @@ function viewFeed()
                     <div class="boxTitle">
                         <h6 class="fontTitillium fontSize16 categories">
                             <img src="{{STATIC_URL}}img/categories.png">
+                            <span>
                             CATEGORIES
+                            </span>
                         </h6>
                         <div class="yellowLineContainer">
                             <hr class="yellowLine"/>
@@ -454,12 +456,12 @@ function viewFeed()
 <div class="row">
     <div class="span10">
         <div class="boxTitle">
-                <h6 class="fontTitillium fontSize16"><span class="hotDealsIcon radioColor">% </span>HOT DEALS</h6>
+                <h6 class="fontTitillium fontSize16"><span class="hotDealsIcon radioColor">%&nbsp;</span>HOT DEALS</h6>
                 <div class="yellowLineContainer">
                     <hr class="yellowLine"/>
                 </div>
         </div>
-        <div class="outerBox dealBox whitebox">
+        <div class="outerBox dealBox whiteBox">
             <div id="topDealsForStoreCategory">
             	{% render_deals_for_categories 'All' 'All'  'MIN_DEALS_HOME_PAGE'|settings_value %}
             </div>
