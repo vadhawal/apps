@@ -95,6 +95,7 @@ a:hover {
 	height: 20px;
 	display: inline-block;
 	margin-top: 5px;
+	margin-left: 3px;
 }
 .facebookLogin{
 	background-image: url("/static/img/facebook.png");
@@ -106,7 +107,6 @@ a:hover {
 	background-size: 20px 20px;
 	background-repeat: no-repeat;
 }
-
 .googleLogin{
 	background-image: url("/static/img/google.png");
 	background-size: 30px 30px;
@@ -123,6 +123,11 @@ a:hover {
 	background-image: url("/static/img/twitter.png");
 	background-size: 20px 20px;
 	background-repeat: no-repeat;
+}
+.tumblr{
+	background-image: url("/static/img/tumblr.png");
+	background-size: 20px 20px;
+	background-repeat: no-repeat;	
 }
 .whiteSpace{
 	background-color: white;
