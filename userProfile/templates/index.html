@@ -11,7 +11,7 @@
 <li class="active">{% trans "Home" %}</li>
 {% endblock %}
 {% block extra_js %}
-
+<script src="{% static "js/trends.js" %}"></script>
 <script src="{% static "js/jquery.jscrollpane.min.js" %}"></script>
 <script src="{% static "js/jquery.mousewheel.js" %}"></script>
 <script src="{% static "js/jquery.form.js" %}"></script>
@@ -34,8 +34,8 @@ var lIndex = 5;
 $(document).ready(function() {
 	$('.message').linkify();
 
-    $('#updateTrends').click(function(){
-        update_trends_handler();
+    $('.updateTrends').click(function(event){
+        update_trends_handler(event, this);
         return false;
     });
 });
@@ -259,6 +259,7 @@ function viewFeed()
 
 
 {% block main %}
+{% blog_parentcategories_abs as parent_categories %}
 <div class="row">
 {% if request.user.is_authenticated %}
     <form id="broadcast" action="/userwish/" method="post" class='album-form' enctype="multipart/form-data">
@@ -286,9 +287,6 @@ function viewFeed()
         <input type="hidden" name="actor" value="vendor">
     {% else %}
         <div id="deal-input"><input id="post-as-wish" type="checkbox" name="post-as-wish" value="deal" onclick="$('#categories').toggle()">Post As Wish</div></br>
-        
-        {% blog_parentcategories_abs as parent_categories %}
-
         {% if parent_categories %}
             <div id="categories" style="display:none;">
                 <select class="blog_parentcategories" name="blog_parentcategories">
@@ -379,18 +377,35 @@ function viewFeed()
 
 {% endif %}
 </div>
-<!-- <a id="updateTrends" href="#" class="postPreviewButton"  type="button"> {% trans "Update Trends" %} </a> -->
 <div class="row">
     <div class="span3"> 
         <div class="outerBox">
             <div class="row">
                 <div class="span3">
                     <div class="boxTitle">
-                        <h6 class="fontTitillium fontSize16">CATEGORIES</h6>
-                        <hr class="yellowLine"/>
+                        <h6 class="fontTitillium fontSize16 categories">
+                            <img src="{{STATIC_URL}}img/categories.png">
+                            CATEGORIES
+                        </h6>
+                        <div class="yellowLineContainer">
+                            <hr class="yellowLine"/>
+                        </div>
                     </div>
                     <div class="innerBox whiteBox">
-                        Images for Category
+                        <div class="span1HalfGutter span1Height imageCategoryBox imageCategoryBoxSelected updateTrends">
+                            <span class="categoryName fontTitillium">
+                                All
+                            </span>
+                        </div>
+                        {% if parent_categories %}
+                            {% for category in parent_categories %}
+                                <div class="span1HalfGutter span1Height imageCategoryBox updateTrends">
+                                    <span class="categoryName fontTitillium">
+                                            {{category}}
+                                    </span>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -401,8 +416,13 @@ function viewFeed()
             <div class="row">
                 <div class="span3">
                     <div class="boxTitle">
-                        <h6 class="fontTitillium fontSize16">TOP STORES</h6>
-                        <hr class="yellowLine"/>
+                        <h6 class="fontTitillium fontSize16">
+                            <img src="{{STATIC_URL}}img/topStores.png">
+                            TOP STORES
+                        </h6>
+                        <div class="yellowLineContainer">
+                            <hr class="yellowLine"/>
+                        </div>
                     </div>
                     <div class="innerBox whiteBox">
                         <div id="topStoresForStoreCategory">
@@ -412,8 +432,13 @@ function viewFeed()
                 </div>
                 <div class="span4">
                     <div class="boxTitle">
-                        <h6 class="fontTitillium fontSize16">STORE REVIEWS</h6>
-                        <hr class="yellowLine"/>
+                        <h6 class="fontTitillium fontSize16">
+                            <img src="{{STATIC_URL}}img/storeReviews.png">
+                            STORE REVIEWS
+                        </h6>
+                        <div class="yellowLineContainer">
+                            <hr class="yellowLine"/>
+                        </div>
                     </div>
                     <div class="innerBox whiteBox">
                         <div id="topReviewsForStoreCategory">
@@ -429,8 +454,10 @@ function viewFeed()
 <div class="row">
     <div class="span10">
         <div class="boxTitle">
-                <h6 class="fontTitillium fontSize16">HOT DEALS</h6>
-                <hr class="yellowLine"/>
+                <h6 class="fontTitillium fontSize16"><span class="hotDealsIcon radioColor">% </span>HOT DEALS</h6>
+                <div class="yellowLineContainer">
+                    <hr class="yellowLine"/>
+                </div>
         </div>
         <div class="outerBox dealBox whitebox">
             <div id="topDealsForStoreCategory">

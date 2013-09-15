@@ -74,9 +74,6 @@ a:hover {
 .noGutter {
 	margin-left: 0px;
 }
-.halfGutter {
-	margin-left: 12px;
-}
 .radioColor{
 	color: #029795;
 	color: rgb(2, 151, 149);
@@ -91,6 +88,7 @@ a:hover {
 .yellowBar{
 	background : #F9DF1E;
 	background : rgba(249, 223, 30, 1);
+	height: 30px;
 }
 .socialLogin{
 	width: 20px;
@@ -103,6 +101,12 @@ a:hover {
 	background-size: 20px 20px;
 	background-repeat: no-repeat;
 }
+.pinterest{
+	background-image: url("/static/img/pinterest.png");
+	background-size: 20px 20px;
+	background-repeat: no-repeat;
+}
+
 .googleLogin{
 	background-image: url("/static/img/google.png");
 	background-size: 30px 30px;
@@ -212,6 +216,6 @@ div span.rightMargin{
 .logo a img{
 	width: 96.25px;
 	height: 110px;
-	padding: 20px 26.875px;
+	padding: 20px 6.875px;
 	box-shadow: 0 0 0;
 }
