@@ -463,7 +463,7 @@ function viewFeed()
         </div>
         <div class="outerBox dealBox whiteBox">
             <div id="topDealsForStoreCategory">
-            	{% render_deals_for_categories 'All' 'All'  'MIN_DEALS_HOME_PAGE'|settings_value %}
+            	{% render_deals_for_categories 'All' 'All'  'MIN_DEALS_HOME_PAGE'|settings_value 'horizontal'%}
             </div>
         </div>
         <span id="wish-status" ></span>

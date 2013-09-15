@@ -18,7 +18,11 @@
 {% endblock %} 
 
 {% block extra_head %}
+{% if orientation == 'horizontal' %}
 <ul style="list-style-type:none;white-space:nowrap;overflow-x:auto;">
+{% else %}
+<ul style="height:500px; overflow: auto">
+{% endif %}
 {% for deal in deal_list %}
 <li style="display:inline-block;">
 {#% get_wish_owner deal as deal_owner %#}
@@ -34,7 +38,7 @@
     {% get_reldata_url deal as rel_data_url %}
 	{% thumbnail deal.wishimage "400x400" as img %} 
         <a class="wishimg-deal-homepage" href="{{  deal.wishimage.url }}" rel="homepage_deals" data-reldata-url="{{rel_data_url}}">
-            <img src="{{ MEDIA_URL }}{{img}}">
+            <img src="{{img.url}}">
         </a> 
     {% endthumbnail %}
 {% endif %}

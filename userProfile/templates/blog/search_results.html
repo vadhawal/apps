@@ -75,8 +75,11 @@ Showing {{ start }} to {{ end }} of {{ total }} results in {{ search_type }} mat
     {% endfor %}
 </div>
 <div class="span3">
-    <h6>Top Deals for selected category</h6>
-        	{% render_deals_for_categories parent_category sub_category %}
+    <h6>Top Deals</h6>
+            <div>
+            		{% render_deals_for_categories parent_category sub_category 'DEALS_NUM_LATEST'|settings_value 'vertical'%}
+        	</div>
+        	
 </div>
 </div>
 

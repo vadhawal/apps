@@ -327,7 +327,7 @@ def get_full_name(user):
 	return ""
 
 @register.inclusion_tag("wish/deallist.html", takes_context=True)
-def render_deals_for_categories(context, parent_category, sub_category, latest=settings.DEALS_NUM_LATEST):
+def render_deals_for_categories(context, parent_category, sub_category, latest=settings.DEALS_NUM_LATEST, orientation='horizontal'):
         ctype = ContentType.objects.get_for_model(BlogPost)
         deals = []
         blog_parentcategory = None
@@ -354,7 +354,7 @@ def render_deals_for_categories(context, parent_category, sub_category, latest=s
 
         context.update({
             'deal_list': deals_queryset,
-            'sIndex':0
+            'orientation':orientation
         })
         return context
 
