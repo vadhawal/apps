@@ -30,20 +30,20 @@ var get_top_reviews_handler = function(parent_category, sub_category)
        });
 	return false;
 }
-var update_trends_handler = function()
+var update_trends_handler = function(event, elementClicked)
 {
-  var parent_category_slug = $('#blog_parentcategories').find("option:selected").text();
-  var subCategorySelect = $('#blog_subcategories');
-  var sub_category_slug = subCategorySelect.find("option:selected").text();
-  var disabled_sub_category_slug = subCategorySelect.find("option:disabled").text();
-
-  if (sub_category_slug != disabled_sub_category_slug) {
+  var $this = $(elementClicked);
+  if ($this.hasClass('imageCategoryBoxSelected')) {
+    // nothing to do
+    return;
+  } else {
+    $('.updateTrends').removeClass('imageCategoryBoxSelected');
+    $this.addClass('imageCategoryBoxSelected');
+    var  parent_category_slug = $this.text().trim();
+    var sub_category_slug = "all";
     get_top_reviews_handler(parent_category_slug, sub_category_slug);
     get_top_stores_handler(parent_category_slug, sub_category_slug);
     get_trending_deals_handler(parent_category_slug, sub_category_slug);
-  } else {
-    subCategorySelect.addClass("error");
   }
-  
 	return false;
 }

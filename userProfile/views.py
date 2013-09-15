@@ -346,7 +346,7 @@ def getTrendingDeals(request, parent_category, sub_category):
 				"""
 				raise Http404()
 
-		return render_to_response('generic/deallist.html', {
+		return render_to_response('wish/deallist.html', {
 					'deal_list': deals_queryset,
 					'sIndex':0
 				}, context_instance=RequestContext(request))
@@ -370,7 +370,6 @@ def getTrendingStores(request, parent_category, sub_category):
 		blog_subcategory_slug = sub_category
 		if blog_subcategory_slug.lower() != "all" and BlogCategory.objects.all().exists():
 			blog_subcategory = get_object_or_404(BlogCategory, slug=slugify(blog_subcategory_slug))
-
 		if blog_parentcategory_slug.lower() == "all" and blog_subcategory_slug.lower() == "all":
 			result = BlogPost.objects.published().extra(select={'fieldsum':'price_average + variety_average + quality_average + service_average + exchange_average + overall_average'},order_by=('-fieldsum',))[:latest]
 		elif blog_parentcategory_slug.lower() != "all" and blog_subcategory_slug.lower() == "all":
