@@ -18,10 +18,10 @@
 {% endblock %} 
 
 {% block extra_head %}
-{% if orientation == 'horizontal' %}
-<ul style="list-style-type:none;white-space:nowrap;overflow-x:auto;">
-{% else %}
+{% if orientation and orientation == 'vertical' %}
 <ul style="height:500px; overflow: auto">
+{% else %}
+<ul style="list-style-type:none;white-space:nowrap;overflow-x:auto;overflow-y:hidden;">
 {% endif %}
 {% for deal in deal_list %}
 <li style="display:inline-block;">
