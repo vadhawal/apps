@@ -11,7 +11,7 @@
         <div class="row vendorResult">
             <div class="span1 text-center">
                 {% if vendor|get_class_name == "BlogPost" and vendor.featured_image %}
-                        {% thumbnail vendor.featured_image "45x45" as img %} 
+                        {% thumbnail vendor.featured_image "100x100" as img %} 
                         <a style="vertical-align:middle;" href='{{vendor.get_absolute_url}}'>
                             <img style="vertical-align:middle;display:inline-block;margin-left:-7px;" src="{{ MEDIA_URL }}{{img}}">
                         </a>

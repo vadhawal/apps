@@ -7,7 +7,7 @@
 			{% if owner|get_class_name == "User" %}
 			  	{% if owner.get_profile.profile_photo %}
 
-				    {% thumbnail owner.get_profile.profile_photo "90x90" as img %} 
+				    {% thumbnail owner.get_profile.profile_photo "100x100" as img %} 
 				      <img style="margin-right:10px;" src="{{ MEDIA_URL }}{{img}}">
 				    {% endthumbnail %}
 
@@ -21,7 +21,7 @@
 
 			{% elif owner|get_class_name == "BlogPost" %}
 
-			  {% thumbnail owner.featured_image "90x90" as img %} 
+			  {% thumbnail owner.featured_image "100x100" as img %} 
 			    	<img style="margin-right:10px;" src="{{ MEDIA_URL }}{{img}}">
 			  {% endthumbnail %}
 
