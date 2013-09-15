@@ -10,6 +10,9 @@
 	height: 250px;
 	margin: auto 0;
 }
+#topStoresForStoreCategory img {
+	height: 45px;
+}
 .dealBox {
 	height: 250px;
 	line-height: 250px;
