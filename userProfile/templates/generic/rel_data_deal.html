@@ -20,8 +20,11 @@ By: {% include 'generic/includes/render_owner.html' with owner=deal_owner %}
         Expires on: {{deal.expiry_date}}
     {% endif %}
     </br>
+    <div  style="width: 100%;border-style: solid;border-color: white;background-color: whitesmoke;">
+    <div style="float:left; margin-right:5px;">
 	{% include 'generic/includes/render_voting.html' with object=deal %}
-
+	</div>
 	{% include 'actstream/render_subcomments.html' with object=deal %}
     <a class="shareDeal" href="#" data-href="{% share_deal_url deal %}" >share</a>
+    </div>
 {% endif %}

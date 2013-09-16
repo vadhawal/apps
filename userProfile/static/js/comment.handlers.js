@@ -47,8 +47,45 @@ var comment_on_object_handler = function(event){
     return false;
 };
 
+var view_previous_comments_handler = function(event){
+    var add_link = $(this);
+    $.get(add_link.attr('href'), {}, function(data) {
+        add_link.closest('.subcomments_container').find('.subcomments').prepend(data);
+        var link = add_link.attr('href');
+        var linksplit = link.split("/");
+        var sIndex = parseInt(linksplit[linksplit.length-2]) + 5;
+        linksplit[linksplit.length-2] = sIndex;
+        var lIndex = parseInt(linksplit[linksplit.length-3]) + 5;
+        linksplit[linksplit.length-3] = lIndex;
+
+        link = linksplit.join('/');
+        add_link.attr('href', link);
+        var total_comments = parseInt(add_link.parent().find('.total_comments').text());
+        var loaded_comments = parseInt(add_link.parent().find('.loaded_comments').text());
+        if(loaded_comments + 5 <= total_comments)
+            add_link.parent().find('.loaded_comments').text(loaded_comments + 5);
+        else
+            add_link.parent().find('.loaded_comments').text(total_comments);
+        install_voting_handlers();
+        install_comment_on_object_handler();
+    });
+
+    event.stopPropagation();
+    event.preventDefault();
+    return false;
+};
+
+var comment_radio_handler = function(event){
+    $(this).parent().find('textarea[name="comment"]').focus();
+    event.stopPropagation();
+    event.preventDefault();
+    return false;
+};
+
 var install_comment_on_object_handler = function() {
     $('.comment_on_object').off('submit').on('submit', comment_on_object_handler);
+    $('.viewPreviousComments').off('click').on('click', view_previous_comments_handler);
+    $('.comment_radio').off('click').on('click', comment_radio_handler);
 };
 
 

@@ -22,7 +22,7 @@ $(function() {
     box-shadow: 1px 1px 0 #DDDDDD;
 }
 </style>
-{% if object_for_comments|get_class_name != "Album" and object_for_comments|get_class_name != "Image" and object_for_comments|get_class_name != "GenericWish" and object_for_comments|get_class_name != "BroadcastWish" and object_for_comments|get_class_name != "BroadcastDeal" %}
+{% if object_for_comments|get_class_name == "BlogPost" %}
 {% comment_thread object_for_comments %}
 {% endif %}
 <span style="float:left;position:relative;left:5px;">

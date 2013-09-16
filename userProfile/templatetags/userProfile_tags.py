@@ -418,8 +418,7 @@ def render_reviews_for_categories(context, parent_category, sub_category, latest
         context.update({
             'comments': reviews,
         })
-        return context	
-
+        return context	 
 
 
 

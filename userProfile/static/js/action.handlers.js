@@ -112,6 +112,7 @@ var img_iframe_handler =  function(){
 var install_action_handlers = function(){
     install_voting_handlers();
     install_toggle_comment_handler(); //inherited from comment.handlers.js
+    install_comment_on_object_handler();
     $('.deleteAction').off("click").on("click", delete_action_handler);
     $('.shareaction').off("click").on("click", share_action_handler);
     $('.followpost').off("click").on("click", follow_post_handler);
