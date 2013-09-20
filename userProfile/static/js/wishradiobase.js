@@ -111,11 +111,30 @@ var sharewish_handler = function() {
     return false;
 }
 
+var share_store_handler = function(event) {
+    if(login_required_handler())
+        return false;
+    
+    var $elementClicked = $(this);
+    var link =  $elementClicked.data("href");
+
+    $.get(link, {}, function(data) {
+        var obj_data = JSON.parse(data);
+        if(obj_data.success == true)
+          alert('shared');
+    });
+    event.stopPropagation();
+    event.preventDefault();
+    return false;
+};
+
 $(document).ready(function() {
     install_follow_handlers();
     $('.vendorFollowers').on("click", display_popup_handler);
     $('.shareaction').off("click").on("click", share_action_handler);
     $(".imgIframe").off("click").on("click", img_iframe_handler);
-    $('.shareDeal').on('click', sharewish_handler);
+    $('.shareDeal').off("click").on('click', sharewish_handler);
+    $('.share_store').off("click").on("click", share_store_handler);
+    $('.store_sharers').off("click").on("click", display_popup_handler);
 });
 

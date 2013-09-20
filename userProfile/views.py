@@ -245,6 +245,20 @@ def shareDeal(request, deal_id):
 			}, context_instance=RequestContext(request))
 
 @login_required
+def shareStore(request, store_id):
+	storeObject = get_object_or_404(BlogPost, pk=store_id)
+
+	action.send(request.user, verb=settings.SHARE_VERB, target=storeObject)
+	
+	if request.is_ajax():
+		return HttpResponse(simplejson.dumps(dict(success=True, message="Store is shared")))
+	else:
+		return render_to_response('blog/blog_post_detail.html', {
+				"blog_post": storeObject, 
+				"editable_obj": storeObject
+			}, context_instance=RequestContext(request))
+
+@login_required
 def followWish(request, wish_id):
 	wishObject = get_object_or_404(BroadcastWish, pk=wish_id)
 	ctype = ContentType.objects.get_for_model(wishObject)

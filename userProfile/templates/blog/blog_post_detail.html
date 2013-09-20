@@ -4,6 +4,7 @@
 {% load userProfile_tags %}
 {% load hitcount_tags %}
 {% load blog_tags %}
+{% load activity_tags %}
 {% block meta_title %}{{ blog_post.meta_title }}{% endblock %}
 
 {% block meta_keywords %}{% metablock %}
@@ -171,11 +172,15 @@
     <a id="vendor_followers" class="vendorFollowers" href="{{subset_follower_url}}">
         {{  request.user|follower_count:blog_post }}
     </a>
-
 <span class="cover-stat cover-stat-views">
       <span class="stat-label be-font-inline">G</span>
       <span class="stat-value">{% get_hit_count for blog_post %}</span>
 </span>
+{% get_share_count blog_post as share_count %}
+<a href="#" data-href="{% url "shareStore" blog_post.id %}" class="share_store">share</a>
+{% broadcasters_for_object blog_post as broadcasters_url %}
+<a class="store_sharers" href="{{broadcasters_url}}" data-href="#">{{share_count}}</a>
+
 {% endblock %}
 
 <div>
