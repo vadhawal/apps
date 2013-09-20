@@ -1,7 +1,3 @@
-var category_namespace = {
-    categories:''
-};
-
 var login_required_handler = function()
 {
     if(!is_authenticated)

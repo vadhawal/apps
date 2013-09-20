@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="{{ LANGUAGE_CODE }}"{% if LANGUAGE_BIDI %} dir="rtl"{% endif %}>
 {% load pages_tags mezzanine_tags i18n future staticfiles %}
+{% load blog_tags %}
 <head>
 
 <meta http-equiv="Content-type" content="text/html; charset=utf-8">
@@ -48,6 +49,9 @@
 
 <script src="{% static "mezzanine/js/"|add:settings.JQUERY_FILENAME %}"></script>
 <script>
+var category_namespace = {
+    categories:''
+};
 var is_authenticated = false;
 var login_url = {{settings.LOGIN_URL}};
 {% if request.user.is_authenticated %}
@@ -55,6 +59,13 @@ var login_url = {{settings.LOGIN_URL}};
 {% else %}
     is_authenticated = false;
 {% endif %}
+{% blog_categories_json as categories %}
+{% autoescape off %}
+var categories = {{categories}};
+{% endautoescape %}
+
+console.log(categories);
+category_namespace.categories = categories;
 </script>
 <script src="{% static "js/bootstrap.js" %}"></script>
 <script src="{% static "js/bootstrap-extras.js" %}"></script>

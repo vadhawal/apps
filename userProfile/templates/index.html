@@ -38,13 +38,6 @@ $(document).ready(function() {
         update_trends_handler(event, this);
         return false;
     });
-    {% blog_categories_json as categories %}
-    {% autoescape off %}
-    var categories = {{categories}};
-    {% endautoescape %}
-    
-    console.log(categories);
-    category_namespace.categories = categories;
 });
 {% if request.user.is_authenticated %}
           $(document).ready(function() {
