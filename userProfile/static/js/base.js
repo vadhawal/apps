@@ -36,7 +36,19 @@ $(document).ready(function() {
             var option = '<option value="all">All</option>';
             $subCSelect.append(option);
         } else {
-            $.get('/' + slug + '/subcategories', {}, function(data) {
+            $subCSelect.empty();
+            var data = category_namespace.categories;
+            slug = slug.toLowerCase();
+            var objJSON = data[slug];
+            $subCSelect.append("<option value='empty' disabled selected>By Sub-category</option>");
+            for(var i=0;i<objJSON.length;i++) {
+                    var option = '<option value="'+objJSON[i]+'">'+objJSON[i]+'</option>';
+                    $subCSelect.append(option);
+            }
+            /* code to fetch categories from AJAX GET requests. Disabled for now.
+             * Category list is preloaded as JSON.
+             */
+            /* $.get('/' + slug + '/subcategories', {}, function(data) {
                 $subCSelect.empty();
                 var objJSON = eval("(function(){return " + data + ";})()");
                 $subCSelect.append("<option value='empty' disabled selected>By Sub-category</option>");
@@ -44,7 +56,7 @@ $(document).ready(function() {
                     var option = '<option value="'+objJSON[i]+'">'+objJSON[i]+'</option>';
                     $subCSelect.append(option);
                 }
-            });     
+            }); */    
         }
     });
 });
