@@ -42,23 +42,7 @@ $(document).ready(function() {
 {% if request.user.is_authenticated %}
           $(document).ready(function() {
 		   $('.linkPreview').linkPreview();
-            // $('#broadcast').submit(function() {
-               /* $.post($(this).attr('action'), $(this).serialize(), function(data, textStatus, jqXHR){
-                        if(data == 'ok')
-                        {
-                            $("form").trigger('reset');
-                            $('#refreshActivity').click();
-                            //alert('posted');
-                        }
-                        else
-                            alert(data);
-                })
-                return false;*/
-                /*$('#broadcast').ajaxForm(function() {
-                    $("form").trigger('reset'); 
-                    alert("Posted Successfully"); 
-                }); */
-            //});
+
             $('#text').click(function() {
                $(this).height(90);
             });
@@ -129,18 +113,23 @@ $(document).ready(function() {
             })();       
 
             $('#loader').hide();
+            
             $('#refreshCache').click(function() {
                 var add_link = $(this);
                 $.get(add_link.attr('href'), {}, function(data) {
+                    alert(data);
                 });
                 return false;
             });
+
             $('#refreshActivity').click(function() {
                 var add_link = $(this);
                 $.get(add_link.attr('href'), {}, function(data) {
-                    if(data.indexOf("No actions yet") < 0)
+                    if(data.indexOf("No actions yet") < 0 && data.indexOf('No New Actions') < 0)
+                    {
                         $('#load-feeds').prepend(data);
                     	install_action_handlers();
+                    }
                 });
                 return false;
             });
@@ -150,9 +139,9 @@ $(document).ready(function() {
             viewFeed(); 
             scrollalert();
             updatestatus(); 
-            /*setInterval(function () {
+            setInterval(function () {
                 checkAnyLatestActivity();
-            }, 10000); */
+            }, 60000);
 
                 /*var element = $('.section-scroll').jScrollPane({
                     horizontalGutter:5,
