@@ -117,7 +117,7 @@ $(document).ready(function() {
             $('#refreshCache').click(function() {
                 var add_link = $(this);
                 $.get(add_link.attr('href'), {}, function(data) {
-                    alert(data);
+                    //alert(data);
                 });
                 return false;
             });
@@ -128,8 +128,27 @@ $(document).ready(function() {
                     if(data.indexOf("No actions yet") < 0 && data.indexOf('No New Actions') < 0)
                     {
                         $('#load-feeds').prepend(data);
+                        $('#refreshActivity').text('');
                     	install_action_handlers();
                     }
+                });
+                return false;
+            });
+            $('#pendingActionCount').click(function() {
+                var add_link = $(this);
+                $.get(add_link.attr('href'), {}, function(data) {
+                	ret_data = JSON.parse(data);
+                	if(ret_data.success == true && ret_data.count != 0)
+                		if(ret_data.count > 1)
+                    		$('#refreshActivity').text(ret_data.count + " pending posts");
+                    	else
+                    		$('#refreshActivity').text(ret_data.count + " pending post");
+                    	$('#refreshActivity').css({
+                    		'background':'whitesmoke',
+                    		'width':'100%',
+                    		'text-align':'center',
+                    		'display':'block'
+                    	});
                 });
                 return false;
             });
@@ -141,7 +160,7 @@ $(document).ready(function() {
             updatestatus(); 
             setInterval(function () {
                 checkAnyLatestActivity();
-            }, 60000);
+            }, 10000);
 
                 /*var element = $('.section-scroll').jScrollPane({
                     horizontalGutter:5,
@@ -186,7 +205,8 @@ $(document).ready(function() {
 
 
 function checkAnyLatestActivity(){
-    $('#refreshActivity').click();
+    //$('#refreshActivity').click();
+    $('#pendingActionCount').click();
 }
 function updatestatus(){  
     //Show number of loaded items  
@@ -350,6 +370,8 @@ function viewFeed()
 <!--input id="viewFeed" type="button" class="button button-primary btn-sucess" value="Feed"></input-->
 <a id="refreshCache" href="{% activity_refresh_cache request.user %}"></a>
 <a id="refreshActivity" href="{% activity_dynamic_update request.user %}"></a>
+<a id="pendingActionCount" href="{% activity_pending_action_count request.user %}"></a>
+
 <h2>Activity Feed</h2>
 <div class="section-scroll" style="border-style:solid;border-width:medium;border-color:#00A3EF;">
     <div id="load-feeds" class="content">
