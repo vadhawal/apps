@@ -7,12 +7,12 @@
         <a style="vertical-align:middle;" href='{{review.user.get_absolute_url}}'>
         {% if review.user.get_profile.profile_photo %}    
             {% thumbnail review.user.get_profile.profile_photo "55x55" as img %} 
-            <img style="vertical-align:middle;display:inline-block" height="70px" width="70px" src="{{ MEDIA_URL }}{{img}}">
+            <img class="reviewUserImage" height="70px" width="70px" src="{{ MEDIA_URL }}{{img}}">
             {% endthumbnail %}
         {% elif review.user.get_profile.image_url %}
-            <img style="vertical-align:middle;display:inline-block" height="70px" width="70px" src="{{ review.user.get_profile.image_url }}">
+            <img class="reviewUserImage" height="70px" width="70px" src="{{ review.user.get_profile.image_url }}">
         {% else %}
-            <img sstyle="vertical-align:middle;display:inline-block" height="70px" width="70px" src="{% static 'img/defaultProfilePic.gif' %}"> 
+            <img class="reviewUserImage" height="70px" width="70px" src="{% static 'img/defaultProfilePic.gif' %}"> 
         {% endif %}
         </a>
     </div>

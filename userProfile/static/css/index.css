@@ -80,6 +80,11 @@
 	font-family : Myriad Pro;
 	font-size : 18px;
 }
+.reviewUserImage {
+	vertical-align:middle;
+	display:inline-block;
+	margin-left:8px;
+}
 .imageCategoryBox
 {
 	cursor: pointer;
