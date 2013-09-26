@@ -7,23 +7,23 @@
         <a style="vertical-align:middle;" href='{{review.user.get_absolute_url}}'>
         {% if review.user.get_profile.profile_photo %}    
             {% thumbnail review.user.get_profile.profile_photo "55x55" as img %} 
-            <img style="vertical-align:middle;display:inline-block" height="70px" width="70px" src="{{ MEDIA_URL }}{{img}}">
+            <img class="reviewUserImage" height="70px" width="70px" src="{{ MEDIA_URL }}{{img}}">
             {% endthumbnail %}
         {% elif review.user.get_profile.image_url %}
-            <img style="vertical-align:middle;display:inline-block" height="70px" width="70px" src="{{ review.user.get_profile.image_url }}">
+            <img class="reviewUserImage" height="70px" width="70px" src="{{ review.user.get_profile.image_url }}">
         {% else %}
-            <img sstyle="vertical-align:middle;display:inline-block" height="70px" width="70px" src="{% static 'img/defaultProfilePic.gif' %}"> 
+            <img class="reviewUserImage" height="70px" width="70px" src="{% static 'img/defaultProfilePic.gif' %}"> 
         {% endif %}
         </a>
     </div>
     <div class="span3 halfGutter">
-        <div class="fontTitillium color5D">
+        <div>
             <a class="fontTitillium1 fontSize13 color5D" href="{{review.user.get_absolute_url}}">{% get_full_name review.user %}</a>
         </div>
-        <div class="fontTitillium3 fontSize13 color5D">
-            <span class="fontTitillium3 fontSize13 color5D">
+        <div>
+            <span>
                 {% get_reviews_by_user review.user as totalReviews %}
-                <a href="{% url get_reviews_by_user review.user.id %}"><span class="fontTitillium1">{{totalReviews|length}}</span> review{{ totalReviews|length|pluralize }}</a>
+                <a href="{% url get_reviews_by_user review.user.id %}" class="fontTitillium3 fontSize13 color5D"><span class="fontTitillium1">{{totalReviews|length}}</span> review{{ totalReviews|length|pluralize }}</a>
                 {% follower_subset_url review.user 0 review.user.relationships.followers.count as follower_url %}
                 <a href="{{follower_url}}" class="followerCountBox fontTitillium3 fontSize13 color5D">
                     <span class="fontTitillium1">&nbsp;{{ review.user.relationships.followers.count }}</span> follower{{ review.user.relationships.followers.count|pluralize }}
