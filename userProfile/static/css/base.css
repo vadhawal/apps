@@ -25,6 +25,8 @@ img {
 	box-shadow: 0 0 3px #bbb;
 }
 a:hover {
+	color: #029795;
+	color: rgb(2, 151, 149);
 	text-decoration: none;
 }
 .width200{
