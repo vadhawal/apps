@@ -69,6 +69,7 @@
 }
 .categoryName{
 	font-size : 10px;
+	line-height : 14px;
 	color : #323333;
 	color : rgb(50, 51, 51);
 	position: absolute;
@@ -84,6 +85,22 @@
 	vertical-align:middle;
 	display:inline-block;
 	margin-left:8px;
+}
+.statusBox {
+	background : #FFFFFF;
+	background : rgba(255, 255, 255, 1);
+	border-style : Solid;
+	border-color : #C4C4BF;
+	border-color : rgba(196, 196, 191, 1);
+	border-width : 0px;
+	box-shadow : 1px 1px 1px 1px rgba(130, 111, 113, 0.75) inset;
+	filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=-0.4, OffY=-0.4, Color='#826F71') ;
+	padding: 5px;
+}
+.statusBox textarea, .statusBox textarea:focus {
+	border:0;
+	-webkit-box-shadow:none;
+	box-shadow: none;
 }
 .imageCategoryBox
 {
