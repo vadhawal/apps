@@ -39,7 +39,7 @@
 		var pTP = "";					
 		var pDP = "";
 		
-		var textText = "What's on your mind?";
+		var textText = "";
 		$('#text').focus(function(){
 			if(trim($('#text').val()) == textText){
 				$(this).val('');

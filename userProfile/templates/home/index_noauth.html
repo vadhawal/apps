@@ -1,0 +1,94 @@
+{% load userProfile_tags %}
+
+<div class="row">
+    <div class="span3"> 
+        <div class="outerBox">
+            <div class="row">
+                <div class="span3">
+                    <div class="boxTitle">
+                        <h6 class="fontTitillium fontSize16 categories">
+                            <img src="{{STATIC_URL}}img/categories.png">
+                            <span>
+                            CATEGORIES
+                            </span>
+                        </h6>
+                        <div class="yellowLineContainer">
+                            <hr class="yellowLine"/>
+                        </div>
+                    </div>
+                    <div class="innerBox whiteBox">
+                        <div class="span1HalfGutter span1Height imageCategoryBox imageCategoryBoxSelected updateTrends">
+                            <span class="categoryName fontTitillium">
+                                All
+                            </span>
+                        </div>
+                        {% if parent_categories %}
+                            {% for category in parent_categories %}
+                                <div class="span1HalfGutter span1Height imageCategoryBox updateTrends {% if forloop.last %}bottomHalfGutter{% endif %} ">
+                                    <span class="categoryName fontTitillium">
+                                            {{category}}
+                                    </span>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="span7">
+        <div class="outerBox">
+            <div class="row">
+                <div class="span3">
+                    <div class="boxTitle">
+                        <h6 class="fontTitillium fontSize16">
+                            <img src="{{STATIC_URL}}img/topStores.png">
+                            TOP STORES
+                        </h6>
+                        <div class="yellowLineContainer">
+                            <hr class="yellowLine"/>
+                        </div>
+                    </div>
+                    <div class="innerBox whiteBox">
+                        <div id="topStoresForStoreCategory">
+                            {% render_stores_for_categories 'All' 'All' 'MIN_STORES_HOME_PAGE'|settings_value %}
+                        </div>
+                    </div>
+                </div>
+                <div class="span4">
+                    <div class="boxTitle">
+                        <h6 class="fontTitillium fontSize16">
+                            <img src="{{STATIC_URL}}img/storeReviews.png">
+                            STORE REVIEWS
+                        </h6>
+                        <div class="yellowLineContainer">
+                            <hr class="yellowLine"/>
+                        </div>
+                    </div>
+                    <div class="innerBox whiteBox">
+                        <div id="topReviewsForStoreCategory">
+                        {% render_reviews_for_categories 'All' 'All' 'MIN_REVIEWS_HOME_PAGE'|settings_value %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="span10">
+        <div class="boxTitle">
+                <h6 class="fontTitillium fontSize16"><span class="hotDealsIcon radioColor">%&nbsp;</span>HOT DEALS</h6>
+                <div class="yellowLineContainer">
+                    <hr class="yellowLine"/>
+                </div>
+        </div>
+        <div class="outerBox dealBox whiteBox">
+            <div id="topDealsForStoreCategory">
+                {% render_deals_for_categories 'All' 'All'  'MIN_DEALS_HOME_PAGE'|settings_value 'horizontal'%}
+            </div>
+        </div>
+        <span id="wish-status" ></span>
+    </div>
+</div>
