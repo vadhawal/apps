@@ -4,6 +4,7 @@
 
 {% if deal %}
 {% get_wish_owner deal as deal_owner %}
+<div class="fancybox-data-inner">
 By: {% include 'generic/includes/render_owner.html' with owner=deal_owner %}
 <span class="message">
     {% if  deal.blog_category %}
@@ -27,4 +28,5 @@ By: {% include 'generic/includes/render_owner.html' with owner=deal_owner %}
 	{% include 'actstream/render_subcomments.html' with object=deal %}
     <a class="shareDeal" href="#" data-href="{% share_deal_url deal %}" >share</a>
     </div>
+</div>
 {% endif %}

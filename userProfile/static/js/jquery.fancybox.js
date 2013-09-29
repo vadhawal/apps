@@ -1165,13 +1165,25 @@
 			F.transitions[ F.isOpened ? current.nextMethod : current.openMethod ]();
 
 			F._preloadImages();
+
+			/* Custome code to load the data related to the image/deal */
 			var reldata_url = F.group[F.current.index].relDataUrl;
 			$.get(reldata_url, {}, function(data) {
 				$('.fancybox-data').html(data);
 				install_voting_handlers();
 				$('.shareDeal').on('click', sharewish_handler);
 				install_comment_on_object_handler();
+				$(".fancybox-data").mCustomScrollbar({
+                  theme:"dark-thick",
+                  mouseWheel:true,
+                  autoHideScrollbar:true,
+                  contentTouchScroll:true
+                });
+                $('.fancybox-data').bind("DOMSubtreeModified", function() {
+                	$(".fancybox-data").mCustomScrollbar("update");
+                });	
 			});
+			/* Custome Code End */
 		},
 
 		_setDimension: function () {
