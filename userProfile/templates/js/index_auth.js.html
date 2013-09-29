@@ -125,14 +125,24 @@ $(document).ready(function() {
     $('#refreshCache').click();
 
     viewFeed(); 
-    scrollalert();
     updatestatus(); 
     setInterval(function () {
         checkAnyLatestActivity();
     }, 10000);
+
+    $(window).debounce('scroll', feedUpdater, 100);
 }); 
 
-
+function feedUpdater() {
+    var scrollOffset = 400;
+    console.log("a = " + ($(window).scrollTop() + $(window).height()));
+    console.log("b = " + ($(document).height() - scrollOffset));
+    if($(window).scrollTop() + $(window).height() >= $(document).height() - scrollOffset) {
+       updateFeed();
+       $(window).off('scroll');
+       console.log("updated");
+    }  
+}
 function checkAnyLatestActivity(){
     $('#pendingActionCount').click();
 }
@@ -141,40 +151,36 @@ function updatestatus(){
     //Show number of loaded items  
     var totalItems=$('#load-feeds ul li').length;  
     $('#status').text('Loaded '+totalItems+' Items');  
-     $('#loader').hide();
+    $('#loader').hide();
 }
 
-function scrollalert(){ 
-    var scrolltop=$('.section-scroll')[0].scrollTop; //$('.section-scroll').attr('scrollTop'); 
-    var scrollheight=$('.section-scroll')[0].scrollHeight;//$('.section-scroll').attr('scrollHeight');  
-    var windowheight=$('.section-scroll')[0].clientHeight;//$('.section-scroll').attr('clientHeight');  
-    var scrolloffset=20; 
+function updateFeed(){ 
 
-    if(scrolltop > 0 && scrolltop>=(scrollheight-(windowheight+scrolloffset)))  
-    {  
-        //fetch new items 
-        $('#status').text('Loading more items...');
-        $('#loader').show();
-        sIndex = lIndex;
-        lIndex = lIndex + 5;
-        {% following_feedsubset_url request.user 0 10 as feed %}
-        var link = "{{feed}}";
-        var linksplit = link.split("/");
-        linksplit[linksplit.length-2] = lIndex;
-        linksplit[linksplit.length-3] = sIndex;
-        link = linksplit.join('/');
+    //fetch new items 
+    $('#status').text('Loading more items...');
+    $('#loader').show();
+    sIndex = lIndex;
+    lIndex = lIndex + 5;
+    {% following_feedsubset_url request.user 0 10 as feed %}
+    var link = "{{feed}}";
+    var linksplit = link.split("/");
+    linksplit[linksplit.length-2] = lIndex;
+    linksplit[linksplit.length-3] = sIndex;
+    link = linksplit.join('/');
 
-        $.get(link, {}, function(data) {
-            if(data.indexOf("No actions yet") >= 0)
-            {
-              //alert("No actions yet");
-            }    
-            $('#load-feeds').append(data);
-            updatestatus();
-            install_action_handlers();
-        }); 
-    }     
-    setTimeout('scrollalert();', 1000); 
+    $.get(link, {}, function(data) {
+        if(data.indexOf("No actions yet") >= 0)
+        {
+          $(window).off('scroll');
+          console.log("no actions yet");
+          $('#loader').hide();
+          return;
+        }    
+        $('#load-feeds').append(data);
+        updatestatus();
+        install_action_handlers();
+        $(window).debounce('scroll', feedUpdater, 100);
+    });  
 }  
 
 function viewFeed()
