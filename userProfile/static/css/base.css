@@ -218,11 +218,10 @@ div span.fullGutterRight{
 }
 .whiteBox {
 	overflow: hidden;
-	background-color: #FFFFFF;
-	background-color: rgba(255, 255, 255, 1);
+	background-color:rgba(255,255,255,0.4);
 	-webkit-box-shadow : 1.25px 1.25px 1.25px rgba(132,125,125,0.75);
 	box-shadow : 1.25px 1.25px 1.25px rgba(132, 125, 125, 0.75);
-	filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=1.25, OffY=1.25, Color='#847D7D') ;
+	filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=1.25, OffY=1.25, Color='#847D7D');
 }
 .logo{
 	height: 150px;
