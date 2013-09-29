@@ -27,12 +27,16 @@
 <script type="text/javascript">
 var sIndex = 0;
 var lIndex = 5;
-$(document).ready(function() {
-	$('.message').linkify();
+$(window).load(function(){
+	/* Calling this on window.load to wait for all the images to load. */
     $(".dealBox_h").mCustomScrollbar({
         horizontalScroll:true,
         theme:"dark-thick"
     });
+});
+$(document).ready(function() {
+	$('.message').linkify();
+
     $('.updateTrends').click(function(event){
         update_trends_handler(event, this);
         return false;
