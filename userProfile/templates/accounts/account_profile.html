@@ -87,7 +87,7 @@ function updatestatus(){
 }
 
 function scrollalert(){ 
-     var scrolltop=$('.section-scroll')[0].scrollTop; //$('.section-scroll').attr('scrollTop'); 
+    var scrolltop=$('.section-scroll')[0].scrollTop; //$('.section-scroll').attr('scrollTop'); 
     var scrollheight=$('.section-scroll')[0].scrollHeight;//$('.section-scroll').attr('scrollHeight');  
     var windowheight=$('.section-scroll')[0].clientHeight;//$('.section-scroll').attr('clientHeight');  
     var scrolloffset=20; 
@@ -99,7 +99,7 @@ function scrollalert(){
         $('#loader').show();
         sIndex = lIndex;
         lIndex = lIndex + 5;
-        {% following_feedsubset_url request.user 0 10 as feed %}
+        {% actor_url_subset profile_user 0 10 as feed %}
         var link = "{{feed}}";
         var linksplit = link.split("/");
         linksplit[linksplit.length-2] = lIndex;
