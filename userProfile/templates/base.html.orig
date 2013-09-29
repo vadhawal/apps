@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="{{ LANGUAGE_CODE }}"{% if LANGUAGE_BIDI %} dir="rtl"{% endif %}>
+{% load pages_tags mezzanine_tags i18n future staticfiles %}
+{% load blog_tags %}
+<head>
+
+<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width">
+<meta name="keywords" content="{% block meta_keywords %}{% endblock %}">
+<meta name="description" content="{% block meta_description %}{% endblock %}">
+<title>{% block meta_title %}{% endblock %}{% if settings.SITE_TITLE %} | {{ settings.SITE_TITLE }}{% endif %}</title>
+<link rel="shortcut icon" href="{% static "img/favicon.ico" %}">
+
+{% ifinstalled mezzanine.blog %}
+<link rel="alternate" type="application/rss+xml" title="RSS" href="{% url "blog_post_feed" "rss" %}">
+<link rel="alternate" type="application/atom+xml" title="Atom" href="{% url "blog_post_feed" "atom" %}">
+{% endifinstalled %}
+
+{% compress css %}
+<link rel="stylesheet" href="{% static "css/bootstrap.css" %}">
+<link rel="stylesheet" href="{% static "css/mezzanine.css" %}">
+<link rel="stylesheet" href="{% static "css/bootstrap-responsive.css" %}">
+<link rel="stylesheet" href="{% static "css/action.template.css" %}">
+<link rel="stylesheet" href="{% static "css/jquery.lightbox-0.5.css" %}"/>
+<<<<<<< HEAD
+<!-- <link rel="stylesheet" href="{% static "css/basetemp.css" %}"/> -->
+=======
+<link rel="stylesheet" href="{% static "css/jquery.mCustomScrollbar.css" %}"/>
+<link rel="stylesheet" href="{% static "css/basetemp.css" %}"/>
+>>>>>>> upstream/master
+<link rel="stylesheet" href="{% static "css/base.css" %}"/>
+<link rel="stylesheet" href="{% static "css/jquery.fancybox.css" %}"/>
+<link rel="stylesheet" href="{% static "css/tcal.css" %}"/>
+{% if LANGUAGE_BIDI %}
+<link rel="stylesheet" href="{% static "css/rtl.css" %}">
+{% endif %}
+<!-- <link rel="stylesheet" href="{% static "css/customnavbar.css" %}"> -->
+<link rel="stylesheet" href="{% static "css/social_login.css" %}">
+<link rel="stylesheet" href="{% static "css/popup_styles.css" %}">
+<!-- <link rel="stylesheet" type="text/css" href="{% static "css/imagestore.css"  %}"/> -->
+<!-- <link rel="stylesheet" type="text/css" href="{% static "css/jquery.lightbox-0.5.css"  %}"/> -->
+<!-- <link rel="stylesheet" class="cssButtons" type="text/css" href="{{ STATIC_URL }}css/linkPreview.css" /> -->
+
+{% ifinstalled cartridge.shop %}
+<link rel="stylesheet" href="{% static "css/cartridge.css" %}">
+{% if LANGUAGE_BIDI %}
+<link rel="stylesheet" href="{% static "css/cartridge.rtl.css" %}">
+{% endif %}
+{% endifinstalled %}
+{% block extra_css %}{% endblock %}
+{% endcompress %}
+
+{% compress js %}
+
+<script src="{% static "mezzanine/js/"|add:settings.JQUERY_FILENAME %}"></script>
+<script>
+var category_namespace = {
+    categories:''
+};
+var is_authenticated = false;
+var login_url = {{settings.LOGIN_URL}};
+{% if request.user.is_authenticated %}
+    is_authenticated = true;
+{% else %}
+    is_authenticated = false;
+{% endif %}
+{% blog_categories_json as categories %}
+{% autoescape off %}
+var categories = {{categories}};
+{% endautoescape %}
+
+console.log(categories);
+category_namespace.categories = categories;
+</script>
+<script src="{% static "js/bootstrap.js" %}"></script>
+<script src="{% static "js/bootstrap-extras.js" %}"></script>
+<script src="{% static "js/ajax.csrf.js" %}"></script>
+<script src="{% static "js/jquery.fancybox.js" %}"></script>
+<script src="{% static "js/jquery.lightbox-0.5.js" %}"></script>
+<script src="{% static "js/jquery.mCustomScrollbar.js" %}"></script>
+<script src="{% static "js/jquery-debounce.js" %}"></script>
+<script src="{% static "js/tcal.js" %}"></script>
+<script src="{% static "js/jquery.linkify.js" %}"></script>
+<script src="{% static "js/jquery.bpopup.js" %}"></script>
+<script src="{% static "js/wishradiobase.js" %}"></script>
+<script src="{% static "js/voting.handlers.js" %}"></script>
+<script src="{% static "js/comment.handlers.js" %}"></script>
+<script src="{% static "js/action.handlers.js" %}"></script>
+<script src="{% static "js/album.handlers.js" %}"></script>
+<script src="{% static "js/base.js" %}"></script>
+
+{% block extra_js %}{% endblock %}
+{% endcompress %}
+<!--[if lt IE 9]>
+<script src="{% static "js/html5shiv.js" %}"></script>
+<![endif]-->
+
+{% block extra_head %}{% endblock %}
+
+</head>
+<body class="bodyCustom" style="padding-top:150px;" id="{% block body_id %}body{% endblock %}">
+
+{% nevercache %}
+    {% include "includes/header.html" %}
+{% endnevercache %}
+
+<div class="container">
+    <div class="row">
+        <div class="offset1 span10">
+            {% block main %}{% endblock %}
+        </div>
+    </div>
+</div>
+
+<footer>
+    <div class="container">
+        {% page_menu "pages/menus/footer.html" %}
+        <p>
+            {% trans "Powered by" %}
+            <a href="http://mezzanine.jupo.org">Mezzanine</a>{% ifinstalled cartridge.shop %},
+            <a href="http://cartridge.jupo.org">Cartridge</a>{% endifinstalled %}
+            {% trans "and" %}
+            <a href="http://www.djangoproject.com">Django</a>
+            <span class="separator">|</span>
+            {% trans "Theme by" %} <a href="http://twitter.github.com/bootstrap/">Bootstrap</a>
+            {% ifinstalled mezzanine.mobile %}
+            <span class="separator">|</span>
+            <a href="{% url "set_device" "mobile" %}?next={{ request.path }}">{% trans "View Mobile Site" %}</a>
+            {% endifinstalled %}
+        </p>
+    </div>
+</footer>
+
+{% include "includes/footer_scripts.html" %}
+</body>
+</html>

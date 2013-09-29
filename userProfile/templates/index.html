@@ -31,7 +31,10 @@ var sIndex = 0;
 var lIndex = 5;
 $(document).ready(function() {
 	$('.message').linkify();
-
+    $(".dealBox_h").mCustomScrollbar({
+        horizontalScroll:true,
+        theme:"dark-thick"
+    });
     $('.updateTrends').click(function(event){
         update_trends_handler(event, this);
         return false;
