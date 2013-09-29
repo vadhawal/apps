@@ -144,7 +144,7 @@
 	padding: 3px 1px;
 }
 #fakeselect{
-	background-image: url(/static/img/uploadImage.png); 
+	background-image: url(../img/upload_image.png); 
 	background-color: transparent;
 	background-repeat: no-repeat;
 	background-position: center;
