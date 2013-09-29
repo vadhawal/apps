@@ -1,83 +1,92 @@
 {% load userProfile_tags blog_tags i18n %}
 {% get_owned_blog request.user as blog %}
-<div class="whiteBox" style="padding: 10px 30px;">
-    <span class="fontTitillium1 fontSize13 color5D">{% if blog %}{% trans "Radio your Deals" %}{% else %}{% trans "Radio your Wishes" %}{% endif %}</span>
-    <form id="broadcast" action="/userwish/" method="post" class='album-form' enctype="multipart/form-data">
+<div class="whiteBox">
+    <div class="span7">
+        <span class="fontTitillium1 fontSize13 colorDarkerGrey">{% if blog %}{% trans "Radio your Deals" %}{% else %}{% trans "Radio your Wishes" %}{% endif %}</span>
+    </div>
+    <form id="broadcast" action="/userwish/" method="post" role="form" class='album-form' enctype="multipart/form-data">
         {% csrf_token %}
 
         <div id="previewLoading"></div>
-        <div class="row">
-            <div class="span4 statusBox">
-                <textarea id="text" name="message"></textarea>
-                <output id="previewimg"></output>
-                <div style="width:100%;margin-bottom:0px;" >
-                    <input style="display:none;" type="file" id="wishimage", name="wishimage" aria-label="Add photos to your post" >
-                    <input id="fakeselect" type="button"/> <span class="fontTitillium1 fontSize11 color5D">{% trans "Upload an Image" %}</span>
-                </div>
-                <input type="hidden" name="urlPreviewContent" id="urlPreviewContent" value="" />
-                        <div id="preview">
-                            <div id="previewImages">
-                                <div id="previewImage"><img src='{{STATIC_URL}}img/loader.gif' style='margin-left: 43%; margin-top: 39%;' ></img></div>
-                                <input type="hidden" id="photoNumber" value="0" />
-                            </div>
-                            <div id="previewContent">
-                                <div id="closePreview" title="Remove" ></div>
-                                <div id="previewTitle"></div>
-                                <div id="previewUrl"></div>
-                                <div id="previewDescription"></div>
-                                <div id="hiddenDescription"></div>
-                                <div id="previewButtons" >
-                                    <div id='previewPreviousImg' class="buttonLeftDeactive" ></div><div id='previewNextImg' class="buttonRightDeactive"  ></div>  <div class="photoNumbers" ></div> <div class="chooseThumbnail">{% trans "Choose a thumbnail" %}</div>
-                                </div>
-                                <input type="checkbox" id="noThumb" class="noThumbCb" />
-                                <div class="nT"  ><span id="noThumbDiv" >{% trans "No thumbnail" %}</span></div>
-                            </div>
-                            <div style="clear: both"></div>
-                        </div>
-                <div class="previewPostedList"></div>
+        <div class="span4 statusBox">
+            <textarea id="text" name="message"></textarea>
+            <output id="previewimg"></output>
+            <div style="width:100%;margin-bottom:0px;" >
+                <input style="display:none;" type="file" id="wishimage", name="wishimage" aria-label="Add photos to your post" >
+                <input id="fakeselect" type="button"/> <span class="fontTitillium1 fontSize11 colorDarkerGrey">{% trans "Upload an Image" %}</span>
             </div>
+            <input type="hidden" name="urlPreviewContent" id="urlPreviewContent" value="" />
+                    <div id="preview">
+                        <div id="previewImages">
+                            <div id="previewImage"><img src='{{STATIC_URL}}img/loader.gif' style='margin-left: 43%; margin-top: 39%;' ></img></div>
+                            <input type="hidden" id="photoNumber" value="0" />
+                        </div>
+                        <div id="previewContent">
+                            <div id="closePreview" title="Remove" ></div>
+                            <div id="previewTitle"></div>
+                            <div id="previewUrl"></div>
+                            <div id="previewDescription"></div>
+                            <div id="hiddenDescription"></div>
+                            <div id="previewButtons" >
+                                <div id='previewPreviousImg' class="buttonLeftDeactive" ></div><div id='previewNextImg' class="buttonRightDeactive"  ></div>  <div class="photoNumbers" ></div> <div class="chooseThumbnail">{% trans "Choose a thumbnail" %}</div>
+                            </div>
+                            <input type="checkbox" id="noThumb" class="noThumbCb" />
+                            <div class="nT"  ><span id="noThumbDiv" >{% trans "No thumbnail" %}</span></div>
+                        </div>
+                        <div style="clear: both"></div>
+                    </div>
+            <div class="previewPostedList"></div>
         </div>
-        <input id="submitwithouturl" class="postPreviewButton"  type="submit" value="{% trans "Post" %}" />
-        <input id="submitwithurl" class="postPreviewButton"  style="display:None;" type="button" value="{% trans "Post" %}" />
-        {% if blog %}
-            <div id="deal-input"><input id="post-as-deal" type="checkbox" name="post-as-deal" value="deal" onclick="$('#expiry_date').toggle();
-            $('#sub_categories_blog').toggle();">{% trans "Post As Deal" %}</div>
-            </br>
-            {% blog_subcategories_for_blog blog as sub_categories_blog %}
-            {% if sub_categories_blog %}
-                <select id="sub_categories_blog" name="radio_category" style="display:none">
-                    <ul class="unstyled">
-                        {% for blog_category in sub_categories_blog %}
-                        <option value="{{ blog_category }}">{{ blog_category }}</option>
-                        {% endfor %}
-                    </ul>
-                </select>
-            {% endif %}
-
-            <input style="display:none;" type="text" id="expiry_date" name="expiry_date" class="tcal" value="" />
-            <!--input style="display:none;" type="date" id="expiry_date" name="expiry_date"-->       
-            <input type="hidden" name="actor" value="vendor">
-        {% else %}
-            <div id="deal-input"><input id="post-as-wish" type="checkbox" name="post-as-wish" value="deal" onclick="$('#categories').toggle()">Post As Wish</div></br>
-            {% if parent_categories %}
-                <div id="categories" style="display:none;">
-                    <select class="blog_parentcategories" name="blog_parentcategories">
-                        <ul class="unstyled">
-                            <option value="all">{% trans "All" %}</option>
-                            {% for category in parent_categories %}
-                            <option value="{{ category }}">{{ category }}</option>
-                            {% endfor %}
-                        </ul>
-                    </select>
-                    <select class="blog_subcategories" name="blog_subcategories">
-                        <ul class="unstyled">
-                            <option value="all">{% trans "All" %}</option>
-                        </ul>
-                    </select>
+        <div class="span2">
+            {% if blog %}
+                <div id="deal-input" class="fontTitillium1 colorDarkerGrey checkbox">
+                    <label for="post-as-deal" class="fontSize13">
+                        <input id="post-as-deal" type="checkbox" name="post-as-deal" value="deal" 
+                        onclick="if ($(this).prop('checked')) { $('#expiry_date').show();$('#sub_categories_blog').show(); }
+                                    else {$('#expiry_date').hide();$('#sub_categories_blog').hide(); } $('#text').height('60px')">
+                        {% trans "Post As Deal" %}
+                    </label>
                 </div>
+                {% blog_subcategories_for_blog blog as sub_categories_blog %}
+                {% if sub_categories_blog %}
+                    <select id="sub_categories_blog" name="radio_category" style="display:none" class="blog_subcategories radioSelect">
+                            <option value='empty' selected disabled>{% trans "Category" %}</option>
+                            {% for blog_category in sub_categories_blog %}
+                            <option value="{{ blog_category }}">{{ blog_category }}</option>
+                            {% endfor %}
+                    </select>
+                {% endif %}
+
+                <input style="display:none;" type="text" id="expiry_date" name="expiry_date" class="tcal" value="{% trans "Expiry Date" %}" />
+                <!--input style="display:none;" type="date" id="expiry_date" name="expiry_date"-->       
+                <input type="hidden" name="actor" value="vendor">
+            {% else %}
+                <div id="deal-input" class="fontTitillium1 colorDarkerGrey checkbox">
+                    <label for="post-as-wish" class="fontSize13">
+                        <input id="post-as-wish" type="checkbox" name="post-as-wish" value="deal" onclick="$('#categories').toggle();$('#text').height('55px')">
+                        {% trans "Add to Wishlist" %}
+                    </label>
+                </div>
+                {% if parent_categories %}
+                    <div id="categories" style="display:none;">
+                        <select class="blog_parentcategories radioSelect" name="blog_parentcategories">
+                                <option value='empty' selected disabled>{% trans "Category" %}</option>
+                                {% for category in parent_categories %}
+                                <option value="{{ category }}">{{ category }}</option>
+                                {% endfor %}
+                        </select>
+                        <select class="blog_subcategories radioSelect" name="blog_subcategories">
+                                <option value='empty' selected disabled>{% trans "Sub Category" %}</option>
+                        </select>
+                    </div>
+                {% endif %}
+                <input type="hidden" name="actor" value="user">       
             {% endif %}
-            <input type="hidden" name="actor" value="user">       
-        {% endif %}
+        </div>
+        <div class="span1" style="margin-left:0px;">
+            <input id="submitwithouturl" class=""  type="submit" value="" />
+            <input id="submitwithurl" class=""  style="display:None;" type="button" value="" />
+        </div>
     </form>
 
     <div class="progress" style="display:None;position:relative;">

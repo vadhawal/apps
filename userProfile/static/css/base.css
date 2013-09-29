@@ -15,6 +15,11 @@
 }
 @font-face
 {
+	font-family: titillium2;
+	src: url('/static/fonts/TitilliumMaps26L002.otf');
+}
+@font-face
+{
 	font-family: titillium1;
 	src: url('/static/fonts/TitilliumMaps26L001.otf');
 }
@@ -80,12 +85,19 @@ a:hover {
 	color: #029795;
 	color: rgb(2, 151, 149);
 }
+.radioColorBackground{
+	background-color: rgb(2, 151, 149);
+}
 .color5D{
 	color: #5D5D5D;
 	color: rgb(93, 93, 93);
 }
+.colorDarkerGrey{
+	color : #64635F;
+	color : rgb(100, 99, 95);
+}
 .customNavBar{
-	height: 180px;
+	height: 150px;
 }
 .yellowBar{
 	background : #F9DF1E;
@@ -156,7 +168,7 @@ a:hover {
 	font-family: helvetica;
 	color:rgba(89,87,87,1.00);
 	background-color:rgba(229,244,244,1.00);
-	background-image: url('/static/img/selectPointer.gif');
+	background-image: url('/static/img/selectPointer.png');
 	background-repeat: no-repeat;
 	background-position: 140px 8px;
 	-webkit-appearance: none;
@@ -174,10 +186,7 @@ a:hover {
 	line-height: normal;
 	/*padding: 0px;*/
 }
-.rightMargin{
-	margin-right: 30px;
-}
-div span.rightMargin{
+div span.fullGutterRight{
 	color:rgba(89,87,87,1.00);
 	font-family: skinny;
 	background-image: url('/static/img/searchIcon.png');
@@ -208,6 +217,7 @@ div span.rightMargin{
 	width: 200px;
 }
 .whiteBox {
+	overflow: hidden;
 	background-color: #FFFFFF;
 	background-color: rgba(255, 255, 255, 1);
 	-webkit-box-shadow : 1.25px 1.25px 1.25px rgba(132,125,125,0.75);

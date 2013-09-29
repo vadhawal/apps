@@ -209,6 +209,28 @@
 	font-family: "lucida grande",tahoma,verdana,arial,sans-serif;
 	float: right;
 }
+#submitwithurl{
+	background-image:  url('/static/img/radioPost.png');
+	background-repeat: no-repeat;
+	background-color: transparent;
+	border-color: transparent;
+	cursor: pointer;
+	display: inline-block;
+	float: right;
+	width:27px;
+	height:30px;
+}
+#submitwithouturl{
+	background-image:  url('/static/img/radioPost.png');
+	background-repeat: no-repeat;
+	background-color: transparent;
+	border-color: transparent;
+	cursor: pointer;
+	display: inline-block;
+	float: right;
+	width:27px;
+	height:30px;
+}
 .postPreviewButton:active{
 	background-image: none;
 	background: #4f6aa3;

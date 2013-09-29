@@ -75,19 +75,19 @@
                     </div>
                 </div>
                 <div class="span8">
-                    <span class="rightMargin wantText">
+                    <span class="fullGutterRight wantText">
                         I WANT
                     </span>
                     {% blog_parentcategories_abs as parent_categories %}
                     {% if parent_categories %}
-                        <select name="blog_parentcategories" class="rightMargin blog_parentcategories">
-                            <option value='empty' selected disabled>By Category</option>
+                        <select name="blog_parentcategories" class="fullGutterRight blog_parentcategories">
+                            <option value='empty' selected disabled>{% trans "By Category" %}</option>
                             <option value="all">{% trans "All" %}</option>
                             {% for category in parent_categories %}
                             <option value="{{ category }}">{{ category }}</option>
                             {% endfor %}
                         </select>
-                        <select name="blog_subcategories" class="rightMargin blog_subcategories">
+                        <select name="blog_subcategories" class="fullGutterRight blog_subcategories">
                             <option value='empty' selected disabled>By Sub-category</option>
                         </select>
                     {% endif %}
