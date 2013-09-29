@@ -31,8 +31,17 @@ $(window).load(function(){
 	/* Calling this on window.load to wait for all the images to load. */
     $(".dealBox_h").mCustomScrollbar({
         horizontalScroll:true,
-        theme:"dark-thick"
+        theme:"dark-thick",
+		mouseWheel:true,
+      	autoHideScrollbar:true,
+      	contentTouchScroll:true
     });
+    $(".innerBox").mCustomScrollbar({
+        theme:"dark-thick",
+		mouseWheel:true,
+		autoHideScrollbar:true,
+      	contentTouchScroll:true
+    });    
 });
 $(document).ready(function() {
 	$('.message').linkify();
