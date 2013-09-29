@@ -42,7 +42,10 @@ $(document).ready(function() {
 {% if request.user.is_authenticated %}
           $(document).ready(function() {
 		   $('.linkPreview').linkPreview();
-
+            $(".dealBox_h").mCustomScrollbar({
+                horizontalScroll:true,
+                theme:"dark-thick"
+            });
             $('#text').click(function() {
                $(this).height(90);
             });
