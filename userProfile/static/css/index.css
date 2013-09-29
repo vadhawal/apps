@@ -113,6 +113,7 @@
 	box-shadow : 1px 1px 1px 1px rgba(130, 111, 113, 0.75) inset;
 	filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=-0.4, OffY=-0.4, Color='#826F71') ;
 	padding: 5px;
+	margin-bottom: 10px;
 }
 .statusBox textarea, .statusBox textarea:focus {
 	border:0;
@@ -133,6 +134,39 @@
 	box-shadow : 1px 1px 1px rgba(0, 0, 0, 0.75);
 	vertical-align: bottom;
 	filter: alpha(opacity=21) progid:DXImageTransform.Microsoft.Alpha(opacity=21) progid:DXImageTransform.Microsoft.dropshadow(OffX=1.31, OffY=1.31, Color='#000000') progid:DXImageTransform.Microsoft.gradient(startColorstr='#867278',endColorstr='#433545' , GradientType=1);
+}
+.dealsFilter
+{
+	font-size: 12.85px;
+	text-indent: 0.01px;
+	text-overflow: '';
+	font-family: helvetica;
+	color:rgba(89,87,87,1.00);
+	background-color:rgba(249, 223, 30, 1);
+	background-image: url('/static/img/selectPointer.png');
+	background-repeat: no-repeat;
+	background-position: 220px 8px;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	-ms-appearance: none;
+	-o-appearance: none;
+	-webkit-border-radius: 0px;
+	border-radius: 0px;
+	-webkit-padding-start: 10px;
+	-moz-padding-start: 10px;
+	height: 25px;
+	width: 100%;
+	vertical-align: top;
+	line-height: normal;
+	margin: 0px;
+	box-sizing:border-box;
+	/*padding: 0px;*/
+}
+.radioSelect{
+	color:white;
+	background-color: rgb(2, 151, 149);
+	background-image: url('/static/img/selectPointerWhite.png');
+	margin-top: 0px;	
 }
 .imageCategoryBoxSelected{
 	background : #FFFFFF;

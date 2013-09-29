@@ -1,37 +1,45 @@
-{% load activity_tags %}
+{% load activity_tags i18n %}
 
-<div class="row">
+<div class="row topHalfGutter">
     <div class="span7">
-        {% include 'home/form_post.html' with parent_categories=parent_categories%}
+        <div class="row">
+            {% include 'home/form_post.html' with parent_categories=parent_categories%}
 
-        <a id="refreshCache" href="{% activity_refresh_cache request.user %}"></a>
-        <a id="refreshActivity" href="{% activity_dynamic_update request.user %}"></a>
-        <a id="pendingActionCount" href="{% activity_pending_action_count request.user %}"></a>
-
-        <h2>Activity Feed</h2>
-        <div class="section-scroll" style="border-style:solid;border-width:medium;border-color:#00A3EF;">
-            <div id="load-feeds" class="content">
+            <a id="refreshCache" href="{% activity_refresh_cache request.user %}"></a>
+            <a id="refreshActivity" href="{% activity_dynamic_update request.user %}"></a>
+            <a id="pendingActionCount" href="{% activity_pending_action_count request.user %}"></a>
+        </div>
+        <div class="row">
+            <div class="whiteBox">
+                <div class="span7 boxTitle">
+                    <h6 class="fontTitillium fontSize16">
+                        <img src="{{STATIC_URL}}img/shopTalk.png">
+                        <span>
+                        SHOP TALK
+                        </span>
+                    </h6>
+                </div>
+                <div id="load-feeds" class="section-scroll content">
+                </div>
+            </div>
+            <span id="status" ></span>
+            <div id="loader">
+                <img src="{{STATIC_URL}}img/ajax-loader.gif">
             </div>
         </div>
-        <span id="status" ></span><div id="loader"><img src="{{STATIC_URL}}img/ajax-loader.gif"></div>
     </div>
 
-    <div class="span3 whiteBox">
-        <div class="innerBox" style="height:200px">
-            <div class="span1HalfGutter span1Height imageCategoryBox imageCategoryBoxSelected updateTrends">
-                <span class="categoryName fontTitillium">
-                    All
-                </span>
-            </div>
-            {% if parent_categories %}
+    <div class="span3 whiteBox" style="overflow:auto">
+        {% if parent_categories %}
+        <div class="halfGutterInset halfGutterInsetRight">
+            <select class="dealsFilter">
+                <option value='empty' selected disabled>{% trans "Filter By" %}</option>
+                <option value="all">{% trans "All" %}</option>
                 {% for category in parent_categories %}
-                    <div class="span1HalfGutter span1Height imageCategoryBox updateTrends {% if forloop.last %}bottomHalfGutter{% endif %}">
-                        <span class="categoryName fontTitillium">
-                                {{category}}
-                        </span>
-                    </div>
+                <option value="{{ category }}">{{ category }}</option>
                 {% endfor %}
-            {% endif %}
+            </select>
         </div>
+        {% endif %}
     </div>
 </div>

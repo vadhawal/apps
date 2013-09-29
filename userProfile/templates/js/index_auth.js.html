@@ -1,0 +1,190 @@
+{% load userProfile_tags activity_tags %}
+
+$(document).ready(function() {
+	$('.linkPreview').linkPreview();
+    {% get_owned_blog request.user as blog %}
+    {% if blog %}
+        $('#text').click(function() {
+                $(this).height("60px");
+        });
+        $('sub_categories_blog').val("empty");
+        $('#post-as-deal').prop('checked', false);
+    {% else %}
+        $('#text').click(function() {
+            $(this).height("55px");
+        });
+        $('#post-as-wish').prop('checked', false);
+    {% endif %}
+    $('#fakeselect').bind("click" , function () {
+        $('#wishimage').click();
+    });
+    (function(){
+        if (window.FileReader) {
+              function handleFileSelect(evt) {
+                var files = evt.target.files;
+                var f = files[0];
+                var reader = new FileReader();
+                
+                  reader.onload = (function(theFile) {
+                    return function(e) {
+                      $('#previewimg').html(['<img src="', e.target.result,'" title="', theFile.name, '" width="100"/>'].join(''));
+                    };
+                  })(f);
+                  reader.readAsDataURL(f);
+              }
+         } 
+         else {
+                alert('This browser does not support FileReader');
+         }
+         $('#wishimage').change(handleFileSelect);
+    })();
+
+    (function() {
+        var bar = $('.bar');
+        var percent = $('.percent');
+        var status = $('#status');
+           
+        $('#broadcast').ajaxForm({
+            beforeSend: function() {
+                $('.progress').toggle();
+                status.empty();
+                var percentVal = '0%';
+                bar.width(percentVal)
+                percent.html(percentVal);
+            },
+            uploadProgress: function(event, position, total, percentComplete) {
+                var percentVal = percentComplete + '%';
+                bar.width(percentVal);
+                percent.html(percentVal);
+            },
+            success: function() {
+                var percentVal = '100%';
+                bar.width(percentVal)
+                percent.html(percentVal);
+            },
+            complete: function(xhr) {
+                if(xhr.responseText != 'ok')
+                {
+                    status.html(xhr.responseText);
+                    $('.progress').toggle(); 
+                }
+                else
+                {
+                    $('#broadcast').trigger('reset');
+                    $('.progress').toggle(); 
+                    $('#refreshActivity').click();
+                    $('#previewimg').html('');
+                }
+            }
+        }); 
+
+    })();
+
+    $('#loader').hide();
+            
+    $('#refreshCache').click(function() {
+        var add_link = $(this);
+        $.get(add_link.attr('href'), {}, function(data) {
+            //alert(data);
+        });
+        return false;
+    });
+
+    $('#refreshActivity').click(function() {
+        var add_link = $(this);
+        $.get(add_link.attr('href'), {}, function(data) {
+            if(data.indexOf("No actions yet") < 0 && data.indexOf('No New Actions') < 0)
+            {
+                $('#load-feeds').prepend(data);
+                $('#refreshActivity').text('');
+            	install_action_handlers();
+            }
+        });
+        return false;
+    });
+
+    $('#pendingActionCount').click(function() {
+        var add_link = $(this);
+        $.get(add_link.attr('href'), {}, function(data) {
+        	ret_data = JSON.parse(data);
+        	if(ret_data.success == true && ret_data.count != 0)
+        		if(ret_data.count > 1)
+            		$('#refreshActivity').text(ret_data.count + " pending posts");
+            	else
+            		$('#refreshActivity').text(ret_data.count + " pending post");
+            	$('#refreshActivity').css({
+            		'background':'whitesmoke',
+            		'width':'100%',
+            		'text-align':'center',
+            		'display':'block'
+            	});
+        });
+        return false;
+    });
+    
+    $('#refreshCache').click();
+
+    viewFeed(); 
+    scrollalert();
+    updatestatus(); 
+    setInterval(function () {
+        checkAnyLatestActivity();
+    }, 10000);
+}); 
+
+
+function checkAnyLatestActivity(){
+    $('#pendingActionCount').click();
+}
+
+function updatestatus(){  
+    //Show number of loaded items  
+    var totalItems=$('#load-feeds ul li').length;  
+    $('#status').text('Loaded '+totalItems+' Items');  
+     $('#loader').hide();
+}
+
+function scrollalert(){ 
+    var scrolltop=$('.section-scroll')[0].scrollTop; //$('.section-scroll').attr('scrollTop'); 
+    var scrollheight=$('.section-scroll')[0].scrollHeight;//$('.section-scroll').attr('scrollHeight');  
+    var windowheight=$('.section-scroll')[0].clientHeight;//$('.section-scroll').attr('clientHeight');  
+    var scrolloffset=20; 
+
+    if(scrolltop > 0 && scrolltop>=(scrollheight-(windowheight+scrolloffset)))  
+    {  
+        //fetch new items 
+        $('#status').text('Loading more items...');
+        $('#loader').show();
+        sIndex = lIndex;
+        lIndex = lIndex + 5;
+        {% following_feedsubset_url request.user 0 10 as feed %}
+        var link = "{{feed}}";
+        var linksplit = link.split("/");
+        linksplit[linksplit.length-2] = lIndex;
+        linksplit[linksplit.length-3] = sIndex;
+        link = linksplit.join('/');
+
+        $.get(link, {}, function(data) {
+            if(data.indexOf("No actions yet") >= 0)
+            {
+              //alert("No actions yet");
+            }    
+            $('#load-feeds').append(data);
+            updatestatus();
+            install_action_handlers();
+        }); 
+    }     
+    setTimeout('scrollalert();', 1000); 
+}  
+
+function viewFeed()
+{
+    $('#load-feeds').html("");
+    {% following_feedsubset_url request.user 0 5 as feed %}
+
+    var link="{{feed}}";
+    $.get(link, {}, function(data) {
+        $('#load-feeds').html(data);
+        install_action_handlers();
+    });
+}

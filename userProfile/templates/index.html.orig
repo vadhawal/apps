@@ -1,0 +1,499 @@
+{% extends "base.html" %}
+{% load i18n static %}
+{% load activity_tags %}
+{% load comment_tags %}
+{% load userProfile_tags %}
+{% load blog_tags %}
+
+{% block meta_title %}{% trans "Home" %}{% endblock %}
+{% block title %}{% trans "Home" %}{% endblock %}
+{% block breadcrumb_menu %}
+<li class="active">{% trans "Home" %}</li>
+{% endblock %}
+{% block extra_js %}
+<script src="{% static "js/trends.js" %}"></script>
+<script src="{% static "js/jquery.jscrollpane.min.js" %}"></script>
+<script src="{% static "js/jquery.mousewheel.js" %}"></script>
+<script src="{% static "js/jquery.form.js" %}"></script>
+<script type="text/javascript" src="{% static "js/linkPreview.js" %}"></script>
+<script type="text/javascript" src="{% static "js/jquery.mcdropdown.min.js" %}"></script>
+<script type="text/javascript" src="{% static "js/jquery.bgiframe.js" %}"></script>
+{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" type="text/css" href="{% static "css/imagestore.css" %}"/>
+<link rel="stylesheet" class="cssButtons" type="text/css" href="{% static "css/linkPreview.css" %}"/>
+<link rel="stylesheet" href="{% static "css/jquery.jscrollpane.css" %}">
+<link rel="stylesheet" class="cssStatics" href="{% static "css/stylesheet.css" %}"/>
+<link rel="stylesheet" href="{% static "css/jquery.mcdropdown.min.css" %}"/>
+<link rel="stylesheet" href="{% static "css/index.css" %}"/>
+<link rel="stylesheet" href="{% static "css/searchresults.css" %}"/>
+
+<script type="text/javascript">
+var sIndex = 0;
+var lIndex = 5;
+$(document).ready(function() {
+	$('.message').linkify();
+
+    $('.updateTrends').click(function(event){
+        update_trends_handler(event, this);
+        return false;
+    });
+});
+{% if request.user.is_authenticated %}
+<<<<<<< HEAD
+    {% include 'js/index_auth.js.html' with parent_categories=parent_categories %}
+=======
+          $(document).ready(function() {
+		   $('.linkPreview').linkPreview();
+            $(".dealBox_h").mCustomScrollbar({
+                horizontalScroll:true,
+                theme:"dark-thick"
+            });
+            $('#text').click(function() {
+               $(this).height(90);
+            });
+            $('#fakeselect').bind("click" , function () {
+                $('#wishimage').click();
+            });
+            (function(){
+                if (window.FileReader) {
+                      function handleFileSelect(evt) {
+                        var files = evt.target.files;
+                        var f = files[0];
+                        var reader = new FileReader();
+                        
+                          reader.onload = (function(theFile) {
+                            return function(e) {
+                              $('#previewimg').html(['<img src="', e.target.result,'" title="', theFile.name, '" width="100"/>'].join(''));
+                            };
+                          })(f);
+                          reader.readAsDataURL(f);
+                      }
+                 } 
+                 else {
+                        alert('This browser does not support FileReader');
+                 }
+                 $('#wishimage').change(handleFileSelect);
+            })();
+
+            (function() {
+                
+                var bar = $('.bar');
+                var percent = $('.percent');
+                var status = $('#status');
+                   
+                $('#broadcast').ajaxForm({
+                    beforeSend: function() {
+                        $('.progress').toggle();
+                        status.empty();
+                        var percentVal = '0%';
+                        bar.width(percentVal)
+                        percent.html(percentVal);
+                    },
+                    uploadProgress: function(event, position, total, percentComplete) {
+                        var percentVal = percentComplete + '%';
+                        bar.width(percentVal);
+                        percent.html(percentVal);
+                    },
+                    success: function() {
+                        var percentVal = '100%';
+                        bar.width(percentVal)
+                        percent.html(percentVal);
+                    },
+                    complete: function(xhr) {
+                        if(xhr.responseText != 'ok')
+                        {
+                            status.html(xhr.responseText);
+                            $('.progress').toggle(); 
+                        }
+                        else
+                        {
+                            $('#broadcast').trigger('reset');
+                            $('.progress').toggle(); 
+                            $('#refreshActivity').click();
+                            $('#previewimg').html('');
+                        }
+                    }
+                }); 
+
+            })();       
+
+            $('#loader').hide();
+            
+            $('#refreshCache').click(function() {
+                var add_link = $(this);
+                $.get(add_link.attr('href'), {}, function(data) {
+                    //alert(data);
+                });
+                return false;
+            });
+
+            $('#refreshActivity').click(function() {
+                var add_link = $(this);
+                $.get(add_link.attr('href'), {}, function(data) {
+                    if(data.indexOf("No actions yet") < 0 && data.indexOf('No New Actions') < 0)
+                    {
+                        $('#load-feeds').prepend(data);
+                        $('#refreshActivity').text('');
+                    	install_action_handlers();
+                    }
+                });
+                return false;
+            });
+            $('#pendingActionCount').click(function() {
+                var add_link = $(this);
+                $.get(add_link.attr('href'), {}, function(data) {
+                	ret_data = JSON.parse(data);
+                	if(ret_data.success == true && ret_data.count != 0)
+                		if(ret_data.count > 1)
+                    		$('#refreshActivity').text(ret_data.count + " pending posts");
+                    	else
+                    		$('#refreshActivity').text(ret_data.count + " pending post");
+                    	$('#refreshActivity').css({
+                    		'background':'whitesmoke',
+                    		'width':'100%',
+                    		'text-align':'center',
+                    		'display':'block'
+                    	});
+                });
+                return false;
+            });
+            
+            $('#refreshCache').click();
+
+            viewFeed(); 
+            scrollalert();
+            updatestatus(); 
+            setInterval(function () {
+                checkAnyLatestActivity();
+            }, 10000);
+
+                /*var element = $('.section-scroll').jScrollPane({
+                    horizontalGutter:5,
+                    verticalGutter:5,
+                    'showArrows': true
+                    });
+                    
+                    $('.jspDrag').hide();
+                    $('.jspScrollable').mouseenter(function(){
+                        $('.jspDrag').stop(true, true).fadeIn('slow');
+                    });
+                    $('.jspScrollable').mouseleave(function(){
+                        $('.jspDrag').stop(true, true).fadeOut('slow');
+                    });
+
+                api = element.data('jsp');
+                var scroll_handler = function(){
+                    if($('.section-scroll').outerHeight() + api.getContentPositionY() >= api.getContentHeight()) {
+                        //Fire another function here
+                        $('#loader').toggle();
+                        $('.section-scroll').unbind('scroll');
+                        scrollalert();
+                        var element = $('.section-scroll').jScrollPane({
+                                        horizontalGutter:5,
+                                        verticalGutter:5,
+                                        'showArrows': true
+                        });
+                        api = element.data('jsp');
+                        api.reinitialise();
+                        $('.section-scroll').bind('scroll', scroll_handler);
+                        
+                        $('#loader').toggle();
+                    }*/
+
+                //}
+                //$('.section-scroll').bind('scroll', scroll_handler);
+                /*$('#viewFeed').click(function() {
+                    viewFeed();
+                });*/    
+
+}); 
+
+
+function checkAnyLatestActivity(){
+    //$('#refreshActivity').click();
+    $('#pendingActionCount').click();
+}
+function updatestatus(){  
+    //Show number of loaded items  
+    var totalItems=$('#load-feeds ul li').length;  
+    $('#status').text('Loaded '+totalItems+' Items');  
+     $('#loader').hide();
+}
+
+function scrollalert(){ 
+    var scrolltop=$('.section-scroll')[0].scrollTop; //$('.section-scroll').attr('scrollTop'); 
+    var scrollheight=$('.section-scroll')[0].scrollHeight;//$('.section-scroll').attr('scrollHeight');  
+    var windowheight=$('.section-scroll')[0].clientHeight;//$('.section-scroll').attr('clientHeight');  
+    var scrolloffset=20; 
+
+    if(scrolltop > 0 && scrolltop>=(scrollheight-(windowheight+scrolloffset)))  
+    {  
+        //fetch new items 
+        $('#status').text('Loading more items...');
+        $('#loader').show();
+        sIndex = lIndex;
+        lIndex = lIndex + 5;
+        {% following_feedsubset_url request.user 0 10 as feed %}
+        var link = "{{feed}}";
+        var linksplit = link.split("/");
+        linksplit[linksplit.length-2] = lIndex;
+        linksplit[linksplit.length-3] = sIndex;
+        link = linksplit.join('/');
+
+        $.get(link, {}, function(data) {
+            if(data.indexOf("No actions yet") >= 0)
+            {
+              //alert("No actions yet");
+            }    
+            $('#load-feeds').append(data);
+            updatestatus();
+            install_action_handlers();
+        }); 
+    }     
+    setTimeout('scrollalert();', 1000); 
+}  
+
+function viewFeed()
+{
+    $('#load-feeds').html("");
+    {% following_feedsubset_url request.user 0 5 as feed %}
+
+    var link="{{feed}}";
+    $.get(link, {}, function(data) {
+        $('#load-feeds').html(data);
+        install_action_handlers();
+    });
+}
+>>>>>>> upstream/master
+{% endif %}
+</script>
+
+{% endblock %}
+
+
+
+{% block main %}
+
+{% blog_parentcategories_abs as parent_categories %}
+<div class="row">
+{% if request.user.is_authenticated %}
+<<<<<<< HEAD
+    {% include 'home/index_auth.html' with parent_categories=parent_categories %}
+{% else %}
+    {% include 'home/index_noauth.html' with parent_categories=parent_categories %}
+=======
+    <form id="broadcast" action="/userwish/" method="post" class='album-form' enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+
+    <div id="previewLoading"></div>
+    {% get_owned_blog request.user as blog %} 
+    {% if blog %}
+        <div id="deal-input"><input id="post-as-deal" type="checkbox" name="post-as-deal" value="deal" onclick="$('#expiry_date').toggle();
+        $('#sub_categories_blog').toggle();">Post As Deal</div>
+        </br>
+        {% blog_subcategories_for_blog blog as sub_categories_blog %}
+        {% if sub_categories_blog %}
+            <select id="sub_categories_blog" name="radio_category" style="display:none">
+                <ul class="unstyled">
+                    {% for blog_category in sub_categories_blog %}
+                    <option value="{{ blog_category }}">{{ blog_category }}</option>
+                    {% endfor %}
+                </ul>
+            </select>
+        {% endif %}
+
+        <input style="display:none;" type="text" id="expiry_date" name="expiry_date" class="tcal" value="" />
+        <!--input style="display:none;" type="date" id="expiry_date" name="expiry_date"-->       
+        <input type="hidden" name="actor" value="vendor">
+    {% else %}
+        <div id="deal-input"><input id="post-as-wish" type="checkbox" name="post-as-wish" value="deal" onclick="$('#categories').toggle()">Post As Wish</div></br>
+        {% if parent_categories %}
+            <div id="categories" style="display:none;">
+                <select class="blog_parentcategories" name="blog_parentcategories">
+                    <ul class="unstyled">
+                        <option value="all">{% trans "All" %}</option>
+                        {% for category in parent_categories %}
+                        <option value="{{ category }}">{{ category }}</option>
+                        {% endfor %}
+                    </ul>
+                </select>
+                <select class="blog_subcategories" name="blog_subcategories">
+                    <ul class="unstyled">
+                        <option value="all">{% trans "All" %}</option>
+                    </ul>
+                </select>
+            </div>
+        {% endif %}
+        <input type="hidden" name="actor" value="user">       
+    {% endif %}
+
+    <div style="border:1px solid #1769ff;">
+        <textarea class="boxsizingBorder" id="text" style="width:100%;height:50px;border: none;resize: none;" name="message" placeholder="What's on your mind?"></textarea>
+    <!--textarea class="boxsizingBorder" id="createwish" style="width:100%;height:50px;border: none;resize: none;" name="message" placeholder="Wish details..."></textarea-->
+    <output id="previewimg"></output>
+    <div style="width:100%;margin-bottom:0px;" >
+        <input style="display:none;" type="file" id="wishimage", name="wishimage" aria-label="Add photos to your post" >
+        <input id="fakeselect" type="button"  style="background-image: url({{STATIC_URL}}img/photo.ico); 
+                                                                    background-color: transparent;
+                                                                    background-repeat: no-repeat;
+                                                                    background-position: 0px 0px;
+                                                                    border: none;     
+                                                                    customrsor: pointer;       
+                                                                    height: 36px;   
+                                                                    width:36px;        
+                                                                    padding-left: 16px;    
+                                                                    vertical-align: middle;"/>
+        <input id="submitwithouturl" class="postPreviewButton"  type="submit" value="{% trans "Post" %}" />
+        <input id="submitwithurl" class="postPreviewButton"  style="display:None;" type="button" value="{% trans "Post" %}" />
+    </div>
+        <input type="hidden" name="urlPreviewContent" id="urlPreviewContent" value="" />
+                <div id="preview">
+                    <div id="previewImages">
+                        <div id="previewImage"><img src='{{STATIC_URL}}img/loader.gif' style='margin-left: 43%; margin-top: 39%;' ></img></div>
+                        <input type="hidden" id="photoNumber" value="0" />
+                    </div>
+                    <div id="previewContent">
+                        <div id="closePreview" title="Remove" ></div>
+                        <div id="previewTitle"></div>
+                        <div id="previewUrl"></div>
+                        <div id="previewDescription"></div>
+                        <div id="hiddenDescription"></div>
+                        <div id="previewButtons" >
+                            <div id='previewPreviousImg' class="buttonLeftDeactive" ></div><div id='previewNextImg' class="buttonRightDeactive"  ></div>  <div class="photoNumbers" ></div> <div class="chooseThumbnail">Choose a thumbnail</div>
+                        </div>
+                        <input type="checkbox" id="noThumb" class="noThumbCb" />
+                        <div class="nT"  ><span id="noThumbDiv" >No thumbnail</span></div>
+                    </div>
+                    <div style="clear: both"></div>
+                </div>
+    <div class="previewPostedList"></div>
+    </div>
+    </form>
+
+    <div class="progress" style="display:None;position:relative;">
+        <div class="bar"></div >
+        <div class="percent">0%</div >
+    </div>
+    
+    <div id="status"></div>
+<!--input id="viewFeed" type="button" class="button button-primary btn-sucess" value="Feed"></input-->
+<a id="refreshCache" href="{% activity_refresh_cache request.user %}"></a>
+<a id="refreshActivity" href="{% activity_dynamic_update request.user %}"></a>
+<a id="pendingActionCount" href="{% activity_pending_action_count request.user %}"></a>
+
+<h2>Activity Feed</h2>
+<div class="section-scroll" style="border-style:solid;border-width:medium;border-color:#00A3EF;">
+    <div id="load-feeds" class="content">
+    </div>
+</div>
+<span id="status" ></span><div id="loader"><img src="{{STATIC_URL}}img/ajax-loader.gif"></div>
+
+<!--div id="scrollcontainer">  
+    <div id="scrollbox" >  
+        <div id="load-feeds" >  
+
+        </div>  
+    </div>  
+    <p><span id="status" ></span></p>  
+</div-->
+
+>>>>>>> upstream/master
+{% endif %}
+</div>
+<div class="row">
+    <div class="span3"> 
+        <div class="outerBox">
+            <div class="row">
+                <div class="span3">
+                    <div class="boxTitle">
+                        <h6 class="fontTitillium fontSize16 categories">
+                            <img src="{{STATIC_URL}}img/categories.png">
+                            <span>
+                            CATEGORIES
+                            </span>
+                        </h6>
+                        <div class="yellowLineContainer">
+                            <hr class="yellowLine"/>
+                        </div>
+                    </div>
+                    <div class="innerBox whiteBox">
+                        <div class="span1HalfGutter span1Height imageCategoryBox imageCategoryBoxSelected updateTrends">
+                            <span class="categoryName fontTitillium">
+                                All
+                            </span>
+                        </div>
+                        {% if parent_categories %}
+                            {% for category in parent_categories %}
+                                <div class="span1HalfGutter span1Height imageCategoryBox updateTrends">
+                                    <span class="categoryName fontTitillium">
+                                            {{category}}
+                                    </span>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="span7">
+        <div class="outerBox">
+            <div class="row">
+                <div class="span3">
+                    <div class="boxTitle">
+                        <h6 class="fontTitillium fontSize16">
+                            <img src="{{STATIC_URL}}img/topStores.png">
+                            TOP STORES
+                        </h6>
+                        <div class="yellowLineContainer">
+                            <hr class="yellowLine"/>
+                        </div>
+                    </div>
+                    <div class="innerBox whiteBox">
+                        <div id="topStoresForStoreCategory">
+                        	{% render_stores_for_categories 'All' 'All' 'MIN_STORES_HOME_PAGE'|settings_value %}
+                        </div>
+                    </div>
+                </div>
+                <div class="span4">
+                    <div class="boxTitle">
+                        <h6 class="fontTitillium fontSize16">
+                            <img src="{{STATIC_URL}}img/storeReviews.png">
+                            STORE REVIEWS
+                        </h6>
+                        <div class="yellowLineContainer">
+                            <hr class="yellowLine"/>
+                        </div>
+                    </div>
+                    <div class="innerBox whiteBox">
+                        <div id="topReviewsForStoreCategory">
+                        {% render_reviews_for_categories 'All' 'All' 'MIN_REVIEWS_HOME_PAGE'|settings_value %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="span10">
+        <div class="boxTitle">
+                <h6 class="fontTitillium fontSize16"><span class="hotDealsIcon radioColor">%&nbsp;</span>HOT DEALS</h6>
+                <div class="yellowLineContainer">
+                    <hr class="yellowLine"/>
+                </div>
+        </div>
+        <div class="outerBox dealBox whiteBox">
+            <div id="topDealsForStoreCategory">
+            	{% render_deals_for_categories 'All' 'All'  'MIN_DEALS_HOME_PAGE'|settings_value 'horizontal'%}
+            </div>
+        </div>
+        <span id="wish-status" ></span>
+    </div>
+</div>
+{% endblock %}
+
