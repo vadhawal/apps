@@ -14,7 +14,7 @@
 	height: 45px;
 }
 .dealBox {
-	height: 250px;
+	height: 280px;
 	line-height: 250px;
 }
 .dealBox ul {
@@ -30,6 +30,23 @@
 	height: 210px;
 	max-height: 210px;
 }
+
+/* dealBox_h will be applied on the deals listed on home page. */
+.dealBox_h {
+	width: auto;
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+}
+.dealBox_h_elem {
+	display:inline-block;
+	height:210px;
+	margin:auto 5px;
+}
+.dealBox_h img {
+	height:100%;
+}
+
 .boxTitle{
 	height: 25px;
 	width: 100%;
