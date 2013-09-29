@@ -17,14 +17,9 @@
 </script>
 {% endblock %} 
 
-{% block extra_head %}
-{% if orientation and orientation == 'vertical' %}
-<ul style="height:500px; overflow: auto">
-{% else %}
-<ul style="list-style-type:none;white-space:nowrap;overflow-x:auto;overflow-y:hidden;">
-{% endif %}
+{% block extra_head %}             
+<div class="dealBox_h">
 {% for deal in deal_list %}
-<li style="display:inline-block;">
 {#% get_wish_owner deal as deal_owner %#}
 {#% include 'generic/includes/render_owner.html' with owner=deal_owner %#}
 
@@ -36,15 +31,17 @@
 
 {% if deal.wishimage %}
     {% get_reldata_url deal as rel_data_url %}
-	{% thumbnail deal.wishimage "400x400" as img %} 
-        <a class="wishimg-deal-homepage" href="{{  deal.wishimage.url }}" rel="homepage_deals" data-reldata-url="{{rel_data_url}}">
+	{% thumbnail deal.wishimage "400x400" as img %}
+    <div class="dealBox_h_elem"> 
+        <a class="wishimg-deal-homepage" href="{{  deal.wishimage.url }}" rel="homepage_deals" data-reldata-url="{{rel_data_url}}" style="">
             <img src="{{img.url}}">
-        </a> 
+        </a>
+    </div>
     {% endthumbnail %}
 {% endif %}
-</li>
+
 {% empty %}
 {% trans "No wishes yet" %}
 {% endfor %}
-</ul>
+</div>
 {% endblock %}

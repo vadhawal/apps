@@ -15,11 +15,8 @@
 <link rel="stylesheet" href="{% static "css/navigation.css" %}"/>
 <link rel="stylesheet" href="{% static "css/creative.css" %}"/>
 <script src="{% static "js/jquery.linkify.js" %}"></script>
-<script src="{% static "js/jquery.jscrollpane.min.js" %}"></script>
 <script src="{% static "js/jquery.mousewheel.js" %}"></script>
 <script src="http://connect.facebook.net/en_US/all.js"></script>
-
-<link rel="stylesheet" href="{% static "css/jquery.jscrollpane.css" %}">
     <script type="text/javascript">
           var sIndex = 0;
           var lIndex = 10;
@@ -66,7 +63,9 @@
                          install_action_handlers();
                     });
             }
-            getFeed();   
+            getFeed();  
+            scrollalert();
+            updatestatus(); 
             var getWishList = function(){
                     $('#load-wish').html("");
                     {% get_wishlist_url profile_user 0 10 as wishlisturl %}
@@ -79,40 +78,6 @@
             }
             getWishList();  
             updatestatus(); 
-            var element = $('.section-scroll').jScrollPane({
-                    horizontalGutter:5,
-                    verticalGutter:5,
-                    'showArrows': true
-                    });
-                    
-                    $('.jspDrag').hide();
-                    $('.jspScrollable').mouseenter(function(){
-                        $('.jspDrag').stop(true, true).fadeIn('slow');
-                    });
-                    $('.jspScrollable').mouseleave(function(){
-                        $('.jspDrag').stop(true, true).fadeOut('slow');
-                    });
-
-                api = element.data('jsp');
-                var scroll_handler = function(){
-                    if($('.section-scroll').outerHeight() + api.getContentPositionY() >= api.getContentHeight()) {
-                        //Fire another function here
-                        $('.section-scroll').unbind('scroll');
-                        
-                        scrollalert();
-                        var element = $('.section-scroll').jScrollPane({
-                                        horizontalGutter:5,
-                                        verticalGutter:5,
-                                        'showArrows': true
-                        });
-                        api = element.data('jsp');
-                        api.reinitialise();
-                        $('.section-scroll').bind('scroll', scroll_handler);
-                        
-                    }
-
-                }
-                $('.section-scroll').bind('scroll', scroll_handler);
         });
 
 function updatestatus(){  
@@ -122,14 +87,20 @@ function updatestatus(){
 }
 
 function scrollalert(){ 
- 
+     var scrolltop=$('.section-scroll')[0].scrollTop; //$('.section-scroll').attr('scrollTop'); 
+    var scrollheight=$('.section-scroll')[0].scrollHeight;//$('.section-scroll').attr('scrollHeight');  
+    var windowheight=$('.section-scroll')[0].clientHeight;//$('.section-scroll').attr('clientHeight');  
+    var scrolloffset=20; 
+
+    if(scrolltop > 0 && scrolltop>=(scrollheight-(windowheight+scrolloffset)))  
+    {  
+        //fetch new items 
         $('#status').text('Loading more items...');
-   
+        $('#loader').show();
         sIndex = lIndex;
         lIndex = lIndex + 5;
-        {% actor_url_subset profile_user 0 10 as feed %}
+        {% following_feedsubset_url request.user 0 10 as feed %}
         var link = "{{feed}}";
-
         var linksplit = link.split("/");
         linksplit[linksplit.length-2] = lIndex;
         linksplit[linksplit.length-3] = sIndex;
@@ -138,14 +109,14 @@ function scrollalert(){
         $.get(link, {}, function(data) {
             if(data.indexOf("No actions yet") >= 0)
             {
-               $('.section-scroll').unbind('scroll');
+              //alert("No actions yet");
             }    
             $('#load-feeds').append(data);
-            updatestatus(); 
+            updatestatus();
             install_action_handlers();
         }); 
-    /*}     
-    setTimeout('scrollalert();', 1500); */ 
+    }     
+    setTimeout('scrollalert();', 1000); 
 }
 
     </script>
