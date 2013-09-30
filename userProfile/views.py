@@ -21,11 +21,15 @@ from itertools import chain
 from mezzanine.conf import settings
 from actstream import actions
 from follow.models import Follow
+import datetime
 
 
-def json_error_response(error_message):
+def json_error_response(error_codes):
     return HttpResponse(simplejson.dumps(dict(success=False,
-                                              error_message=error_message)))
+    										  error_codes=error_codes)))
+
+def json_success_response():
+    return HttpResponse(simplejson.dumps(dict(success=True)))
 
 def close_login_popup(request):
     return render_to_response('close_popup.html', {}, RequestContext(request))
@@ -61,36 +65,45 @@ def userwish(request):
 		blog_category = None
 		blog_parentcategory = None
 		wishimgeobj = None
-		err_message = []
+		error_codes = []
+		expiry_date_valid = True
 
 		if 'wishimage' in request.FILES:
 			wishimgeobj = request.FILES['wishimage']
 
 		deal_expiry_date = request.POST.get('expiry_date',None)
-		
+		try:
+			datetime.datetime.strptime(deal_expiry_date, '%Y-%m-%d')
+		except ValueError:
+			expiry_date_valid = False
+
 		actor = request.POST.get('actor', None)
 		message = request.POST.get('message', '')
 		urlPreviewContent = request.POST.get("urlPreviewContent","")
-
-
 
 		if actor and actor == "vendor":
 			post_as_deal = request.POST.get('post-as-deal', False)
 			if post_as_deal:
 				blog_category_slug = request.POST.get('radio_category', None)
+				
 				if BlogCategory.objects.all().exists() and blog_category_slug:
-					blog_category = get_object_or_404(BlogCategory, slug=slugify(blog_category_slug))
-				if BlogParentCategory.objects.all().exists() and blog_category:
-					blog_parentcategory = blog_category.parent_category			
-				if not wishimgeobj:
-					err_message.append('Image is required for deals.')
-				if not deal_expiry_date:
-					err_message.append('Expiry Date is required for the deals.')
-				if not blog_category:
-					err_message.append('Sub Category is required for the deals.')
+					try:
+						blog_category = BlogCategory.objects.get(slug=slugify(blog_category_slug))#get_object_or_404(BlogCategory, slug=slugify(blog_category_slug))
+					except:
+						pass
 
-			if err_message:
-				return json_error_response(err_message)
+				if BlogParentCategory.objects.all().exists() and blog_category:
+					blog_parentcategory = blog_category.parent_category	
+		
+				if not wishimgeobj:
+					error_codes.append(settings.DEAL_IMAGE_REQUIRED)
+				if not deal_expiry_date or not expiry_date_valid:
+					error_codes.append(settings.DEAL_EXPIRY_DATE_REQUIRED)
+				if not blog_category:
+					error_codes.append(settings.DEAL_SUBCATEGORY_REQUIRED)
+
+			if error_codes:
+				return json_error_response(error_codes)
 			else:
 				blog_posts = BlogPost.objects.published(
                                      for_user=request.user).select_related().filter(user=request.user)
@@ -118,13 +131,16 @@ def userwish(request):
 			if post_as_wish:
 				blog_category_slug = request.POST.get('blog_subcategories', None)
 				if BlogCategory.objects.all().exists() and blog_category_slug:
-					blog_category = get_object_or_404(BlogCategory, slug=slugify(blog_category_slug))
+					blog_category = BlogCategory.objects.get(slug=slugify(blog_category_slug)) #get_object_or_404(BlogCategory, slug=slugify(blog_category_slug))
+				
 				if BlogParentCategory.objects.all().exists() and blog_category:
 					blog_parentcategory = blog_category.parent_category	
+
 				if not blog_category:
-					err_message.append('Category is required to post a wish.')
-			if err_message:
-				return json_error_response(err_message)
+					error_codes.append(settings.WISH_CATEGORY_REQUIRED)
+
+			if error_codes:
+				return json_error_response(error_codes)
 			else:
 				ctype = ContentType.objects.get_for_model(User)
 				broadcast_obj = None
@@ -141,7 +157,7 @@ def userwish(request):
 				Follow.objects.get_or_create(request.user, broadcast_obj)
 
 	if request.is_ajax():
-		return HttpResponse('ok')
+		return json_success_response()
 	else:
 		return render_to_response('broadcast_success.html', {}, RequestContext(request))
 

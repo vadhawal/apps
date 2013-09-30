@@ -59,17 +59,24 @@ $(document).ready(function() {
                 percent.html(percentVal);
             },
             complete: function(xhr) {
-                if(xhr.responseText != 'ok')
-                {
-                    status.html(xhr.responseText);
-                    $('.progress').toggle(); 
-                }
-                else
+                var ret_data = JSON.parse(xhr.responseText);
+                if(ret_data.success == true)
                 {
                     $('#broadcast').trigger('reset');
                     $('.progress').toggle(); 
                     $('#refreshActivity').click();
                     $('#previewimg').html('');
+                }
+                else
+                {
+                    if(ret_data.error_codes.indexOf(100) != -1)
+                        $('#fakeselect').parent().addClass('error');
+                    if(ret_data.error_codes.indexOf(101) != -1)
+                        $('#expiry_date').addClass('error');
+                    if(ret_data.error_codes.indexOf(102) != -1)
+                        $('#sub_categories_blog').addClass('error'); 
+                                             
+                    $('.progress').toggle(); 
                 }
             }
         }); 
