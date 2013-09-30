@@ -2,17 +2,13 @@
 
 $(document).ready(function() {
 	$('.linkPreview').linkPreview();
+    $('#text').click(function() {
+        expandWishText();
+    });
     {% get_owned_blog request.user as blog %}
     {% if blog %}
-        $('#text').click(function() {
-                $(this).height("60px");
-        });
-        $('sub_categories_blog').val("empty");
         $('#post-as-deal').prop('checked', false);
     {% else %}
-        $('#text').click(function() {
-            $(this).height("55px");
-        });
         $('#post-as-wish').prop('checked', false);
     {% endif %}
     $('#fakeselect').bind("click" , function () {
@@ -132,6 +128,19 @@ $(document).ready(function() {
 
     $(window).debounce('scroll', feedUpdater, 100);
 }); 
+
+function expandWishText() {
+    {% if blog %}
+        $('#text').height("60px");
+        $('sub_categories_blog').val("empty");
+        $('#submitwithouturl').addClass('topHalfGutter');
+        $('#submitwithurl').addClass('topHalfGutter');
+    {% else %}
+        $('#text').height("55px");
+        $('#submitwithouturl').addClass('topHalfGutter');
+        $('#submitwithurl').addClass('topHalfGutter');
+    {% endif %}
+}
 
 function feedUpdater() {
     var scrollOffset = 400;

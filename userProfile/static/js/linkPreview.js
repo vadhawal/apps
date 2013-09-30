@@ -50,6 +50,8 @@
 			if(trim($('#text').val()) == ""){
 				$(this).val(textText);
 				$(this).css({'color': 'grey'});
+				$('#submitwithouturl').removeClass('radioPostActive');
+        		$('#submitwithurl').removeClass('radioPostActive');
 			}
 		});
 		
@@ -70,6 +72,11 @@
 			images = "";
 		}
 		$('#text').keyup(function(e){
+			if ($('#text').val() != "")
+			{
+				$('#submitwithouturl').addClass('radioPostActive');
+        		$('#submitwithurl').addClass('radioPostActive');
+			}
 			if((e.which == 13 || e.which == 32 || e.which == 17) && trim($(this).val()) != ""){
 				text = " "+$('#text').val();
 				video = "no";
