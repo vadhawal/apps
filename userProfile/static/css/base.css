@@ -23,6 +23,12 @@
 	font-family: titillium1;
 	src: url('/static/fonts/TitilliumMaps26L001.otf');
 }
+body{
+	line-height: normal;
+}
+li{
+	line-height: normal;
+}
 div p span {
 	text-shadow: none;
 }

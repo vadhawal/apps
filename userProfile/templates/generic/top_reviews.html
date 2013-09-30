@@ -6,7 +6,7 @@
     <div class="span1 text-center ">
         <a style="vertical-align:middle;" href='{{review.user.get_absolute_url}}'>
         {% if review.user.get_profile.profile_photo %}    
-            {% thumbnail review.user.get_profile.profile_photo "55x55" as img %} 
+            {% thumbnail review.user.get_profile.profile_photo "100x100" as img %} 
             <img class="reviewUserImage" height="70px" width="70px" src="{{ MEDIA_URL }}{{img}}">
             {% endthumbnail %}
         {% elif review.user.get_profile.image_url %}
