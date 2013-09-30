@@ -210,26 +210,27 @@
 	float: right;
 }
 #submitwithurl{
-	background-image:  url('/static/img/radioPost.png');
-	background-repeat: no-repeat;
-	background-color: transparent;
-	border-color: transparent;
 	cursor: pointer;
 	display: inline-block;
 	float: right;
-	width:27px;
-	height:30px;
+	width:40px;
+	height:45px;
 }
 #submitwithouturl{
-	background-image:  url('/static/img/radioPost.png');
-	background-repeat: no-repeat;
-	background-color: transparent;
-	border-color: transparent;
 	cursor: pointer;
 	display: inline-block;
 	float: right;
-	width:27px;
-	height:30px;
+	width:40px;
+	height:45px;
+}
+.radioPost{
+	background-image:  url('/static/img/radio_post_dark.png');
+	background-repeat: no-repeat;
+	background-color: transparent;
+	border-color: transparent;
+}
+.radioPostActive{
+	background-image:  url('/static/img/radio_post_colored.png');
 }
 .postPreviewButton:active{
 	background-image: none;
