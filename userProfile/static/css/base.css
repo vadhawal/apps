@@ -35,6 +35,10 @@ div p span {
 img {
 	box-shadow: 0 0 3px #bbb;
 }
+a{
+	color: #5D5D5D;
+	color: rgb(93, 93, 93);
+}
 a:hover {
 	color: #029795;
 	color: rgb(2, 151, 149);
@@ -55,6 +59,9 @@ a:hover {
 }
 .fontTitillium1 {
 	font-family: titillium1;
+}
+.fontTitillium2 {
+	font-family: titillium2;
 }
 .fontTitillium3 {
 	font-family: titillium3;

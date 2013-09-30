@@ -43,10 +43,6 @@
                 <a  class="clearvote" href="#" data-href="{% url 'vote_on_post' object.id 'clear' %}">Unlike</a>     
         {% endif %}
     {% endif %}
-     <span class="cover-stat cover-stat-appreciations">
-            <span class="stat-label be-font-inline">F</span>
-            <a class="pScore" href="{{ voters }}">{{score.num_up_votes}}</a>
-     </span>    
-     
+            (<a class="pScore" href="{{ voters }}">{{score.num_up_votes}}</a>)     
      </span>
 {% endif %}
