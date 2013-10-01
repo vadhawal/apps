@@ -41,7 +41,7 @@ $(document).ready(function() {
         $('#refreshActivity').click();
         $('#previewimg').html('');
         $('#categories').hide();
-
+        $('#deal_categories').hide();
         $('#broadcast textarea').removeClass('error');
         $('#broadcast select').removeClass('error');
         $('#broadcast input').removeClass('error');
@@ -125,9 +125,9 @@ $(document).ready(function() {
             if(data.indexOf("No actions yet") < 0 && data.indexOf('No New Actions') < 0)
             {
                 $('#load-feeds').prepend(data);
-                $('#refreshActivity').text('');
             	install_action_handlers();
             }
+            $('#refreshActivity').text('');
         });
         return false;
     });

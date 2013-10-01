@@ -42,22 +42,24 @@
                 <div id="deal-input" class="fontTitillium1 colorDarkerGrey checkbox">
                     <label for="post-as-deal" class="fontSize13">
                         <input id="post-as-deal" type="checkbox" name="post-as-deal" value="deal" 
-                        onclick="if ($(this).prop('checked')) { $('#expiry_date').show();$('#sub_categories_blog').show(); }
-                                    else {$('#expiry_date').hide();$('#sub_categories_blog').hide(); } $('#text').height('60px')">
+                        onclick="if ($(this).prop('checked')) { $('#deal_categories').show(); }
+                                    else { $('#deal_categories').hide(); } $('#text').height('60px')">
                         {% trans "Post As Deal" %}
                     </label>
                 </div>
-                {% blog_subcategories_for_blog blog as sub_categories_blog %}
-                {% if sub_categories_blog %}
-                    <select id="sub_categories_blog" name="radio_category" style="display:none" class="blog_subcategories radioSelect">
-                            <option value='empty' selected disabled>{% trans "Category" %}</option>
-                            {% for blog_category in sub_categories_blog %}
-                            <option value="{{ blog_category }}">{{ blog_category }}</option>
-                            {% endfor %}
-                    </select>
-                {% endif %}
+                <div id="deal_categories" style="display:none;">
+                    {% blog_subcategories_for_blog blog as sub_categories_blog %}
+                    {% if sub_categories_blog %}
+                        <select id="sub_categories_blog" name="radio_category" class="blog_subcategories radioSelect">
+                                <option value='empty' selected disabled>{% trans "Category" %}</option>
+                                {% for blog_category in sub_categories_blog %}
+                                <option value="{{ blog_category }}">{{ blog_category }}</option>
+                                {% endfor %}
+                        </select>
+                    {% endif %}
 
-                <input style="display:none;" type="text" id="expiry_date" name="expiry_date" class="tcal" value="{% trans "Expiry Date" %}" readonly />
+                    <input type="text" id="expiry_date" name="expiry_date" class="tcal" value="{% trans "Expiry Date" %}" readonly />
+                </div>
                 <!--input style="display:none;" type="date" id="expiry_date" name="expiry_date"-->       
                 <input type="hidden" name="actor" value="vendor">
             {% else %}
