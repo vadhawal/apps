@@ -1,13 +1,13 @@
 var get_trending_deals_handler = function(parent_category, sub_category)
 {
     $.get('/' + parent_category + '/'+ sub_category + '/trendingdeals', {}, function(data) {
-          $('#topDealsForStoreCategory').html(data);
+          $('#topDealsForStoreCategoryAuth').html(data);
             install_voting_handlers();
             $('.shareWish').on('click', sharewish_handler);
 
-            $("#topDealsForStoreCategory").imagesLoaded({
+            $("#topDealsForStoreCategoryAuth").imagesLoaded({
                 complete: function(images) {
-                    $(".dealBox_h").mCustomScrollbar({
+                    $(".dealBox_v").mCustomScrollbar({
                       horizontalScroll:true,
                       theme:"dark-thick",
                       mouseWheel:true,
@@ -30,7 +30,7 @@ var get_trending_deals_handler = function(parent_category, sub_category)
 var get_top_stores_handler = function(parent_category, sub_category)
 {
     $.get('/' + parent_category + '/'+ sub_category + '/trendingstores', {}, function(data) {
-       $('#topStoresForStoreCategory').html(data);
+       $('#topStoresForStoreCategoryAuth').html(data);
        });
    	return false;
 }
@@ -38,11 +38,12 @@ var get_top_stores_handler = function(parent_category, sub_category)
 var get_top_reviews_handler = function(parent_category, sub_category)
 {
 	$.get('/' + parent_category + '/'+ sub_category + '/trendingreviews', {}, function(data) {
-       $('#topReviewsForStoreCategory').html(data);
+       $('#topReviewsForStoreCategoryAuth').html(data);
        install_toggle_comment_handler();
        });
 	return false;
 }
+
 var update_trends_handler = function(event, elementClicked)
 {
   var $this = $(elementClicked);

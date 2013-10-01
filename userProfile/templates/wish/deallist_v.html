@@ -1,0 +1,39 @@
+{% load i18n %}
+{% load userProfile_tags %}
+{% load comment_tags %}
+{% load voting_tags %}
+{% load thumbnail %}
+
+{% block extra_js %}
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('a.wishimg-deal-homepage').fancybox({
+	        scrolling: 'yes',
+	        minWidth: 500,
+	        minHeight: 450,
+	        autoSize: true
+	      });
+    });
+</script>
+{% endblock %} 
+
+{% block extra_head %}             
+<div class="dealBox_v">
+{% for deal in deal_list %}
+
+{% if deal.wishimage %}
+    {% get_reldata_url deal as rel_data_url %}
+	{% thumbnail deal.wishimage "400x400" as img %}
+    <div class="dealBox_v_elem"> 
+        <a class="wishimg-deal-homepage" href="{{  deal.wishimage.url }}" rel="homepage_deals" data-reldata-url="{{rel_data_url}}" style="">
+            <img src="{{img.url}}">
+        </a>
+    </div>
+    {% endthumbnail %}
+{% endif %}
+
+{% empty %}
+{% trans "No wishes yet" %}
+{% endfor %}
+</div>
+{% endblock %}

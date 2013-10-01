@@ -5,7 +5,7 @@ from mezzanine.blog.models import BlogPost
 from mezzanine.generic.models import ThreadedComment
 
 from django.contrib.contenttypes.models import ContentType
-from django.template import Node, TemplateSyntaxError
+from django.template import Node, TemplateSyntaxError, loader, Context
 from django.core.urlresolvers import reverse
 from userProfile.models import BroadcastDeal, BroadcastWish
 from django.http import HttpResponse
@@ -326,8 +326,15 @@ def get_full_name(user):
 		return (user.first_name + " " + user.last_name).title()
 	return ""
 
-@register.inclusion_tag("wish/deallist.html", takes_context=True)
-def render_deals_for_categories(context, parent_category, sub_category, latest=settings.DEALS_NUM_LATEST, orientation='horizontal'):
+@register.simple_tag
+def render_deals_for_categories(parent_category, sub_category, latest=settings.DEALS_NUM_LATEST, orientation='horizontal'):
+        template_name = 'wish/deallist.html'
+
+        if orientation == 'vertical':
+            template_name = 'wish/deallist_v.html'
+
+        template = loader.get_template(template_name)
+
         ctype = ContentType.objects.get_for_model(BlogPost)
         deals = []
         blog_parentcategory = None
@@ -352,11 +359,9 @@ def render_deals_for_categories(context, parent_category, sub_category, latest=s
             if blog_subcategory and blog_parentcategory:
                 deals_queryset = BroadcastDeal.objects.all().filter(blog_category=blog_subcategory).order_by('-timestamp')[:latest]
 
-        context.update({
-            'deal_list': deals_queryset,
-            'orientation':orientation
-        })
-        return context
+        return template.render(Context({
+            'deal_list': deals_queryset
+        }))
 
 @register.inclusion_tag("generic/vendor_list.html", takes_context=True)
 def render_stores_for_categories(context, parent_category, sub_category, latest=settings.STORES_NUM_LATEST):

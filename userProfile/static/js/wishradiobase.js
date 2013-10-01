@@ -1,3 +1,33 @@
+(function($) {
+    $.fn.imagesLoaded = function(options) {
+        var images = this.find("img"), 
+            loadedImages = [], 
+            options = options;
+
+        images.each(function(i, image) {
+            function loaded() {
+                loadedImages.push(this);
+                if(options.imageLoaded) {
+                    options.imageLoaded(this);    
+                }
+                if(loadedImages.length == images.length) {
+                    if(options.complete) {
+                        options.complete(loadedImages);    
+                    }
+                }
+            }
+
+            if(image.complete || image.complete === undefined) {
+                // Image is already loaded
+                loaded.call(image);               
+            } else {
+                // Image is not loaded yet, bind event
+                $(image).load(loaded);
+            }
+        });
+    }
+})(jQuery);
+
 var login_required_handler = function()
 {
     if(!is_authenticated)

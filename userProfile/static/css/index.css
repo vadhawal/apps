@@ -17,19 +17,6 @@
 	height: 280px;
 	line-height: 250px;
 }
-.dealBox ul {
-	margin: auto 0;
-	height: 250px;
-	line-height: 250px;
-}
-.dealBox li{
-	height: 210px;
-	margin: auto 5px;
-}
-.dealBox li img{
-	height: 210px;
-	max-height: 210px;
-}
 
 /* dealBox_h will be applied on the deals listed on home page. */
 .dealBox_h {
@@ -224,4 +211,14 @@
 }
 .manageFeedUp{
 	background-image: url('/static/img/manage_feed_up.png');
+}
+/* dealBox_v will be applied on the deals listed on logged-in home page. */
+.dealBox_v {
+	height: 600px;
+	overflow 	: auto;
+}
+
+.dealBox_v_elem {
+	width: 230px;
+	margin-bottom: 5px;
 }
