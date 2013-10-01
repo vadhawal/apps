@@ -35,6 +35,46 @@ $(document).ready(function() {
          $('#wishimage').change(handleFileSelect);
     })();
 
+    function doBroadcastFormReset() {
+        $('#broadcast').trigger('reset');
+        $('.progress').hide(); 
+        $('#refreshActivity').click();
+        $('#previewimg').html('');
+        $('#categories').hide();
+
+        $('#broadcast textarea').removeClass('error');
+        $('#broadcast select').removeClass('error');
+        $('#broadcast input').removeClass('error');
+    }
+
+    function doHandleBroadcastFormError(ret_data) {
+        $('#broadcast textarea').removeClass('error');
+        $('#broadcast select').removeClass('error');
+        $('#broadcast input').removeClass('error');
+
+        if(ret_data.error_codes.indexOf(100) != -1)
+            $('#fakeselect').addClass('error');
+        if(ret_data.error_codes.indexOf(101) != -1)
+            $('#expiry_date').addClass('error');
+        if(ret_data.error_codes.indexOf(102) != -1)
+            $('#sub_categories_blog').addClass('error'); 
+        if(ret_data.error_codes.indexOf(103) != -1)
+            $('#broadcast').find('.blog_parentcategories').addClass('error'); 
+        if(ret_data.error_codes.indexOf(104) != -1)
+            $('#broadcast').find('.blog_subcategories').addClass('error'); 
+        if(ret_data.error_codes.indexOf(105) != -1)
+            $('#broadcast').find('textarea[name=message]').addClass('error');
+        if(ret_data.error_codes.indexOf(106) != -1){
+            $('#broadcast').find('.blog_parentcategories').addClass('error'); 
+            $('#broadcast').find('.blog_subcategories').addClass('error');
+            console.log('server side mismtach between parent category sent and stored parent category for the selected sub category'); 
+        }
+        if(ret_data.error_codes.indexOf(107) != -1)
+            $('#expiry_date').addClass('error');
+
+        $('.progress').toggle(); 
+        console.log('form submission error!!');
+    }
     (function() {
         var bar = $('.bar');
         var percent = $('.percent');
@@ -61,23 +101,9 @@ $(document).ready(function() {
             complete: function(xhr) {
                 var ret_data = JSON.parse(xhr.responseText);
                 if(ret_data.success == true)
-                {
-                    $('#broadcast').trigger('reset');
-                    $('.progress').toggle(); 
-                    $('#refreshActivity').click();
-                    $('#previewimg').html('');
-                }
+                    doBroadcastFormReset();
                 else
-                {
-                    if(ret_data.error_codes.indexOf(100) != -1)
-                        $('#fakeselect').parent().addClass('error');
-                    if(ret_data.error_codes.indexOf(101) != -1)
-                        $('#expiry_date').addClass('error');
-                    if(ret_data.error_codes.indexOf(102) != -1)
-                        $('#sub_categories_blog').addClass('error'); 
-                                             
-                    $('.progress').toggle(); 
-                }
+                    doHandleBroadcastFormError(ret_data);
             }
         }); 
 

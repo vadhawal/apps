@@ -64,46 +64,53 @@ def userwish(request):
 	if request.method == "POST":
 		blog_category = None
 		blog_parentcategory = None
-		wishimgeobj = None
+		wishimageobj = None
 		error_codes = []
 		expiry_date_valid = True
 
-		if 'wishimage' in request.FILES:
-			wishimgeobj = request.FILES['wishimage']
-
-		deal_expiry_date = request.POST.get('expiry_date',None)
-		try:
-			datetime.datetime.strptime(deal_expiry_date, '%Y-%m-%d')
-		except ValueError:
-			expiry_date_valid = False
-
 		actor = request.POST.get('actor', None)
 		message = request.POST.get('message', '')
-		urlPreviewContent = request.POST.get("urlPreviewContent","")
+		urlPreviewContent = request.POST.get('urlPreviewContent','')
+		if 'wishimage' in request.FILES:
+			wishimageobj = request.FILES['wishimage']
+								
+		if message == '' and urlPreviewContent == '' and not wishimageobj:
+			error_codes.append(settings.POST_DATA_REQUIRED)
 
 		if actor and actor == "vendor":
 			post_as_deal = request.POST.get('post-as-deal', False)
 			if post_as_deal:
+				if not wishimageobj:
+					error_codes.append(settings.DEAL_IMAGE_REQUIRED)
+
+				deal_expiry_date = request.POST.get('expiry_date',None)
+				if deal_expiry_date:
+					try:
+						received_date = datetime.datetime.strptime(deal_expiry_date, '%Y-%m-%d')
+						if received_date.date() < datetime.datetime.today().date():
+							error_codes.append(settings.DEAL_EXPIRY_DATE_INVALID)
+
+					except ValueError:
+						error_codes.append(settings.DEAL_EXPIRY_DATE_INVALID)
+						pass
+				else:
+					error_codes.append(settings.DEAL_EXPIRY_DATE_REQUIRED)
+
 				blog_category_slug = request.POST.get('radio_category', None)
 				
 				if BlogCategory.objects.all().exists() and blog_category_slug:
 					try:
-						blog_category = BlogCategory.objects.get(slug=slugify(blog_category_slug))#get_object_or_404(BlogCategory, slug=slugify(blog_category_slug))
+						blog_category = BlogCategory.objects.get(slug=slugify(blog_category_slug))
 					except:
+						error_codes.append(settings.DEAL_SUB_CATEGORY_REQUIRED)
 						pass
 
 				if BlogParentCategory.objects.all().exists() and blog_category:
-					blog_parentcategory = blog_category.parent_category	
-		
-				if not wishimgeobj:
-					error_codes.append(settings.DEAL_IMAGE_REQUIRED)
-				if not deal_expiry_date or not expiry_date_valid:
-					error_codes.append(settings.DEAL_EXPIRY_DATE_REQUIRED)
-				if not blog_category:
-					error_codes.append(settings.DEAL_SUBCATEGORY_REQUIRED)
+					blog_parentcategory = blog_category.parent_category
 
 			if error_codes:
 				return json_error_response(error_codes)
+
 			else:
 				blog_posts = BlogPost.objects.published(
                                      for_user=request.user).select_related().filter(user=request.user)
@@ -116,12 +123,12 @@ def userwish(request):
 				ctype = ContentType.objects.get_for_model(BlogPost)
 				broadcast_obj = None
 				if post_as_deal:
-					broadcast_obj = BroadcastDeal.objects.create_vendor_deal_object(request.user, blog_category, blog_parentcategory, message, ctype, blog_post.pk, wishimgeobj, urlPreviewContent, deal_expiry_date)
+					broadcast_obj = BroadcastDeal.objects.create_vendor_deal_object(request.user, blog_category, blog_parentcategory, message, ctype, blog_post.pk, wishimageobj, urlPreviewContent, deal_expiry_date)
 					action.send(blog_post, verb=settings.DEAL_POST_VERB, target=broadcast_obj)
 					actions.follow(request.user, broadcast_obj, send_action=False, actor_only=False) 
 					Follow.objects.get_or_create(request.user, broadcast_obj)
 				else:
-					broadcast_obj = GenericWish.objects.create_generic_wish_object(request.user, message, ctype, blog_post.pk, wishimgeobj, urlPreviewContent)
+					broadcast_obj = GenericWish.objects.create_generic_wish_object(request.user, message, ctype, blog_post.pk, wishimageobj, urlPreviewContent)
 					action.send(blog_post, verb=settings.SAID_VERB, target=broadcast_obj)
 					actions.follow(request.user, broadcast_obj, send_action=False, actor_only=False) 
 					Follow.objects.get_or_create(request.user, broadcast_obj)
@@ -129,27 +136,38 @@ def userwish(request):
 		elif actor and actor == "user":
 			post_as_wish = request.POST.get('post-as-wish', False)
 			if post_as_wish:
-				blog_category_slug = request.POST.get('blog_subcategories', None)
-				if BlogCategory.objects.all().exists() and blog_category_slug:
-					blog_category = BlogCategory.objects.get(slug=slugify(blog_category_slug)) #get_object_or_404(BlogCategory, slug=slugify(blog_category_slug))
-				
-				if BlogParentCategory.objects.all().exists() and blog_category:
-					blog_parentcategory = blog_category.parent_category	
+				blog_parentcategory_slug 	= request.POST.get('blog_parentcategories', None)
+				blog_category_slug 			= request.POST.get('blog_subcategories', None)
 
-				if not blog_category:
-					error_codes.append(settings.WISH_CATEGORY_REQUIRED)
+				if blog_parentcategory_slug:
+					try:
+						blog_parentcategory = BlogParentCategory.objects.get(slug=slugify(blog_parentcategory_slug))
+					except:
+						error_codes.append(settings.WISH_PARENT_CATEGORY_REQUIRED)
+						pass
+
+				if blog_category_slug:
+					try:
+						blog_category = BlogCategory.objects.get(slug=slugify(blog_category_slug))
+					except:
+						error_codes.append(settings.WISH_SUB_CATEGORY_REQUIRED)
+						pass
+
+					if blog_category and blog_parentcategory != blog_category.parent_category:
+						error_codes.append(settings.WISH_PARENT_CATEGORY_MISMATCH)	
 
 			if error_codes:
 				return json_error_response(error_codes)
+
 			else:
 				ctype = ContentType.objects.get_for_model(User)
 				broadcast_obj = None
 				verb_str = ''
 				if post_as_wish:
-					broadcast_obj = BroadcastWish.objects.create_user_wish_object(request.user, blog_category , blog_parentcategory, message, ctype, request.user.pk, wishimgeobj, urlPreviewContent )
+					broadcast_obj = BroadcastWish.objects.create_user_wish_object(request.user, blog_category , blog_parentcategory, message, ctype, request.user.pk, wishimageobj, urlPreviewContent )
 					verb_str=settings.WISH_POST_VERB
 				else:
-					broadcast_obj = GenericWish.objects.create_generic_wish_object(request.user, message, ctype, request.user.pk, wishimgeobj, urlPreviewContent)
+					broadcast_obj = GenericWish.objects.create_generic_wish_object(request.user, message, ctype, request.user.pk, wishimageobj, urlPreviewContent)
 					verb_str=settings.SAID_VERB
 				
 				action.send(request.user, verb=verb_str, target=broadcast_obj)

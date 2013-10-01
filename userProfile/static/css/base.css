@@ -171,8 +171,9 @@ a:hover {
 	background-color: rgb(2, 151, 149);
 }
 .error{
-	border-width: 1px;
-	border-color: red;
+	border-width: 1px !important;
+	border-color: red !important;
+	border-style: solid !important;
 }
 .blog_parentcategories, .blog_subcategories{
 	font-size: 12.85px;
