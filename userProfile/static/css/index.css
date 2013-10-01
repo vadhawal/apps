@@ -174,3 +174,54 @@
 	box-shadow : 1px 1px 1px 1px rgba(0, 0, 0, 0.75) inset;
 	filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=-0.57, OffY=-0.57, Color='#000000') ;
 }
+.radioModuleFeedRadio{
+	background-image: url('/static/img/radio_dark_small.png');
+	background-repeat: no-repeat;
+	background-position: bottom;
+	width: 19px;
+	height: 22px;
+	display: inline-block;
+}
+.radioModuleFeedContainer{
+	display: inline-block;
+	background : #FFFFFF;
+	background : rgba(255, 255, 255, 1);
+	border-style : Solid;
+	border-color : #D1D3D2;
+	border-color : rgba(209, 211, 210, 1);
+	border-width : 1px;
+	-webkit-box-shadow : 1px 1px 1px rgba(197,189,189,0.75) inset;
+	box-shadow : 1px 1px 1px rgba(197,189,189,0.75) inset;
+	-webkit-box-shadow C5BDBD
+	height: 24px;
+	vertical-align: top;
+	line-height: 24px;
+	margin-left: 20px;
+	position: relative;
+}
+.radioModuleFeedContainer a{
+	margin-left: 10px;
+	margin-right: 10px;
+}
+.radioModuleFeedContainer:before{
+	content: '';
+	position: absolute;
+	left: -14px;
+	top: 6px;
+	width: 0;
+	height: 0;
+	border-top: 6px solid transparent;
+	border-bottom: 6px solid transparent;
+	border-right: 14px solid rgba(209, 211, 210, 1);
+}
+.manageFeed{
+	background-image: url('/static/img/manage_feed_down.png');
+	background-repeat: no-repeat;
+	background-position: 0px 10px;
+	width: 10px;
+	height:25px;
+	display: inline-block;
+}
+.manageFeedUp{
+	background-image: url('/static/img/manage_feed_up.png');
+}
