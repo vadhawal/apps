@@ -26,6 +26,24 @@ $(document).ready(function()
 			$('.active-header').toggleClass('active-header').toggleClass('inactive-header').next().slideToggle().toggleClass('open-content');
 			$(this).toggleClass('active-header').toggleClass('inactive-header');
 			$(this).next().slideToggle().toggleClass('open-content');
+			/* Custome Code */
+			/* If dealBox is being opened and scrolling is not enabled alredy, enable it now. */
+			if($("#topDealsForStoreCategoryAuth").parent().hasClass('open-content') && $("#topDealsForStoreCategoryAuth").find('.mCustomScrollbar').length == 0)
+			{
+				$("#topDealsForStoreCategoryAuth").imagesLoaded({
+	                complete: function(images) {
+	                    $(".dealBox_v").mCustomScrollbar({
+	                      verticalScroll:true,
+	                      theme:"dark-thick",
+	                      mouseWheel:true,
+	                      autoHideScrollbar:true,
+	                      contentTouchScroll:true
+	                  	});
+	                  	$(".mCSB_draggerContainer").css("margin-left", "10px");
+	                }
+	            });
+			}
+			/* End Custome Code */
 		}
 		
 		else {

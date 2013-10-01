@@ -394,9 +394,13 @@ def getTrendingDeals(request, parent_category, sub_category):
 				"""
 				raise Http404()
 
-		return render_to_response('wish/deallist.html', {
+		isVertical = request.GET.get('v', '0')
+		template = 'wish/deallist.html'
+		if isVertical == '1':
+			template = 'wish/deallist_v.html'
+
+		return render_to_response(template, {
 					'deal_list': deals_queryset,
-					'sIndex':0
 				}, context_instance=RequestContext(request))
 	else:
 		raise Http404()
