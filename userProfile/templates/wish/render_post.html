@@ -2,16 +2,20 @@
 {% load thumbnail %}
 {% load userProfile_tags %}
 
-<ul class="unstyled">
-        <li>
+<div class="row">
+    <div class="span6">
         <span class="message">
-            {{ post.message }}
-        </br>
-        {% get_reldata_url post as rel_data_url %}
-        {% if post.wishimage %}
-            {% thumbnail post.wishimage "500x400" crop="center" as img %} 
+            {{post.message}}
+        </span>
+    </div>
+</div>
+{% if post.wishimage %}
+    <div class="row" style="margin-top:10px; margin-bottom:10px;">
+        <div class="span6 pagination-centered">
+            {% get_reldata_url deal as rel_data_url %}
+            {% thumbnail deal.wishimage "800x400" crop="center" as img %} 
                 <a class="wishimg-post{{post.id}}" href="{{  post.wishimage.url }}" data-reldata-url="{{rel_data_url}}">
-                    <img style="margin-right:20px;" src="{{ MEDIA_URL }}{{img}}">
+                    <img src="{{ MEDIA_URL }}{{img}}" style="max-height:250px;">
                 </a> 
                 <script type="text/javascript">
                       $('a.wishimg-post{{post.id}}').fancybox({
@@ -22,12 +26,13 @@
                       });
                 </script> 
             {% endthumbnail %}
-        {% endif %}
-    </span>
-    <p>
-    {% autoescape off %}
-        {{post.urlPreviewContent}}
-    {% endautoescape %}
-    </li>
-</ul>
-
+        </div>
+    </div>
+{% endif %}
+<div class="row">
+    <div class="span6">
+        {% autoescape off %}
+            {{post.urlPreviewContent}}
+        {% endautoescape %}
+    </div>
+</div>
