@@ -214,8 +214,10 @@
 	height: 600px;
 	overflow 	: auto;
 }
-
 .dealBox_v_elem {
 	width: 230px;
 	margin-bottom: 8px;
+}
+[id*="action"]:hover .radioModuleFeedRadio {
+	background-image: url('/static/img/radio_colored_small.png');
 }
