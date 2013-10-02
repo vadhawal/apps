@@ -1,31 +1,31 @@
 {% load i18n %}
 {% load static thumbnail userProfile_tags %}
 
-{% if actor %}
-	{% if actor.get_absolute_url %}
+{% if owner %}
+	{% if owner.get_absolute_url %}
 		<div class="span1">
-			<a href="{{ actor.get_absolute_url }}">
-			{% if actor|get_class_name == "User" %}
-				{% if actor.get_profile.profile_photo %}
-					{% thumbnail actor.get_profile.profile_photo "100x100" as img %} 
-					<img style="" width="55px" height="55px" src="{{img.url}}">
+			<a href="{{ owner.get_absolute_url }}">
+			{% if owner|get_class_name == "User" %}
+				{% if owner.get_profile.profile_photo %}
+					{% thumbnail owner.get_profile.profile_photo "100x100" as img %}
+						<img style="" width="55px" height="55px" src="{{img.url}}">
 					{% endthumbnail %}
-				{% elif actor.get_profile.image_url %}
-					<img style="" width="55px" height="55px" src="{{ actor.get_profile.image_url }}">
-					{% else %}
+				{% elif owner.get_profile.image_url %}
+					<img style="" width="55px" height="55px" src="{{ owner.get_profile.image_url }}">
+				{% else %}
 					<img style="" width="55px" height="55px" src="{% static "img/defaultProfilePic.gif" %}"> 
 				{% endif %}
 
-			{% elif actor|get_class_name == "BlogPost" %}
-					{% thumbnail actor.featured_image "100x100" as img %} 
+			{% elif owner|get_class_name == "BlogPost" %}
+					{% thumbnail owner.featured_image "100x100" as img %} 
 					<img style="" width="55px" height="55px" src="{{img.url}}">
 					{% endthumbnail %}
 			{% else %}
-				{{actor}}
+				{{owner}}
 			{% endif %}
 			</a>
 		</div>
 	{% else %}
-		{{actor}}
+		{{owner}}
 	{% endif %}
 {% endif %}
