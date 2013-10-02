@@ -208,6 +208,8 @@
 }
 .manageFeedUp{
 	background-image: url('/static/img/manage_feed_up.png');
+}
+.moveManageFeedUp{
 	position: relative;
 	top:-20px;
 }
