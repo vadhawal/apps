@@ -51,6 +51,9 @@ class UserProfile(models.Model):
     gender = models.CharField(max_length=10, blank=True, choices=GENDER_CHOICES, verbose_name=_("Gender"))
     image_url = models.URLField(blank=True, verbose_name=_("Imageurl"), editable=False)
     description = models.TextField(blank=True, verbose_name=_("Description"), help_text=_("Tell us about yourself!"))
+    location = models.CharField(verbose_name=_("Location"), max_length=100, help_text=_("Tell us about your location!"), null=True, blank=True)
+    birthday = models.DateField(_("Your Birthday!"), null=True, blank=True)
+
     def __str__(self):  
         return "%s's profile" % self.user  
     class Meta:
@@ -96,10 +99,16 @@ def new_users_handler(sender, user, response, details, **kwargs):
                     if sender == FacebookBackend:
                         profile.image_url = "http://graph.facebook.com/%s/picture" \
                                 % response["id"]
+                        user_birthday = user.social_auth.get(provider='facebook').extra_data['birthday']
+                        profile.birthday = datetime_.datetime.strptime(user_birthday, '%m/%d/%Y').strftime('%Y-%m-%d')
+
+                        user_location = user.social_auth.get(provider='facebook').extra_data['location']
+                        profile.location = user_location['name']
                         #'https://graph.facebook.com/' + user.social_auth.filter(provider="facebook")[0] + '/picture'
                         #profile.profile_photo.save(slugify(user.username + " social") + '.jpg', ContentFile(avatar.read()))              
                     elif sender == TwitterBackend: 
-                        profile.image_url = user.social_auth.get(provider='twitter').extra_data['profile_image_url'] 
+                        profile.image_url = user.social_auth.get(provider='twitter').extra_data['profile_image_url']
+                        profile.location = user.social_auth.get(provider='twitter').extra_data['location'] 
                     profile.save()
     
             except HTTPError:
