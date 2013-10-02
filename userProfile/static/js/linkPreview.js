@@ -104,7 +104,7 @@
 						$('#previewLoading').html("");
 						$('#preview').show();
 						$('#previewTitle').html("<span id='previewSpanTitle' >"+answer.title+"</span><input type='text' value='"+answer.title+"' id='previewInputTitle' class='inputPreview' style='display: none;'/>");
-						$('#text').css({"border": "1px solid #b3b3b3", "border-bottom": "1px dashed #b3b3b3"});
+						// $('#text').css({"border": "1px solid #b3b3b3", "border-bottom": "1px dashed #b3b3b3"});
 						$('#previewUrl').html(answer.url);
 						$('#previewDescription').html("<span id='previewSpanDescription' >"+answer.description+"</span><textarea id='previewInputDescription' style='width: 290px; display: none;' class='inputPreview' >"+answer.description+"</textarea>");
 						title = "<a href='"+answer.pageUrl+"' target='_blank'>"+$('#previewTitle').html()+"</a>";
