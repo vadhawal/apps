@@ -208,6 +208,8 @@
 }
 .manageFeedUp{
 	background-image: url('/static/img/manage_feed_up.png');
+	position: relative;
+	top:-20px;
 }
 /* dealBox_v will be applied on the deals listed on logged-in home page. */
 .dealBox_v {
@@ -217,6 +219,11 @@
 .dealBox_v_elem {
 	width: 230px;
 	margin-bottom: 8px;
+}
+.categoryTag {
+	box-shadow: 1px 1px 1px rgb(2, 151, 149);;
+	padding-left: 5px;
+	padding-right: 5px;
 }
 [id*="action"]:hover .radioModuleFeedRadio {
 	background-image: url('/static/img/radio_colored_small.png');
