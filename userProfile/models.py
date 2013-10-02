@@ -104,11 +104,12 @@ def new_users_handler(sender, user, response, details, **kwargs):
 
                         user_location = user.social_auth.get(provider='facebook').extra_data['location']
                         profile.location = user_location['name']
+                        profile.gender = user.social_auth.get(provider='facebook').extra_data['gender']
                         #'https://graph.facebook.com/' + user.social_auth.filter(provider="facebook")[0] + '/picture'
                         #profile.profile_photo.save(slugify(user.username + " social") + '.jpg', ContentFile(avatar.read()))              
                     elif sender == TwitterBackend: 
                         profile.image_url = user.social_auth.get(provider='twitter').extra_data['profile_image_url']
-                        profile.location = user.social_auth.get(provider='twitter').extra_data['location'] 
+                        profile.location = user.social_auth.get(provider='twitter').extra_data['location']
                     profile.save()
     
             except HTTPError:
