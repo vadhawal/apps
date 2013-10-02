@@ -48,8 +48,16 @@ $(document).ready(function()
 		
 		else {
 			/* Disabling closure of already opened header */
-			/* $(this).toggleClass('active-header').toggleClass('inactive-header');
-			$(this).next().slideToggle().toggleClass('open-content');*/ 
+			$(this).toggleClass('active-header').toggleClass('inactive-header');
+			$(this).next().slideToggle().toggleClass('open-content');
+			var $nextAccordianHeader = $(this).next().next();
+			if ($nextAccordianHeader.length) {
+				$nextAccordianHeader.toggleClass('active-header').toggleClass('inactive-header');
+				$nextAccordianHeader.next().slideToggle().toggleClass('open-content'); 
+			} else {
+				$('.accordion-header').first().toggleClass('active-header').toggleClass('inactive-header');
+				$('.accordion-content').first().slideDown().toggleClass('open-content');
+			}
 		}
 	});
 	

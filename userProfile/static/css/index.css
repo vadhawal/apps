@@ -49,9 +49,6 @@
 	box-shadow: none;
 	display: inline-block;
 }
-.boxTitle h6 span {
-	display: inline-block;
-}
 .yellowLine {
 	margin: auto 2px 2px 10px;
 	border:0;
@@ -217,8 +214,10 @@
 	height: 600px;
 	overflow 	: auto;
 }
-
 .dealBox_v_elem {
 	width: 230px;
-	margin-bottom: 5px;
+	margin-bottom: 8px;
+}
+[id*="action"]:hover .radioModuleFeedRadio {
+	background-image: url('/static/img/radio_colored_small.png');
 }
