@@ -50,6 +50,7 @@
 			if(trim($('#text').val()) == ""){
 				$(this).val(textText);
 				$(this).css({'color': 'grey'});
+				$('#submitwithouturl').removeClass('radioPostActive');
         		$('#submitwithurl').removeClass('radioPostActive');
 			}
 		});
@@ -73,6 +74,7 @@
 		$('#text').keyup(function(e){
 			if ($('#text').val() != "")
 			{
+				$('#submitwithouturl').addClass('radioPostActive');
         		$('#submitwithurl').addClass('radioPostActive');
 			}
 			if((e.which == 13 || e.which == 32 || e.which == 17) && trim($(this).val()) != ""){
@@ -86,6 +88,8 @@
 					$('#previewLoading').html("<img src='http://leocardz.com/img/littleLoader.gif' ></img>");
 					$('#photoNumber').val(0);
 					$.get('php/textCrawler.php', {text: text}, function(answer) {
+						$('#submitwithurl').show();
+			            $('#submitwithouturl').hide();
 						if(answer.url == null) answer.url = "";
 						if(answer.pageUrl == null) answer.pageUrl = "";
 						if(answer.title == null) answer.title = answer.titleEsc;
@@ -331,28 +335,32 @@
 													'</div>';
 										$('input[name=urlPreviewContent]').val(content);
 									    $('#broadcast').submit();
-										$('#preview').fadeOut("fast", function(){
-											$('#text').css({"border": "1px solid #b3b3b3", "border-bottom": "1px solid #e6e6e6"});
-											$('#text').val("");
-											$('#previewImage').html("");
-											$('#previewTitle').html("");
-											$('#previewUrl').html("");
-											$('#previewDescription').html("");
-											//$(content).hide().prependTo('.previewPostedList').fadeIn("fast");
+									    /* This Code has been moved to broadcast-submit handler. 
+										 * In case of form validation errors, urlPreview should persist.
+										 * urlPreview will be cleaned only if form submission is successful or user manually closes it.
+									     */
+										// $('#preview').fadeOut("fast", function(){
+										// 	$('#text').css({"border": "1px solid #b3b3b3", "border-bottom": "1px solid #e6e6e6"});
+										// 	$('#text').val("");
+										// 	$('#previewImage').html("");
+										// 	$('#previewTitle').html("");
+										// 	$('#previewUrl').html("");
+										// 	$('#previewDescription').html("");
+										// 	//$(content).hide().prependTo('.previewPostedList').fadeIn("fast");
 
-											$(".imgIframe").click(function(){
-												var oldId = $(this).attr("id");
-												var currentId = oldId.substring(3);
-												pTP = "pTP"+currentId;
-												pDP = "pDP"+currentId;
-												oldId = "#"+oldId;
-												currentId = "#"+currentId;
-												$(oldId).css({'display': 'none'});
-												$(currentId).css({'display': 'block'});
-												$('#'+pTP).css({'width': '495px'});
-												$('#'+pDP).css({'width': '495px'});
-											});
-										});
+										// 	$(".imgIframe").click(function(){
+										// 		var oldId = $(this).attr("id");
+										// 		var currentId = oldId.substring(3);
+										// 		pTP = "pTP"+currentId;
+										// 		pDP = "pDP"+currentId;
+										// 		oldId = "#"+oldId;
+										// 		currentId = "#"+currentId;
+										// 		$(oldId).css({'display': 'none'});
+										// 		$(currentId).css({'display': 'block'});
+										// 		$('#'+pTP).css({'width': '495px'});
+										// 		$('#'+pDP).css({'width': '495px'});
+										// 	});
+										// });
 										block = false;
 										endOfCrawling = false;
 									}, "json");
@@ -361,7 +369,6 @@
 								else {
 									$('#broadcast').submit();
 								}
-
 							});
 						}
 					}, "json");

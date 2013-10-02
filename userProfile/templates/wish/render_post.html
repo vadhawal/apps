@@ -12,8 +12,8 @@
 {% if post.wishimage %}
     <div class="row" style="margin-top:10px; margin-bottom:10px;">
         <div class="span6 pagination-centered">
-            {% get_reldata_url deal as rel_data_url %}
-            {% thumbnail deal.wishimage "800x400" crop="center" as img %} 
+            {% get_reldata_url post as rel_data_url %}
+            {% thumbnail post.wishimage "800x400" as img %} 
                 <a class="wishimg-post{{post.id}}" href="{{  post.wishimage.url }}" data-reldata-url="{{rel_data_url}}">
                     <img src="{{ MEDIA_URL }}{{img}}" style="max-height:250px;">
                 </a> 

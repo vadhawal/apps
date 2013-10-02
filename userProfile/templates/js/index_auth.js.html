@@ -46,6 +46,32 @@ $(document).ready(function() {
          $('#wishimage').change(handleFileSelect);
     })();
 
+    function clearPreviewIfAny()
+    {
+        $('#preview').fadeOut("fast", function(){
+        $('#text').css({"border": "1px solid #b3b3b3", "border-bottom": "1px solid #e6e6e6"});
+        $('#text').val("");
+        $('#previewImage').html("");
+        $('#previewTitle').html("");
+        $('#previewUrl').html("");
+        $('#previewDescription').html("");
+        //$(content).hide().prependTo('.previewPostedList').fadeIn("fast");
+
+            $(".imgIframe").click(function(){
+                var oldId = $(this).attr("id");
+                var currentId = oldId.substring(3);
+                pTP = "pTP"+currentId;
+                pDP = "pDP"+currentId;
+                oldId = "#"+oldId;
+                currentId = "#"+currentId;
+                $(oldId).css({'display': 'none'});
+                $(currentId).css({'display': 'block'});
+                $('#'+pTP).css({'width': '495px'});
+                $('#'+pDP).css({'width': '495px'});
+            });
+        });
+    }
+
     function doBroadcastFormReset() {
         $('#broadcast').trigger('reset');
         $('.progress').hide(); 
@@ -57,6 +83,9 @@ $(document).ready(function() {
         $('#broadcast select').removeClass('error');
         $('#broadcast input').removeClass('error');
         $('input[name=urlPreviewContent]').val('');
+        $('#submitwithurl').hide();
+        $('#submitwithouturl').show();
+        clearPreviewIfAny();
     }
 
     function doHandleBroadcastFormError(ret_data) {
