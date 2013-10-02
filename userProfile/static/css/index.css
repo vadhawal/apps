@@ -49,9 +49,6 @@
 	box-shadow: none;
 	display: inline-block;
 }
-.boxTitle h6 span {
-	display: inline-block;
-}
 .yellowLine {
 	margin: auto 2px 2px 10px;
 	border:0;
@@ -220,5 +217,5 @@
 
 .dealBox_v_elem {
 	width: 230px;
-	margin-bottom: 5px;
+	margin-bottom: 8px;
 }
