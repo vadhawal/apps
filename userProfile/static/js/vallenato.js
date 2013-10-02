@@ -47,8 +47,9 @@ $(document).ready(function()
 		}
 		
 		else {
-			$(this).toggleClass('active-header').toggleClass('inactive-header');
-			$(this).next().slideToggle().toggleClass('open-content');
+			/* Disabling closure of already opened header */
+			/* $(this).toggleClass('active-header').toggleClass('inactive-header');
+			$(this).next().slideToggle().toggleClass('open-content');*/ 
 		}
 	});
 	
