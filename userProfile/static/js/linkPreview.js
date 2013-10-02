@@ -50,7 +50,6 @@
 			if(trim($('#text').val()) == ""){
 				$(this).val(textText);
 				$(this).css({'color': 'grey'});
-				$('#submitwithouturl').removeClass('radioPostActive');
         		$('#submitwithurl').removeClass('radioPostActive');
 			}
 		});
@@ -74,7 +73,6 @@
 		$('#text').keyup(function(e){
 			if ($('#text').val() != "")
 			{
-				$('#submitwithouturl').addClass('radioPostActive');
         		$('#submitwithurl').addClass('radioPostActive');
 			}
 			if((e.which == 13 || e.which == 32 || e.which == 17) && trim($(this).val()) != ""){
@@ -88,8 +86,6 @@
 					$('#previewLoading').html("<img src='http://leocardz.com/img/littleLoader.gif' ></img>");
 					$('#photoNumber').val(0);
 					$.get('php/textCrawler.php', {text: text}, function(answer) {
-						$('#submitwithurl').show();
-						$('#submitwithouturl').hide();
 						if(answer.url == null) answer.url = "";
 						if(answer.pageUrl == null) answer.pageUrl = "";
 						if(answer.title == null) answer.title = answer.titleEsc;
@@ -289,18 +285,15 @@
 						if(firstPosting == false){
 							firstPosting = true;
 							$('#submitwithurl').click(function(){
-								var allowPosting = false;
+								//var allowPosting = false;
 								imageId = "";
 								pTP = "";
 								pDP = "";
 								text = " "+$('#text').val();
 								title = $('#previewTitle').html();
 								description = $('#previewDescription').html();
-								if(text == " What's on your mind?"){
-									text = "";
-									allowPosting = true;
-								}
-								if((trim(text) != "" && endOfCrawling == true) || allowPosting == true){
+
+								if((trim(text) != "" && endOfCrawling == true)){
 									$.get('php/searchUrls.php', {text: text, description: description}, function(urls) {
 										if($('#noThumb').attr("checked") == "checked" || images.length == 0){
 											contentWidth = 495;
@@ -337,7 +330,7 @@
 														'<div style="clear: both"></div>'+
 													'</div>';
 										$('input[name=urlPreviewContent]').val(content);
-										$('#broadcast').submit();
+									    $('#broadcast').submit();
 										$('#preview').fadeOut("fast", function(){
 											$('#text').css({"border": "1px solid #b3b3b3", "border-bottom": "1px solid #e6e6e6"});
 											$('#text').val("");
@@ -364,7 +357,11 @@
 										endOfCrawling = false;
 									}, "json");
 									text = "";
-								}	
+								}
+								else {
+									$('#broadcast').submit();
+								}
+
 							});
 						}
 					}, "json");
