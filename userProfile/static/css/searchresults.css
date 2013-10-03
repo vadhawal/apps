@@ -78,9 +78,13 @@
 	font-style: italic;
 }
 .dottedSeparator {
-	border: 1px dotted #63625E; border-style: none none dotted; color: #fff; background-color: #fff;margin:0; width: 95%;margin-left: 2.5%;
-	border-color: #63625E;
-	border-color: rgba(99, 98, 94, 1);
+	border: 1px dotted #63625E; 
+	border-style: none none dotted; 
+	color: #fff; 
+	background-color: #fff;
+	margin:0; 
+	width: 95%;
+	margin-left: 2.5%;
 	opacity : 0.31;
 	filter: alpha(opacity=31) progid:DXImageTransform.Microsoft.Alpha(opacity=31) ;
 	margin-top: 6px
