@@ -259,10 +259,21 @@ div span.fullGutterRight{
 	width: 150px;
 	margin-top: -70px;
 }
-
 .logo a img{
 	width: 96.25px;
 	height: 110px;
 	padding: 20px 6.875px;
 	box-shadow: 0 0 0;
+}
+.subcomments_container input[type="submit"] {
+	display: none !important;
+}
+.subcomment_text{
+	font-family: titillium2;
+	font-size: 13px;
+	height: 28px;
+	border-radius: 0px;
+	resize: none;
+	padding: 2px;
+	margin: 0;
 }
