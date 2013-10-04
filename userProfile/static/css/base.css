@@ -276,4 +276,7 @@ div span.fullGutterRight{
 	resize: none;
 	padding: 2px;
 	margin: 0;
+	-webkit-transition: height 0.2s;
+	-moz-transition: height 0.2s;
+	transition: height 0.2s;
 }
