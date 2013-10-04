@@ -6,7 +6,7 @@
 {% for comment in comments_for_thread %}
     {% editable comment.is_public comment.is_removed %}
     {% if not comment.is_removed and comment.is_public %}
-    <div class="span6 dottedSeparatorIncresedMargin"> 
+    <div class="span6 dottedSeparatorIncresedMargin dottedSeparatorIncresedMarginBottom"> 
         <div class="row">
             {% include 'generic/includes/render_owner_subcomment.html' with owner=comment.user %}
             <div class="span5 noGutter">
@@ -31,7 +31,7 @@
             </div>
         </div>
     </div>
-    <hr class="dottedSeparator dottedSeparatorIncresedMargin">
+    <hr class="dottedSeparator">
     {% endif %}
     {% endeditable %}
 {% endfor %}
