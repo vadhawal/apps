@@ -165,6 +165,7 @@
 	width: 19px;
 	height: 22px;
 	display: inline-block;
+	vertical-align: top;
 }
 .radioModuleFeedContainer{
 	display: inline-block;
@@ -176,7 +177,6 @@
 	border-width : 1px;
 	-webkit-box-shadow : 1px 1px 1px rgba(197,189,189,0.75) inset;
 	box-shadow : 1px 1px 1px rgba(197,189,189,0.75) inset;
-	-webkit-box-shadow C5BDBD
 	height: 24px;
 	vertical-align: top;
 	line-height: 24px;
@@ -211,7 +211,7 @@
 }
 .moveManageFeedUp{
 	position: relative;
-	top:-20px;
+	top:-25px;
 }
 /* dealBox_v will be applied on the deals listed on logged-in home page. */
 .dealBox_v {
