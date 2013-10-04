@@ -87,10 +87,13 @@
 	margin-left: 2.5%;
 	opacity : 0.31;
 	filter: alpha(opacity=31) progid:DXImageTransform.Microsoft.Alpha(opacity=31) ;
-	margin-top: 6px
+	margin-top: 6px;
 }
 .dottedSeparatorIncresedMargin{
 	margin-top: 8px;
+}
+.dottedSeparatorIncresedMarginBottom {
+	margin-bottom: 8px;
 }
 .vendorResult {
 	background-color: #fff;
