@@ -1,0 +1,19 @@
+{% load i18n mezzanine_tags comment_tags %}
+{% load thumbnail %}
+
+<div class="dottedSeparatorIncresedMargin">
+<style>.input_id_honeypot {display:none !important;}</style>
+<span>
+    {% include "generic/includes/render_owner_subcomment.html" with owner=request.user %}
+</span>
+<form method="post" action="{{ comment_url }}">
+    {% if not request.POST.replied_to %}
+        {% fields_for posted_comment_form %}
+    {% else %}
+        {% fields_for unposted_comment_form %}
+    {% endif %}
+    <!--div class="form-actions"-->     
+       <input class="btn" type="submit" value="{% trans "Post" %}">
+    <!--/div-->
+</form>
+</div>
