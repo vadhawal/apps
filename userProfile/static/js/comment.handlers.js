@@ -37,6 +37,15 @@ var comment_on_object_handler = function(event){
                 subcomments_element.find('.pScore').off("click").on("click", display_popup_handler);
                 subcomments_element.find('.broadcasters').off("click").on("click", display_popup_handler);
                 install_toggle_comment_handler();
+                var $formParent = form.parents(".subcomments_container");
+                var $total_comments = $formParent.find('.total_comments');
+                var $loaded_comments = $formParent.find('.loaded_comments');
+                var total_comments = parseInt($total_comments.text());
+                var loaded_comments = parseInt($loaded_comments.text());
+                total_comments = total_comments + 1;
+                loaded_comments = loaded_comments + 1;
+                $total_comments.text(total_comments);
+                $loaded_comments.text(loaded_comments);
             },
             error: function(data) {
                 console.log(data);
