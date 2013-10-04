@@ -36,6 +36,7 @@ var comment_on_object_handler = function(event){
                 subcomments_element.find('.clearvote').off("click").on("click", voting_handlers);
                 subcomments_element.find('.pScore').off("click").on("click", display_popup_handler);
                 subcomments_element.find('.broadcasters').off("click").on("click", display_popup_handler);
+                install_toggle_comment_handler();
             },
             error: function(data) {
                 console.log(data);
@@ -62,12 +63,17 @@ var view_previous_comments_handler = function(event){
         add_link.attr('href', link);
         var total_comments = parseInt(add_link.parent().find('.total_comments').text());
         var loaded_comments = parseInt(add_link.parent().find('.loaded_comments').text());
-        if(loaded_comments + 5 <= total_comments)
+        if(loaded_comments + 5 <= total_comments) {
             add_link.parent().find('.loaded_comments').text(loaded_comments + 5);
-        else
-            add_link.parent().find('.loaded_comments').text(total_comments);
+        }
+        else {
+            $('.viewPreviousComments').parent().next().remove(); // remove the next HR
+            $('.viewPreviousComments').parent().remove(); // remove the entire view previos comment
+            //add_link.parent().find('.loaded_comments').text(total_comments);
+        }
         install_voting_handlers();
         install_comment_on_object_handler();
+        install_toggle_comment_handler();
     });
 
     event.stopPropagation();

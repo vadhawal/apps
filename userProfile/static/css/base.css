@@ -240,6 +240,17 @@ div span.fullGutterRight{
 	box-shadow : 1.25px 1.25px 1.25px rgba(132, 125, 125, 0.75);
 	filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=1.25, OffY=1.25, Color='#847D7D');
 }
+.whiteBoxLarge {
+	overflow: hidden;
+	background : #FFFFFF;
+	background : rgba(255, 255, 255, 1);
+	border-color: rgba(198, 190, 190, 0.75);
+	border-width: 1px;
+	border-style: solid;
+	-webkit-box-shadow : 1px 1px 1px rgba(198, 190, 190, 0.75);
+	box-shadow : 1px 1px 1px rgba(198, 190, 190, 0.75);
+	filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=1.65, OffY=1.65, Color='#C6BEBE') ;
+}
 .whiteBoxGlassy {
 	background-color:rgba(255,255,255,0.4);
 }
