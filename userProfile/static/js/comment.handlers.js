@@ -120,7 +120,7 @@ var comment_on_object_key_handler = function(event){
 
 var install_comment_on_object_handler = function() {
     $('.comment_on_object').off('submit').on('submit', comment_on_object_handler);
-    $('.subcomment_text').off('keyup').on('keyup', comment_on_object_key_handler);
+    $('.subcomment_text').off('keyup').on('keydown', comment_on_object_key_handler);
     $('.subcomment_text').autosize({append: "\n"});
     $('.viewPreviousComments').off('click').on('click', view_previous_comments_handler);
     $('.comment_radio').off('click').on('click', comment_radio_handler);
