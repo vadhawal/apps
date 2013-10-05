@@ -16,7 +16,7 @@
 };
 
 var install_toggle_comment_handler = function() {
-    $('.toggle-comment').off('click').on('click', toggle_comment_handler);
+    $('.toggle-comment').off('click', toggle_comment_handler).on('click', toggle_comment_handler);
 }
 
 var comment_on_object_handler = function(event){
@@ -31,11 +31,11 @@ var comment_on_object_handler = function(event){
                 var subcomments_element = $form.parents('.subcomments_container').find(".subcomments");
                 $form.trigger('reset');
                 subcomments_element.append(data.html);
-                subcomments_element.find('.upvote').off("click").on("click", voting_handlers);
-                subcomments_element.find('.downvote').off("click").on("click", voting_handlers);
-                subcomments_element.find('.clearvote').off("click").on("click", voting_handlers);
-                subcomments_element.find('.pScore').off("click").on("click", display_popup_handler);
-                subcomments_element.find('.broadcasters').off("click").on("click", display_popup_handler);
+                subcomments_element.find('.upvote').off("click", voting_handlers).on("click", voting_handlers);
+                subcomments_element.find('.downvote').off("click", voting_handlers).on("click", voting_handlers);
+                subcomments_element.find('.clearvote').off("click", voting_handlers).on("click", voting_handlers);
+                subcomments_element.find('.pScore').off("click", display_popup_handler).on("click", display_popup_handler);
+                subcomments_element.find('.broadcasters').off("click", display_popup_handler).on("click", display_popup_handler);
                 install_toggle_comment_handler();
                 var $formParent = $form.parents(".subcomments_container");
                 var $total_comments = $formParent.find('.total_comments');
@@ -117,15 +117,12 @@ var comment_on_object_key_handler = function(event){
     	event.preventDefault();
 		return false;	
 	}
-
 }
 
 var install_comment_on_object_handler = function() {
-    $('.comment_on_object').off('submit').on('submit', comment_on_object_handler);
-    $('.subcomment_text').off('keyup').on('keydown', comment_on_object_key_handler);
+    $('.comment_on_object').off('submit', comment_on_object_handler).on('submit', comment_on_object_handler);
+    $('.subcomment_text').off('keydown', comment_on_object_key_handler).on('keydown', comment_on_object_key_handler);
     $('.subcomment_text').autosize({append: "\n"});
-    $('.viewPreviousComments').off('click').on('click', view_previous_comments_handler);
-    $('.comment_radio').off('click').on('click', comment_radio_handler);
+    $('.viewPreviousComments').off('click', view_previous_comments_handler).on('click', view_previous_comments_handler);
+    $('.comment_radio').off('click', comment_radio_handler).on('click', comment_radio_handler);
 };
-
-

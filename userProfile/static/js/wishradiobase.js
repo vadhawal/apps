@@ -125,8 +125,8 @@ var unfollow_handler = function(event) {
 };
 
 var install_follow_handlers = function() {
-    $('.follow-btn').off("click").on("click", follow_handler);
-    $('.unfollow-btn').off("click").on("click", unfollow_handler);
+    $('.follow-btn').off("click", follow_handler).on("click", follow_handler);
+    $('.unfollow-btn').off("click", unfollow_handler).on("click", unfollow_handler);
 }
 
 var sharewish_handler = function() {
@@ -161,10 +161,10 @@ var share_store_handler = function(event) {
 $(document).ready(function() {
     install_follow_handlers();
     $('.vendorFollowers').on("click", display_popup_handler);
-    $('.shareaction').off("click").on("click", share_action_handler);
-    $(".imgIframe").off("click").on("click", img_iframe_handler);
-    $('.shareDeal').off("click").on('click', sharewish_handler);
-    $('.share_store').off("click").on("click", share_store_handler);
-    $('.store_sharers').off("click").on("click", display_popup_handler);
+    $('.shareaction').off("click", share_action_handler).on("click", share_action_handler);
+    $(".imgIframe").off("click", img_iframe_handler).on("click", img_iframe_handler);
+    $('.shareDeal').off("click", sharewish_handler).on('click', sharewish_handler);
+    $('.share_store').off("click", share_store_handler).on("click", share_store_handler);
+    $('.store_sharers').off("click", display_popup_handler).on("click", display_popup_handler);
 });
 

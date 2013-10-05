@@ -113,19 +113,19 @@ var install_action_handlers = function(){
     install_voting_handlers();
     install_toggle_comment_handler(); //inherited from comment.handlers.js
     install_comment_on_object_handler();
-    $('.deleteAction').off("click").on("click", delete_action_handler);
-    $('.shareaction').off("click").on("click", share_action_handler);
-    $('.followpost').off("click").on("click", follow_post_handler);
-    $('.unfollowpost').off("click").on("click", unfollow_post_handler);
+    $('.deleteAction').off("click", delete_action_handler).on("click", delete_action_handler);
+    $('.shareaction').off("click", share_action_handler).on("click", share_action_handler);
+    $('.followpost').off("click", follow_post_handler).on("click", follow_post_handler);
+    $('.unfollowpost').off("click", unfollow_post_handler).on("click", unfollow_post_handler);
     $('a.album_in_feed').off('click').on('click', album_in_feed_handler);
-    $(".imgIframe").off("click").on("click", img_iframe_handler);
+    $(".imgIframe").off("click", album_in_feed_handler).on("click", img_iframe_handler);
     $('.previewPosted').width('100%');
 }
 
 var install_voting_handlers = function(){
-    $('.upvote').add('.downvote').add('.clearvote').off("click").on("click", voting_handlers);
-    $('.found-helpful').add('.not-found-helpful').add('.clear-helpful').off("click").on("click", review_voting_handler);
-    $('.pScore').add('.broadcasters').off("click").on("click", display_popup_handler);
+    $('.upvote').add('.downvote').add('.clearvote').off("click", voting_handlers).on("click", voting_handlers);
+    $('.found-helpful').add('.not-found-helpful').add('.clear-helpful').off("click", review_voting_handler).on("click", review_voting_handler);
+    $('.pScore').add('.broadcasters').off("click", display_popup_handler).on("click", display_popup_handler);
 }
 
 var album_in_feed_handler = function(){
