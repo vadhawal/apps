@@ -221,6 +221,7 @@
 .dealBox_v_elem {
 	width: 230px;
 	margin-bottom: 8px;
+	position: relative;
 }
 .categoryTag {
 	box-shadow: 1px 1px 1px rgb(2, 151, 149);;
@@ -245,4 +246,16 @@
 	overflow: auto;
 	width: 100%;
 	display: inline-block;
+}
+.dealBox_v_elem div {
+	position: absolute;
+	width: 210px;
+	bottom: 10px;
+	height: 25px;
+	left: 10px;
+	line-height: 25px;
+	display: none;
+}
+.dealBox_v_elem:hover div {
+	display: block;
 }
