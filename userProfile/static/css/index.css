@@ -230,3 +230,9 @@
 [id*="action"]:hover .radioModuleFeedRadio {
 	background-image: url('/static/img/radio_colored_small.png');
 }
+#refreshActivity{
+	display: block;
+	background : #F9DF1E;
+	background : rgba(249, 223, 30, 1);
+	padding: 5px;
+}

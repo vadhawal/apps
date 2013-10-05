@@ -7,7 +7,7 @@
             {% include 'home/form_post.html' with parent_categories=parent_categories%}
 
             <a id="refreshCache" href="{% activity_refresh_cache request.user %}"></a>
-            <a id="refreshActivity" href="{% activity_dynamic_update request.user %}"></a>
+            <a id="refreshActivity" class="fontSize12 pagination-centered" style="display:none;" href="{% activity_dynamic_update request.user %}"></a>
             <a id="pendingActionCount" href="{% activity_pending_action_count request.user %}"></a>
         </div>
         <div class="row">

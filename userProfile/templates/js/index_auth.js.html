@@ -169,6 +169,7 @@ $(document).ready(function() {
             	install_action_handlers();
             }
             $('#refreshActivity').text('');
+            $('#refreshActivity').hide();
         });
         return false;
     });
@@ -177,17 +178,10 @@ $(document).ready(function() {
         var add_link = $(this);
         $.get(add_link.attr('href'), {}, function(data) {
         	ret_data = JSON.parse(data);
-        	if(ret_data.success == true && ret_data.count != 0)
-        		if(ret_data.count > 1)
-            		$('#refreshActivity').text(ret_data.count + " pending posts");
-            	else
-            		$('#refreshActivity').text(ret_data.count + " pending post");
-            	$('#refreshActivity').css({
-            		'background':'whitesmoke',
-            		'width':'100%',
-            		'text-align':'center',
-            		'display':'block'
-            	});
+        	if(ret_data.success == true && ret_data.count != 0) {
+            	$('#refreshActivity').text("You have " + ret_data.count + " update" + (ret_data.count > 1 ? "s" : "") + " waiting to be read!");
+                $('#refreshActivity').show();
+            }
         });
         return false;
     });
@@ -195,7 +189,6 @@ $(document).ready(function() {
     $('#refreshCache').click();
 
     viewFeed(); 
-    updatestatus(); 
     setInterval(function () {
         checkAnyLatestActivity();
     }, 10000);
@@ -230,15 +223,7 @@ function checkAnyLatestActivity(){
     $('#pendingActionCount').click();
 }
 
-function updatestatus(){  
-    //Show number of loaded items  
-    var totalItems=$('#load-feeds ul li').length;  
-    $('#status').text('Loaded '+totalItems+' Items');  
-    $('#loader').hide();
-}
-
 function updateFeed(){ 
-
     //fetch new items 
     $('#status').text('Loading more items...');
     $('#loader').show();
@@ -260,7 +245,6 @@ function updateFeed(){
           return;
         }    
         $('#load-feeds').append(data);
-        updatestatus();
         install_action_handlers();
         $(window).debounce('scroll', feedUpdater, 100);
     });  
