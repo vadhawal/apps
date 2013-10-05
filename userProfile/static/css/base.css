@@ -280,3 +280,6 @@ div span.fullGutterRight{
 	-moz-transition: height 0.2s;
 	transition: height 0.2s;
 }
+form.comment_on_object{
+	margin-bottom: 0px;
+}
