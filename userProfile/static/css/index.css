@@ -236,3 +236,13 @@
 	background : rgba(249, 223, 30, 1);
 	padding: 5px;
 }
+#load-feeds ul{
+	margin-top: 0px;
+}
+.content {
+	margin: 0px auto;
+	height: auto;
+	overflow: auto;
+	width: 100%;
+	display: inline-block;
+}
