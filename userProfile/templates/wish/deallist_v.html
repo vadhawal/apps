@@ -23,11 +23,18 @@
 
 {% if deal.wishimage %}
     {% get_reldata_url deal as rel_data_url %}
+    {% comment_count_on_object deal as total_comments %}
+
 	{% thumbnail deal.wishimage "400x400" as img %}
     <div class="dealBox_v_elem"> 
         <a class="wishimg-deal-homepage" href="{{  deal.wishimage.url }}" rel="homepage_deals" data-reldata-url="{{rel_data_url}}" style="">
             <img src="{{img.url}}">
         </a>
+        <div class="whiteBoxGlassy pagination-centered">
+            Like
+            <a class="shareDeal" href="#" data-href="{% share_deal_url deal %}" >Share</a>
+            Comment
+        </div>
     </div>
     {% endthumbnail %}
 {% endif %}
