@@ -228,7 +228,7 @@ function updateFeed(){
     $('#status').text('Loading more items...');
     $('#loader').show();
     sIndex = lIndex;
-    lIndex = lIndex + 5;
+    lIndex = lIndex + 10;
     {% following_feedsubset_url request.user 0 10 as feed %}
     var link = "{{feed}}";
     var linksplit = link.split("/");
@@ -253,7 +253,7 @@ function updateFeed(){
 function viewFeed()
 {
     $('#load-feeds').html("");
-    {% following_feedsubset_url request.user 0 5 as feed %}
+    {% following_feedsubset_url request.user 0 20 as feed %}
 
     var link="{{feed}}";
     $.get(link, {}, function(data) {

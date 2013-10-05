@@ -46,8 +46,13 @@ var share_action_handler = function(event) {
     var link =  $elementClicked.data("href");
 
     $.get(link, {}, function(data) {
-        if(data.success == true)
-          alert('shared');
+        var dataResult = JSON.parse(data);
+        if(dataResult.success == true) {
+             $elementClicked.text("Shared");
+             var $shareCountEle = $elementClicked.parent().find('.sharedCount');
+             var shareCount = dataResult.count;
+             $shareCountEle.text("(" + shareCount + ")");
+        }
     });
    	event.stopPropagation();
 	event.preventDefault();
