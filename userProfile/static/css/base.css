@@ -271,7 +271,8 @@ div span.fullGutterRight{
 .subcomment_text{
 	font-family: titillium2;
 	font-size: 13px;
-	height: 28px;
+	height: 20px;
+	line-height: 20px;
 	border-radius: 0px;
 	resize: none;
 	padding: 2px;
@@ -282,4 +283,7 @@ div span.fullGutterRight{
 }
 form.comment_on_object{
 	margin-bottom: 0px;
+}
+.trunc-comment, .exp-comment {
+	white-space: pre-wrap;
 }
