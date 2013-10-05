@@ -93,8 +93,10 @@ var view_previous_comments_handler = function(event){
 
 var comment_radio_handler = function(event){
 	var $text_element = $(this).parents('.radio_module').parent().find('.subcomment_text');
-	if($text_element)
+	if($text_element) {
+        $text_element.parents('.subcomments_container').removeClass("hide");
 		$text_element.focus();
+    }
 
     event.stopPropagation();
     event.preventDefault();
