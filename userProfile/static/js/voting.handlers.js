@@ -6,7 +6,7 @@ var voting_handlers = function(event){
 		$.post(url, {HTTP_X_REQUESTED:'XMLHttpRequest'},
 	       function(data) {
 	           if (data.success == true) {
-	               $elementClicked.parent().find('a.pScore').text(data.score.num_up_votes);
+	               $elementClicked.parent().find('a.pScore').text('('+data.score.num_up_votes+')');
 	               if($elementClicked.hasClass('upvote'))
 	               {
 	               		$elementClicked.removeClass('upvote').addClass('clearvote');
