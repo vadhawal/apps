@@ -102,7 +102,7 @@ var comment_radio_handler = function(event){
 };
 
 var comment_on_object_key_handler = function(event){
-	if(event.which == 13) {
+	if(event.which == 13 && !event.shiftKey) {
 		var $text_element = $(this);
 		$text_element.blur();
 		var $form = $text_element.parents('.comment_on_object');
