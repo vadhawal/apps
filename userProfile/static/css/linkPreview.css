@@ -166,6 +166,8 @@
 	font-family: Arial;
 	color: grey;
 	border-radius: 0px;
+	font-family: titillium2;
+    font-size: 13px;
 }
 #closePreview{
 	float: right;

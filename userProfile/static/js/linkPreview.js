@@ -43,13 +43,13 @@
 		$('#text').focus(function(){
 			if(trim($('#text').val()) == textText){
 				$(this).val('');
-				$(this).css({'color': 'black'});
+				$(this).css({'color': '#555555'});
 			}
 		});
 		$('#text').blur(function(){
 			if(trim($('#text').val()) == ""){
 				$(this).val(textText);
-				$(this).css({'color': 'grey'});
+				$(this).css({'color': '#555555'});
 				$('#submitwithouturl').removeClass('radioPostActive');
         		$('#submitwithurl').removeClass('radioPostActive');
 			}
