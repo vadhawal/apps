@@ -158,6 +158,27 @@ var share_store_handler = function(event) {
     return false;
 };
 
+var share_object_handler = function(event) {
+    if(login_required_handler())
+        return false;
+    
+    var $elementClicked = $(this);
+    var link =  $elementClicked.data("href");
+
+    $.get(link, {}, function(data) {
+        var dataResult = JSON.parse(data);
+        if(dataResult.success == true) {
+             $elementClicked.text("Shared");
+             var $shareCountEle = $elementClicked.parent().find('.sharedCount');
+             var shareCount = dataResult.count;
+             $shareCountEle.text("(" + shareCount + ")");
+        }
+    });
+    event.stopPropagation();
+    event.preventDefault();
+    return false;
+};
+
 $(document).ready(function() {
     install_follow_handlers();
     $('.vendorFollowers').on("click", display_popup_handler);
@@ -165,6 +186,7 @@ $(document).ready(function() {
     $(".imgIframe").off("click", img_iframe_handler).on("click", img_iframe_handler);
     $('.shareDeal').off("click", sharewish_handler).on('click', sharewish_handler);
     $('.share_store').off("click", share_store_handler).on("click", share_store_handler);
+    $('.shareObject').off("click", share_object_handler).on("click", share_object_handler);
     $('.store_sharers').off("click", display_popup_handler).on("click", display_popup_handler);
 });
 

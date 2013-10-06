@@ -5,7 +5,7 @@ from mezzanine.blog.models import BlogPost
 from mezzanine.generic.models import ThreadedComment
 
 from django.contrib.contenttypes.models import ContentType
-from django.template import Node, TemplateSyntaxError, loader, Context
+from django.template import Node, TemplateSyntaxError, loader, Context, RequestContext
 from django.core.urlresolvers import reverse
 from userProfile.models import BroadcastDeal, BroadcastWish
 from django.http import HttpResponse
@@ -197,6 +197,37 @@ def get_wishlist_url(parser, token):
     else:
         return GetWishListUrl.handle_token(parser, token)
 
+class GetShareObjectUrl(template.Node):
+    def __init__(self, object, context_var):
+        self.object = object
+        self.context_var = context_var
+
+    def render(self, context):
+        try:
+            object = template.resolve_variable(self.object, context)
+            content_type = ContentType.objects.get_for_model(object).pk
+        except template.VariableDoesNotExist:
+            return ''
+        context[self.context_var] =  reverse('shareObject', kwargs={'content_type_id': content_type, 'object_id': object.pk })
+        return ''
+
+def get_share_object_url(parser, token):
+    """
+    Retrieves the url to get voting/comment/share info and stores them in a context variable which has
+    ``voters`` property.
+
+    Example usage::
+
+        {% get_share_object_url object as share_object_url %}
+    """
+
+    bits = token.contents.split()
+    if len(bits) != 4:
+        raise template.TemplateSyntaxError("'%s' tag takes exactly three arguments" % bits[0])
+    if bits[2] != 'as':
+        raise template.TemplateSyntaxError("second argument to '%s' tag must be 'as'" % bits[0])
+    return GetShareObjectUrl(bits[1], bits[3])
+
 class GetRelDataUrl(template.Node):
     def __init__(self, object, context_var):
         self.object = object
@@ -313,6 +344,7 @@ class DealsOwner(template.Node):
 register.tag(share_wish_url)
 register.tag(share_deal_url)
 register.tag(get_wishlist_url)
+register.tag(get_share_object_url)
 register.tag(get_reldata_url)
 register.tag(get_deallist_url)
 
@@ -326,8 +358,8 @@ def get_full_name(user):
 		return (user.first_name + " " + user.last_name).title()
 	return ""
 
-@register.simple_tag
-def render_deals_for_categories(parent_category, sub_category, latest=settings.DEALS_NUM_LATEST, orientation='horizontal'):
+@register.simple_tag(takes_context=True)
+def render_deals_for_categories(context, parent_category, sub_category, latest=settings.DEALS_NUM_LATEST, orientation='horizontal'):
         template_name = 'wish/deallist.html'
 
         if orientation == 'vertical':
@@ -359,7 +391,7 @@ def render_deals_for_categories(parent_category, sub_category, latest=settings.D
             if blog_subcategory and blog_parentcategory:
                 deals_queryset = BroadcastDeal.objects.all().filter(blog_category=blog_subcategory).order_by('-timestamp')[:latest]
 
-        return template.render(Context({
+        return template.render(RequestContext(context['request'], {
             'deal_list': deals_queryset
         }))
 

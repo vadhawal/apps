@@ -2,6 +2,7 @@
 {% load userProfile_tags %}
 {% load comment_tags %}
 {% load voting_tags %}
+{% load activity_tags %}
 {% load thumbnail %}
 
 {% block extra_js %}
@@ -31,8 +32,8 @@
             <img src="{{img.url}}">
         </a>
         <div class="whiteBoxGlassy pagination-centered">
-            Like
-            <a class="shareDeal" href="#" data-href="{% share_deal_url deal %}" >Share</a>
+            {% include 'generic/includes/render_voting.html' with object=deal %}
+            {% include 'actstream/render_share_action.html' with object=deal %}
             Comment
         </div>
     </div>

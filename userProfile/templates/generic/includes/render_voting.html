@@ -39,7 +39,7 @@
         {% elif object|get_class_name == "BroadcastWish" %}
                 <a  class="clearvote" href="#" data-href="{% url 'vote_on_wish' object.id 'clear' %}" style="margin-right:0px;">Unlike</a>
         {% elif object|get_class_name == "BroadcastDeal" %}
-                <a  class="clearvote" href="#" data-href="{% url 'vote_on_post' object.id 'clear' %}" style="margin-right:0px;">Unlike</a>     
+                <a  class="clearvote" href="#" data-href="{% url 'vote_on_deal' object.id 'clear' %}" style="margin-right:0px;">Unlike</a>     
         {% endif %}
     {% endif %}
     <a class="pScore" href="{{ voters }}" style="margin-left:0px;">({{score.num_up_votes}})</a>

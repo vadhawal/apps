@@ -506,3 +506,16 @@ def get_reviews_by_user(request, user_id, template="generic/includes/reviews_pag
     return render_to_response('generic/includes/reviews_page.html', {
        'reviews': reviews, 
     }, context_instance=RequestContext(request))
+
+
+def shareObject(request, content_type_id, object_id, ):
+	if request.is_ajax():
+		ctype = get_object_or_404(ContentType, pk=content_type_id)
+		object = get_object_or_404(ctype.model_class(), pk=object_id)
+
+		action.send(request.user, verb=settings.SHARE_VERB, target=object)
+		shareCount = Action.objects.filter(verb=settings.SHARE_VERB, target_content_type=ctype, target_object_id = object_id).count()
+		return HttpResponse(simplejson.dumps(dict(success=True, count=shareCount)))
+	else:
+		raise Http404();
+	

@@ -120,6 +120,7 @@ var install_action_handlers = function(){
     install_comment_on_object_handler();
     $('.deleteAction').off("click", delete_action_handler).on("click", delete_action_handler);
     $('.shareaction').off("click", share_action_handler).on("click", share_action_handler);
+    $('.shareObject').off("click", share_object_handler).on("click", share_object_handler);
     $('.followpost').off("click", follow_post_handler).on("click", follow_post_handler);
     $('.unfollowpost').off("click", unfollow_post_handler).on("click", unfollow_post_handler);
     $('a.album_in_feed').off('click').on('click', album_in_feed_handler);

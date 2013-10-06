@@ -26,7 +26,8 @@ By: {% include 'generic/includes/render_owner.html' with owner=deal_owner %}
 	{% include 'generic/includes/render_voting.html' with object=deal %}
 	</div>
 	{% include 'actstream/render_subcomments.html' with object=deal %}
-    <a class="shareDeal" href="#" data-href="{% share_deal_url deal %}" >share</a>
+    {% get_share_object_url deal as shareDealUrl %}
+    <a class="shareObject" href="#" data-href="{{shareDealUrl}}" >share</a>
     </div>
 </div>
 {% endif %}
