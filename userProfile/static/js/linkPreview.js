@@ -278,7 +278,7 @@
 							block = false;
 							endOfCrawling = false;
 							$('#preview').fadeOut("fast", function(){
-								$('#text').css({"border": "1px solid #b3b3b3", "border-bottom": "1px solid #e6e6e6"});
+								// $('#text').css({"border": "1px solid #b3b3b3", "border-bottom": "1px solid #e6e6e6"});
 								$('#previewImage').html("");
 								$('#previewTitle').html("");
 								$('#previewUrl').html("");
