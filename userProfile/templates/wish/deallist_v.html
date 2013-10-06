@@ -34,7 +34,9 @@
         <div class="whiteBoxGlassy pagination-centered">
             {% include 'generic/includes/render_voting.html' with object=deal %}
             {% include 'actstream/render_share_action.html' with object=deal %}
-            Comment
+			<a href="#" class="comment_radio_d" style="margin-right:0px;">Comment</a>
+				{% comment_count_on_object deal as total_comments %}
+			<a class="broadcasters commentCount" href="{% get_commenters_url deal %}" style="margin-left:0px;">({{total_comments}})</a>
         </div>
     </div>
     {% endthumbnail %}
