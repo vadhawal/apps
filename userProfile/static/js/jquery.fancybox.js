@@ -1168,21 +1168,26 @@
 
 			/* Custome code to load the data related to the image/deal */
 			var reldata_url = F.group[F.current.index].relDataUrl;
-			$.get(reldata_url, {}, function(data) {
-				$('.fancybox-data').html(data);
-				install_voting_handlers();
-				$('.shareObject').on('click', share_object_handler);
-				install_comment_on_object_handler();
-				$(".fancybox-data").mCustomScrollbar({
-                  theme:"dark-thick",
-                  mouseWheel:true,
-                  autoHideScrollbar:true,
-                  contentTouchScroll:true
-                });
-                $('.fancybox-data').bind("DOMSubtreeModified", function() {
-                	$(".fancybox-data").mCustomScrollbar("update");
-                });	
-			});
+			if(reldata_url)
+			{
+				$.get(reldata_url, {}, function(data) {
+					$('.fancybox-data').html(data);
+					install_voting_handlers();
+					$('.shareObject').on('click', share_object_handler);
+					install_comment_on_object_handler();
+					$(".fancybox-data").mCustomScrollbar({
+	                  theme:"dark-thick",
+	                  mouseWheel:true,
+	                  autoHideScrollbar:true,
+	                  contentTouchScroll:true
+	                });
+	                $('.fancybox-data').bind("DOMSubtreeModified", function() {
+	                	$(".fancybox-data").mCustomScrollbar("update");
+	                });	
+				});
+			}
+			else
+				$('.fancybox-data').css({width:'0px'});
 			/* Custome Code End */
 		},
 
