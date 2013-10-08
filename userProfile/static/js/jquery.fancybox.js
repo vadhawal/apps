@@ -60,8 +60,8 @@
 			height    : 600,
 			minWidth  : 100,
 			minHeight : 100,
-			maxWidth  : 9999,
-			maxHeight : 9999,
+			maxWidth  : 800,
+			maxHeight : 700,
 			pixelRatio: 1, // Set to 2 for retina display support
 
 			autoSize   : true,
@@ -70,12 +70,12 @@
 
 			autoResize  : true,
 			autoCenter  : !isTouch,
-			fitToView   : true,
+			fitToView   : false,
 			aspectRatio : false,
 			topRatio    : 0.5,
 			leftRatio   : 0.5,
 
-			scrolling : 'auto', // 'auto', 'yes' or 'no'
+			scrolling : 'yes', // 'auto', 'yes' or 'no'
 			wrapCSS   : '',
 
 			arrows     : true,
@@ -148,27 +148,27 @@
 
 			// Properties for each animation type
 			// Opening fancyBox
-			openEffect  : 'fade', // 'elastic', 'fade' or 'none'
+			openEffect  : 'elastic', // 'elastic', 'fade' or 'none'
 			openSpeed   : 250,
 			openEasing  : 'swing',
 			openOpacity : true,
 			openMethod  : 'zoomIn',
 
 			// Closing fancyBox
-			closeEffect  : 'fade', // 'elastic', 'fade' or 'none'
+			closeEffect  : 'elastic', // 'elastic', 'fade' or 'none'
 			closeSpeed   : 250,
 			closeEasing  : 'swing',
 			closeOpacity : true,
 			closeMethod  : 'zoomOut',
 
 			// Changing next gallery item
-			nextEffect : 'elastic', // 'elastic', 'fade' or 'none'
+			nextEffect : 'none', // 'elastic', 'fade' or 'none'
 			nextSpeed  : 250,
 			nextEasing : 'swing',
 			nextMethod : 'changeIn',
 
 			// Changing previous gallery item
-			prevEffect : 'elastic', // 'elastic', 'fade' or 'none'
+			prevEffect : 'none', // 'elastic', 'fade' or 'none'
 			prevSpeed  : 250,
 			prevEasing : 'swing',
 			prevMethod : 'changeOut',
@@ -1165,7 +1165,6 @@
 			F.transitions[ F.isOpened ? current.nextMethod : current.openMethod ]();
 
 			F._preloadImages();
-
 			/* Custome code to load the data related to the image/deal */
 			var reldata_url = F.group[F.current.index].relDataUrl;
 			if(reldata_url)
@@ -1180,15 +1179,12 @@
 	                  mouseWheel:true,
 	                  autoHideScrollbar:true,
 	                  contentTouchScroll:true
-	                });
-	                $('.fancybox-data').bind("DOMSubtreeModified", function() {
-	                	$(".fancybox-data").mCustomScrollbar("update");
 	                });	
 				});
 			}
 			else
 				$('.fancybox-data').css({width:'0px'});
-			/* Custome Code End */
+				/* Custome Code End */
 		},
 
 		_setDimension: function () {

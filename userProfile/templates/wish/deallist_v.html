@@ -5,19 +5,6 @@
 {% load activity_tags %}
 {% load thumbnail %}
 
-{% block extra_js %}
-<script type="text/javascript">
-    $(document).ready(function() {
-        $('a.wishimg-deal-homepage').fancybox({
-	        scrolling: 'yes',
-	        minWidth: 500,
-	        minHeight: 450,
-	        autoSize: true
-	      });
-    });
-</script>
-{% endblock %} 
-
 {% block extra_head %}             
 <div class="dealBox_v">
 {% for deal in deal_list %}
