@@ -85,7 +85,7 @@ var view_previous_comments_handler = function(event){
         install_comment_on_object_handler();
         install_toggle_comment_handler();
         var $fancybox = add_link.parents('.fancybox-data');
-        if($fancybox && $fancybox.length == 0)
+        if($fancybox && $fancybox.length > 0)
         {
             $(".fancybox-data").mCustomScrollbar("update");
         }
