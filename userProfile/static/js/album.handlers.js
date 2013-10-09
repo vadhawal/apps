@@ -34,7 +34,8 @@ var show_album_handler = function(event) {
                         scrolling: 'yes',
                         minWidth:800,
                         minHeight:600,
-                        autoSize: true
+                        autoSize: true,
+                        helpers : { overlay : { locked : false } }
                 });
     		});
         });

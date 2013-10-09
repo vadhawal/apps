@@ -145,7 +145,8 @@ var album_in_feed_handler = function(){
             scrolling: 'yes',
             minWidth:500,
             minHeight:450,
-            autoSize: true
+            autoSize: true,
+            helpers : { overlay : { locked : false } }
         });
         $element_clicked.click();
     });
