@@ -21,7 +21,8 @@ var get_trending_deals_handler = function(parent_category, sub_category)
               scrolling: 'yes',
               minWidth: 500,
               minHeight:450,
-              autoSize: true
+              autoSize: true,
+              helpers : { overlay : { locked : false } }
             });
        });
     return false;
