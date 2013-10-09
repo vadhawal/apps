@@ -138,9 +138,9 @@ var album_in_feed_handler = function(){
     var $element_clicked = $(this);
     var album_url = $element_clicked.data("album-url");
     $.get(album_url, {}, function(data) {
-        $element_clicked.closest('div[class^="album-feed-container"]').append(data);
+        $element_clicked.closest('div.album-feed-container').append(data);
         $element_clicked.off('click');
-        var elements = $element_clicked.closest('div[class^="album-feed-container"]').find('a.album_in_feed'); 
+        var elements = $element_clicked.closest('div.album-feed-container').find('a.album_in_feed'); 
         $(elements.get()).fancybox({
             scrolling: 'yes',
             minWidth:500,
