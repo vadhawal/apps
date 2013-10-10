@@ -60,8 +60,8 @@
 			height    : 600,
 			minWidth  : 100,
 			minHeight : 100,
-			maxWidth  : 800,
-			maxHeight : 700,
+			maxWidth  : 8000,
+			maxHeight : 7000,
 			pixelRatio: 1, // Set to 2 for retina display support
 
 			autoSize   : true,
@@ -70,7 +70,7 @@
 
 			autoResize  : true,
 			autoCenter  : !isTouch,
-			fitToView   : false,
+			fitToView   : true,
 			aspectRatio : false,
 			topRatio    : 0.5,
 			leftRatio   : 0.5,
@@ -1422,8 +1422,8 @@
 			var current  = F.current,
 				viewport = F.getViewport(),
 				margin   = current.margin,
-				width    = F.wrap.width()  + margin[1] + margin[3],
-				height   = F.wrap.height() + margin[0] + margin[2],
+				width    = F.skin.width()  + margin[1] + margin[3],
+				height   = F.skin.height() + margin[0] + margin[2],
 				rez      = {
 					position: 'absolute',
 					top  : margin[0],
