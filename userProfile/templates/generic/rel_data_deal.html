@@ -1,5 +1,6 @@
 {% load i18n %}
 {% load thumbnail %}
+{% load comment_tags  %}
 {% load userProfile_tags %}
 
 {% if deal %}
@@ -21,11 +22,16 @@ By: {% include 'generic/includes/render_owner.html' with owner=deal_owner %}
         Expires on: {{deal.expiry_date}}
     {% endif %}
     </br>
-    <div  style="width: 100%;border-style: solid;border-color: white;background-color: whitesmoke;">
+    <div  style="border-style: solid;border-color: white;background-color: whitesmoke;">
     <div style="float:left; margin-right:5px;">
 	{% include 'generic/includes/render_voting.html' with object=deal %}
 	</div>
-	{% include 'actstream/render_subcomments.html' with object=deal %}
+    {% comment_count_on_object deal as total_comments %}
+    <div class="row">
+        <div class="span6 whiteBoxLarge subcomments_container {% if total_comments == 0 %}hide{% endif %}">
+	       {% include 'generic/render_subcomments_deal.html' with object=deal %}
+        </div>
+    </div>
     {% get_share_object_url deal as shareDealUrl %}
     <a class="shareObject" href="#" data-href="{{shareDealUrl}}" >share</a>
     </div>
