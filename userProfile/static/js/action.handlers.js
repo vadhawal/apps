@@ -10,34 +10,6 @@ var delete_action_handler = function(event) {
     return false;
 };
 
-var display_popup_handler = function(event) {
-    /*var w = 700;
-    var h = 500;
-    var left = 100;
-    var top = 100;
-    var name="Friends";
-    var settings = 'height=' + h + ',width=' + w + ',left=' + left + ',top=' + top + ',resizable=yes,scrollbars=yes,toolbar=no,menubar=no,location=yes,directories=no,status=yes';
-    var url = $(this).attr("href");
-    window.open(url, name, settings);
-    event.stopPropagation();
-	event.preventDefault();
-    return false;*/
-
-    event.preventDefault();
-    $("<div id='pop_up'><span class='button b-close'><span>X</span></span></div>").appendTo("body").addClass('popup');
-    $('#pop_up').bPopup({
-        content:'ajax',
-        loadUrl:$(this).attr("href"),
-        zIndex: 8050,
-        onClose: function(){ $('#pop_up').remove(); },
-        scrollBar:'true'
-    },
-    function() {
-            install_follow_handlers();
-    });
-    
-};
-
 var share_action_handler = function(event) {
     if(login_required_handler())
         return false;
@@ -114,24 +86,32 @@ var img_iframe_handler =  function(){
     $('#'+pDP).css({'width': '495px'});
 };
 
-var install_action_handlers = function(){
-    install_voting_handlers();
-    install_toggle_comment_handler(); //inherited from comment.handlers.js
-    install_comment_on_object_handler();
-    $('.deleteAction').off("click", delete_action_handler).on("click", delete_action_handler);
-    $('.shareaction').off("click", share_action_handler).on("click", share_action_handler);
-    $('.shareObject').off("click", share_object_handler).on("click", share_object_handler);
-    $('.followpost').off("click", follow_post_handler).on("click", follow_post_handler);
-    $('.unfollowpost').off("click", unfollow_post_handler).on("click", unfollow_post_handler);
-    $('a.album_in_feed').off('click').on('click', album_in_feed_handler);
-    $(".imgIframe").off("click", album_in_feed_handler).on("click", img_iframe_handler);
-    $('.previewPosted').width('100%');
-}
-
-var install_voting_handlers = function(){
-    $('.upvote').add('.downvote').add('.clearvote').off("click", voting_handlers).on("click", voting_handlers);
-    $('.found-helpful').add('.not-found-helpful').add('.clear-helpful').off("click", review_voting_handler).on("click", review_voting_handler);
-    $('.pScore').add('.broadcasters').off("click", display_popup_handler).on("click", display_popup_handler);
+var install_action_handlers = function($parent_element){
+    install_voting_handlers($parent_element);
+    install_toggle_comment_handler($parent_element); //inherited from comment.handlers.js
+    install_comment_on_object_handler($parent_element);
+    if($parent_element)
+    {
+	    $parent_element.find('.deleteAction').off("click", delete_action_handler).on("click", delete_action_handler);
+	    $parent_element.find('.shareaction').off("click", share_action_handler).on("click", share_action_handler);
+	    $parent_element.find('.shareObject').off("click", share_object_handler).on("click", share_object_handler);
+	    $parent_element.find('.followpost').off("click", follow_post_handler).on("click", follow_post_handler);
+	    $parent_element.find('.unfollowpost').off("click", unfollow_post_handler).on("click", unfollow_post_handler);
+	    $parent_element.find('a.album_in_feed').off('click').on('click', album_in_feed_handler);
+	    $parent_element.find(".imgIframe").off("click", album_in_feed_handler).on("click", img_iframe_handler);
+	    $parent_element.find('.previewPosted').width('100%');
+	}
+	else
+	{
+	    $('.deleteAction').off("click", delete_action_handler).on("click", delete_action_handler);
+	    $('.shareaction').off("click", share_action_handler).on("click", share_action_handler);
+	    $('.shareObject').off("click", share_object_handler).on("click", share_object_handler);
+	    $('.followpost').off("click", follow_post_handler).on("click", follow_post_handler);
+	    $('.unfollowpost').off("click", unfollow_post_handler).on("click", unfollow_post_handler);
+	    $('a.album_in_feed').off('click').on('click', album_in_feed_handler);
+	    $(".imgIframe").off("click", album_in_feed_handler).on("click", img_iframe_handler);
+	    $('.previewPosted').width('100%');		
+	}
 }
 
 var album_in_feed_handler = function(){

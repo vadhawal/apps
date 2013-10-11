@@ -15,8 +15,15 @@
     return false;
 };
 
-var install_toggle_comment_handler = function() {
-    $('.toggle-comment').off('click', toggle_comment_handler).on('click', toggle_comment_handler);
+var install_toggle_comment_handler = function($parent_element) {
+    if($parent_element)
+    {
+       $parent_element.find('.toggle-comment').off('click', toggle_comment_handler).on('click', toggle_comment_handler); 
+    }
+    else
+    {
+        $('.toggle-comment').off('click', toggle_comment_handler).on('click', toggle_comment_handler);
+    }
 }
 
 var comment_on_object_handler = function(event){
@@ -31,11 +38,7 @@ var comment_on_object_handler = function(event){
                 var subcomments_element = $form.parents('.subcomments_container').find(".subcomments");
                 $form.trigger('reset');
                 subcomments_element.append(data.html);
-                subcomments_element.find('.upvote').off("click", voting_handlers).on("click", voting_handlers);
-                subcomments_element.find('.downvote').off("click", voting_handlers).on("click", voting_handlers);
-                subcomments_element.find('.clearvote').off("click", voting_handlers).on("click", voting_handlers);
-                subcomments_element.find('.pScore').off("click", display_popup_handler).on("click", display_popup_handler);
-                subcomments_element.find('.broadcasters').off("click", display_popup_handler).on("click", display_popup_handler);
+                install_voting_handlers(subcomments_element);
                 install_toggle_comment_handler();
                 var $formParent = $form.parents(".subcomments_container");
                 var $total_comments = $formParent.find('.total_comments');
@@ -61,7 +64,8 @@ var comment_on_object_handler = function(event){
 var view_previous_comments_handler = function(event){
     var add_link = $(this);
     $.get(add_link.attr('href'), {}, function(data) {
-        add_link.closest('.subcomments_container').find('.subcomments').prepend(data);
+        var $subcomments = add_link.closest('.subcomments_container').find('.subcomments');
+        $subcomments.prepend(data);
         var link = add_link.attr('href');
         var linksplit = link.split("/");
         var sIndex = parseInt(linksplit[linksplit.length-2]) + 5;
@@ -81,9 +85,9 @@ var view_previous_comments_handler = function(event){
             $('.viewPreviousComments').parent().remove(); // remove the entire view previos comment
             //add_link.parent().find('.loaded_comments').text(total_comments);
         }
-        install_voting_handlers();
-        install_comment_on_object_handler();
-        install_toggle_comment_handler();
+        install_voting_handlers($subcomments.children().first());
+        install_comment_on_object_handler($subcomments.children().first());
+        install_toggle_comment_handler($subcomments.children().first());
         var $fancybox = add_link.parents('.fancybox-data');
         if($fancybox && $fancybox.length > 0)
         {
@@ -125,10 +129,21 @@ var comment_on_object_key_handler = function(event){
 	}
 }
 
-var install_comment_on_object_handler = function() {
-    $('.comment_on_object').off('submit', comment_on_object_handler).on('submit', comment_on_object_handler);
-    $('.subcomment_text').off('keydown', comment_on_object_key_handler).on('keydown', comment_on_object_key_handler);
-    $('.subcomment_text').autosize({append: "\n"});
-    $('.viewPreviousComments').off('click', view_previous_comments_handler).on('click', view_previous_comments_handler);
-    $('.comment_radio').off('click', comment_radio_handler).on('click', comment_radio_handler);
+var install_comment_on_object_handler = function($parent_element) {
+    if($parent_element)
+    {
+        $parent_element.find('.comment_on_object').off('submit', comment_on_object_handler).on('submit', comment_on_object_handler);
+        $parent_element.find('.subcomment_text').off('keydown', comment_on_object_key_handler).on('keydown', comment_on_object_key_handler);
+        $parent_element.find('.subcomment_text').autosize({append: "\n"});
+        $parent_element.find('.viewPreviousComments').off('click', view_previous_comments_handler).on('click', view_previous_comments_handler);
+        $parent_element.find('.comment_radio').off('click', comment_radio_handler).on('click', comment_radio_handler);
+    }
+    else
+    {
+        $('.comment_on_object').off('submit', comment_on_object_handler).on('submit', comment_on_object_handler);
+        $('.subcomment_text').off('keydown', comment_on_object_key_handler).on('keydown', comment_on_object_key_handler);
+        $('.subcomment_text').autosize({append: "\n"});
+        $('.viewPreviousComments').off('click', view_previous_comments_handler).on('click', view_previous_comments_handler);
+        $('.comment_radio').off('click', comment_radio_handler).on('click', comment_radio_handler);
+    }
 };

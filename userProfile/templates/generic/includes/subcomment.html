@@ -3,6 +3,7 @@
 {% load voting_tags %}
 {% load thumbnail %}
 
+<div>
 {% for comment in comments_for_thread %}
     {% editable comment.is_public comment.is_removed %}
     {% if not comment.is_removed and comment.is_public %}
@@ -35,3 +36,4 @@
     {% endif %}
     {% endeditable %}
 {% endfor %}
+</div>
