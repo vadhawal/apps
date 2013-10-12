@@ -26,10 +26,11 @@
     </div>
     <div class="row whiteSpace">
         {% if request.user.is_authenticated %}
-            <div class="offset8 span3">
+            <div class="offset7 span4">
                 <span class="pull-right">
-                    <a href="/messages/inbox/">
-                        <img class="messages_homepage" src="{% static "img/messages.png" %}">
+                    <a href="{% url "messages_inbox" %}">
+                        <span class="messages_homepage"><img src="{% static "img/messages.png" %}"></span>
+                        <span class="messages_count circleBase fontSize9 fontTitillium2 pagination-centered">{{ messages_inbox_count }}</span>
                     </a>
                 </span>
                 <span class="settings pull-right" style="margin-right: 5px;">
