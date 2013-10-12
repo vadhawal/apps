@@ -41,7 +41,7 @@ var get_top_stores_handler_auth = function(parent_category, sub_category)
 
 var get_top_reviews_handler_auth = function(parent_category, sub_category)
 {
-	$.get('/' + parent_category + '/'+ sub_category + '/trendingreviews', {}, function(data) {
+	$.get('/' + parent_category + '/'+ sub_category + '/trendingreviews?v=1', {}, function(data) {
        $('#topReviewsForStoreCategoryAuth').html(data);
        install_toggle_comment_handler();
        });

@@ -489,8 +489,15 @@ def render_stores_for_categories(context, parent_category, sub_category, latest=
         })
         return context
 
-@register.inclusion_tag("generic/top_reviews.html", takes_context=True)
-def render_reviews_for_categories(context, parent_category, sub_category, latest=_settings.REVIEWS_NUM_LATEST):
+@register.simple_tag(takes_context=True)
+def render_reviews_for_categories(context, parent_category, sub_category, latest=_settings.REVIEWS_NUM_LATEST,  orientation='horizontal'):
+        template_name = 'generic/top_reviews.html'
+
+        if orientation == 'vertical':
+            template_name = 'generic/top_reviews_v.html'
+
+        template = loader.get_template(template_name)
+
         blog_parentcategory = None
         
         blog_parentcategory_slug = parent_category
@@ -516,10 +523,11 @@ def render_reviews_for_categories(context, parent_category, sub_category, latest
                     raise 404 error, in case categories are not present.
                 """
                 raise Http404()
-        context.update({
+
+        return template.render(RequestContext(context['request'], {
             'comments': reviews,
-        })
-        return context	 
+        }))
+ 
 
 
 

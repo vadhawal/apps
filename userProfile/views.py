@@ -375,8 +375,12 @@ def getTrendingReviews(request, parent_category, sub_category):
 					raise 404 error, in case categories are not present.
 				"""
 				raise Http404()
+		isVertical = request.GET.get('v', '0')
+		template = 'generic/top_reviews.html'
+		if isVertical == '1':
+			template = 'generic/top_reviews_v.html'
 
-		return render_to_response('generic/top_reviews.html', {
+		return render_to_response(template, {
 				'comments': reviews
 			}, context_instance=RequestContext(request))
 	else:
