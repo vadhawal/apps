@@ -50,13 +50,16 @@ $(document).ready(function()
 			/* Disabling closure of already opened header */
 			$(this).toggleClass('active-header').toggleClass('inactive-header');
 			$(this).next().slideToggle().toggleClass('open-content');
+			var $nextContentElement = null;
 			var $nextAccordianHeader = $(this).next().next();
 			if ($nextAccordianHeader.length) {
 				$nextAccordianHeader.toggleClass('active-header').toggleClass('inactive-header');
-				$nextAccordianHeader.next().slideToggle().toggleClass('open-content'); 
+				$nextContentElement = $nextAccordianHeader.next();
+				$nextContentElement.slideToggle().toggleClass('open-content'); 
 			} else {
 				$('.accordion-header').first().toggleClass('active-header').toggleClass('inactive-header');
-				$('.accordion-content').first().slideDown().toggleClass('open-content');
+				$nextContentElement = $('.accordion-content').first();
+				$nextContentElement.slideDown().toggleClass('open-content');
 			}
 		}
 	});

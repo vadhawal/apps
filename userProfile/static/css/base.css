@@ -282,9 +282,6 @@ div span.wantText{
 	color: #029795;
 	color: rgb(2, 151, 149);
 }
-.messages_homepage{
-	box-shadow: none;
-}
 .subcomments_container input[type="submit"] {
 	display: none !important;
 }
@@ -306,4 +303,29 @@ form.comment_on_object{
 }
 .trunc-comment, .exp-comment {
 	white-space: pre-wrap;
+}
+.circleBase {
+    -webkit-border-radius: 999px;
+    -moz-border-radius: 999px;
+    border-radius: 999px;
+}
+.messages_homepage img{
+	box-shadow: none;
+}
+.messages_count{
+	background : #F9DF1E;
+	background : rgba(249, 223, 30, 1);
+	width: 15px;
+    height: 15px;
+    display: inline-block;
+    position: relative;
+    left: -12px;
+    top: -7px;
+    line-height: 15px;
+}
+.messages_homepage:hover + .messages_count {
+	top: -10px;
+}
+.messages_count:hover {
+	top: -10px
 }
