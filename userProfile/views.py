@@ -11,6 +11,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
 from django.utils import simplejson
+from django.core.exceptions import MultipleObjectsReturned
 
 from mezzanine.blog.models import BlogPost, BlogCategory, BlogParentCategory
 from mezzanine.generic.models import Review
@@ -303,11 +304,23 @@ def followObject(request, content_type_id, object_id):
 
 @login_required
 def unfollowObject(request, content_type_id, object_id):
+	follow = None
 	ctype = get_object_or_404(ContentType, pk=content_type_id)
 	object = get_object_or_404(ctype.model_class(), pk=object_id)
-	
-	follow = Follow.objects.get_follows(object).get(user=request.user)
-	follow.delete()
+	try:
+		_follow = Follow.objects.get_follows(object)
+		follow = _follow.get(user=request.user)
+	except (MultipleObjectsReturned, Follow.DoesNotExist) as e:
+		if isinstance(e, MultipleObjectsReturned):
+			follow = _follow.filter(user=request.user)[0]
+			pass
+		else:
+			follow = None
+			pass
+
+	if follow:
+		follow.delete()
+
 	actions.unfollow(request.user, object, send_action=False)
 	return HttpResponse(simplejson.dumps(dict(success=True)))
 
