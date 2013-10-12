@@ -26,26 +26,44 @@
     </div>
     <div class="row whiteSpace">
         {% if request.user.is_authenticated %}
-            <div class="offset7 span4">
-                {% url "profile" request.user.username as profile_url %}
-                {% if profile_url %}
-                    {% include 'actstream/render_actor_name.html' with actor=request.user %}
-                    {% if request.user.is_authenticated %}
-                    <a href="{{profile_url}}">
-                    {% if request.user.get_profile.profile_photo%}
-                        <img style="margin-right:20px;height=30px;width:30px;" src="{{ request.user.get_profile.profile_photo.url }}">
-                    {% elif request.user.get_profile.image_url %}
-                        <img style="margin-right:20px;height=30px;width:30px;" src="{{ request.user.get_profile.image_url }}">
+            <div class="offset8 span3">
+                <span class="pull-right">
+                    <a href="/messages/inbox/">
+                        <img class="messages_homepage" src="{% static "img/messages.png" %}">
+                    </a>
+                </span>
+                <span class="settings pull-right" style="margin-right: 5px;">
+                    <img src="{% static "img/settings.png" %}">
+                    <img src="{% static "img/green_pointer.png" %}">
+                    <span class="whiteBox fontSize13 fontTitillium1 settingsPopup hide">
+                        <span>
+                            <a href="{% url "profile_update" %}">{% trans "Update profile" %}</a>
+                        </span>
+                        <hr class="dottedSeparator">
+                        <span style="clear:both;">
+                            <a href="{% url "logout" %}?next={{ request.get_full_path }}">{% trans "Log out" %}</a>
+                        </span>
+                </span>
+                </span>
+                <span class="pull-right" style="margin-right: 5px;">
+                    {% url "profile" request.user.username as profile_url %}
+                    {% if profile_url %}
+                        {% if request.user.is_authenticated %}
+                        <a href="{{profile_url}}">
+                        {% if request.user.get_profile.profile_photo%}
+                            <img style="margin-right:5px;height=30px;width:30px;" src="{{ request.user.get_profile.profile_photo.url }}">
+                        {% elif request.user.get_profile.image_url %}
+                            <img style="margin-right:5px;height=30px;width:30px;" src="{{ request.user.get_profile.image_url }}">
+                        {% else %}
+                            <img style="margin-right:5pxpx;height=30px;width:30px;" src="{{ STATIC_URL }}img/defaultProfilePic.gif">
+                        {% endif %}
+                        </a> 
+                        {% endif %}
                     {% else %}
                         <img style="margin-right:20px;height=30px;width:30px;" src="{{ STATIC_URL }}img/defaultProfilePic.gif">
                     {% endif %}
-                    </a> 
-                    {% endif %}
-                    <a href="{% url "profile_update" %}" class="btn btn-small btn-account">{% trans "Update profile" %}</a>
-                {% else %}
-                    <img style="margin-right:20px;height=30px;width:30px;" src="{{ STATIC_URL }}img/defaultProfilePic.gif">
-                {% endif %}
-                <a class="fontSize13 fontTitillium" href="{% url "logout" %}?next={{ request.get_full_path }}">{% trans "Log out" %}</a>
+                    {% include 'actstream/render_actor_name.html' with actor=request.user %}
+                </span>
             </div>
         {% else %}
             <div class="offset9 span2">
@@ -75,24 +93,32 @@
                     </div>
                 </div>
                 <div class="span8">
-                    <span class="fullGutterRight wantText">
-                        I WANT
-                    </span>
+                    <div class="span2 halfGutterRight">
+                        <span class="wantText">
+                            {% trans "I'm looking for" %}
+                        </span>
+                    </div>
                     {% blog_parentcategories_abs as parent_categories %}
                     {% if parent_categories %}
-                        <select name="blog_parentcategories" class="fullGutterRight blog_parentcategories">
+                    <div class="span2 halfGutterRight">
+                        <select name="blog_parentcategories" class="blog_parentcategories">
                             <option value='empty' selected disabled>{% trans "By Category" %}</option>
                             <option value="all">{% trans "All" %}</option>
                             {% for category in parent_categories %}
                             <option value="{{ category }}">{{ category }}</option>
                             {% endfor %}
                         </select>
-                        <select name="blog_subcategories" class="fullGutterRight blog_subcategories">
+                    </div>
+                    <div class="span2 halfGutterRight">
+                        <select name="blog_subcategories" class="blog_subcategories">
                             <option value='empty' selected disabled>By Sub-category</option>
                         </select>
+                    </div>
                     {% endif %}
-                    <div id="getvendorsdiv" style="display:inline-block;">
-                        <a id="getvendors" href="#"></a>
+                    <div class="span1">
+                        <div id="getvendorsdiv" style="display:inline-block;">
+                            <a id="getvendors" href="#"></a>
+                        </div>
                     </div>
                 </div>
             </div>

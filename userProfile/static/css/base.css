@@ -187,7 +187,7 @@ a:hover {
 	background-color:rgba(229,244,244,1.00);
 	background-image: url('/static/img/selectPointer.png');
 	background-repeat: no-repeat;
-	background-position: 140px 8px;
+	background-position: 94% 8px;
 	-webkit-appearance: none;
 	-moz-appearance: none;
 	-ms-appearance: none;
@@ -197,15 +197,15 @@ a:hover {
 	-webkit-padding-start: 10px;
 	-moz-padding-start: 10px;
 	height: 25px;
-	width: 160px;
+	width: 100%;
 	vertical-align: top;
 	margin-top: 12px;
 	line-height: normal;
 	/*padding: 0px;*/
 }
-div span.fullGutterRight{
+div span.wantText{
 	color:rgba(89,87,87,1.00);
-	font-family: skinny;
+	font-family: titillium2;
 	background-image: url('/static/img/searchIcon.png');
 	background-repeat: no-repeat;
 	background-position: 10px center;
@@ -217,6 +217,7 @@ div span.fullGutterRight{
 	padding-right: 10px;
 	height: 25px;
 	line-height: 25px;
+	width: 70%;
 }
 #getvendorsdiv{
 	height: 52px;
@@ -229,9 +230,6 @@ div span.fullGutterRight{
 	display: inline-block;
 	width: 30px;
 	height: 30px;
-}
-.wantText{
-	width: 200px;
 }
 .whiteBox {
 	overflow: hidden;
@@ -256,7 +254,6 @@ div span.fullGutterRight{
 }
 .logo{
 	height: 150px;
-	width: 150px;
 	margin-top: -70px;
 }
 .logo a img{
@@ -264,6 +261,29 @@ div span.fullGutterRight{
 	height: 110px;
 	padding: 20px 6.875px;
 	box-shadow: 0 0 0;
+}
+.settings {
+	position: relative;
+	cursor: pointer;
+}
+.settings img {
+	box-shadow: none;
+}
+.settingsPopup {
+	height: 50px; 
+	padding: 0px 15px;
+	position: absolute;
+}
+.settingsPopup span{
+	line-height:25px;
+	float:left;
+}
+.settingsPopup span a:hover{
+	color: #029795;
+	color: rgb(2, 151, 149);
+}
+.messages_homepage{
+	box-shadow: none;
 }
 .subcomments_container input[type="submit"] {
 	display: none !important;
