@@ -36,16 +36,17 @@ var follow_post_handler = function(event) {
         return false;
     
     var $elementClicked = $(this);
-    var link =  $elementClicked.data("href");
+    var $href =  $elementClicked.data("href");
 
-    $.get(link, {}, function(data) {
+    $.get($href, {}, function(data) {
         var dataResult = JSON.parse(data);
         if(dataResult.success == true)
         {
-          $href = $elementClicked.attr('href');
           $newhref = $href.replace("follow", "unfollow");
-          $elementClicked.attr('href', $newhref);
-          $elementClicked.html("unfollow post");
+          $elementClicked.removeClass('followpost').addClass('unfollowpost');
+          $elementClicked.attr('data-href', $newhref);
+          $elementClicked.html("Unfollow post");
+          $elementClicked.off('click', follow_post_handler).on('click', unfollow_post_handler);
         }
     });
     event.stopPropagation();
@@ -58,16 +59,17 @@ var unfollow_post_handler = function(event) {
         return false;
     
     var $elementClicked = $(this);
-    var link =  $elementClicked.data("href");
+    var $href =  $elementClicked.data("href");
     
-    $.get(link, {}, function(data) {
+    $.get($href, {}, function(data) {
         var dataResult = JSON.parse(data);
         if(dataResult.success == true)
         {
-          $href = $elementClicked.attr('href')
           $newhref = $href.replace("unfollow", "follow");
-          $elementClicked.attr('href', $newhref);
-          $elementClicked.html("follow post");
+          $elementClicked.removeClass('unfollowpost').addClass('followpost');
+          $elementClicked.attr('data-href', $newhref);
+          $elementClicked.html("Follow post");
+          $elementClicked.off('click', unfollow_post_handler).on('click', follow_post_handler);
         }
     });
     event.stopPropagation();
