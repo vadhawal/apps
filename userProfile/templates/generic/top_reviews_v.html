@@ -1,0 +1,68 @@
+{% load i18n mezzanine_tags %}
+{% load thumbnail userProfile_tags %}
+{% load relationship_tags static %}
+{% for review in comments %}
+<div class="row topReviews">
+    <div class="span1 text-center ">
+        <a style="vertical-align:middle;" href='{{review.user.get_absolute_url}}'>
+        {% if review.user.get_profile.profile_photo %}    
+            {% thumbnail review.user.get_profile.profile_photo "100x100" as img %} 
+            <img class="reviewUserImage" height="70px" width="70px" src="{{ MEDIA_URL }}{{img}}">
+            {% endthumbnail %}
+        {% elif review.user.get_profile.image_url %}
+            <img class="reviewUserImage" height="70px" width="70px" src="{{ review.user.get_profile.image_url }}">
+        {% else %}
+            <img class="reviewUserImage" height="70px" width="70px" src="{% static 'img/defaultProfilePic.gif' %}"> 
+        {% endif %}
+        </a>
+    </div>
+    <div class="span3 halfGutter">
+        <div>
+            <a class="fontTitillium1 fontSize13 radioColor" href="{{review.user.get_absolute_url}}">{% get_full_name review.user %}</a>
+        </div>
+        <div>
+            <span>
+                {% get_reviews_by_user review.user as totalReviews %}
+                <a href="{% url get_reviews_by_user review.user.id %}" class="fontTitillium3 fontSize13 color5D"><span class="fontTitillium1">{{totalReviews|length}}</span> review{{ totalReviews|length|pluralize }}</a>
+                {% follower_subset_url review.user 0 review.user.relationships.followers.count as follower_url %}
+                <a href="{{follower_url}}" class="followerCountBox fontTitillium3 fontSize13 color5D">
+                    <span class="fontTitillium1">&nbsp;{{ review.user.relationships.followers.count }}</span> follower{{ review.user.relationships.followers.count|pluralize }}
+                </a>
+            </span>
+        </div>
+        <div class="reviewTitle fontSize12 fontTitillium3">
+            {{review.introchars}}
+<!--             <span class="searchResultRating searchResultRatingScheme searchResultRatingText rating-{{review.overall_value|floatformat:"0"}} pull-right" style="margin-left:0;">
+                {#review.overall_value|floatformat:"1"#}
+            </span> -->
+        </div>
+        <div style="margin-top:-2px;">
+            <span class="fontHelvetica"> <span class="forText fontSize11">for </span>
+                <a class="fontSize12 radioColor" href="{{ review.content_object.get_absolute_url }}">
+                    {{ review.content_object }}
+                </a>
+        </div>
+    </div>
+</div>
+<hr class="dottedSeparator dottedSeparatorIncresedMargin">
+<!-- 
+    <span>
+        <span class="trunc-comment">{{ review.intro }}</span>
+        {% if review.comment != review.intro %}
+            <span class="exp-comment" style="display:none;">{{ review.comment }}</span>
+            <a class="toggle-comment" style="cursor: pointer;">More...</a>
+        {% endif %}
+    </span>
+    <p> On
+        <a href="{{ review.content_object.get_absolute_url }}">
+            {{ review.content_object }}
+        </a>
+        
+        <a href="{{ review.get_absolute_url }}">
+            {% blocktrans with sometime=review.submit_date|timesince %}{{ sometime }} ago{% endblocktrans %}
+        </a>
+        <a href="{% url render_review review.content_object.slug review.id %}">Full Review</a>
+    </p>
+ -->
+
+{% endfor %}
