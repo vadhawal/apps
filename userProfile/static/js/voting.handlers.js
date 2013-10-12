@@ -70,24 +70,26 @@ var review_voting_handler = function(event){
 	               if($elementClicked.hasClass('found-helpful'))
 	               {
 	               		var new_url = url.replace('up', 'clear');
-	               		var html = '</span>You found this review helpful.</span><a class="clear-helpful" href="'+new_url+'">Clear</a>';
+	               		var html = '</span>You found this review helpful.</span><a class="clear-helpful" href="" data-href="'+new_url+'">Clear</a>';
 	               		$elementClicked.parent().html(html);
+	               		$('.clear-helpful').off("click", review_voting_handler).on("click", review_voting_handler);
 	               }
 	               else if($elementClicked.hasClass('not-found-helpful'))
 	               {
 	               		var new_url = url.replace('down', 'clear');
-	               		var html = '</span>You did not find this review helpful!</span><a class="clear-helpful" href="'+new_url+'">Clear</a>';
+	               		var html = '</span>You did not find this review helpful!</span><a class="clear-helpful" href="" data-href="'+new_url+'">Clear</a>';
 	               		$elementClicked.parent().html(html);
+	               		$('.clear-helpful').off("click", review_voting_handler).on("click", review_voting_handler);
 	               }
 	               else if($elementClicked.hasClass('clear-helpful'))
 	               {
 	               		var up_url = url.replace('clear', 'up');
 	               		var down_url = url.replace('clear', 'down');
-	               		var html = '<span>Do you find this review helpful? </span><a class="found-helpful" href="'+up_url+'">Yes </a>'+
+	               		var html = '<span>Do you find this review helpful? </span><a class="found-helpful" href="" data-href="'+up_url+'">Yes </a>'+
                         '<a class="not-found-helpful" href="'+down_url+'">No</a>';
                         $elementClicked.parent().html(html);
+                        $('.found-helpful').add('.not-found-helpful').off("click", review_voting_handler).on("click", review_voting_handler);
 	               }
-	               install_voting_handlers();
 	           } else {
 	               alert('ERROR: ' + data.error_message);
 	           }

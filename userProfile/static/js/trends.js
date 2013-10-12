@@ -2,7 +2,7 @@ var get_trending_deals_handler = function(parent_category, sub_category)
 {
     $.get('/' + parent_category + '/'+ sub_category + '/trendingdeals', {}, function(data) {
           $('#topDealsForStoreCategory').html(data);
-            install_voting_handlers();
+            install_voting_handlers($('#topDealsForStoreCategory'));
             $('.shareWish').on('click', sharewish_handler);
 
             $("#topDealsForStoreCategory").imagesLoaded({

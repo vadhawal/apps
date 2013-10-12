@@ -1171,9 +1171,9 @@
 			{
 				$.get(reldata_url, {}, function(data) {
 					$('.fancybox-data').html(data);
-					install_voting_handlers();
+					install_voting_handlers($('.fancybox-data'));
 					$('.shareObject').on('click', share_object_handler);
-					install_comment_on_object_handler();
+					install_comment_on_object_handler($('.fancybox-data'));
 					$(".fancybox-data").mCustomScrollbar({
 	                  theme:"dark-thick",
 	                  mouseWheel:true,

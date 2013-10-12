@@ -2,7 +2,7 @@ var get_trending_deals_handler_auth = function(parent_category, sub_category)
 {
     $.get('/' + parent_category + '/'+ sub_category + '/trendingdeals?v=1', {}, function(data) {
           $('#topDealsForStoreCategoryAuth').html(data);
-            install_voting_handlers();
+            install_voting_handlers($('#topDealsForStoreCategoryAuth'));
             $('.shareWish').on('click', sharewish_handler);
 
             if($("#topDealsForStoreCategoryAuth").parent().hasClass('open-content'))
