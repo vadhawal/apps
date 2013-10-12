@@ -228,6 +228,68 @@ def get_share_object_url(parser, token):
         raise template.TemplateSyntaxError("second argument to '%s' tag must be 'as'" % bits[0])
     return GetShareObjectUrl(bits[1], bits[3])
 
+class GetFollowObjectUrl(template.Node):
+    def __init__(self, object, context_var):
+        self.object = object
+        self.context_var = context_var
+
+    def render(self, context):
+        try:
+            object = template.resolve_variable(self.object, context)
+            content_type = ContentType.objects.get_for_model(object).pk
+        except template.VariableDoesNotExist:
+            return ''
+        context[self.context_var] =  reverse('followObject', kwargs={'content_type_id': content_type, 'object_id': object.pk })
+        return ''
+
+def get_follow_object_url(parser, token):
+    """
+    Retrieves the url to get voting/comment/share info and stores them in a context variable which has
+    ``voters`` property.
+
+    Example usage::
+
+        {% get_follow_object_url object as share_object_url %}
+    """
+
+    bits = token.contents.split()
+    if len(bits) != 4:
+        raise template.TemplateSyntaxError("'%s' tag takes exactly three arguments" % bits[0])
+    if bits[2] != 'as':
+        raise template.TemplateSyntaxError("second argument to '%s' tag must be 'as'" % bits[0])
+    return GetFollowObjectUrl(bits[1], bits[3])
+
+class GetUnfollowObjectUrl(template.Node):
+    def __init__(self, object, context_var):
+        self.object = object
+        self.context_var = context_var
+
+    def render(self, context):
+        try:
+            object = template.resolve_variable(self.object, context)
+            content_type = ContentType.objects.get_for_model(object).pk
+        except template.VariableDoesNotExist:
+            return ''
+        context[self.context_var] =  reverse('unfollowObject', kwargs={'content_type_id': content_type, 'object_id': object.pk })
+        return ''
+
+def get_unfollow_object_url(parser, token):
+    """
+    Retrieves the url to get voting/comment/share info and stores them in a context variable which has
+    ``voters`` property.
+
+    Example usage::
+
+        {% get_unfollow_object_url object as share_object_url %}
+    """
+
+    bits = token.contents.split()
+    if len(bits) != 4:
+        raise template.TemplateSyntaxError("'%s' tag takes exactly three arguments" % bits[0])
+    if bits[2] != 'as':
+        raise template.TemplateSyntaxError("second argument to '%s' tag must be 'as'" % bits[0])
+    return GetUnfollowObjectUrl(bits[1], bits[3])
+
 class GetRelDataUrl(template.Node):
     def __init__(self, object, context_var):
         self.object = object
@@ -345,6 +407,8 @@ register.tag(share_wish_url)
 register.tag(share_deal_url)
 register.tag(get_wishlist_url)
 register.tag(get_share_object_url)
+register.tag(get_follow_object_url)
+register.tag(get_unfollow_object_url)
 register.tag(get_reldata_url)
 register.tag(get_deallist_url)
 
