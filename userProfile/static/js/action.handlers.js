@@ -39,9 +39,10 @@ var follow_post_handler = function(event) {
     var link =  $elementClicked.data("href");
 
     $.get(link, {}, function(data) {
-        if(data == 'ok')
+        var dataResult = JSON.parse(data);
+        if(dataResult.success == true)
         {
-          $href = $elementClicked.attr('href')
+          $href = $elementClicked.attr('href');
           $newhref = $href.replace("follow", "unfollow");
           $elementClicked.attr('href', $newhref);
           $elementClicked.html("unfollow post");
@@ -60,7 +61,8 @@ var unfollow_post_handler = function(event) {
     var link =  $elementClicked.data("href");
     
     $.get(link, {}, function(data) {
-        if(data == 'ok')
+        var dataResult = JSON.parse(data);
+        if(dataResult.success == true)
         {
           $href = $elementClicked.attr('href')
           $newhref = $href.replace("unfollow", "follow");

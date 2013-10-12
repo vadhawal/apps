@@ -293,6 +293,26 @@ def shareStore(request, store_id):
 			}, context_instance=RequestContext(request))
 
 @login_required
+def followObject(request, content_type_id, object_id):
+	ctype = get_object_or_404(ContentType, pk=content_type_id)
+	object = get_object_or_404(ctype.model_class(), pk=object_id)
+	
+	Follow.objects.get_or_create(request.user, object)
+	actions.follow(request.user, object, send_action=False, actor_only=False)
+	return HttpResponse(simplejson.dumps(dict(success=True)))
+
+@login_required
+def unfollowObject(request, content_type_id, object_id):
+	ctype = get_object_or_404(ContentType, pk=content_type_id)
+	object = get_object_or_404(ctype.model_class(), pk=object_id)
+	
+	follow = Follow.objects.get_follows(object).get(user=request.user)
+	follow.delete()
+	actions.unfollow(request.user, object, send_action=False)
+	return HttpResponse(simplejson.dumps(dict(success=True)))
+
+
+@login_required
 def followWish(request, wish_id):
 	wishObject = get_object_or_404(BroadcastWish, pk=wish_id)
 	ctype = ContentType.objects.get_for_model(wishObject)
