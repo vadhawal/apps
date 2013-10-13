@@ -67,21 +67,23 @@
                 </span>
             </div>
         {% else %}
-            <div class="offset9 span2">
-                <a href="{% url "socialauth_begin" "facebook" %}">
-                    <div class="socialLogin facebookLogin">
-                    </div>
-                </a>
-                <a href="{% url "socialauth_begin" "twitter" %}" >
-                    <div class="socialLogin twitterLogin">
-                    </div>
-                </a>
+            <div class="offset8 span3">
+                <span class="pull-right">
+                    <a class="fontSize13 fontTitillium" href="{% url "login" %}?next={{ request.get_full_path }}">{% trans " Log in" %}</a>
+                     | <a class="fontSize13 fontTitillium" href="{% url "signup" %}?next={{ request.get_full_path }}">{% trans "Sign up" %}</a>
+                </span>
                 <a href="#google">
-                   <div class="socialLogin googleLogin">
-                   </div>
+                   <span class="socialLogin googleLogin pull-right" style="margin-top:10px;">
+                   </span>
                 </a>
-                <a class="fontSize13 fontTitillium" href="{% url "login" %}?next={{ request.get_full_path }}">{% trans " Log in" %}</a>
-                 | <a class="fontSize13 fontTitillium" href="{% url "signup" %}?next={{ request.get_full_path }}">{% trans "Sign up" %}</a>
+                <a href="{% url "socialauth_begin" "twitter" %}">
+                    <span class="socialLogin twitterLogin pull-right" style="margin-top:10px;">
+                    </span>
+                </a>
+                <a href="{% url "socialauth_begin" "facebook" %}">
+                    <span class="socialLogin facebookLogin pull-right" style="margin-top:10px;">
+                    </span>
+                </a>
             </div>
          {% endif %}
     </div>
