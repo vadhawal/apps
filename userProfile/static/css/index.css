@@ -10,8 +10,21 @@
 	height: 250px;
 	margin: auto 0;
 }
-#topStoresForStoreCategory img {
+#topStoresForStoreCategory img.smallIcon{
 	height: 45px;
+	vertical-align:middle;
+	display:inline-block;
+	margin-left: -7px;
+}
+.vendorResult{
+	margin-top: 6px;
+}
+#topStoresForStoreCategoryAuth img.smallIcon, 
+#topReviewsForStoreCategoryAuth img.smallIcon {
+	height: 45px;
+	vertical-align:middle;
+	display:inline-block;
+	margin-left:-4px;
 }
 .dealBox {
 	height: 250px;
@@ -68,7 +81,7 @@
 .topReviews{
 	background-color: #fff;
 	line-height: normal;
-	margin-top: 8px;
+	margin-top: 6px;
 }
 .categoryName{
 	font-size : 10px;

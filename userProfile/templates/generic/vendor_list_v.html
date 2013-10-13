@@ -9,7 +9,7 @@
 {% block content %}
     {% for vendor in vendors %}
         <div class="row vendorResult">
-            <div class="span1 text-center">
+            <div class="span1 text-center halfGutter">
                 {% if vendor|get_class_name == "BlogPost" and vendor.featured_image %}
                         {% thumbnail vendor.featured_image "100x100" as img %} 
                         <a style="vertical-align:middle;" href='{{vendor.get_absolute_url}}'>
