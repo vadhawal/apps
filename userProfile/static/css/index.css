@@ -26,6 +26,10 @@
 	display:inline-block;
 	margin-left:-4px;
 }
+
+#topReviewsForStoreCategoryAuth div.topReviews{
+	margin-top: 6px;
+}
 .dealBox {
 	height: 250px;
 	line-height: 250px;
@@ -81,7 +85,7 @@
 .topReviews{
 	background-color: #fff;
 	line-height: normal;
-	margin-top: 6px;
+	margin-top: 8px;
 }
 .categoryName{
 	font-size : 10px;
