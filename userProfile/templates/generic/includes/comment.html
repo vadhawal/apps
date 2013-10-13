@@ -1,6 +1,7 @@
 {% load i18n mezzanine_tags comment_tags rating_tags %}
 {% load mezzanine_tags i18n future comment_tags %}
 {% load voting_tags %}
+{% load userProfile_tags %}
 {% load inbox thumbnail %}
 
 <ul class="unstyled">
@@ -55,6 +56,12 @@
                 {% endwith %}
             </div>
             <div><span>Shop Again? </span> {% if comment.shop_again == 0%}NO{% else %}YES{% endif %}</div>
+            
+            {% if request.user == comment.user %}
+                {% get_delete_object_url comment as delete_review_url %}
+                <div><a class="deleteObject" data-href="{{delete_review_url}}" href="#">Delete</a></div>
+            {% endif %}
+
         <p>{{ comment.comment|comment_filter }}</p>
         {% include 'generic/includes/render_voting.html' with object=comment %}
         {% include 'actstream/render_subcomments.html' with object=comment %}
