@@ -1,7 +1,7 @@
 $(document).ready(function() {
     $('#getvendors').click(function(){
-        var $blog_parentcategories = $(this).parent().parent().find('.blog_parentcategories');
-        var $subCategorySelect = $(this).parent().parent().find('.blog_subcategories');
+        var $blog_parentcategories = $(this).parent().parent().parent().find('.blog_parentcategories');
+        var $subCategorySelect = $(this).parent().parent().parent().find('.blog_subcategories');
         var parent_category_slug = $blog_parentcategories.find("option:selected").text();
         var sub_category_slug = $subCategorySelect.find("option:selected").text();
         var disabled_sub_category_slug = $subCategorySelect.find("option:disabled").text();
