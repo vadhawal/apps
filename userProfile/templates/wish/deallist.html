@@ -37,6 +37,21 @@
         <a class="wishimg-deal-homepage" href="{{  deal.wishimage.url }}" rel="homepage_deals" data-reldata-url="{{rel_data_url}}" style="">
             <img src="{{img.url}}">
         </a>
+        <div class="whiteBoxGlassy pagination-centered">
+            <span class="dealRadio">
+                <span style="float:left;margin-right:4px;">
+                    {% include 'generic/includes/render_voting.html' with object=deal %}
+                </span>
+                <span style="float:left;margin-right:4px;">
+                    {% include 'actstream/render_share_action.html' with object=deal %}
+                </span>
+                <span style="float:left;">
+                    <a href="#" class="comment_radio_d" style="margin-right:0px;">Comment</a>
+                        {% comment_count_on_object deal as total_comments %}
+                    <a class="broadcasters commentCount" href="{% get_commenters_url deal %}" style="margin-left:0px;">({{total_comments}})</a>
+                </span>
+            </span>
+        </div>
     </div>
     {% endthumbnail %}
 {% endif %}

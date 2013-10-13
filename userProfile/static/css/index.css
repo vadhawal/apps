@@ -14,8 +14,9 @@
 	height: 45px;
 }
 .dealBox {
-	height: 280px;
+	height: 250px;
 	line-height: 250px;
+	margin-top: -20px;
 }
 
 /* dealBox_h will be applied on the deals listed on home page. */
@@ -29,11 +30,12 @@
 	display:inline-block;
 	height:210px;
 	margin:auto 5px;
+	vertical-align: middle;
 }
 .dealBox_h img {
 	height:100%;
+	vertical-align: initial;
 }
-
 .boxTitle{
 	height: 25px;
 	width: 100%;
@@ -227,7 +229,6 @@
 	position: absolute;
 	width: 90%;
 	bottom: 10px;
-	height: 25px;
 	left: 10px;
 	line-height: 25px;
 	font-size: 11px;
@@ -235,6 +236,25 @@
 }
 .dealBox_v_elem:hover div {
 	display: block;
+}
+.dealBox_h_elem {
+	position: relative;
+}
+.dealBox_h_elem div {
+	position: absolute;
+	width: 90%;
+	bottom: 10px;
+	left: 5%;
+	line-height: 25px;
+	font-size: 11px;
+	display: none;
+}
+.dealBox_h_elem:hover div {
+	display: block;
+}
+.dealRadio {
+	display: table;
+	margin: auto;
 }
 .categoryTag {
 	box-shadow: 1px 1px 1px rgb(2, 151, 149);;

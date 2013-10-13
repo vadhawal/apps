@@ -125,7 +125,7 @@ a:hover {
 	height: 20px;
 	display: inline-block;
 	margin-top: 5px;
-	margin-left: 3px;
+	margin-right: 3px;
 }
 .facebookLogin{
 	background-image: url("/static/img/facebook.png");
