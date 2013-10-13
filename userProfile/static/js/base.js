@@ -38,7 +38,7 @@ $(document).ready(function() {
     $('.blog_parentcategories').change(function(){
         var $this = $(this);
         var slug = $this.find("option:selected").text();
-        var $subCSelect = $this.parent().find('.blog_subcategories');
+        var $subCSelect = $this.parent().parent().find('.blog_subcategories');
         $subCSelect.removeClass("error");
         $this.removeClass("error");
         if(slug.toLowerCase() == "all") {
