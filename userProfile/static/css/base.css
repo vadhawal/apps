@@ -234,8 +234,8 @@ div span.wantText{
 	background-repeat: no-repeat;
 	background-position: 10px center;
 	background-size: 10px 10px;
+	background-color:rgba(229,244,244,1.00);
 	display: inline-block;
-	background-color: white;
 	margin-top: 12px;
 	padding-left:30px;
 	padding-right: 10px;
