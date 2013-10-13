@@ -491,8 +491,15 @@ def render_deals_for_categories(context, parent_category, sub_category, latest=s
             'deal_list': deals_queryset
         }))
 
-@register.inclusion_tag("generic/vendor_list.html", takes_context=True)
-def render_stores_for_categories(context, parent_category, sub_category, latest=settings.STORES_NUM_LATEST):
+@register.simple_tag(takes_context=True)
+def render_stores_for_categories(context, parent_category, sub_category, latest=settings.STORES_NUM_LATEST, orientation='horizontal'):
+        template_name = 'generic/vendor_list.html'
+
+        if orientation == 'vertical':
+            template_name = 'generic/vendor_list_v.html'
+
+        template = loader.get_template(template_name)
+
         blog_parentcategory = None
         result = None
 
@@ -515,14 +522,13 @@ def render_stores_for_categories(context, parent_category, sub_category, latest=
             if blog_subcategory and blog_parentcategory:
                 result = BlogPost.objects.published().filter(categories=blog_subcategory).extra(select={'fieldsum':'price_average + variety_average + quality_average + service_average + exchange_average + overall_average'},order_by=('-fieldsum',))[:latest]
 
-        context.update({
+        return template.render(RequestContext(context['request'], {
             'vendors': result,
             'sIndex':0
-        })
-        return context
+        }))
 
 @register.simple_tag(takes_context=True)
-def render_reviews_for_categories(context, parent_category, sub_category, latest=_settings.REVIEWS_NUM_LATEST,  orientation='horizontal'):
+def render_reviews_for_categories(context, parent_category, sub_category, latest=_settings.REVIEWS_NUM_LATEST, orientation='horizontal'):
         template_name = 'generic/top_reviews.html'
 
         if orientation == 'vertical':

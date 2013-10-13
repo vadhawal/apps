@@ -49,7 +49,7 @@
             </h2>
 			<div class="accordion-content"> 
 			    <div id="topDealsForStoreCategoryAuth">
-            		{% render_deals_for_categories 'All' 'All'  'MIN_DEALS_HOME_PAGE'|settings_value 'vertical'%}
+            		{% render_deals_for_categories 'All' 'All'  'MIN_DEALS_HOME_PAGE'|settings_value 'vertical' %}
         		</div>
 			</div> 
 			<h2 class="accordion-header"><img src="{% static "img/top_stores_white.png" %}">TOP STORES                        
@@ -59,7 +59,7 @@
             </h2>
 			<div class="accordion-content"> 
 			    <div id="topStoresForStoreCategoryAuth">
-                        {% render_stores_for_categories 'All' 'All' 'MIN_STORES_HOME_PAGE'|settings_value %}
+                        {% render_stores_for_categories 'All' 'All' 'MIN_STORES_HOME_PAGE'|settings_value 'vertical' %}
                 </div>
 			</div> 
 			<h2 class="accordion-header"><img src="{% static "img/store_reviews_white.png" %}">STORE REVIEWS

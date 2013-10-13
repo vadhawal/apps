@@ -476,7 +476,12 @@ def getTrendingStores(request, parent_category, sub_category):
 				"""
 				raise Http404()
 
-		return render_to_response('generic/vendor_list.html', {
+		isVertical = request.GET.get('v', '0')
+		template = 'generic/vendor_list.html'
+		if isVertical == '1':
+			template = 'generic/vendor_list_v.html'
+
+		return render_to_response(template, {
 				'vendors': result
 			}, context_instance=RequestContext(request))
 	else:

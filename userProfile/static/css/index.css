@@ -10,8 +10,25 @@
 	height: 250px;
 	margin: auto 0;
 }
-#topStoresForStoreCategory img {
+#topStoresForStoreCategory img.smallIcon{
 	height: 45px;
+	vertical-align:middle;
+	display:inline-block;
+	margin-left: -7px;
+}
+.vendorResult{
+	margin-top: 6px;
+}
+#topStoresForStoreCategoryAuth img.smallIcon, 
+#topReviewsForStoreCategoryAuth img.smallIcon {
+	height: 45px;
+	vertical-align:middle;
+	display:inline-block;
+	margin-left:-4px;
+}
+
+#topReviewsForStoreCategoryAuth div.topReviews{
+	margin-top: 6px;
 }
 .dealBox {
 	height: 250px;
@@ -237,6 +254,9 @@
 .dealBox_v_elem:hover div {
 	display: block;
 }
+.dealBox_v_elem div:hover {
+	background-color: rgba(255, 255, 255, 0.7);
+}
 .dealBox_h_elem {
 	position: relative;
 }
@@ -251,6 +271,9 @@
 }
 .dealBox_h_elem:hover div {
 	display: block;
+}
+.dealBox_h_elem div:hover {
+	background-color: rgba(255, 255, 255, 0.7);
 }
 .dealRadio {
 	display: table;

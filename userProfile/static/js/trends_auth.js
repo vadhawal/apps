@@ -33,7 +33,7 @@ var get_trending_deals_handler_auth = function(parent_category, sub_category)
 
 var get_top_stores_handler_auth = function(parent_category, sub_category)
 {
-    $.get('/' + parent_category + '/'+ sub_category + '/trendingstores', {}, function(data) {
+    $.get('/' + parent_category + '/'+ sub_category + '/trendingstores?v=1', {}, function(data) {
        $('#topStoresForStoreCategoryAuth').html(data);
        });
    	return false;

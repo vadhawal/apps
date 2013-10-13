@@ -3,20 +3,20 @@
 {% load relationship_tags static %}
 {% for review in comments %}
 <div class="row topReviews">
-    <div class="span1 text-center ">
+    <div class="span1 text-center halfGutter">
         <a style="vertical-align:middle;" href='{{review.user.get_absolute_url}}'>
         {% if review.user.get_profile.profile_photo %}    
             {% thumbnail review.user.get_profile.profile_photo "100x100" as img %} 
-            <img class="reviewUserImage" height="70px" width="70px" src="{{ MEDIA_URL }}{{img}}">
+            <img class="reviewUserImage smallIcon" src="{{ MEDIA_URL }}{{img}}">
             {% endthumbnail %}
         {% elif review.user.get_profile.image_url %}
-            <img class="reviewUserImage" height="70px" width="70px" src="{{ review.user.get_profile.image_url }}">
+            <img class="reviewUserImage smallIcon" src="{{ review.user.get_profile.image_url }}">
         {% else %}
-            <img class="reviewUserImage" height="70px" width="70px" src="{% static 'img/defaultProfilePic.gif' %}"> 
+            <img class="reviewUserImage smallIcon" src="{% static 'img/defaultProfilePic.gif' %}"> 
         {% endif %}
         </a>
     </div>
-    <div class="span3 halfGutter">
+    <div class="span2 noGutter">
         <div>
             <a class="fontTitillium1 fontSize13 radioColor" href="{{review.user.get_absolute_url}}">{% get_full_name review.user %}</a>
         </div>
@@ -31,7 +31,7 @@
             </span>
         </div>
         <div class="reviewTitle fontSize12 fontTitillium3">
-            {{review.introchars}}
+            {{review.introchars}}<a class="radioColor" href ="{% url render_review review.content_object.slug review.id %}">&nbsp;Read Full Review</a>
 <!--             <span class="searchResultRating searchResultRatingScheme searchResultRatingText rating-{{review.overall_value|floatformat:"0"}} pull-right" style="margin-left:0;">
                 {#review.overall_value|floatformat:"1"#}
             </span> -->
@@ -44,7 +44,7 @@
         </div>
     </div>
 </div>
-<hr class="dottedSeparator dottedSeparatorIncresedMargin">
+<hr class="dottedSeparator">
 <!-- 
     <span>
         <span class="trunc-comment">{{ review.intro }}</span>
