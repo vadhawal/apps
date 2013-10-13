@@ -94,11 +94,11 @@ var install_action_handlers = function($parent_element){
     install_voting_handlers($parent_element);
     install_toggle_comment_handler($parent_element); //inherited from comment.handlers.js
     install_comment_on_object_handler($parent_element);
+    install_share_object_handler($parent_element);
     if($parent_element)
     {
 	    $parent_element.find('.deleteAction').off("click", delete_action_handler).on("click", delete_action_handler);
 	    $parent_element.find('.shareaction').off("click", share_action_handler).on("click", share_action_handler);
-	    $parent_element.find('.shareObject').off("click", share_object_handler).on("click", share_object_handler);
 	    $parent_element.find('.followpost').off("click", follow_post_handler).on("click", follow_post_handler);
 	    $parent_element.find('.unfollowpost').off("click", unfollow_post_handler).on("click", unfollow_post_handler);
 	    $parent_element.find('a.album_in_feed').off('click').on('click', album_in_feed_handler);
@@ -109,7 +109,6 @@ var install_action_handlers = function($parent_element){
 	{
 	    $('.deleteAction').off("click", delete_action_handler).on("click", delete_action_handler);
 	    $('.shareaction').off("click", share_action_handler).on("click", share_action_handler);
-	    $('.shareObject').off("click", share_object_handler).on("click", share_object_handler);
 	    $('.followpost').off("click", follow_post_handler).on("click", follow_post_handler);
 	    $('.unfollowpost').off("click", unfollow_post_handler).on("click", unfollow_post_handler);
 	    $('a.album_in_feed').off('click').on('click', album_in_feed_handler);

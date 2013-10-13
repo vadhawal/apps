@@ -217,6 +217,15 @@ var install_delete_object_handler = function($parent_element) {
     }
 }
 
+var install_share_object_handler =  function($parent_element) {
+    if($parent_element) {
+        $parent_element.find('.shareObject').off('click', share_object_handler).on('click', share_object_handler);
+    }
+    else {
+        $('.shareObject').off('click', share_object_handler).on('click', share_object_handler);
+    }
+}
+
 $(document).ready(function() {
     install_follow_handlers();
     $('.vendorFollowers').on("click", display_popup_handler);
@@ -224,8 +233,8 @@ $(document).ready(function() {
     $(".imgIframe").off("click", img_iframe_handler).on("click", img_iframe_handler);
     $('.shareDeal').off("click", sharewish_handler).on('click', sharewish_handler);
     $('.share_store').off("click", share_store_handler).on("click", share_store_handler);
-    $('.shareObject').off("click", share_object_handler).on("click", share_object_handler);
     $('.store_sharers').off("click", display_popup_handler).on("click", display_popup_handler);
+    install_share_object_handler();
     install_delete_object_handler();
 });
 
