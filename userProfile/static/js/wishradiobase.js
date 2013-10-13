@@ -179,6 +179,44 @@ var share_object_handler = function(event) {
     return false;
 };
 
+var delete_object_handler = function(event) {
+    if(login_required_handler())
+        return false;
+    
+    var $elementClicked = $(this);
+    var link =  $elementClicked.data("href");
+
+    $.get(link, {}, function(data) {
+        var dataResult = JSON.parse(data);
+        if(dataResult.success == true) {
+             alert('object deleted');
+        }
+        else {
+            if(dataResult.error_codes.indexOf(400) != -1) {
+                alert('Unauthorized Action!')
+            }
+            else if(dataResult.error_codes.indexOf(401) != -1) {
+                alert('Object Does Not Exist!')
+            }
+            else if(dataResult.error_codes.indexOf(402) != -1) {
+                alert('Only supported through Ajax!');
+            }
+        }
+    });
+    event.stopPropagation();
+    event.preventDefault();
+    return false;    
+}
+
+var install_delete_object_handler = function($parent_element) {
+    if($parent_element) {
+        $parent_element.find('.deleteObject').off('click', delete_object_handler).on('click', delete_object_handler);
+    }
+    else {
+        $('.deleteObject').off('click', delete_object_handler).on('click', delete_object_handler);
+    }
+}
+
 $(document).ready(function() {
     install_follow_handlers();
     $('.vendorFollowers').on("click", display_popup_handler);
@@ -188,5 +226,6 @@ $(document).ready(function() {
     $('.share_store').off("click", share_store_handler).on("click", share_store_handler);
     $('.shareObject').off("click", share_object_handler).on("click", share_object_handler);
     $('.store_sharers').off("click", display_popup_handler).on("click", display_popup_handler);
+    install_delete_object_handler();
 });
 
