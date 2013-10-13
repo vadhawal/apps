@@ -31,7 +31,7 @@
             </span>
         </div>
         <div class="reviewTitle fontSize12 fontTitillium3">
-            {{review.introchars}}
+            {{review.introchars}}<a class="radioColor" href ="{% url render_review review.content_object.slug review.id %}">&nbsp;Read Full Review</a>
 <!--             <span class="searchResultRating searchResultRatingScheme searchResultRatingText rating-{{review.overall_value|floatformat:"0"}} pull-right" style="margin-left:0;">
                 {#review.overall_value|floatformat:"1"#}
             </span> -->
