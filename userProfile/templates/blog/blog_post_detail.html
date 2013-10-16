@@ -72,6 +72,7 @@
                 install_voting_handlers($('#commentContainer'));
                 install_review_voting_handler($('#commentContainer'));
                 install_delete_object_handler($('#commentContainer'));
+                install_comment_on_object_handler($('#commentContainer'));
                 $('.editReview').on('click', function(event){
                         $("<div id='pop_up'><span class='button b-close'><span>X</span></span></div>").appendTo("body").addClass('popup');
                         $('#pop_up').bPopup({
