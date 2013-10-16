@@ -60,6 +60,7 @@
             {% if request.user == comment.user %}
                 {% get_delete_object_url comment as delete_review_url %}
                 <div><a class="deleteObject" data-href="{{delete_review_url}}" href="#">Delete</a></div>
+                <div><a class="editReview" href="{% url 'edit_review' comment.id %}">Edit</a>
             {% endif %}
 
         <p>{{ comment.comment|comment_filter }}</p>
