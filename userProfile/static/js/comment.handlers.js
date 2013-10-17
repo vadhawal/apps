@@ -62,6 +62,8 @@ var comment_on_object_handler = function(event){
 };
 
 var edit_review_handler = function(event) {
+	if(login_required_handler())
+        return false;
     $("<div id='pop_up'><span class='button b-close'><span>X</span></span></div>").appendTo("body").addClass('popup');
     $('#pop_up').bPopup({
         content:'ajax',
@@ -75,6 +77,8 @@ var edit_review_handler = function(event) {
 };
 
 var write_review_handler = function(event) {
+	if(login_required_handler())
+        return false;
     $("<div id='pop_up'><span class='button b-close'><span>X</span></span></div>").appendTo("body").addClass('popup');
     $('#pop_up').bPopup({
         content:'ajax',
