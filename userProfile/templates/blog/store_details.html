@@ -30,7 +30,7 @@
 		</div>
 	</div>
 	<div class="row">
-		<div class="span7">
+		<div class="span7" id="commentContainer">
 			{% block blog_post_detail_comments %}
 			{% if blog_post.allow_comments %}
 				{% comments_for blog_post %}

@@ -67,7 +67,7 @@ var edit_review_handler = function(event) {
     $("<div id='pop_up'><span class='button b-close'><span>X</span></span></div>").appendTo("body").addClass('popup');
     $('#pop_up').bPopup({
         content:'ajax',
-        loadUrl:$(this).attr("href"),
+        loadUrl:$(this).data("href"),
         zIndex: 2,
         onClose: function(){ $('#pop_up').remove(); },
         scrollBar:'true',
@@ -82,7 +82,7 @@ var write_review_handler = function(event) {
     $("<div id='pop_up'><span class='button b-close'><span>X</span></span></div>").appendTo("body").addClass('popup');
     $('#pop_up').bPopup({
         content:'ajax',
-        loadUrl:$(this).attr("href"),
+        loadUrl:$(this).data("href"),
         zIndex: 2,
         onClose: function(){ $('#pop_up').remove(); },
         scrollBar:'true',
@@ -203,11 +203,11 @@ var install_review_handlers = function($parent_element) {
     install_comment_on_object_handler($parent_element);
     if($parent_element) {
         $parent_element.find('.editReview').off('click', edit_review_handler ).on('click', edit_review_handler);
-        $parent_element.find('.writeReview').on('click', write_review_handler).on('click', write_review_handler);
+        $parent_element.find('.writeReview').off('click', write_review_handler).on('click', write_review_handler);
     }
     else {
         $('.editReview').off('click', edit_review_handler ).on('click', edit_review_handler);
-        $('.writeReview').on('click', write_review_handler).on('click', write_review_handler);
+        $('.writeReview').off('click', write_review_handler).on('click', write_review_handler);
     }
 
 }
