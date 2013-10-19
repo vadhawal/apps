@@ -81,10 +81,9 @@ $(document).ready(function() {
         });
     }
 
-    function doBroadcastFormReset() {
+    function doBroadcastFormReset(doRefreshActivity) {
         $('#broadcast').trigger('reset');
         $('.progress').hide(); 
-        $('#refreshActivity').click();
         $('#previewimg').html('');
         $('#categories').hide();
         $('#deal_categories').hide();
@@ -95,6 +94,8 @@ $(document).ready(function() {
         $('#submitwithurl').hide();
         $('#submitwithouturl').show();
         clearPreviewIfAny();
+        if(doRefreshActivity)
+            $('#refreshActivity').click();
     }
 
     function doHandleBroadcastFormError(ret_data) {
@@ -150,8 +151,16 @@ $(document).ready(function() {
             },
             complete: function(xhr) {
                 var ret_data = JSON.parse(xhr.responseText);
-                if(ret_data.success == true)
-                    doBroadcastFormReset();
+                if(ret_data.success == true){
+                    var crop_url = ret_data.crop_url;
+                    if(crop_url) {
+                        doOpenUrlInFancyBox(crop_url);
+                        doBroadcastFormReset(false);
+                    }
+                    else {
+                       doBroadcastFormReset(true); 
+                    }
+                }
                 else
                     doHandleBroadcastFormError(ret_data);
             }
@@ -200,7 +209,7 @@ $(document).ready(function() {
     viewFeed(); 
     setInterval(function () {
         checkAnyLatestActivity();
-    }, 10000);
+    }, 30000);
 
     $(window).debounce('scroll', feedUpdater, 100);
 }); 

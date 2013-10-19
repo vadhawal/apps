@@ -15,6 +15,8 @@ from mezzanine.blog.models import BlogCategory, BlogParentCategory
 from mezzanine.conf import settings
 from mezzanine.generic.fields import CommentsField
 from django.contrib.contenttypes.models import ContentType
+from cropper.models import Original
+
 try:
     from django.utils import timezone
     now = timezone.now
@@ -158,7 +160,7 @@ class GenericWish(Broadcast):
     content_type = models.ForeignKey(ContentType)
     object_id = models.CharField(max_length=255)
     timestamp = models.DateTimeField(default=now)
-    wishimage = ResizedImageField(upload_to=get_wishimage_upload_path, blank=True)
+    wishimage = models.OneToOneField(Original, null=True, blank=True)
     urlPreviewContent = models.TextField(blank=True, verbose_name=_("UrlPreview"))
 
     objects = GenericWishManager()

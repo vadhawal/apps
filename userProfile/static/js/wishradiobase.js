@@ -226,6 +226,20 @@ var install_share_object_handler =  function($parent_element) {
     }
 }
 
+var doOpenUrlInFancyBox = function(url) {
+    $("<a href='"+url +"'></a>").appendTo("body").addClass('cropImageFancyBox');
+    $('a.cropImageFancyBox').fancybox({
+        'frameWidth'    :       500,
+        'frameHeight'   :       500,
+        'hideOnContentClick': false, 
+        'type':'iframe',
+         onClosed: function(){
+            $('a.cropImageFancyBox').remove();
+         }
+    }); 
+    $('a.cropImageFancyBox').click();
+}
+
 $(document).ready(function() {
     install_follow_handlers();
     $('.vendorFollowers').on("click", display_popup_handler);

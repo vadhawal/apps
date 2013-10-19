@@ -279,7 +279,7 @@
 
 				href  = opts.href  || obj.href || (isString(element) ? element : null);
 				title = opts.title !== undefined ? opts.title : obj.title || '';
-				relDataUrl	= element.data('reldata-url')
+
 				content = opts.content || obj.content;
 				type    = content ? 'html' : (opts.type  || obj.type);
 

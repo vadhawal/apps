@@ -9,12 +9,12 @@
         </span>
     </div>
 </div>
-{% if post.wishimage %}
+{% if post.wishimage and post.wishimage.image %}
     <div class="row" style="margin-top:10px; margin-bottom:10px;">
         <div class="span6 pagination-centered">
             {% get_reldata_url post as rel_data_url %}
-            {% thumbnail post.wishimage "800x400" as img %} 
-                <a class="wishimg-post{{post.id}}" href="{{  post.wishimage.url }}" data-reldata-url="{{rel_data_url}}">
+            {% thumbnail post.wishimage.image "800x400" as img %} 
+                <a class="wishimg-post{{post.id}}" href="{{  post.wishimage.image.url }}" data-reldata-url="{{rel_data_url}}">
                     <img src="{{ MEDIA_URL }}{{img}}" style="max-height:250px;">
                 </a> 
                 <script type="text/javascript">

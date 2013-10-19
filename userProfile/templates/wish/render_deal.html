@@ -5,10 +5,10 @@
 <ul class="unstyled">
         <li>
         <span class="message">
-        {% if deal.wishimage %}
+        {% if deal.wishimage and deal.wishimage.image %}
             {% get_reldata_url deal as rel_data_url %}
-        	{% thumbnail deal.wishimage "500x400" as img %} 
-                <a class="wishimg-deal{{deal.id}}" href="{{  deal.wishimage.url }}" data-reldata-url="{{rel_data_url}}">
+        	{% thumbnail deal.wishimage.image "500x400" as img %} 
+                <a class="wishimg-deal{{deal.id}}" href="{{  deal.wishimage.image.url }}" data-reldata-url="{{rel_data_url}}">
                     <img style="margin-right:20px;" src="{{ MEDIA_URL }}{{img}}">
                 </a> 
                 <script type="text/javascript">
