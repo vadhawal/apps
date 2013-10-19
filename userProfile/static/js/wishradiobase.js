@@ -67,8 +67,8 @@ var FollowUnfollow = function($elementClicked, new_count) {
     var $followerCountElement = $("#" + $elementClicked.data("id"));
     if ($followerCountElement) {
         console.log($followerCountElement.html());
-        var newHTML = new_count;
-        $followerCountElement.html(newHTML);
+        var newHTML = "("+new_count+")";
+        $followerCountElement.text(newHTML);
     }
 }
 
@@ -78,10 +78,6 @@ var follow_handler = function(event) {
 
     var $elementClicked = $(this);
     $elementClicked.off("click", follow_handler);
-    var $followerCountElement = $("#" + $elementClicked.data("id"));
-    var followerCount = $followerCountElement.html();
-    followerCount = parseInt(followerCount) + 1;
-    $followerCountElement.html(followerCount);
     var url =  $elementClicked.data("href");
 
     $.post(url, {}, function(data) {
@@ -105,10 +101,6 @@ var unfollow_handler = function(event) {
     var $elementClicked = $(this);
     $elementClicked.off("click", unfollow_handler);
     var url =  $elementClicked.data("href");
-    var $followerCountElement = $("#" + $elementClicked.data("id"));
-    var followerCount = $followerCountElement.html();
-    followerCount = parseInt(followerCount) - 1;
-    $followerCountElement.html(followerCount);
 
     $.post(url, {}, function(data) {
         var return_val = JSON.parse(data)

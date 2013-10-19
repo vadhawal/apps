@@ -1,0 +1,35 @@
+{% load activity_tags %}
+{% load userProfile_tags %}
+{% load mezzanine_tags %}
+{% load future %}
+
+<div class="span6" style="height:22px;">
+    <span class="radioModuleFeedRadio"></span>
+    <span class="radioModuleFeedContainer fontTitillium1 fontSize12">
+    	{% include 'generic/includes/render_voting.html' with object=comment %}
+    	{% get_share_count comment as share_count %}
+		<a href="#" data-href="{# url "shareStore" comment.id #}" class="share_store">Share</a>
+		{% broadcasters_for_object comment as broadcasters_url %}
+		<a class="store_sharers" href="{{broadcasters_url}}" data-href="#">({{share_count}})</a>
+		{% include 'actstream/render_comment_text.html' with object=comment %}
+    </span>
+        {% if request.user == comment.user %}
+            <span class="manageFeed" onclick="var $this = $(this); if ( $this.hasClass('manageFeedUp') ) { $this.removeClass('manageFeedUp moveManageFeedUp'); $this.parent().find('.whiteBox').hide();} else { $this.addClass('manageFeedUp moveManageFeedUp'); $this.parent().find('.whiteBox').show().css({'display': 'inline-block', 'position': 'relative'});}"></span>
+            <span style="height:50px;display:none;padding:0px 15px;" class="whiteBox">
+            	{% get_delete_object_url comment as delete_review_url %}
+                <span style="line-height:25px;float:left;">
+                    <a class="editReview" href="{% url 'edit_review' comment.id %}">Edit</a>
+                </span>
+                <span style="line-height:25px;float:left;clear:both;">
+                    <a class="deleteObject" data-href="{{delete_review_url}}" href="#">Delete</a>
+                </span>
+            </span>
+        {% else %}
+            <span class="manageFeed" onclick=" if ( $(this).hasClass('manageFeedUp') ) { $(this).removeClass('manageFeedUp'); $(this).parent().find('.whiteBox').hide();} else { $(this).addClass('manageFeedUp'); $(this).parent().find('.whiteBox').show().css({'display': 'inline-block', 'position': 'relative'});}"></span>
+            <span style="height:25px;line-height:25px;display:none;padding:0px 15px;" class="whiteBox">
+                <span>
+                    {% include 'actstream/render_spam_report.html' with object=comment %}
+                </span>
+            </span>
+        {% endif %}
+</div>

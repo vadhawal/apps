@@ -41,18 +41,16 @@ img.current {
 #image-view {
     margin-right: 300px;
 }
-
 .album-list .album {
-    //width: 160px;
-    //height: 200px;
-    float: left;
-    padding: 5px;
-    margin: 10px;
+    width: 130px;
+    display: inline-block;
+    vertical-align: top;
 }
 
 .album-name {
     width: 100%;
     text-align: center;
+    clear:both;
 }
 
 .album-user {
@@ -63,19 +61,31 @@ img.current {
 }
 
 .album_photos_ex {
-    height: 150px;
-    width: 150px;
-    display: table-cell;
     vertical-align: middle;
-    text-align: center;   
+    text-align: center;
+}
+
+.album_photos_ex img{
+    width: 100px;
+    height: 100px;
+    max-height:100px;
 }
 
 .album-head {
-    display: table-cell;
+    width:100px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .album-head a {
     text-align: center;
+    font-size: 11px;
+    font-family: titillium1;
+}
+.album-head span {
+    text-align: center;
+    font-size: 11px;
+    font-family: titillium1;
 }
 
 .user-info {

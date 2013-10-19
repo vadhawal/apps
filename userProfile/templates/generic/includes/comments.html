@@ -29,5 +29,7 @@ $(function() {
 {% endif %}
 </div>
 <div>
-<a class="writeReview" href="{% write_review_for_obj_url object_for_comments %}">Write a Review</a>
+{% if object_for_comments|get_class_name == "BlogPost" %}
+	<button class="writeReview rateStoreNow radioColorBackground colorWhite fontTitillium1 fontSize13 pull-right bottomHalfGutter topHalfGutter" data-href="{% write_review_for_obj_url object_for_comments %}">Write a Review</button>
+{% endif %}
 </div>

@@ -132,6 +132,12 @@ a:hover {
 	color: #5D5D5D;
 	color: rgb(93, 93, 93);
 }
+.colorWhite{
+	color: white;
+}
+.colorBlack{
+	color: black;
+}
 .colorDarkerGrey{
 	color : #64635F;
 	color : rgb(100, 99, 95);
@@ -390,4 +396,70 @@ form.comment_on_object{
 }
 .dottedSeparatorIncresedMarginBottom {
 	margin-bottom: 8px;
+}
+.radioModuleFeedRadio{
+	background-image: url('/static/img/radio_dark_small.png');
+	background-repeat: no-repeat;
+	background-position: bottom;
+	width: 19px;
+	height: 22px;
+	display: inline-block;
+	vertical-align: top;
+}
+.radioModuleFeedContainer{
+	display: inline-block;
+	background : #FFFFFF;
+	background : rgba(255, 255, 255, 1);
+	border-style : Solid;
+	border-color : #D1D3D2;
+	border-color : rgba(209, 211, 210, 1);
+	border-width : 1px;
+	-webkit-box-shadow : 1px 1px 1px rgba(197,189,189,0.75) inset;
+	box-shadow : 1px 1px 1px rgba(197,189,189,0.75) inset;
+	height: 24px;
+	vertical-align: top;
+	line-height: 24px;
+	margin-left: 20px;
+	position: relative;
+}
+.radioModuleFeedContainer a{
+	margin-left: 10px;
+	margin-right: 10px;
+}
+.radioModuleFeedContainer:before{
+	content: '';
+	position: absolute;
+	left: -14px;
+	top: 6px;
+	width: 0;
+	height: 0;
+	border-top: 6px solid transparent;
+	border-bottom: 6px solid transparent;
+	border-right: 14px solid rgba(209, 211, 210, 1);
+}
+.socialShare{
+	background-color : #F9DF1E;
+	background-color : rgba(249, 223, 30, 1);
+	padding: 1px 10px 5px 10px;
+	font-size: 18px;
+}
+.categoryTag {
+	box-shadow: 1px 1px 1px rgb(2, 151, 149);;
+	padding-left: 5px;
+	padding-right: 5px;
+}
+.manageFeed{
+	background-image: url('/static/img/manage_feed_down.png');
+	background-repeat: no-repeat;
+	background-position: 0px 10px;
+	width: 10px;
+	height:25px;
+	display: inline-block;
+}
+.manageFeedUp{
+	background-image: url('/static/img/manage_feed_up.png');
+}
+.moveManageFeedUp{
+	position: relative;
+	top:-25px;
 }
