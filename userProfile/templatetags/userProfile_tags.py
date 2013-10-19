@@ -97,6 +97,32 @@ def get_review_count(parser, token):
         raise template.TemplateSyntaxError("second argument to '%s' tag must be 'as'" % bits[0])
     return ReviewCount(bits[1], bits[3])
 
+class GetVendorsUrl(template.Node):
+    def __init__(self, subcategory_slug, context_var):
+        self.subcategory_slug = template.Variable(subcategory_slug)
+        self.context_var = context_var
+
+    def render(self, context):
+        subcategory_slug_instance = self.subcategory_slug.resolve(context)
+        try:
+            subcategory_instance = BlogCategory.objects.get(slug=slugify(subcategory_slug_instance))
+            parent_category = subcategory_instance.parent_category
+            url = reverse('get_vendors', kwargs={'parent_category_slug':parent_category.slug,'sub_category_slug':slugify(subcategory_slug_instance)})
+            context[self.context_var] = url 
+        except:
+            context[self.context_var] = '#'
+            pass
+        return  ''
+
+@register.tag
+def get_vendors_url(parser, token):
+    bits = token.contents.split()
+    if len(bits) != 4:
+        raise template.TemplateSyntaxError("'%s' tag takes exactly three arguments" % bits[0])
+    if bits[2] != 'as':
+        raise template.TemplateSyntaxError("second argument to '%s' tag must be 'as'" % bits[0])
+    return GetVendorsUrl(bits[1], bits[3])
+
 class ReviewsByUser(template.Node):
     def __init__(self, user, context_var):
         self.user = template.Variable(user)
