@@ -30,11 +30,11 @@
 
 {#% include 'actstream/render_subcomments.html' with object=deal %#}
 
-{% if deal.wishimage %}
+{% if deal.wishimage and deal.wishimage.image %}
     {% get_reldata_url deal as rel_data_url %}
-	{% thumbnail deal.wishimage "400x400" as img %}
+	{% thumbnail deal.wishimage.image "400x400" as img %}
     <div class="dealBox_h_elem"> 
-        <a class="wishimg-deal-homepage" href="{{  deal.wishimage.url }}" rel="homepage_deals" data-reldata-url="{{rel_data_url}}" style="">
+        <a class="wishimg-deal-homepage" href="{{  deal.wishimage.image.url }}" rel="homepage_deals" data-reldata-url="{{rel_data_url}}" style="">
             <img src="{{img.url}}">
         </a>
         <div class="whiteBoxGlassy pagination-centered">

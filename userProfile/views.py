@@ -24,6 +24,8 @@ from actstream import actions
 from follow.models import Follow
 from actstream.models import Follow as _Follow
 from voting.models import Vote
+from cropper.models import Original
+from PIL import Image
 import datetime
 
 
@@ -70,13 +72,18 @@ def userwish(request):
 		wishimageobj = None
 		error_codes = []
 		expiry_date_valid = True
+		broadcast_obj = None
 
 		actor = request.POST.get('actor', None)
 		message = request.POST.get('message', '')
 		urlPreviewContent = request.POST.get('urlPreviewContent','')
+		originalImageObj = None
 		if 'wishimage' in request.FILES:
 			wishimageobj = request.FILES['wishimage']
-								
+			img = Image.open(wishimageobj)
+			width, height = img.size
+			originalImageObj = Original.objects.create(image=wishimageobj, image_width=width, image_height=height)
+
 		if message == '' and urlPreviewContent == '' and not wishimageobj:
 			error_codes.append(settings.POST_DATA_REQUIRED)
 
@@ -125,13 +132,14 @@ def userwish(request):
 				blog_post = blog_posts[0]
 				ctype = ContentType.objects.get_for_model(BlogPost)
 				broadcast_obj = None
+
 				if post_as_deal:
-					broadcast_obj = BroadcastDeal.objects.create_vendor_deal_object(request.user, blog_category, blog_parentcategory, message, ctype, blog_post.pk, wishimageobj, urlPreviewContent, deal_expiry_date)
+					broadcast_obj = BroadcastDeal.objects.create_vendor_deal_object(request.user, blog_category, blog_parentcategory, message, ctype, blog_post.pk, originalImageObj, urlPreviewContent, deal_expiry_date)
 					action.send(blog_post, verb=settings.DEAL_POST_VERB, target=broadcast_obj)
 					actions.follow(request.user, broadcast_obj, send_action=False, actor_only=False) 
 					Follow.objects.get_or_create(request.user, broadcast_obj)
 				else:
-					broadcast_obj = GenericWish.objects.create_generic_wish_object(request.user, message, ctype, blog_post.pk, wishimageobj, urlPreviewContent)
+					broadcast_obj = GenericWish.objects.create_generic_wish_object(request.user, message, ctype, blog_post.pk, originalImageObj, urlPreviewContent)
 					action.send(blog_post, verb=settings.SAID_VERB, target=broadcast_obj)
 					actions.follow(request.user, broadcast_obj, send_action=False, actor_only=False) 
 					Follow.objects.get_or_create(request.user, broadcast_obj)
@@ -167,10 +175,10 @@ def userwish(request):
 				broadcast_obj = None
 				verb_str = ''
 				if post_as_wish:
-					broadcast_obj = BroadcastWish.objects.create_user_wish_object(request.user, blog_category , blog_parentcategory, message, ctype, request.user.pk, wishimageobj, urlPreviewContent )
+					broadcast_obj = BroadcastWish.objects.create_user_wish_object(request.user, blog_category , blog_parentcategory, message, ctype, request.user.pk, originalImageObj, urlPreviewContent )
 					verb_str=settings.WISH_POST_VERB
 				else:
-					broadcast_obj = GenericWish.objects.create_generic_wish_object(request.user, message, ctype, request.user.pk, wishimageobj, urlPreviewContent)
+					broadcast_obj = GenericWish.objects.create_generic_wish_object(request.user, message, ctype, request.user.pk, originalImageObj, urlPreviewContent)
 					verb_str=settings.SAID_VERB
 				
 				action.send(request.user, verb=verb_str, target=broadcast_obj)
@@ -178,7 +186,10 @@ def userwish(request):
 				Follow.objects.get_or_create(request.user, broadcast_obj)
 
 	if request.is_ajax():
-		return json_success_response()
+		if broadcast_obj.wishimage:
+			return HttpResponse(simplejson.dumps(dict(success=True, crop_url=broadcast_obj.wishimage.get_absolute_url())))
+		else:
+			return json_success_response()
 	else:
 		return render_to_response('broadcast_success.html', {}, RequestContext(request))
 
