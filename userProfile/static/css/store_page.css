@@ -1,0 +1,63 @@
+div a.siteURL{
+	color: #029795;
+	color: rgb(2, 151, 149);
+}
+.progress{
+	border-radius: 0;
+	margin: 0;
+	height: 10px;
+	width: 135px;
+	margin-bottom: 15px;
+}
+.progress .bar-success{
+	background-color: #029795;
+	background-image: none;
+}
+.rateStoreNow{
+	color: white;
+	background-color: #029795;
+	border: 0;
+	padding: 6px 10px;
+}
+a#vendor_followers{
+	display: inline-block;
+	margin-left:0;
+}
+span#vendorFollowContainer a{
+	margin-right: 0;
+	width: initial;
+}
+span#vendorFollowContainer a.icon-follow{
+	display: inline-block;
+}
+span#vendorFollowContainer a.icon-following{
+	display: none;
+}
+span#vendorFollowContainer a.icon-unfollow{
+	display:none;
+}
+span#vendorFollowContainer.following a.icon-follow{
+	display: none;
+}
+span#vendorFollowContainer.following a.icon-following{
+	display: inline-block;
+}
+span#vendorFollowContainer.following a.icon-unfollow{
+	display: none;
+}
+.categories img{
+	box-shadow: none;
+}
+span#vendorFollowContainer.following:hover a.icon-following{
+	display: none;
+}
+span#vendorFollowContainer.following:hover a.icon-unfollow{
+	display: inline-block;
+}
+a.share_store{
+	margin-right: 0;
+}
+a.store_sharers{
+	margin: 0;
+	margin-right: 10px;
+}

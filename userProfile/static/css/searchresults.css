@@ -15,10 +15,15 @@
 }
 .searchResultRating {
 	cursor: default;
-	margin-left: 15px;
-	padding: 0px;
-	padding-left: 3px;
-	padding-right: 3px;
+	font-family: titillium1;
+	font-size: 17px;
+	padding: 10px 15px;
+	box-sizing: border-box;
+}
+.searchResultRatingSmall {
+	width:15px;
+	height:10px;
+	box-sizing: border-box;
 }
 .reviewTitle{
 	color: rgb(99, 98, 91);
@@ -26,50 +31,37 @@
 .searchResultRatingScheme {
 	background-attachment: scroll;
 	background-clip: border-box;
-	background-color: rgb(91, 168, 41);
+	background-color: rgb(2, 151, 149);
 	background-image: none;
 	background-origin: padding-box;
-	color: #605D5A;
-  	color: rgb(96, 93, 90);
+  	color: white;
 }
 .darken{
 	font-weight: 500;
 }
 .rating-0 {
-	background : #D1D0C1;
-  	background : rgba(209, 208, 193, 0.4);
-  	filter: alpha(opacity=40) progid:DXImageTransform.Microsoft.Alpha(opacity=40) ;
-	/*background-color: rgb(222, 29, 15);*/
+	background-color: #E2DEC7;
+	background-color: rgba(226, 222, 199, 1);
 }
 .rating-1 {
-	background : #D1D0C1;
-  	background : rgba(209, 208, 193, 0.4);
-  	filter: alpha(opacity=40) progid:DXImageTransform.Microsoft.Alpha(opacity=40) ;
-	/*background-color: rgb(255, 120, 0);*/
+	background-color: #E0CE65;
+	background-color: rgba(224, 206, 101, 1);
 }
 .rating-2 {
-	background : #D1D0C1;
-  	background : rgba(209, 208, 193, 0.4);
-  	filter: alpha(opacity=40) progid:DXImageTransform.Microsoft.Alpha(opacity=40) ;
-	/*background-color: rgb(255, 186, 0);*/
+	background-color: #F9DF1E;
+	background-color: rgba(249, 223, 30, 1);
 }
 .rating-3 {
-	background : #D1D0C1;
-  	background : rgba(209, 208, 193, 0.4);
-  	filter: alpha(opacity=40) progid:DXImageTransform.Microsoft.Alpha(opacity=40) ;
-	/*background-color: rgb(154, 205, 50);*/
+	background-color: #CC830E;
+	background-color: rgba(204, 131, 14, 1);
 }
 .rating-4 {
-	background : #D1D0C1;
-  	background : rgba(209, 208, 193, 0.4);
-  	filter: alpha(opacity=40) progid:DXImageTransform.Microsoft.Alpha(opacity=40) ;
-	/*background-color: rgb(91, 168, 41);*/
+	background-color: #029795;
+	background-color: rgba(2, 151, 149, 1);
 }
 .rating-5 {
-	background : #D1D0C1;
-  	background : rgba(209, 208, 193, 0.4);
-  	filter: alpha(opacity=40) progid:DXImageTransform.Microsoft.Alpha(opacity=40) ;
-	/*background-color: rgb(63, 126, 0);*/
+	background-color: #056861;
+  	background-color: rgba(5, 104, 97, 1);
 }
 .infoSpace{
 	margin-right: 4px;

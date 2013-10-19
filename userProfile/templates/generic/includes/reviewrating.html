@@ -1,60 +1,92 @@
-{% load reviewrating_tags i18n future %}
+{% load i18n %}
 
-<div class="panel rating">
-
-<div id="reviewrating-{{ reviewrating_object.id }}">
-	<p>
-	Total Ratings: {{overall_count}} <br/>
-	Excellent : {{overall_excellentR}} / {{overall_count}} <br/>
-	Very Good : {{overall_verygoodR}} / {{overall_count}} <br/>
-	Average : {{overall_averageR}} / {{overall_count}} <br/>
-	Poor : {{overall_poorR}} / {{overall_count}} <br/>
-	Terrible : {{overall_terribleR}} / {{overall_count}} <br/>
-    </p>
-	<p>
-    {% if overall_average %}
-    {% trans "Current Overall rating" %}: {{ overall_average|floatformat }}
-    {% else %}
-    {% trans "Currently unrated Overall" %}
-    {% endif %}
-    </p>
-	<p>
-    {% if price_average %}
-    {% trans "Current Price rating" %}: {{ price_average|floatformat }}
-    {% else %}
-    {% trans "Currently unrated on Price" %}
-    {% endif %}
-    </p>
-    <p>
-    {% if variety_average %}
-    {% trans "Current Variety rating" %}: {{ variety_average|floatformat }}
-    {% else %}
-    {% trans "Currently unrated on Variety" %}
-    {% endif %}
-    </p>
-    <p>
-    {% if quality_average %}
-    {% trans "Current Quality rating" %}: {{ quality_average|floatformat }}
-    {% else %}
-    {% trans "Currently unrated on Quality" %}
-    {% endif %}
-    </p>
-    <p>
-    {% if service_average %}
-    {% trans "Current Service rating" %}: {{ service_average|floatformat }}
-    {% else %}
-    {% trans "Currently unrated on Service" %}
-    {% endif %}
-    </p>
-    <p>
-    {% if exchange_average %}
-    {% trans "Current Exchange rating" %}: {{ exchange_average|floatformat }}
-    {% else %}
-    {% trans "Currently unrated on Exchange" %}
-    {% endif %}
-    </p>
-</div>
-
-<br style="clear:both">
-
+<div class="row fontTitillium1 fontSize13">
+    <div class="span4">
+        <div class="row">
+            <div class="span1">
+                {% trans "Excellent" %}&nbsp;&nbsp;
+            </div>
+            <div class="span2 progress halfGutter">
+                <div class="bar bar-success" role="progressbar" aria-valuenow="{% widthratio overall_excellentR overall_count 100 %}" aria-valuemin="0" aria-valuemax="100" style="width: {% widthratio overall_excellentR overall_count 100 %}%">
+                </div>
+            </div>
+            <div class="span1 halfGutter">
+                {% widthratio overall_excellentR overall_count 100 %}%
+            </div>
+        </div>
+            <div class="row">
+            <div class="span1">
+                {% trans "Very Good" %}&nbsp;&nbsp;
+            </div>
+            <div class="span2 progress halfGutter">
+                <div class="bar bar-success" role="progressbar" aria-valuenow="{% widthratio overall_verygoodR overall_count 100 %}" aria-valuemin="0" aria-valuemax="100" style="width: {% widthratio overall_verygoodR overall_count 100 %}%">
+                </div>
+            </div>
+            <div class="span1 halfGutter">
+                {% widthratio overall_verygoodR overall_count 100 %}%
+            </div>
+        </div>
+            <div class="row">
+            <div class="span1">
+                {% trans "Average" %}&nbsp;&nbsp;
+            </div>
+            <div class="span2 progress halfGutter">
+                <div class="bar bar-success" role="progressbar" aria-valuenow="{% widthratio overall_averageR overall_count 100 %}" aria-valuemin="0" aria-valuemax="100" style="width: {% widthratio overall_averageR overall_count 100 %}%">
+                </div>
+            </div>
+            <div class="span1 halfGutter">
+                {% widthratio overall_averageR overall_count 100 %}%
+            </div>
+        </div>
+            <div class="row">
+            <div class="span1">
+                {% trans "Poor" %}&nbsp;&nbsp;
+            </div>
+            <div class="span2 progress halfGutter">
+                <div class="bar bar-success" role="progressbar" aria-valuenow="{% widthratio overall_poorR overall_count 100 %}" aria-valuemin="0" aria-valuemax="100" style="width: {% widthratio overall_poorR overall_count 100 %}%">
+                </div>
+            </div>
+            <div class="span1 halfGutter">
+                {% widthratio overall_poorR overall_count 100 %}%
+            </div>
+        </div>
+            <div class="row">
+            <div class="span1">
+                {% trans "Terrible" %}&nbsp;&nbsp;
+            </div>
+            <div class="span2 progress halfGutter" style="margin-bottom:0;">
+                <div class="bar bar-success" role="progressbar" aria-valuenow="{% widthratio overall_terribleR overall_count 100 %}" aria-valuemin="0" aria-valuemax="100" style="width: {% widthratio overall_terribleR overall_count 100 %}%">
+                </div>
+            </div>
+            <div class="span1 halfGutter">
+                {% widthratio overall_terribleR overall_count 100 %}%
+            </div>
+        </div>
+    </div>
+    <div class="span3">
+        <div class="row">
+            <div class="span1">
+                {% trans "Overall Rating" %}
+            </div>
+            <div class="span2 noGutter">
+                <span class="searchResultRating searchResultRatingScheme rating-{{overall_average|floatformat:"0"}}">
+                {% if overall_average %}
+                    {{ overall_average|floatformat:"1" }}
+                {% else %}
+                    0
+                {% endif %}
+                </span>
+            </div>
+        </div>
+        <div class="row topHalfGutter">
+            <div class="span3">
+                Based on {{overall_count}} vote{{ overall_count|pluralize }}
+            </div>
+        </div>
+        <div class="row topHalfGutter">
+            <div class="span3">
+                <button class="rateStoreNow fontTitillium1 fontSize13">Rate {{blog_post.title}} Now</button>
+            </div>
+        </div>
+    </div>
 </div>

@@ -1,0 +1,34 @@
+{% load hitcount_tags blog_tags %}
+{% load follow_tags %}
+{% load activity_tags %}
+{% load userProfile_tags %}
+
+<div class="span6" style="height:22px;">
+    <span class="radioModuleFeedRadio"></span>
+    <span class="radioModuleFeedContainer fontTitillium1 fontSize12">
+    	<a href="#">
+    		Views ({% get_hit_count for blog_post %})
+    	</a>
+    	<a href="#reviews">
+    		Reviews ({{blog_post.comments_count}})
+    	</a>
+		{% get_share_count blog_post as share_count %}
+		<a href="#" data-href="{# url "shareStore" blog_post.id #}" class="share_store">Share</a>
+		{% broadcasters_for_object blog_post as broadcasters_url %}
+		<a class="store_sharers" href="{{broadcasters_url}}" data-href="#">({{share_count}})</a>
+
+		<span id="vendorFollowContainer" class="{% if request.user|is_following:blog_post %}following{% endif %}" >
+			<a href="#" class="follow-btn icon-follow" data-id="vendor_followers" data-href="{% follow_url blog_post %}">Follow</a>
+
+			<a class="icon-following" data-id="vendor_followers">Following</a>
+
+			<a href="#" class="unfollow-btn icon-unfollow" data-id="vendor_followers" data-href="{% follow_url blog_post %}">Unfollow</a>
+		</span>
+		{% vendor_follower_subset_info_url blog_post 0 request.user|follower_count:blog_post as subset_follower_url %}
+		<a id="vendor_followers" class="vendor_followers" href="{{subset_follower_url}}">({{  request.user|follower_count:blog_post }})</a>
+    </span>
+    <span class="socialShare fontTitillium halfGutter">
+    	+
+    </span>
+    <button class="rateStoreNow fontTitillium1 fontSize13 pull-right">Write a Review</button>
+</div>
