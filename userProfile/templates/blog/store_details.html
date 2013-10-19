@@ -2,46 +2,40 @@
 {% load future %}
 {% load comment_tags %}
 
-<div class="span7 whiteBox color5D">
+<div class="span7 color5D">
 	<div class="row">
 		<div class="span7">
-			<div class="row">
-				<div class="span7">
-					<h6 class="fontTitillium fontSize16 categories halfGutter">
-						<img src="{% static "img/categories.png" %}">
-						THE COLLECTION
-					</h6>
-				</div>
-			</div>
-			<div class="row">
-				<div class="span7">
-					<a id="viewAlbum" href="{% url "imagestore:user" blog_post.user %}"></a>
-					<div id="vendorAlbum">
-					</div>
-				</div>
+			<h6 class="fontTitillium fontSize16 categories">
+				<img src="{% static "img/categories.png" %}">
+				THE COLLECTION
+			</h6>
+		</div>
+	</div>
+	<div class="row">
+		<div class="span7">
+			<a id="viewAlbum" href="{% url "imagestore:user" blog_post.user %}"></a>
+			<div id="vendorAlbum">
 			</div>
 		</div>
 	</div>
-	<hr class="dottedSeparator">
-	<div class="row topHalfGutter">
+</div>
+<hr class="dottedSeparator">
+<div class="span7 topHalfGutter">
+	<div class="row">
 		<div class="span7">
-			<div class="row">
-				<div class="span7">
-					<h6 class="fontTitillium fontSize16 categories halfGutter">
-						<img src="{% static "img/shopTalk.png" %}">
-						REVIEWS
-					</h6>
-				</div>
-			</div>
-			<div class="row">
-				<div class="span7">
-					{% block blog_post_detail_comments %}
-					{% if blog_post.allow_comments %}
-						{% comments_for blog_post %}
-					{% endif %}
-					{% endblock %}
-				</div>
-			</div>
+			<h6 class="fontTitillium fontSize16 categories">
+				<img src="{% static "img/shopTalk.png" %}">
+				REVIEWS
+			</h6>
+		</div>
+	</div>
+	<div class="row">
+		<div class="span7">
+			{% block blog_post_detail_comments %}
+			{% if blog_post.allow_comments %}
+				{% comments_for blog_post %}
+			{% endif %}
+			{% endblock %}
 		</div>
 	</div>
 </div>

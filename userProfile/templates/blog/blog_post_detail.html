@@ -66,7 +66,7 @@
                 $('#commentContainer').html(data);
                 install_voting_handlers($('#commentContainer'));
                 install_review_voting_handler($('#commentContainer'));
-                install_delete_object_handler($('#commentContainer'));
+                install_review_handlers($('#commentContainer'));
             });
             return false;
         });
@@ -80,10 +80,14 @@
 <div class="row topHalfGutter">
     <div class="span7">
         <div class="row">
-            {% include 'blog/store_intro.html' with blog_post=blog_post %}
+            <div class="whiteBox">
+                {% include 'blog/store_intro.html' with blog_post=blog_post %}
+            </div>
         </div>
         <div class="row topHalfGutter">
-            {% include 'blog/store_details.html'  with blog_post=blog_post %}
+            <div class="whiteBox">
+                {% include 'blog/store_details.html'  with blog_post=blog_post %}
+            </div>
         </div>
     </div>
     <div class="span3 whiteBox" style="overflow:auto">

@@ -2,6 +2,7 @@
 {% load follow_tags %}
 {% load activity_tags %}
 {% load userProfile_tags %}
+{% load comment_tags %}
 
 <div class="span6" style="height:22px;">
     <span class="radioModuleFeedRadio"></span>
@@ -30,5 +31,5 @@
     <span class="socialShare fontTitillium halfGutter">
     	+
     </span>
-    <button class="rateStoreNow fontTitillium1 fontSize13 pull-right">Write a Review</button>
+        <button class="rateStoreNow radioColorBackground colorWhite fontTitillium1 fontSize13 pull-right" data-href="{% write_review_for_obj_url blog_post %}">Write a Review</button>
 </div>

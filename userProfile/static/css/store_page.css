@@ -14,8 +14,6 @@ div a.siteURL{
 	background-image: none;
 }
 .rateStoreNow{
-	color: white;
-	background-color: #029795;
 	border: 0;
 	padding: 6px 10px;
 }
@@ -60,4 +58,9 @@ a.share_store{
 a.store_sharers{
 	margin: 0;
 	margin-right: 10px;
+}
+.found-helpful{
+	padding: 2px 5px;
+	line-height: normal;
+	margin-left: 3px;
 }

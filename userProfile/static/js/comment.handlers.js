@@ -61,6 +61,75 @@ var comment_on_object_handler = function(event){
     return false;
 };
 
+var edit_review_handler = function(event) {
+	if(login_required_handler())
+        return false;
+    $("<div id='pop_up'><span class='button b-close'><span>X</span></span></div>").appendTo("body").addClass('popup');
+    $('#pop_up').bPopup({
+        content:'ajax',
+        loadUrl:$(this).attr("href"),
+        zIndex: 2,
+        onClose: function(){ $('#pop_up').remove(); },
+        scrollBar:'true',
+    });
+    event.preventDefault();
+    return false;
+};
+
+var write_review_handler = function(event) {
+	if(login_required_handler())
+        return false;
+    $("<div id='pop_up'><span class='button b-close'><span>X</span></span></div>").appendTo("body").addClass('popup');
+    $('#pop_up').bPopup({
+        content:'ajax',
+        loadUrl:$(this).attr("href"),
+        zIndex: 2,
+        onClose: function(){ $('#pop_up').remove(); },
+        scrollBar:'true',
+        loadCallback: function(){
+            $('.review_on_object').submit(review_submit_handler);
+        }
+    });
+    event.preventDefault();
+    return false;
+};
+
+var review_submit_handler = function(){
+        if(login_required_handler())
+            return false;
+        var $form = $(this);
+        $.ajax({
+            type: $form.attr('method'),
+            url: $form.attr('action'),
+            data: $form.serialize(),
+            success: function (data) {
+                var ret_data = data;
+                if(ret_data.success) {
+                    var subcomments_element = $("#comments");
+                    $form.trigger('reset');
+                    subcomments_element.append(ret_data.html);
+                    install_voting_handlers(subcomments_element);
+                    install_toggle_comment_handler();
+                    install_review_handlers(subcomments_element);
+                    $form.find('.subcomment_text').trigger('autosize.resize');
+                    $('#pop_up').bPopup().close();
+                    $('#pop_up').remove();
+                }
+                else {
+                    var errors = ret_data.errors;
+                    $('#pop_up').find('.error').removeClass('error');
+                    $.each( errors, function( key, value ) {
+                        $('#pop_up').find('[name="' + key + '"]').parents('.controls').addClass('error');
+                    });
+                }
+            },
+            error: function(data) {
+                console.log(data);
+            }
+        });
+    return false;
+};
+
 var view_previous_comments_handler = function(event){
     var add_link = $(this);
     $.get(add_link.attr('href'), {}, function(data) {
@@ -129,6 +198,20 @@ var comment_on_object_key_handler = function(event){
 	}
 }
 
+var install_review_handlers = function($parent_element) {
+    install_delete_object_handler($parent_element);
+    install_comment_on_object_handler($parent_element);
+    if($parent_element) {
+        $parent_element.find('.editReview').off('click', edit_review_handler ).on('click', edit_review_handler);
+        $parent_element.find('.writeReview').on('click', write_review_handler).on('click', write_review_handler);
+    }
+    else {
+        $('.editReview').off('click', edit_review_handler ).on('click', edit_review_handler);
+        $('.writeReview').on('click', write_review_handler).on('click', write_review_handler);
+    }
+
+}
+
 var install_comment_on_object_handler = function($parent_element) {
     if($parent_element)
     {
@@ -137,6 +220,7 @@ var install_comment_on_object_handler = function($parent_element) {
         $parent_element.find('.subcomment_text').autosize({append: "\n"});
         $parent_element.find('.viewPreviousComments').off('click', view_previous_comments_handler).on('click', view_previous_comments_handler);
         $parent_element.find('.comment_radio').off('click', comment_radio_handler).on('click', comment_radio_handler);
+        
     }
     else
     {

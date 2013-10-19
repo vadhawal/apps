@@ -1,4 +1,5 @@
 {% load i18n %}
+{% load comment_tags %}
 
 <div class="row fontTitillium1 fontSize13">
     <div class="span4">
@@ -85,7 +86,7 @@
         </div>
         <div class="row topHalfGutter">
             <div class="span3">
-                <button class="rateStoreNow fontTitillium1 fontSize13">Rate {{blog_post.title}} Now</button>
+                <button class="rateStoreNow radioColorBackground colorWhite fontTitillium1 fontSize13" data-href="{% write_review_for_obj_url blog_post %}">Rate {{blog_post.title}} Now</button>
             </div>
         </div>
     </div>

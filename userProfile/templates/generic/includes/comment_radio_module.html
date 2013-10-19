@@ -1,5 +1,7 @@
 {% load activity_tags %}
 {% load userProfile_tags %}
+{% load mezzanine_tags %}
+{% load future %}
 
 <div class="span6" style="height:22px;">
     <span class="radioModuleFeedRadio"></span>
@@ -15,11 +17,11 @@
             <span class="manageFeed" onclick="var $this = $(this); if ( $this.hasClass('manageFeedUp') ) { $this.removeClass('manageFeedUp moveManageFeedUp'); $this.parent().find('.whiteBox').hide();} else { $this.addClass('manageFeedUp moveManageFeedUp'); $this.parent().find('.whiteBox').show().css({'display': 'inline-block', 'position': 'relative'});}"></span>
             <span style="height:50px;display:none;padding:0px 15px;" class="whiteBox">
             	{% get_delete_object_url comment as delete_review_url %}
-                <span style="line-height:25px;float:left">
-                    <a class="deleteObject" data-href="{{delete_review_url}}" href="#">Delete</a>
+                <span style="line-height:25px;float:left;">
+                    <a class="editReview" href="{% url 'edit_review' comment.id %}">Edit</a>
                 </span>
-                <span style="line-height:25px;float:left;clear:both">
-                    Edit
+                <span style="line-height:25px;float:left;clear:both;">
+                    <a class="deleteObject" data-href="{{delete_review_url}}" href="#">Delete</a>
                 </span>
             </span>
         {% else %}

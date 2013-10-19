@@ -1,0 +1,14 @@
+
+{% load i18n mezzanine_tags comment_tags %}
+
+<span style="float:left;position:relative;left:5px;">
+    {% include "generic/includes/render_owner.html" with owner=request.user %}
+</span>
+<form class="review_on_object" method="post" id="comment" action="{{ comment_url }}" >
+    {% if not request.POST.replied_to %}
+        {% fields_for posted_comment_form %}
+    {% else %}
+        {% fields_for unposted_comment_form %}
+    {% endif %}   
+    <input class="btn" type="submit" value="{% trans "Comment" %}">
+</form>

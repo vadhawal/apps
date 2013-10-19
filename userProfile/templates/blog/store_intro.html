@@ -1,44 +1,40 @@
 {% load mezzanine_tags reviewrating_tags %}
-<div class="span7 whiteBox color5D">
-<div class="row topHalfGutter bottomHalfGutter">
-	<div class="span4 pagination-centered">
-	{% block blog_post_detail_featured_image %}
-	{% if settings.BLOG_USE_FEATURED_IMAGE and blog_post.featured_image %}
-		<img src="{{ MEDIA_URL }}{% thumbnail blog_post.featured_image 100 0 %}">
-	{% endif %}
-	{% endblock %}
-	</div>
-	<div class="span3">
-		{% block title %}
-		{% editable blog_post.title %}
-			<span class="fontHelvetica fontSize15 weightBold">{{ blog_post.title }}</span>
-		{% endeditable %}
+<div class="span7 color5D">
+	<div class="row topHalfGutter bottomHalfGutter">
+		<div class="span4 pagination-centered">
+		{% block blog_post_detail_featured_image %}
+		{% if settings.BLOG_USE_FEATURED_IMAGE and blog_post.featured_image %}
+			<img src="{{ MEDIA_URL }}{% thumbnail blog_post.featured_image 100 0 %}">
+		{% endif %}
 		{% endblock %}
-		<div>
-			<a class="siteURL fontTitillium fontSize13" href="{{blog_post.web_url}}">Visit Site</a>
 		</div>
-		{% block blog_post_detail_content %}
-		{% editable blog_post.content %}
-			<span class="fontTitillium1 fontSize12">{{ blog_post.content|richtext_filter|safe }}</span>
-		{% endeditable %}
-		{% endblock %}
+		<div class="span3">
+			{% block title %}
+			{% editable blog_post.title %}
+				<span class="fontHelvetica fontSize15 weightBold">{{ blog_post.title }}</span>
+			{% endeditable %}
+			{% endblock %}
+			<div>
+				<a class="siteURL fontTitillium fontSize13" href="{{blog_post.web_url}}">Visit Site</a>
+			</div>
+			{% block blog_post_detail_content %}
+			{% editable blog_post.content %}
+				<span class="fontTitillium1 fontSize12">{{ blog_post.content|richtext_filter|safe }}</span>
+			{% endeditable %}
+			{% endblock %}
+		</div>
 	</div>
-</div>
-<hr class="dottedSeparator">
-<div class="row topHalfGutter bottomHalfGutter">
-	<div class="span7">
+	<hr class="dottedSeparator">
+	<div class="row topHalfGutter bottomHalfGutter">
 		{% include 'blog/store_radio_module.html' %}
 	</div>
-</div>
-<hr class="dottedSeparator">
-<div class="row topHalfGutter bottomHalfGutter">
-	<div class="span7">
-		<div class="span7 fontTitillium fontSize15 bottomHalfGutter">
-			What People Say
-		</div>
+	<hr class="dottedSeparator">
+	<div class="row topHalfGutter bottomHalfGutter">
 		<div class="span7">
+			<div class="fontTitillium fontSize15 bottomHalfGutter">
+				What People Say
+			</div>
 			{% reviewrating_for blog_post %}
 		</div>
 	</div>
-</div>
 </div>

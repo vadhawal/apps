@@ -565,9 +565,9 @@ def shareObject(request, content_type_id, object_id, ):
 
 def deleteObject(request, content_type_id, object_id ):
     error_codes = []
-    if not request.is_ajax():
-        error_codes.append(settings.AJAX_ONLY_SUPPORT)
-        return json_error_response(error_codes)
+    #if not request.is_ajax():
+    #    error_codes.append(settings.AJAX_ONLY_SUPPORT)
+    #    return json_error_response(error_codes)
 
     try:
 		ctype = ContentType.objects.get(pk=content_type_id)
@@ -630,7 +630,12 @@ def deleteObject(request, content_type_id, object_id ):
     		Delete related objects for Reviews.
     	"""
         if isinstance(object, Review):
-        	requiredReviewRatingObj = RequiredReviewRating.objects.get(commentid=object._get_pk_val())
+        	try:
+        		requiredReviewRatingObj = RequiredReviewRating.objects.get(commentid=object._get_pk_val())
+        	except:
+        		requiredReviewRatingObj = None
+        		pass
+
         	if requiredReviewRatingObj:
         		requiredReviewRatingCtype = ContentType.objects.get_for_model(requiredReviewRatingObj)
         		requiredReviewRatingVoteObjects = Vote.objects.filter(content_type=requiredReviewRatingCtype,
@@ -639,8 +644,12 @@ def deleteObject(request, content_type_id, object_id ):
         		if requiredReviewRatingVoteObjects:
         			requiredReviewRatingVoteObjects.delete()
         		requiredReviewRatingObj.delete()
+        	try:
+        		OptionalReviewRatingObj = OptionalReviewRating.objects.get(commentid=object._get_pk_val())
+        	except:
+        		OptionalReviewRatingObj = None
+        		pass
 
-        	OptionalReviewRatingObj = OptionalReviewRating.objects.get(commentid=object._get_pk_val())
         	if OptionalReviewRatingObj:
         		OptionalReviewRatingObj.delete()
 
