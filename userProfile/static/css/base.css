@@ -44,6 +44,9 @@ a:hover {
 	color: rgb(2, 151, 149);
 	text-decoration: none;
 }
+a.radioColorBackground:hover{
+	color:white;
+}
 .width200{
 	width:200px;
 }
@@ -302,10 +305,16 @@ div span.wantText{
 	box-shadow: none;
 }
 .settings img:first-child{
-	content: url("/static/img/settings.png");
+	background-image: url("/static/img/settings.png");
+	background-repeat: no-repeat;
+	background-position: center;
+    width: 25px;
+    display:inline-block;
+    padding: 25px 0 0 0;
+    height: 0px !important;
 }
 .settings:hover img:first-child{
-	content: url("/static/img/settings_hover.png");
+	background-image: url("/static/img/settings_hover.png");
 }
 .settingsPopup {
 	height: 50px; 

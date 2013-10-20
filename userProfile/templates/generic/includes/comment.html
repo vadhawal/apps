@@ -48,12 +48,13 @@
                                 {% score_for_object review_rating_obj as score %}
                                 {% if not vote %}
                                     <span>Was this review helpful?</span>
-                                    <a class="found-helpful radioColorBackground colorWhite fontSize11" href="#" data-href="{% url 'rating_on_reviews' review_rating_obj.id 'up' %}">Yes</a>&nbsp;
+                                    <a class="found-helpful radioColorBackground colorWhite fontSize11" href="#" data-href="{% url 'rating_on_reviews' review_rating_obj.id 'up' %}"></a>&nbsp;
                                     <a class="pScore" href="{{ voters }}" style="margin-left:0px;">({{score.num_up_votes}})</a>
                                     {# <a class="not-found-helpful" href="#" data-href="{% url 'rating_on_reviews' review_rating_obj.id 'down' %}">No</a> #}
                                 {% else %}
-                                    </span>You found this review helpful.</span>
-                                    <a class="clear-helpful" href="#" data-href="{% url 'rating_on_reviews' review_rating_obj.id 'clear' %}">Clear</a>
+                                    <span>You found this review helpful.</span>
+                                    <a class="clear-helpful radioColorBackground colorWhite fontSize11" href="#" data-href="{% url 'rating_on_reviews' review_rating_obj.id 'clear' %}"></a>
+                                    <a class="pScore" href="{{ voters }}" style="margin-left:0px;">({{score.num_up_votes}})</a>
                                 {% endif %}
                         {% endif %}
                     {% endwith %}
