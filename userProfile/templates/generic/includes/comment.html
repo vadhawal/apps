@@ -4,7 +4,7 @@
 {% load userProfile_tags %}
 {% load inbox thumbnail %}
 
-<div class="fontTitillium1 color5D">
+<div class="fontTitillium1 color5D fontSize12">
     {% for comment in comments_for_thread %}
 
     <div id="comment-{{ comment.id }}" class="row topHalfGutter">
@@ -38,32 +38,33 @@
                 </div>
             </div>
             <div class="row topHalfGutter">
-                {% include 'generic/includes/comment_radio_module.html' %}
-            </div>
-            <div class="row topHalfGutter">
                 <div class="span6">
                     {% with comment|get_reviewrating_obj as review_rating_obj %}
                         {% if review_rating_obj %}
                                 {% vote_by_user request.user on review_rating_obj as vote %}
+                                {% voters_for_object review_rating_obj as voters %}
                                 {% score_for_object review_rating_obj as score %}
                                 {% if not vote %}
                                     <span>Was this review helpful?</span>
-                                    <a class="found-helpful radioColorBackground colorWhite fontSize11" href="#" data-href="{% url 'rating_on_reviews' review_rating_obj.id 'up' %}"></a>&nbsp;
+                                    <a class="found-helpful radioColorBackground colorWhite fontSize11" href="javascript:void(0)" data-href="{% url 'rating_on_reviews' review_rating_obj.id 'up' %}"></a>&nbsp;
                                     <a class="pScore" href="{{ voters }}" style="margin-left:0px;">({{score.num_up_votes}})</a>
-                                    {# <a class="not-found-helpful" href="#" data-href="{% url 'rating_on_reviews' review_rating_obj.id 'down' %}">No</a> #}
+                                    {# <a class="not-found-helpful" href="javascript:void(0)" data-href="{% url 'rating_on_reviews' review_rating_obj.id 'down' %}">No</a> #}
                                 {% else %}
                                     <span>You found this review helpful.</span>
-                                    <a class="clear-helpful radioColorBackground colorWhite fontSize11" href="#" data-href="{% url 'rating_on_reviews' review_rating_obj.id 'clear' %}"></a>
+                                    <a class="clear-helpful radioColorBackground colorWhite fontSize11" href="javascript:void(0)" data-href="{% url 'rating_on_reviews' review_rating_obj.id 'clear' %}"></a>
                                     <a class="pScore" href="{{ voters }}" style="margin-left:0px;">({{score.num_up_votes}})</a>
                                 {% endif %}
                         {% endif %}
                     {% endwith %}
                 </div>
             </div>
+            <div class="row topHalfGutter radio_module">
+                {% include 'generic/includes/comment_radio_module.html' %}
+            </div>
             {% comment_count_on_object comment as total_comments %}
-            <div class="row">
+            <div class="row topHalfGutter">
                 <div class="span6 whiteBoxLarge subcomments_container {% if total_comments == 0 %}hide{% endif %}">
-                    {% include 'actstream/render_subcomments_actstream.html' with object=action.comment %}
+                    {% include 'actstream/render_subcomments_actstream.html' with object=comment %}
                 </div>
             </div>
         </div>
