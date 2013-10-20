@@ -81,7 +81,7 @@ $(document).ready(function() {
         } else {
             $subCSelect.empty();
             var data = category_namespace.categories;
-            slug = slug.toLowerCase();
+            // slug = slug.toLowerCase();
             var objJSON = data[slug];
             $subCSelect.append("<option value='empty' disabled selected>By Sub-category</option>");
             for(var i=0;i<objJSON.length;i++) {
