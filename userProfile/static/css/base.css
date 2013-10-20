@@ -472,3 +472,7 @@ form.comment_on_object{
 	position: relative;
 	top:-25px;
 }
+
+a.shareObject {
+	margin-right:0px;
+}

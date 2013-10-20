@@ -14,9 +14,10 @@
     		Reviews ({{blog_post.comments_count}})
     	</a>
 		{% get_share_count blog_post as share_count %}
-		<a href="#" data-href="{# url "shareStore" blog_post.id #}" class="share_store">Share</a>
+        {% get_share_object_url blog_post as share_store_url %}
+		<a href="#" data-href="{{share_store_url}}" class="shareObject">Share</a>
 		{% broadcasters_for_object blog_post as broadcasters_url %}
-		<a class="store_sharers" href="{{broadcasters_url}}" data-href="#">({{share_count}})</a>
+		<a class="store_sharers sharedCount" href="{{broadcasters_url}}" data-href="#">({{share_count}})</a>
 
 		<span id="vendorFollowContainer" class="{% if request.user|is_following:blog_post %}following{% endif %}" >
 			<a href="#" class="follow-btn icon-follow" data-id="vendor_followers" data-href="{% follow_url blog_post %}">Follow</a>
