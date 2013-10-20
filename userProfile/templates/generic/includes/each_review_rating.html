@@ -1,19 +1,19 @@
-{% if comment.overall_value%}
+{% if comment.overall_value %}
 	<span>Overall <span class="searchResultRatingSmall searchResultRatingScheme rating-{{comment.overall_value|floatformat:"0"}}" style="display:inline-block;"></span> {{comment.overall_value}} | </span>
 {% endif %}
-{% if comment.price_value%}
+{% if comment.price_value %}
       <span>Price <span class="searchResultRatingSmall searchResultRatingScheme rating-{{comment.price_value|floatformat:"0"}}" style="display:inline-block;"></span> {{comment.price_value}} | </span>
 {% endif %}
-{% if comment.variety_value%}
+{% if comment.variety_value %}
       <span>Variety <span class="searchResultRatingSmall searchResultRatingScheme rating-{{comment.variety_value|floatformat:"0"}}" style="display:inline-block;"></span> {{comment.variety_value}} | </span>
 {% endif %}
-{% if comment.quality_value%}
+{% if comment.quality_value %}
       <span>Quality <span class="searchResultRatingSmall searchResultRatingScheme rating-{{comment.quality_value|floatformat:"0"}}" style="display:inline-block;"></span> {{comment.quality_value}} | </span>
 {% endif %}
-{% if comment.service_value%}
+{% if comment.service_value %}
       <span>Service <span class="searchResultRatingSmall searchResultRatingScheme rating-{{comment.service_value|floatformat:"0"}}" style="display:inline-block;"></span> {{comment.service_value}} | </span>
 {% endif %}
-{% if comment.exchange_value%}
+{% if comment.exchange_value %}
       <span>Exchange <span class="searchResultRatingSmall searchResultRatingScheme rating-{{comment.exchange_value|floatformat:"0"}}" style="display:inline-block;"></span> {{comment.exchange_value}}</span>
 {% endif %}
-<span style="background-color:{% if comment.shop_again == 0%}red{% else %}green{% endif %}; color:white;">Shop Again</span>
+<span style="background-color:{% ifequal comment.shop_again|slugify '0' %}red{% else %}green{% endifequal %}; color:white;">Shop Again</span>
