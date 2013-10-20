@@ -562,3 +562,24 @@ a.shareObject {
 	display: table;
 	margin: auto;
 }
+.searchResultRating {
+	cursor: default;
+	font-family: titillium1;
+	font-size: 17px;
+	padding: 10px 15px;
+	box-sizing: border-box;
+}
+.searchResultRatingSmall {
+	width:15px;
+	height:10px;
+	padding: 1px 3px;
+	box-sizing: border-box;
+}
+.searchResultRatingScheme {
+	background-attachment: scroll;
+	background-clip: border-box;
+	background-color: rgb(2, 151, 149);
+	background-image: none;
+	background-origin: padding-box;
+  	color: white;
+}

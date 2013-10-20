@@ -1,0 +1,56 @@
+{% load future %}
+
+<script>
+
+var baseURLDealsTemplate = "{% url "get_filtered_deallist" blog_post.id "category" 0 10 %}";
+var baseURLStoresTemplate = "{% url "get_related_stores" blog_post.id "category" 0 5 %}";
+
+var get_filtered_deals_handler = function(sub_category)
+{
+	var new_url = baseURLDealsTemplate.replace("category", sub_category);
+	new_url += "?v=1";
+
+    $.get(new_url, {}, function(data) {
+          $('#topDealsForStore').html(data);
+            install_voting_handlers($('#topDealsForStore'));
+            install_share_object_handler($('#topDealsForStore'));
+
+            if($("#topDealsForStore").parent().hasClass('open-content')) {
+				setupCustomScrollBar($("#topDealsForStore"));
+	        }
+
+            $('a.wishimg-deal-homepage').fancybox({
+				scrolling: 'yes',
+				minWidth: 500,
+				minHeight:450,
+				autoSize: true,
+				helpers : { overlay : { locked : false } }
+            });
+       });
+    return false;
+}
+
+var get_related_stores_handler = function(sub_category)
+{
+	var new_url = baseURLStoresTemplate.replace("category", sub_category);
+		new_url += "?v=1";
+    $.get(new_url, {}, function(data) {
+       $('#topRelatedStoreForStore').html(data);
+    });
+   	return false;
+}
+
+var update_accordion = function(sub_category_slug)
+{
+    get_related_stores_handler(sub_category_slug);
+    get_filtered_deals_handler(sub_category_slug);
+	return false;
+}
+
+$(document).ready(function(event){
+	$('#dealsFilterSelect').change(function(){
+		var slug = $(this).find("option:selected").text();
+		return update_accordion(slug);
+	});
+});
+</script>

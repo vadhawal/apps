@@ -1,12 +1,34 @@
+var setupCustomScrollBar = function ($element) {
+    if (!$element || $element.length == 0 ) {
+        return;
+    }
+    var $scrollContainer = null;
+    if ($element.hasClass("scrollContainer")) {
+        $scrollContainer = $element;
+    } else {
+        $scrollContainer = $element.find(".scrollContainer");
+    }
+
+    if ($scrollContainer && !$scrollContainer.hasClass('mCustomScrollbar')) {
+        $scrollContainer.imagesLoaded({
+            complete: function(images) {
+                $scrollContainer.mCustomScrollbar({
+                  verticalScroll:true,
+                  theme:"dark-thick",
+                  mouseWheel:true,
+                  autoHideScrollbar:true,
+                  contentTouchScroll:true
+                });
+                $(".mCSB_draggerContainer").css("margin-left", "10px");
+            }
+        });
+    } else if ($scrollContainer) {
+        $scrollContainer.mCustomScrollbar("update");
+    }
+};
+
 $(window).load(function(){
-    $(".accordion-content").first().find(".scrollContainer").mCustomScrollbar({
-        verticalScroll:true,
-        theme:"dark-thick",
-        mouseWheel:true,
-        autoHideScrollbar:true,
-        contentTouchScroll:true
-    });
-    $(".mCSB_draggerContainer").css("margin-left", "10px");
+    setupCustomScrollBar($(".accordion-content").first());
 });
 
 $(document).ready(function() {

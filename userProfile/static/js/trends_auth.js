@@ -7,18 +7,7 @@ var get_trending_deals_handler_auth = function(parent_category, sub_category)
 
             if($("#topDealsForStoreCategoryAuth").parent().hasClass('open-content'))
             {
-	            $("#topDealsForStoreCategoryAuth").imagesLoaded({
-	                complete: function(images) {
-	                    $(".dealBox_v").mCustomScrollbar({
-	                      verticalScroll:true,
-	                      theme:"dark-thick",
-	                      mouseWheel:true,
-	                      autoHideScrollbar:true,
-	                      contentTouchScroll:true
-	                  	});
-	                  	$(".mCSB_draggerContainer").css("margin-left", "10px");
-	                }
-	            });
+              setupCustomScrollBar($("#topDealsForStoreCategoryAuth"));
 	        }
             $('a.wishimg-deal-homepage').fancybox({
               scrolling: 'yes',
