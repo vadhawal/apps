@@ -23,14 +23,10 @@
 <script src="{% static "js/vallenato.js" %}"></script>
 {% if request.user.is_authenticated %}
 <script src="{% static "js/trends_auth.js" %}"></script>
-<script>
 {% include 'js/index_auth.js.html' with parent_categories=parent_categories %}
-</script>
 {% else %}
 <script src="{% static "js/trends.js" %}"></script>
-<script>
 {% include 'js/index_noauth.js.html' %}
-</script>
 {% endif %}
 <script type="text/javascript" src="{% static "js/linkPreview.js" %}"></script>
 

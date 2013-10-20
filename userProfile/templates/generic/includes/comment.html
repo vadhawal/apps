@@ -7,7 +7,7 @@
 <div class="fontTitillium1 color5D fontSize12">
     {% for comment in comments_for_thread %}
 
-    <div id="comment-{{ comment.id }}" class="row topHalfGutter">
+    <div id="review-{{ comment.id }}" class="row topHalfGutter">
         {% editable comment.is_public comment.is_removed %}
         {% if not comment.is_removed and comment.is_public %}
         {% include 'generic/includes/render_owner.html' with owner=comment.user %}

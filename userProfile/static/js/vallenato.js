@@ -22,21 +22,8 @@ $(document).ready(function()
 
 	var setupScrollBar = function ($contentElement) {
 		/* If accordian is being opened and scrolling is not enabled alredy, enable it now. */
-
-		if($contentElement.hasClass('open-content') && $contentElement.find('.mCustomScrollbar').length == 0)
-		{
-			$contentElement.imagesLoaded({
-                complete: function(images) {
-                    $contentElement.find(".scrollContainer").mCustomScrollbar({
-                      verticalScroll:true,
-                      theme:"dark-thick",
-                      mouseWheel:true,
-                      autoHideScrollbar:true,
-                      contentTouchScroll:true
-                  	});
-                  	$(".mCSB_draggerContainer").css("margin-left", "10px");
-                }
-            });
+		if($contentElement.hasClass('open-content')) {
+			setupCustomScrollBar($contentElement);
 		}
 	};
 	

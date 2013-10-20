@@ -27,6 +27,7 @@
 <link rel="stylesheet" type="text/css" href="{% static "css/imagestore.css" %}"/>
 {% endblock %}
 {% block extra_js %}
+{% include 'js/store_page.js.html' with blog_post=blog_post %}
 <script src="{% static "js/vallenato.js" %}"></script>
 <script src="{% static "js/album.handlers.js" %}"></script>
 <script type="text/javascript">
@@ -82,7 +83,7 @@
 <div class="row topHalfGutter color5D">
     <div class="span7">
         <div class="row">
-            <div class="whiteBox">
+            <div class="whiteBox storeIntro">
                 {% include 'blog/store_intro.html' with blog_post=blog_post %}
             </div>
         </div>
