@@ -15,16 +15,16 @@ var get_filtered_deals_handler = function(sub_category)
             install_voting_handlers($('#topDealsForStore'));
             install_share_object_handler($('#topDealsForStore'));
 
-            if($("#topDealsForStore").parent().hasClass('open-content'))
-            {
+            if($("#topDealsForStore").parent().hasClass('open-content')) {
 				setupCustomScrollBar($("#topDealsForStore"));
 	        }
+
             $('a.wishimg-deal-homepage').fancybox({
-              scrolling: 'yes',
-              minWidth: 500,
-              minHeight:450,
-              autoSize: true,
-              helpers : { overlay : { locked : false } }
+				scrolling: 'yes',
+				minWidth: 500,
+				minHeight:450,
+				autoSize: true,
+				helpers : { overlay : { locked : false } }
             });
        });
     return false;

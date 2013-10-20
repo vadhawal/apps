@@ -9,7 +9,7 @@ var setupCustomScrollBar = function ($element) {
         $scrollContainer = $element.find(".scrollContainer");
     }
 
-    if ($scrollContainer && $scrollContainer.find('.mCustomScrollbar').length == 0) {
+    if ($scrollContainer && !$scrollContainer.hasClass('mCustomScrollbar')) {
         $scrollContainer.imagesLoaded({
             complete: function(images) {
                 $scrollContainer.mCustomScrollbar({
