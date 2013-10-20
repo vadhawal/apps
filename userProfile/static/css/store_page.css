@@ -64,6 +64,9 @@ a.store_sharers{
 	line-height: normal;
 	margin-left: 3px;
 }
+a.found-helpful:before{
+	content: 'Yes';
+}
 a.clear-helpful:before{
 	content: "Yes";
 }

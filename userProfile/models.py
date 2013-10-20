@@ -10,12 +10,19 @@ from django.db import models
 from django_resized import ResizedImageField
 from django.utils.translation import ugettext_lazy as _
 from django import forms
-
-from mezzanine.blog.models import BlogCategory, BlogParentCategory
-from mezzanine.conf import settings
-from mezzanine.generic.fields import CommentsField
+from django.contrib.comments.signals import comment_was_posted
+from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
+
+from mezzanine.blog.models import BlogPost, BlogCategory, BlogParentCategory
+from mezzanine.conf import settings as _settings
+from mezzanine.generic.fields import CommentsField
+from mezzanine.generic.models import ThreadedComment
+
 from cropper.models import Original
+from imagestore.models import Album, Image
+from actstream import action, actions
+from follow.models import Follow
 
 try:
     from django.utils import timezone
@@ -28,7 +35,8 @@ import datetime as datetime_
 from follow import utils
 import uuid
 
-MESSAGE_MAX_LENGTH = getattr(settings,'MESSAGE_MAX_LENGTH',3000)
+
+MESSAGE_MAX_LENGTH = getattr(_settings,'MESSAGE_MAX_LENGTH',3000)
 
 def get_image_path(instance, filename):
     ext = filename.split('.')[-1]
@@ -209,3 +217,39 @@ pre_update.connect(new_users_handler, sender=TwitterBackend)
 utils.register(GenericWish)
 utils.register(BroadcastWish)
 utils.register(BroadcastDeal)
+
+
+def comment_action(sender, comment=None, target=None, **kwargs):
+    if comment.user:
+        if isinstance(comment.content_object, BlogPost):
+            action.send(comment.user, verb=settings.REVIEW_POST_VERB, action_object=comment.content_object, 
+                target=comment)
+            Follow.objects.get_or_create(comment.user, comment)
+            actions.follow(comment.user, comment, send_action=False, actor_only=False) 
+        elif isinstance(comment.content_object, ThreadedComment):
+            action.send(comment.user, verb=settings.REVIEW_COMMENT_VERB, action_object=comment, 
+                target=comment.content_object, batch_time_minutes=30, is_batchable=True)
+        elif isinstance(comment.content_object, Album):
+            action.send(comment.user, verb=settings.ALBUM_COMMENT_VERB, action_object=comment, 
+                target=comment.content_object, batch_time_minutes=30, is_batchable=True)
+        elif isinstance(comment.content_object, Image):
+            action.send(comment.user, verb=settings.IMAGE_COMMENT_VERB, action_object=comment, 
+                target=comment.content_object, batch_time_minutes=30, is_batchable=True)
+        elif isinstance(comment.content_object, BroadcastWish):
+            action.send(comment.user, verb=settings.WISH_COMMENT_VERB, action_object=comment, 
+                target=comment.content_object, batch_time_minutes=30, is_batchable=True)
+            Follow.objects.get_or_create(comment.user, comment.content_object)
+            actions.follow(comment.user, comment.content_object, send_action=False, actor_only=False)
+        elif isinstance(comment.content_object, BroadcastDeal):
+            action.send(comment.user, verb=settings.DEAL_COMMENT_VERB, action_object=comment, 
+                target=comment.content_object, batch_time_minutes=30, is_batchable=True)
+            Follow.objects.get_or_create(comment.user, comment.content_object)
+            actions.follow(comment.user, comment.content_object, send_action=False, actor_only=False)
+        elif isinstance(comment.content_object, GenericWish):
+            action.send(comment.user, verb=settings.POST_COMMENT_VERB, action_object=comment, 
+                    target=comment.content_object, batch_time_minutes=30, is_batchable=True)
+    
+            Follow.objects.get_or_create(comment.user, comment.content_object)
+            actions.follow(comment.user, comment.content_object, send_action=False, actor_only=False) 
+
+comment_was_posted.connect(comment_action)

@@ -1,3 +1,8 @@
+var VOTING_STRING = {
+	foundReviewHelpful: 'You found this review helpful.',
+	foundReviewHelpfulQues: 'Was this review helpful?'
+};
+
 var display_popup_handler = function(event) {
     /*var w = 700;
     var h = 500;
@@ -66,30 +71,31 @@ var review_voting_handler = function(event){
 		$.post(url, {HTTP_X_REQUESTED:'XMLHttpRequest'},
 	       function(data) {
 	           if (data.success == true) {
-	               $elementClicked.parent().find('a.pScore').text(data.score.num_up_votes);
-	               if($elementClicked.hasClass('found-helpful'))
-	               {
-	               		var new_url = url.replace('up', 'clear');
-	               		var html = '</span>You found this review helpful.</span><a class="clear-helpful" href="" data-href="'+new_url+'">Clear</a>';
-	               		$elementClicked.parent().html(html);
-	               		$('.clear-helpful').off("click", review_voting_handler).on("click", review_voting_handler);
-	               }
-	               else if($elementClicked.hasClass('not-found-helpful'))
-	               {
-	               		var new_url = url.replace('down', 'clear');
-	               		var html = '</span>You did not find this review helpful!</span><a class="clear-helpful" href="" data-href="'+new_url+'">Clear</a>';
-	               		$elementClicked.parent().html(html);
-	               		$('.clear-helpful').off("click", review_voting_handler).on("click", review_voting_handler);
-	               }
-	               else if($elementClicked.hasClass('clear-helpful'))
-	               {
-	               		var up_url = url.replace('clear', 'up');
-	               		var down_url = url.replace('clear', 'down');
-	               		var html = '<span>Do you find this review helpful? </span><a class="found-helpful" href="" data-href="'+up_url+'">Yes </a>'+
-                        '<a class="not-found-helpful" href="'+down_url+'">No</a>';
-                        $elementClicked.parent().html(html);
-                        $('.found-helpful').add('.not-found-helpful').off("click", review_voting_handler).on("click", review_voting_handler);
-	               }
+					var $parent = $elementClicked.parent();
+					var removeClass = "";
+					var addClass = "";
+					var new_url = "";
+					var spanText = "";
+					$parent.find('a.pScore').text('(' + data.score.num_up_votes + ')');
+					if($elementClicked.hasClass('found-helpful'))
+					{
+						new_url = url.replace('up', 'clear');
+						spanText = VOTING_STRING.foundReviewHelpful;
+						removeClass = 'found-helpful';
+						addClass = 'clear-helpful';
+					}
+					else if($elementClicked.hasClass('clear-helpful'))
+					{
+						addClass = 'found-helpful';
+						removeClass = 'clear-helpful';
+					 	new_url = url.replace('clear', 'up');
+						spanText = VOTING_STRING.foundReviewHelpfulQues;
+					}
+					$elementClicked.removeClass(removeClass);
+					$elementClicked.addClass(addClass);
+					$elementClicked.data("href", new_url);
+					$parent.find('span').text(spanText);
+					install_review_voting_handler($parent);
 	           } else {
 	               alert('ERROR: ' + data.error_message);
 	           }
@@ -119,12 +125,11 @@ var install_review_voting_handler = function($parent_element) {
 	if($parent_element)
 	{
 		$parent_element.find('.found-helpful').off("click", review_voting_handler).on("click", review_voting_handler);
-		$parent_element.find('.not-found-helpful').off("click", review_voting_handler).on("click", review_voting_handler);
 		$parent_element.find('.clear-helpful').off("click", review_voting_handler).on("click", review_voting_handler);
 	}
 	else
 	{
-		$('.found-helpful').add('.not-found-helpful').add('.clear-helpful').off("click", review_voting_handler).on("click", review_voting_handler);
+		$('.found-helpful').add('.clear-helpful').off("click", review_voting_handler).on("click", review_voting_handler);
 	}
 }
 
