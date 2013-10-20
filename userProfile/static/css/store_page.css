@@ -59,8 +59,17 @@ a.store_sharers{
 	margin: 0;
 	margin-right: 10px;
 }
-.found-helpful{
+.found-helpful, .clear-helpful{
 	padding: 2px 5px;
 	line-height: normal;
 	margin-left: 3px;
+}
+a.clear-helpful:before{
+	content: "Yes";
+}
+a.clear-helpful:hover:before{
+	content: "No";
+}
+a.clear-helpful:hover{
+	background-color: red;
 }

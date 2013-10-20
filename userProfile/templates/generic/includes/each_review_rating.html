@@ -16,4 +16,4 @@
 {% if comment.exchange_value%}
       <span>Exchange <span class="searchResultRatingSmall searchResultRatingScheme rating-{{comment.exchange_value|floatformat:"0"}}" style="display:inline-block;"></span> {{comment.exchange_value}}</span>
 {% endif %}
-<span style="background-color:{% if comment.shop_again == 0%}red{% else %}green{% endif %}; color:white;">Shop Again</span>
+<span style="background-color:{% if comment.shop_again == 0 %}red{% else %}green{% endif %}; color:white;">Shop Again</span>
