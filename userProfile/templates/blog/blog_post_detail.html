@@ -93,6 +93,39 @@
         </div>
     </div>
     <div class="span3 whiteBox" style="overflow:auto">
+        {% blog_subcategories_for_blog blog_post as sub_categories_blog %}
+        {% if sub_categories_blog %}
+            <div class="halfGutterInset halfGutterInsetRight">
+                <select id="dealsFilterSelect" class="dealsFilter">
+                    <option value='empty' selected disabled>{% trans "Filter By" %}</option>
+                    <option value="all">{% trans "All" %}</option>
+                    {% for category in sub_categories_blog %}
+                    <option value="{{ category }}">{{ category }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div id="accordion-container">
+            <h2 class="accordion-header"><span class="hotDealsIcon">%&nbsp;</span>{{ blog_post.title }} {% trans "Deals" %}
+                <div class="yellowLineContainer">
+                    <hr class="whiteLine"/>
+                </div>
+            </h2>
+            <div class="accordion-content"> 
+                <div id="topDealsForStore">
+                    {% render_deals_for_stores blog_post.id 'All'  'MIN_DEALS_HOME_PAGE'|settings_value 'vertical' %}
+                </div>
+            </div> 
+            <h2 class="accordion-header"><img src="{% static "img/top_stores_white.png" %}"> {% trans "RELATED STORES" %}
+                <div class="yellowLineContainer">
+                    <hr class="whiteLine"/>
+                </div>
+            </h2>
+            <div class="accordion-content"> 
+                <div id="topRelatedStoreForStore" class="scrollContainer">
+                        {# render_stores_for_categories 'All' 'All' 'MIN_STORES_HOME_PAGE'|settings_value 'vertical' #}
+                </div>
+            </div> 
+        {% endif %}
     </div>
 </div>
 {% endblock %}

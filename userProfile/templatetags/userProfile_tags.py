@@ -618,7 +618,7 @@ def render_deals_for_stores(context, store_id, sub_category, latest=settings.DEA
                 blog_subcategory = None
                 pass
 
-        elif blog_subcategory_slug.lower() == "all" and blog_subcategory_slug.lower() == '':
+        elif blog_subcategory_slug.lower() == "all" or blog_subcategory_slug.lower() == '':
             deals_queryset = BroadcastDeal.objects.all().filter(content_type=ctype, object_id=store_id).order_by('-timestamp')[:latest]
         else:
             return ''
