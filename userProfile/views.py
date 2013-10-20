@@ -528,6 +528,37 @@ def getTrendingStores(request, parent_category, sub_category):
 	else:
 		raise Http404()
 
+def get_related_stores(request, store_id, sub_category, sIndex, lIndex):
+	if sub_category.lower() != "all" and sub_category.lower() != '':
+		try:
+			blog_subcategory = BlogCategory.objects.get(slug=slugify(sub_category))
+			blogPostQueryset = BlogPost.objects.published().filter(categories=blog_subcategory).extra(select={'fieldsum':'price_average + variety_average + quality_average + service_average + exchange_average + overall_average'},order_by=('-fieldsum',)).distinct()
+		except:
+			blogPostQueryset = None
+			pass	
+	elif sub_category.lower() == "all" or sub_category.lower() == '':
+		try:
+			blog_post = BlogPost.objects.get(id=store_id)
+			categories = blog_post.categories.all() 
+			blogPostQueryset = BlogPost.objects.published().filter(categories__in=categories).extra(select={'fieldsum':'price_average + variety_average + quality_average + service_average + exchange_average + overall_average'},order_by=('-fieldsum',)).distinct()
+		except:
+			blogPostQueryset = None
+			pass
+
+	if blogPostQueryset:
+		s = (int)(""+sIndex)
+		l = (int)(""+lIndex)
+		blogPostQueryset = blogPostQueryset[s:l]
+
+	isVertical = request.GET.get('v', '0')
+	template = 'generic/vendor_list.html'
+	if isVertical == '1':
+		template = 'generic/vendor_list_v.html'
+
+	return render_to_response(template, {
+			'vendors': blogPostQueryset
+		}, context_instance=RequestContext(request))
+
 def get_profile_image(request, username=None):
 	user = None
 
