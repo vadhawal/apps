@@ -82,3 +82,9 @@ a.clear-helpful:hover{
 [id*="review"]:hover .radioModuleFeedRadio {
 	background-image: url('/static/img/radio_colored_small.png');
 }
+#topRelatedStoreForStore img.smallIcon{
+	height: 45px;
+	vertical-align: middle;
+	display: inline-block;
+	margin-left: -4px;
+}

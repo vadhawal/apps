@@ -13,28 +13,8 @@
 	word-wrap: break-word;
 	display:inline;
 }
-.searchResultRating {
-	cursor: default;
-	font-family: titillium1;
-	font-size: 17px;
-	padding: 10px 15px;
-	box-sizing: border-box;
-}
-.searchResultRatingSmall {
-	width:15px;
-	height:10px;
-	box-sizing: border-box;
-}
 .reviewTitle{
 	color: rgb(99, 98, 91);
-}
-.searchResultRatingScheme {
-	background-attachment: scroll;
-	background-clip: border-box;
-	background-color: rgb(2, 151, 149);
-	background-image: none;
-	background-origin: padding-box;
-  	color: white;
 }
 .darken{
 	font-weight: 500;
