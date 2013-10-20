@@ -104,7 +104,6 @@ var review_voting_handler = function(event){
 		event.preventDefault();
 		return false;  
 };
-
 var install_voting_handlers = function($parent_element){
 	if($parent_element)
 	{
@@ -119,8 +118,7 @@ var install_voting_handlers = function($parent_element){
     	$('.upvote').add('.downvote').add('.clearvote').off("click", voting_handlers).on("click", voting_handlers);
     	$('.pScore').add('.broadcasters').off("click", display_popup_handler).on("click", display_popup_handler);
     }
-}
-
+};
 var install_review_voting_handler = function($parent_element) {
 	if($parent_element)
 	{
@@ -131,5 +129,4 @@ var install_review_voting_handler = function($parent_element) {
 	{
 		$('.found-helpful').add('.clear-helpful').off("click", review_voting_handler).on("click", review_voting_handler);
 	}
-}
-
+};
