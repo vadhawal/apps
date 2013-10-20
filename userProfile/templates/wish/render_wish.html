@@ -11,7 +11,7 @@
             {% if  wish.blog_category %}
                 <a href="{{ wish.blog_category.get_absolute_url }}"> {{wish.blog_category}} </a> </br>
             {% endif %}
-            {{ wish.message }}
+            {{ wish.message|urlize }}
         </br>
         {% get_reldata_url wish as rel_data_url %}
         {% if wish.wishimage and wish.wishimage.image %}
