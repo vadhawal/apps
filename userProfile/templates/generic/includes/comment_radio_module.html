@@ -8,9 +8,9 @@
     <span class="radioModuleFeedContainer fontTitillium1 fontSize12">
     	{% include 'generic/includes/render_voting.html' with object=comment %}
     	{% get_share_count comment as share_count %}
-		<a href="#" data-href="{# url "shareStore" comment.id #}" class="share_store">Share</a>
+		<a href="javascript:void(0)" data-href="{# url "shareStore" comment.id #}" class="share_store">Share</a>
 		{% broadcasters_for_object comment as broadcasters_url %}
-		<a class="store_sharers" href="{{broadcasters_url}}" data-href="#">({{share_count}})</a>
+		<a class="store_sharers" data-href="{{broadcasters_url}}" href="javascript:void(0)">({{share_count}})</a>
 		{% include 'actstream/render_comment_text.html' with object=comment %}
     </span>
         {% if request.user == comment.user %}
@@ -18,10 +18,10 @@
             <span style="height:50px;display:none;padding:0px 15px;" class="whiteBox">
             	{% get_delete_object_url comment as delete_review_url %}
                 <span style="line-height:25px;float:left;">
-                    <a class="editReview" href="{% url 'edit_review' comment.id %}">Edit</a>
+                    <a class="editReview" href="javascript:void(0)" data-href="{% url 'edit_review' comment.id %}">Edit</a>
                 </span>
                 <span style="line-height:25px;float:left;clear:both;">
-                    <a class="deleteObject" data-href="{{delete_review_url}}" href="#">Delete</a>
+                    <a class="deleteObject" data-href="{{delete_review_url}}" href="javascript:void(0)">Delete</a>
                 </span>
             </span>
         {% else %}
