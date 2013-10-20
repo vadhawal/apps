@@ -1,3 +1,14 @@
+$(window).load(function(){
+    $(".accordion-content").first().find(".scrollContainer").mCustomScrollbar({
+        verticalScroll:true,
+        theme:"dark-thick",
+        mouseWheel:true,
+        autoHideScrollbar:true,
+        contentTouchScroll:true
+    });
+    $(".mCSB_draggerContainer").css("margin-left", "10px");
+});
+
 $(document).ready(function() {
     $('#getvendors').click(function(){
         var $blog_parentcategories = $(this).parent().parent().parent().find('.blog_parentcategories');

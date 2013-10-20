@@ -19,39 +19,43 @@ $(document).ready(function()
 	//Open The First Accordion Section When Page Loads
 	$('.accordion-header').first().toggleClass('active-header').toggleClass('inactive-header');
 	$('.accordion-content').first().slideDown().toggleClass('open-content');
+
+	var setupScrollBar = function ($contentElement) {
+		/* If accordian is being opened and scrolling is not enabled alredy, enable it now. */
+
+		if($contentElement.hasClass('open-content') && $contentElement.find('.mCustomScrollbar').length == 0)
+		{
+			$contentElement.imagesLoaded({
+                complete: function(images) {
+                    $contentElement.find(".scrollContainer").mCustomScrollbar({
+                      verticalScroll:true,
+                      theme:"dark-thick",
+                      mouseWheel:true,
+                      autoHideScrollbar:true,
+                      contentTouchScroll:true
+                  	});
+                  	$(".mCSB_draggerContainer").css("margin-left", "10px");
+                }
+            });
+		}
+	};
 	
 	// The Accordion Effect
 	$('.accordion-header').click(function () {
-		if($(this).is('.inactive-header')) {
+		var $this = $(this);
+		var $nextContentElement = null;
+
+		if($this.is('.inactive-header')) {
 			$('.active-header').toggleClass('active-header').toggleClass('inactive-header').next().slideToggle().toggleClass('open-content');
-			$(this).toggleClass('active-header').toggleClass('inactive-header');
-			$(this).next().slideToggle().toggleClass('open-content');
-			/* Custome Code */
-			/* If dealBox is being opened and scrolling is not enabled alredy, enable it now. */
-			if($("#topDealsForStoreCategoryAuth").parent().hasClass('open-content') && $("#topDealsForStoreCategoryAuth").find('.mCustomScrollbar').length == 0)
-			{
-				$("#topDealsForStoreCategoryAuth").imagesLoaded({
-	                complete: function(images) {
-	                    $(".dealBox_v").mCustomScrollbar({
-	                      verticalScroll:true,
-	                      theme:"dark-thick",
-	                      mouseWheel:true,
-	                      autoHideScrollbar:true,
-	                      contentTouchScroll:true
-	                  	});
-	                  	$(".mCSB_draggerContainer").css("margin-left", "10px");
-	                }
-	            });
-			}
-			/* End Custome Code */
+			$this.toggleClass('active-header').toggleClass('inactive-header');
+			$nextContentElement = $this.next();
+			$nextContentElement.slideToggle().toggleClass('open-content');
 		}
-		
 		else {
 			/* Disabling closure of already opened header */
-			$(this).toggleClass('active-header').toggleClass('inactive-header');
-			$(this).next().slideToggle().toggleClass('open-content');
-			var $nextContentElement = null;
-			var $nextAccordianHeader = $(this).next().next();
+			$this.toggleClass('active-header').toggleClass('inactive-header');
+			$this.next().slideToggle().toggleClass('open-content');
+			var $nextAccordianHeader = $this.next().next();
 			if ($nextAccordianHeader.length) {
 				$nextAccordianHeader.toggleClass('active-header').toggleClass('inactive-header');
 				$nextContentElement = $nextAccordianHeader.next();
@@ -62,6 +66,7 @@ $(document).ready(function()
 				$nextContentElement.slideDown().toggleClass('open-content');
 			}
 		}
+		setupScrollBar($nextContentElement);
 	});
 	
 	return false;

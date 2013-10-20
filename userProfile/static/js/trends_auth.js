@@ -63,4 +63,3 @@ $(document).ready(function(event){
 		update_trends_handler_auth(slug);
 	});
 });
-
