@@ -52,5 +52,13 @@ $(document).ready(function(event){
 		var slug = $(this).find("option:selected").text();
 		return update_accordion(slug);
 	});
+
+	$('a.wishimg-deal-homepage').fancybox({
+        scrolling: 'yes',
+        minWidth: 500,
+        minHeight: 450,
+        autoSize: true,
+        helpers : { overlay : { locked : false } }
+    });
 });
 </script>
