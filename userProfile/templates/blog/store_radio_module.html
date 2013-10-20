@@ -10,9 +10,11 @@
     	<a href="#">
     		Views ({% get_hit_count for blog_post %})
     	</a>
-    	<a href="#reviews">
-    		Reviews ({{blog_post.comments_count}})
+    	<a href="#reviews" style="margin-right:0px;">
+    		Reviews 
     	</a>
+        <a class="broadcasters commentCount" href="{% get_commenters_url blog_post %}" style="margin-left:0px;">({{blog_post.comments_count}})</a>
+
 		{% get_share_count blog_post as share_count %}
         {% get_share_object_url blog_post as share_store_url %}
 		<a href="#" data-href="{{share_store_url}}" class="shareObject">Share</a>
