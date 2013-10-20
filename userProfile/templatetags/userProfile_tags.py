@@ -626,6 +626,36 @@ def render_deals_for_stores(context, store_id, sub_category, latest=settings.DEA
         return template.render(RequestContext(context['request'], {
             'deal_list': deals_queryset
         }))
+
+@register.simple_tag(takes_context=True)
+def render_related_stores(context, store_id, sub_category, latest=settings.STORES_NUM_LATEST, orientation='horizontal'):
+    template_name = 'generic/vendor_list.html'
+
+    if orientation == 'vertical':
+        template_name = 'generic/vendor_list_v.html'
+
+    template = loader.get_template(template_name)
+
+    if sub_category.lower() != "all" and sub_category.lower() != '':
+        try:
+            blog_subcategory = BlogCategory.objects.get(slug=slugify(sub_category))
+            blogPostQueryset = BlogPost.objects.published().filter(categories=blog_subcategory).exclude(id=store_id).extra(select={'fieldsum':'price_average + variety_average + quality_average + service_average + exchange_average + overall_average'},order_by=('-fieldsum',)).distinct()[:latest]
+        except:
+            blogPostQueryset = None
+            pass
+
+    elif sub_category.lower() == "all" or sub_category.lower() == '':
+        try:
+            blog_post = BlogPost.objects.get(id=store_id)
+            categories = blog_post.categories.all() 
+            blogPostQueryset = BlogPost.objects.published().filter(categories__in=categories).exclude(id=store_id).extra(select={'fieldsum':'price_average + variety_average + quality_average + service_average + exchange_average + overall_average'},order_by=('-fieldsum',)).distinct()[:latest]
+        except:
+            blogPostQueryset = None
+            pass
+
+    return template.render(RequestContext(context['request'], {
+        'vendors': blogPostQueryset
+    }))
  
 
 

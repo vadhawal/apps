@@ -532,7 +532,7 @@ def get_related_stores(request, store_id, sub_category, sIndex, lIndex):
 	if sub_category.lower() != "all" and sub_category.lower() != '':
 		try:
 			blog_subcategory = BlogCategory.objects.get(slug=slugify(sub_category))
-			blogPostQueryset = BlogPost.objects.published().filter(categories=blog_subcategory).extra(select={'fieldsum':'price_average + variety_average + quality_average + service_average + exchange_average + overall_average'},order_by=('-fieldsum',)).distinct()
+			blogPostQueryset = BlogPost.objects.published().filter(categories=blog_subcategory).exclude(id=store_id).extra(select={'fieldsum':'price_average + variety_average + quality_average + service_average + exchange_average + overall_average'},order_by=('-fieldsum',)).distinct()
 		except:
 			blogPostQueryset = None
 			pass	
@@ -540,7 +540,7 @@ def get_related_stores(request, store_id, sub_category, sIndex, lIndex):
 		try:
 			blog_post = BlogPost.objects.get(id=store_id)
 			categories = blog_post.categories.all() 
-			blogPostQueryset = BlogPost.objects.published().filter(categories__in=categories).extra(select={'fieldsum':'price_average + variety_average + quality_average + service_average + exchange_average + overall_average'},order_by=('-fieldsum',)).distinct()
+			blogPostQueryset = BlogPost.objects.published().filter(categories__in=categories).exclude(id=store_id).extra(select={'fieldsum':'price_average + variety_average + quality_average + service_average + exchange_average + overall_average'},order_by=('-fieldsum',)).distinct()
 		except:
 			blogPostQueryset = None
 			pass
