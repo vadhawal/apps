@@ -455,6 +455,36 @@ def getTrendingDeals(request, parent_category, sub_category):
 	else:
 		raise Http404()
 
+def get_filtered_deallist(request, store_id, sub_category, sIndex, lIndex):
+	deals_queryset = None
+	blog_subcategory = None
+	
+	ctype = ContentType.objects.get_for_model(BlogPost)
+	if sub_category.lower() != "all" and sub_category.lower() != '':
+		try:
+			blog_subcategory = BlogCategory.objects.get(slug=slugify(sub_category))
+			deals_queryset = BroadcastDeal.objects.all().filter(content_type=ctype, object_id=store_id, blog_category=blog_subcategory)
+		except:
+			raise Http404()
+
+	elif sub_category.lower() == "all" or sub_category.lower() == '':
+		deals_queryset = BroadcastDeal.objects.all().filter(content_type=ctype, object_id=store_id)
+
+	s = (int)(""+sIndex)
+	l = (int)(""+lIndex)
+
+	if deals_queryset:
+		deals_queryset = deals_queryset.order_by('-timestamp')[s:l]
+
+	isVertical = request.GET.get('v', '0')
+	template = 'wish/deallist.html'
+	if isVertical == '1':
+		template = 'wish/deallist_v.html'
+
+	return render_to_response(template, {
+		'deal_list': deals_queryset
+	}, context_instance=RequestContext(request))
+
 def getTrendingStores(request, parent_category, sub_category):
 	if request.method == "GET" and request.is_ajax():
 		latest = settings.STORES_NUM_LATEST
