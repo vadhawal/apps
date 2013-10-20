@@ -591,6 +591,41 @@ def render_reviews_for_categories(context, parent_category, sub_category, latest
         return template.render(RequestContext(context['request'], {
             'comments': reviews,
         }))
+
+@register.simple_tag(takes_context=True)
+def render_deals_for_stores(context, store_id, sub_category, latest=settings.DEALS_NUM_LATEST, orientation='horizontal'):
+        template_name = 'wish/deallist.html'
+
+        if orientation == 'vertical':
+            template_name = 'wish/deallist_v.html'
+
+        template = loader.get_template(template_name)
+        try:
+            blog_post = BlogPost.objects.get(id=store_id)
+        except:
+            return ''
+        
+        ctype = ContentType.objects.get_for_model(BlogPost)
+        deals_queryset = None
+        blog_subcategory = None
+        blog_subcategory_slug = sub_category
+
+        if blog_subcategory_slug.lower() != "all" and blog_subcategory_slug.lower() != '':
+            try:
+                blog_subcategory = BlogCategory.objects.get(slug=slugify(blog_subcategory_slug))
+                deals_queryset = BroadcastDeal.objects.all().filter(content_type=ctype, object_id=store_id, blog_category=blog_subcategory).order_by('-timestamp')[:latest]
+            except:
+                blog_subcategory = None
+                pass
+
+        elif blog_subcategory_slug.lower() == "all" and blog_subcategory_slug.lower() == '':
+            deals_queryset = BroadcastDeal.objects.all().filter(content_type=ctype, object_id=store_id).order_by('-timestamp')[:latest]
+        else:
+            return ''
+
+        return template.render(RequestContext(context['request'], {
+            'deal_list': deals_queryset
+        }))
  
 
 
