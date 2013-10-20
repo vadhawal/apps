@@ -1472,7 +1472,9 @@
 			if (current.closeBtn) {
 				$(current.tpl.closeBtn).appendTo(F.skin).bind('click.fb', function(e) {
 					e.preventDefault();
-
+					/* Custome Code */
+					$('.fancybox-data').hide();
+					/* End Custome Code */
 					F.close();
 				});
 			}
