@@ -100,8 +100,33 @@ var album_form_submit_handler = function() {
     return false;
 }
 
+var edit_album_form_submit_handler = function(event) {
+    var $form = $(this);
+    $.ajax({
+        type: $form.attr('method'),
+        url: $form.attr('action'),
+        data: $form.serialize(),
+        success: function (data) {
+            var ret_data = JSON.parse(data);
+            $form.parent().hide();
+            $.each( ret_data, function( key, value ) {
+                $('.album_' + key).text(value);   //class album_name = 'album_' + Field Name . Check imagesore/image_scope.html
+            });            
+        },
+        error: function(xhr) {
+            var errors = JSON.parse(xhr.responseText);
+            $form.find('.error').removeClass('error');
+            $.each( errors, function( key, value ) {
+                $form.find('[name="' + key + '"]').addClass('error');
+            });
+        }
+    });
+    return false;
+}
+
 var install_album_handlers = function($parent_element){
 	install_voting_handlers($parent_element);  //Assumed inheritance from action.handler.js
+
     if($parent_element)
     {
     	$parent_element.find('.delete_album').off('click').on('click', delete_album_handler);
