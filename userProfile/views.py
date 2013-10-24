@@ -240,7 +240,8 @@ def get_deallist(request, content_type_id, object_id, sIndex, lIndex):
 	import operator
 
 	ctype = get_object_or_404(ContentType, pk=content_type_id)
-	dealset = BroadcastDeal.objects.all().filter(content_type=ctype, object_id=object_id)
+	today = datetime.datetime.today().date()
+	dealset = BroadcastDeal.objects.all().filter(content_type=ctype, object_id=object_id, expiry_date__gte=today)
 	deallist = list(dealset)
 
 	deallist =  sorted(deallist, key=operator.attrgetter('timestamp'), reverse=True)
@@ -419,7 +420,8 @@ def getTrendingDeals(request, parent_category, sub_category):
 		deals = []
 		blog_parentcategory = None
 		deals_queryset = None
-		
+		today = datetime.datetime.today().date()
+
 		blog_parentcategory_slug = parent_category
 		if blog_parentcategory_slug.lower() != "all" and BlogParentCategory.objects.all().exists():
 			blog_parentcategory = get_object_or_404(BlogParentCategory, slug=slugify(blog_parentcategory_slug))
@@ -430,14 +432,14 @@ def getTrendingDeals(request, parent_category, sub_category):
 			blog_subcategory = get_object_or_404(BlogCategory, slug=slugify(blog_subcategory_slug))
 
 		if blog_parentcategory_slug.lower() == "all" and blog_subcategory_slug.lower() == "all":
-			deals_queryset = BroadcastDeal.objects.all().filter(content_type=ctype).order_by('-timestamp')[:latest]
+			deals_queryset = BroadcastDeal.objects.all().filter(content_type=ctype, expiry_date__gte=today).order_by('-timestamp')[:latest]
 		elif blog_parentcategory_slug.lower() != "all" and blog_subcategory_slug.lower() == "all":
 			if blog_parentcategory:
 				blog_subcategories = list(BlogCategory.objects.all().filter(parent_category=blog_parentcategory))
-				deals_queryset = BroadcastDeal.objects.all().filter(content_type=ctype, blog_category__in=blog_subcategories).order_by('-timestamp').distinct()[:latest]
+				deals_queryset = BroadcastDeal.objects.all().filter(content_type=ctype, blog_category__in=blog_subcategories, expiry_date__gte=today).order_by('-timestamp').distinct()[:latest]
 		else:
 			if blog_subcategory and blog_parentcategory:
-				deals_queryset = BroadcastDeal.objects.all().filter(blog_category=blog_subcategory).order_by('-timestamp')[:latest]
+				deals_queryset = BroadcastDeal.objects.all().filter(blog_category=blog_subcategory, expiry_date__gte=today).order_by('-timestamp')[:latest]
 			else:
 				"""
 					raise 404 error, in case categories are not present.
@@ -458,17 +460,17 @@ def getTrendingDeals(request, parent_category, sub_category):
 def get_filtered_deallist(request, store_id, sub_category, sIndex, lIndex):
 	deals_queryset = None
 	blog_subcategory = None
-	
+	today = datetime.datetime.today().date()
 	ctype = ContentType.objects.get_for_model(BlogPost)
 	if sub_category.lower() != "all" and sub_category.lower() != '':
 		try:
 			blog_subcategory = BlogCategory.objects.get(slug=slugify(sub_category))
-			deals_queryset = BroadcastDeal.objects.all().filter(content_type=ctype, object_id=store_id, blog_category=blog_subcategory)
+			deals_queryset = BroadcastDeal.objects.all().filter(content_type=ctype, object_id=store_id, blog_category=blog_subcategory, expiry_date__gte=today)
 		except:
 			raise Http404()
 
 	elif sub_category.lower() == "all" or sub_category.lower() == '':
-		deals_queryset = BroadcastDeal.objects.all().filter(content_type=ctype, object_id=store_id)
+		deals_queryset = BroadcastDeal.objects.all().filter(content_type=ctype, object_id=store_id, expiry_date__gte=today)
 
 	s = (int)(""+sIndex)
 	l = (int)(""+lIndex)

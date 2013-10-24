@@ -16,6 +16,7 @@ from mezzanine.conf import settings as _settings
 from django.shortcuts import render, get_object_or_404
 from django.template.defaultfilters import slugify
 from mezzanine.generic.models import Review
+import datetime
 
 def json_error_response(error_message):
     return HttpResponse(simplejson.dumps(dict(success=False,
@@ -432,7 +433,9 @@ def recent_deals(context):
     deals = []
     latest = context["settings"].COMMENTS_NUM_LATEST
     ctype = ContentType.objects.get_for_model(BlogPost)
-    deals_queryset = BroadcastDeal.objects.all().filter(content_type=ctype)
+    today = datetime.datetime.today().date()
+
+    deals_queryset = BroadcastDeal.objects.all().filter(content_type=ctype, expiry_date__gte=today)
     deals_queryset = sorted(deals_queryset, key=operator.attrgetter('timestamp'), reverse=True)
     for deal in deals_queryset:
         deals.append(deal) 
@@ -493,7 +496,8 @@ def render_deals_for_categories(context, parent_category, sub_category, latest=s
         deals = []
         blog_parentcategory = None
         deals_queryset = None
-        
+        today = datetime.datetime.today().date()
+
         blog_parentcategory_slug = parent_category
         if blog_parentcategory_slug.lower() != "all" and BlogParentCategory.objects.all().exists():
             blog_parentcategory = get_object_or_404(BlogParentCategory, slug=slugify(blog_parentcategory_slug))
@@ -504,14 +508,14 @@ def render_deals_for_categories(context, parent_category, sub_category, latest=s
             blog_subcategory = get_object_or_404(BlogCategory, slug=slugify(blog_subcategory_slug))
 
         if blog_parentcategory_slug.lower() == "all" and blog_subcategory_slug.lower() == "all":
-            deals_queryset = BroadcastDeal.objects.all().filter(content_type=ctype).order_by('-timestamp')[:latest]
+            deals_queryset = BroadcastDeal.objects.all().filter(content_type=ctype, expiry_date__gte=today).order_by('-timestamp')[:latest]
         elif blog_parentcategory_slug.lower() != "all" and blog_subcategory_slug.lower() == "all":
             if blog_parentcategory:
                 blog_subcategories = list(BlogCategory.objects.all().filter(parent_category=blog_parentcategory))
-                deals_queryset = BroadcastDeal.objects.all().filter(content_type=ctype, blog_category__in=blog_subcategories).order_by('-timestamp').distinct()[:latest]
+                deals_queryset = BroadcastDeal.objects.all().filter(content_type=ctype, blog_category__in=blog_subcategories, expiry_date__gte=today).order_by('-timestamp').distinct()[:latest]
         else:
             if blog_subcategory and blog_parentcategory:
-                deals_queryset = BroadcastDeal.objects.all().filter(blog_category=blog_subcategory).order_by('-timestamp')[:latest]
+                deals_queryset = BroadcastDeal.objects.all().filter(blog_category=blog_subcategory, expiry_date__gte=today).order_by('-timestamp')[:latest]
 
         return template.render(RequestContext(context['request'], {
             'deal_list': deals_queryset
@@ -609,17 +613,17 @@ def render_deals_for_stores(context, store_id, sub_category, latest=settings.DEA
         deals_queryset = None
         blog_subcategory = None
         blog_subcategory_slug = sub_category
-
+        today = datetime.datetime.today().date()
         if blog_subcategory_slug.lower() != "all" and blog_subcategory_slug.lower() != '':
             try:
                 blog_subcategory = BlogCategory.objects.get(slug=slugify(blog_subcategory_slug))
-                deals_queryset = BroadcastDeal.objects.all().filter(content_type=ctype, object_id=store_id, blog_category=blog_subcategory).order_by('-timestamp')[:latest]
+                deals_queryset = BroadcastDeal.objects.all().filter(content_type=ctype, object_id=store_id, blog_category=blog_subcategory, expiry_date__gte=today).order_by('-timestamp')[:latest]
             except:
                 blog_subcategory = None
                 pass
 
         elif blog_subcategory_slug.lower() == "all" or blog_subcategory_slug.lower() == '':
-            deals_queryset = BroadcastDeal.objects.all().filter(content_type=ctype, object_id=store_id).order_by('-timestamp')[:latest]
+            deals_queryset = BroadcastDeal.objects.all().filter(content_type=ctype, object_id=store_id, expiry_date__gte=today).order_by('-timestamp')[:latest]
         else:
             return ''
 
