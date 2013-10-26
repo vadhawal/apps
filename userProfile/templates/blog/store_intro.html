@@ -5,9 +5,11 @@
 		<div class="span4 pagination-centered">
 
 		{% block blog_post_detail_featured_image %}
-			{% if settings.BLOG_USE_FEATURED_IMAGE and blog_post.featured_image %}
-				<img class="noBoxShadow featuredImg" src="{{ MEDIA_URL }}{% thumbnail blog_post.featured_image 100 0 %}">
-			{% endif %}
+			
+				<img class="noBoxShadow featuredImg" src="
+				{% if settings.BLOG_USE_FEATURED_IMAGE and blog_post.featured_image %}
+					{{ MEDIA_URL }}{% thumbnail blog_post.featured_image 100 0 %}
+				{% endif %}">
 			{% if blog_post.user == request.user %}
 				 <form id="blogpost_edit_image" action="{% url edit_blog_image blog_post.id %}" method="post" role="form" class='album-form' enctype="multipart/form-data">
 				 {% csrf_token %}

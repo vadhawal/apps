@@ -811,9 +811,10 @@ def edit_blog_image(request, blogpost_id):
 				if featuredImageObj:
 					new_file_rel_path = 'users/store/%s/images/' % (blogpost.id)
 					new_file_path = save_file(featuredImageObj, new_file_rel_path)
-					old_file_path = '%s/%s' % (settings.MEDIA_ROOT, str(blogpost.featured_image.path))
-					if os.path.exists(old_file_path):
-						os.remove(old_file_path)
+					if blogpost.featured_image:
+						old_file_path = '%s/%s' % (settings.MEDIA_ROOT, str(blogpost.featured_image.path))
+						if os.path.exists(old_file_path):
+							os.remove(old_file_path)
 
 					blogpost.featured_image = new_file_path
 					blogpost.save()
