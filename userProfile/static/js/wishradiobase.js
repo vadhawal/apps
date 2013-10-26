@@ -103,7 +103,7 @@ var unfollow_handler = function(event) {
     var url =  $elementClicked.data("href");
 
     $.post(url, {}, function(data) {
-        var return_val = JSON.parse(data)
+        var return_val = JSON.parse(data);
         if (return_val.success  == true) {
             FollowUnfollow($elementClicked, return_val.count);
         } else {

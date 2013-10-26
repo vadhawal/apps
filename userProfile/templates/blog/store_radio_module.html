@@ -24,9 +24,9 @@
 		<span id="vendorFollowContainer" class="{% if request.user|is_following:blog_post %}following{% endif %}" >
 			<a href="#" class="follow-btn icon-follow" data-id="vendor_followers" data-href="{% follow_url blog_post %}">Follow</a>
 
-			<a class="icon-following" data-id="vendor_followers">Following</a>
+			<a class="icon-following radioColor" data-id="vendor_followers">Follow</a>
 
-			<a href="#" class="unfollow-btn icon-unfollow" data-id="vendor_followers" data-href="{% follow_url blog_post %}">Unfollow</a>
+			<a href="#" class="unfollow-btn icon-unfollow" data-id="vendor_followers" data-href="{% follow_url blog_post %}"><img class="noBoxShadow" src="/static/img/1transparent.png"></a>
 		</span>
 		{% vendor_follower_subset_info_url blog_post 0 request.user|follower_count:blog_post as subset_follower_url %}
 		<a id="vendor_followers" class="vendorFollowers" class="vendor_followers" href="{{subset_follower_url}}">({{  request.user|follower_count:blog_post }})</a>

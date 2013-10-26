@@ -1,10 +1,5 @@
 @font-face
 {
-	font-family: skinny;
-	src: url('/static/fonts/TheSkinny-bold.otf');
-}
-@font-face
-{
 	font-family: titillium;
 	src: url('/static/fonts/TitilliumMaps26L.otf');
 }
@@ -33,7 +28,13 @@ div p span {
 	text-shadow: none;
 }
 img {
+	-webkit-box-shadow: 0 0 3px #bbb;
 	box-shadow: 0 0 3px #bbb;
+	filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='#bbb');
+}
+img.noBoxShadow{
+	-webkit-box-shadow: none;
+	box-shadow: none;
 }
 a{
 	color: #5D5D5D;
@@ -205,6 +206,9 @@ a.radioColorBackground:hover{
 .searchBar{
 	height: 60px;
 	background-color: rgb(2, 151, 149);
+	-webkit-box-shadow : 1.25px 1.25px 1.25px rgba(132,125,125,0.75);
+	box-shadow : 1.25px 1.25px 1.25px rgba(132, 125, 125, 0.75);
+	filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=1.25, OffY=1.25, Color='#847D7D');
 }
 .error{
 	border-width: 1px !important;
@@ -232,29 +236,22 @@ a.radioColorBackground:hover{
 	height: 25px;
 	width: 100%;
 	vertical-align: top;
-	margin-top: 12px;
+	margin-top: 17.5px;
 	line-height: normal;
 	/*padding: 0px;*/
 }
 div span.wantText{
-	color:rgba(89,87,87,1.00);
-	font-family: titillium2;
-	background-image: url('/static/img/searchIcon.png');
-	background-repeat: no-repeat;
-	background-position: 10px center;
-	background-size: 10px 10px;
-	background-color:rgba(229,244,244,1.00);
+	color:white;
+	font-family: titillium1;
 	display: inline-block;
-	margin-top: 12px;
+	margin-top: 15px;
 	padding-left:30px;
 	padding-right: 10px;
-	height: 25px;
-	line-height: 25px;
-	width: 70%;
+	font-size: 28px;
 }
 #getvendorsdiv{
-	height: 52px;
-	background-image: url("/static/img/goSearch.png");
+	height: 60px;
+	background-image: url("/static/img/go_search.png");
 	background-repeat: no-repeat;
 	background-position: center center;
 	background-size: 30px 30px;
@@ -262,7 +259,7 @@ div span.wantText{
 #getvendors{
 	display: inline-block;
 	width: 30px;
-	height: 30px;
+	height: inherit;
 }
 .whiteBox {
 	overflow: hidden;
@@ -308,6 +305,7 @@ div span.wantText{
 	background-image: url("/static/img/settings.png");
 	background-repeat: no-repeat;
 	background-position: center;
+	background-size: 20px;
     width: 25px;
     display:inline-block;
     padding: 25px 0 0 0;
@@ -407,9 +405,10 @@ form.comment_on_object{
 	margin-bottom: 8px;
 }
 .radioModuleFeedRadio{
-	background-image: url('/static/img/radio_dark_small.png');
+	background-image: url('/static/img/radio_grey.png');
 	background-repeat: no-repeat;
 	background-position: bottom;
+	background-size: contain;
 	width: 19px;
 	height: 22px;
 	display: inline-block;
@@ -422,9 +421,9 @@ form.comment_on_object{
 	border-style : Solid;
 	border-color : #D1D3D2;
 	border-color : rgba(209, 211, 210, 1);
-	border-width : 1px;
-	-webkit-box-shadow : 1px 1px 1px rgba(197,189,189,0.75) inset;
-	box-shadow : 1px 1px 1px rgba(197,189,189,0.75) inset;
+	border-width : 0px;
+	-webkit-box-shadow : 0px 1px 1px rgba(197,189,189,0.75);
+	box-shadow : 0px 1px 1px rgba(197,189,189,0.75);
 	height: 24px;
 	vertical-align: top;
 	line-height: 24px;
@@ -434,6 +433,32 @@ form.comment_on_object{
 .radioModuleFeedContainer a{
 	margin-left: 10px;
 	margin-right: 10px;
+}
+a.clearvote{
+	margin: 0px;
+}
+a.upvote{
+	margin-left: 10px;
+	margin-right: 0px;
+}
+span.clearvote{
+	margin-left: 10px;
+}
+#comments img {
+	margin-right: 0px;
+}
+.upvote img {
+	display: none;
+}
+.clearvote img {
+	background-image: url("/static/img/cross_button.png");
+	background-size: 10px;
+	background-repeat: no-repeat;
+	margin: 0px;
+	width: 12px;
+	display: inline-block;
+	padding: 12px 0 0 0;
+	height: 0px !important;
 }
 .radioModuleFeedContainer:before{
 	content: '';
@@ -468,10 +493,6 @@ form.comment_on_object{
 .manageFeedUp{
 	background-image: url('/static/img/manage_feed_up.png');
 }
-.moveManageFeedUp{
-	position: relative;
-	top:-25px;
-}
 a.shareObject {
 	margin-right:0px;
 }
@@ -495,6 +516,8 @@ a.shareObject {
 	text-indent: 0.01px;
 	text-overflow: '';
 	font-family: helvetica;
+	margin-top: 5px;
+	margin-bottom: 5px;
 	color:rgba(89,87,87,1.00);
 	background-color:rgba(249, 223, 30, 1);
 	background-image: url('/static/img/selectPointer.png');
@@ -570,8 +593,8 @@ a.shareObject {
 	box-sizing: border-box;
 }
 .searchResultRatingSmall {
-	width:15px;
-	height:10px;
+	width:19px;
+	height:11px;
 	padding: 1px 3px;
 	box-sizing: border-box;
 }
