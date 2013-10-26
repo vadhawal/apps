@@ -12,6 +12,7 @@ from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
 from django.utils import simplejson
 from django.core.exceptions import MultipleObjectsReturned
+from django.core.files import File
 
 from mezzanine.blog.models import BlogPost, BlogCategory, BlogParentCategory
 from mezzanine.generic.models import Review
@@ -27,6 +28,8 @@ from voting.models import Vote
 from cropper.models import Original
 from PIL import Image
 import datetime
+import os
+import uuid
 
 
 def json_error_response(error_codes):
@@ -650,7 +653,7 @@ def deleteObject(request, content_type_id, object_id ):
         error_codes.append(settings.OBJECT_DOES_NOT_EXIST)
         return json_error_response(error_codes)
 
-    owner = get_object_owner(request, content_type_id, object_id)
+    owner = get_object_owner_helper(content_type_id, object_id)
 
     """
     	Check whehter use is authorized to delete the object.
@@ -734,7 +737,7 @@ def deleteObject(request, content_type_id, object_id ):
 
         return json_success_response()
 
-def get_object_owner(request, content_type_id, object_id):
+def get_object_owner_helper(content_type_id, object_id):
 	owner = None
 	try:
 		ctype = ContentType.objects.get(pk=content_type_id)
@@ -747,7 +750,7 @@ def get_object_owner(request, content_type_id, object_id):
 		Currently supports only Review, BroadcastWish, BroadcastDeal, GenericWish models.
 		Enhance for other models as and when required.
 	"""
-	if isinstance(object, Review):
+	if isinstance(object, Review) or isinstance(object, BlogPost):
 		owner = object.user
 
 	elif isinstance(object, BroadcastWish) or isinstance(object, GenericWish):
@@ -762,3 +765,68 @@ def get_object_owner(request, content_type_id, object_id):
 		owner = owner_blog_post.user
 
 	return owner
+
+def save_file(file, path=''):
+    ''' Little helper to save a file
+    '''
+    filename = file._get_name()
+    new_filename =  u'{name}.{ext}'.format(  name=uuid.uuid4().hex,
+                                             ext=os.path.splitext(filename)[1].strip('.'))
+
+    dir_path =  '%s/%s' % (settings.MEDIA_ROOT, str(path))
+
+    if not os.path.exists(dir_path):
+    	os.makedirs(dir_path)
+
+    save_path = os.path.join(dir_path, new_filename)
+
+    with open(save_path, 'wb+') as destination:
+        for chunk in file.chunks():
+            destination.write(chunk)
+
+    return os.path.join(path, new_filename)
+
+@login_required
+def edit_blog_image(request, blogpost_id):
+	if request.method == "POST":
+		error_codes = []
+		try:
+			blogpost = BlogPost.objects.get(id=blogpost_id)
+		except:
+			error_codes.append(settings.OBJECT_DOES_NOT_EXIST)
+			return json_error_response(error_codes)
+
+		ctype = ContentType.objects.get_for_model(BlogPost)
+		owner = get_object_owner_helper(ctype.pk, blogpost_id)
+
+		if owner != request.user:
+			if request.is_ajax():
+				error_codes.append(settings.UNAUTHORIZED_OPERATION)
+				return json_error_response(error_codes)
+			else:
+				raise Http404()
+		else:
+			if 'featured_image' in request.FILES:
+				featuredImageObj = request.FILES['featured_image']
+				if featuredImageObj:
+					save_path = save_file(featuredImageObj, 'users/store/%s/images/' % (blogpost.id))
+					del_path = '%s/%s' % (settings.MEDIA_ROOT, str(blogpost.featured_image.path))
+					if os.path.exists(del_path):
+						os.remove(del_path)
+
+					blogpost.featured_image = save_path
+					blogpost.save()
+
+				return HttpResponseRedirect(blogpost.get_absolute_url())
+				return HttpResponse(simplejson.dumps(dict(success=True, image_url=blogpost.featured_image.path)))
+			else:
+				error_codes.append(settings.INSUFFICIENT_DATA)
+				return json_error_response(error_codes)
+	else:
+		if request.is_ajax():
+			error_codes.append(settings.AJAX_ONLY_SUPPORT)
+			return json_error_response(error_codes)
+		else:
+			return HttpResponseRedirect(request.build_absolute_uri())
+
+	
