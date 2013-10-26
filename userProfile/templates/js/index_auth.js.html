@@ -157,8 +157,6 @@ $(document).ready(function() {
 
     })();
 
-    $('#loader').hide();
-            
     $('#refreshCache').click(function() {
         var add_link = $(this);
         $.get(add_link.attr('href'), {}, function(data) {
@@ -233,7 +231,7 @@ function checkAnyLatestActivity(){
 function updateFeed(){ 
     //fetch new items 
     $('#status').text('Loading more items...');
-    $('#loader').show();
+    $('#status').show();
     sIndex = lIndex;
     lIndex = lIndex + 10;
     {% following_feedsubset_url request.user 0 10 as feed %}
@@ -248,7 +246,7 @@ function updateFeed(){
         {
           $(window).off('scroll');
           console.log("no actions yet");
-          $('#loader').hide();
+          $('#status').hide();
           return;
         }    
         $('#load-feeds').append(data);

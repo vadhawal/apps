@@ -146,6 +146,12 @@
 	background : rgba(249, 223, 30, 1);
 	padding: 5px;
 }
+#status{
+	display: block;
+	background : #F9DF1E;
+	background : rgba(249, 223, 30, 1);
+	padding: 5px;
+}
 #load-feeds ul{
 	margin-top: 0px;
 }
