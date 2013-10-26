@@ -47,6 +47,28 @@ var update_accordion = function(sub_category_slug)
 	return false;
 }
 
+var manageFeedOwner = function() {
+    var $this = $(this); 
+    if ($this.hasClass('manageFeedUp')) {
+        $this.removeClass('manageFeedUp');
+        $this.parent().find('.whiteBox').hide();
+    }
+    else { 
+        $this.addClass('manageFeedUp');
+        $this.parent().find('.whiteBox').show().css({'display': 'inline-block', 'position': 'relative', 'left': '10px'});
+    }
+}
+
+var manageFeedOther = function() {
+    if ($(this).hasClass('manageFeedUp')) {
+        $(this).removeClass('manageFeedUp');
+        $(this).parent().find('.whiteBox').hide();
+    } else {
+        $(this).addClass('manageFeedUp');
+        $(this).parent().find('.whiteBox').show().css({'display': 'inline-block', 'position': 'relative', 'left': '10px'});
+    }
+}
+
 $(document).ready(function(event){
 	$('#dealsFilterSelect').change(function(){
 		var slug = $(this).find("option:selected").text();

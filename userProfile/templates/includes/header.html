@@ -2,6 +2,8 @@
 {% load i18n static %}
 {% load blog_tags %}
 
+<div class="yellowBar navbar navbar-fixed-top">
+</div>
 <div class="container customNavBar navbar navbar-fixed-top">
     <div class="row yellowBar">
         <div class="offset9 span2">
@@ -88,19 +90,17 @@
          {% endif %}
     </div>
     <div class="row">
-        <div class="offset1 span10 searchBar">
-            <div class="row" style="margin-top:auto;margin-bottom:auto;">
+        <div class="offset1 span10">
+            <div class="row searchBar" style="margin-top:auto;margin-bottom:auto;">
                 <div class="span2 logo">
-                    <div class="whiteBox whiteBoxGlassy fullGutter" style="width:110px;">
+                    <div class="whiteBox whiteBoxGlassy" style="width:110px;">
                         <a href="/"><img src="/static/img/wishRadioLogo.png"/></a>
                     </div>
                 </div>
                 <div class="span8">
-                    <div class="span2 halfGutterRight">
-                        <span class="wantText">
-                            {% trans "I'm looking for" %}
-                        </span>
-                    </div>
+                    <span class="wantText" style="float:left;">
+                            {% trans "I want" %}
+                    </span>
                     {% blog_parentcategories_abs as parent_categories %}
                     {% if parent_categories %}
                     <div class="span2 halfGutterRight">

@@ -23,16 +23,13 @@
                 <div id="load-feeds" class="section-scroll content">
                 </div>
             </div>
-            <span id="status" ></span>
-            <div id="loader">
-                <img src="{{STATIC_URL}}img/ajax-loader.gif">
-            </div>
+            <span id="status" class="pagination-centered">{% trans "Loading Activity Feed" %}</span>
         </div>
     </div>
 
     <div class="span3 whiteBox" style="overflow:auto">
         {% if parent_categories %}
-        <div class="halfGutterInset halfGutterInsetRight">
+        <div>
             <select id="dealsFilterSelect" class="dealsFilter">
                 <option value='empty' selected disabled>{% trans "Filter By" %}</option>
                 <option value="all">{% trans "All" %}</option>
