@@ -81,6 +81,23 @@
             $('#blogpost_edit_image').submit();
             return false;
         });
+
+        $('#blogpost_edit_image').ajaxForm({
+            complete: function(xhr) {
+                var ret_data = JSON.parse(xhr.responseText);
+                if(ret_data.success == true){
+                    var img_url = ret_data.image_url;
+                    if(img_url) {
+                        $('.featuredImg').attr('src', img_url);
+                    }
+                    else {
+                        console.log(ret_data);
+                    }
+                }
+                else
+                   console.log(ret_data); 
+            }
+        });     
     });
 </script>
 {% endblock %}

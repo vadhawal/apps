@@ -809,16 +809,20 @@ def edit_blog_image(request, blogpost_id):
 			if 'featured_image' in request.FILES:
 				featuredImageObj = request.FILES['featured_image']
 				if featuredImageObj:
-					save_path = save_file(featuredImageObj, 'users/store/%s/images/' % (blogpost.id))
-					del_path = '%s/%s' % (settings.MEDIA_ROOT, str(blogpost.featured_image.path))
-					if os.path.exists(del_path):
-						os.remove(del_path)
+					new_file_rel_path = 'users/store/%s/images/' % (blogpost.id)
+					new_file_path = save_file(featuredImageObj, new_file_rel_path)
+					old_file_path = '%s/%s' % (settings.MEDIA_ROOT, str(blogpost.featured_image.path))
+					if os.path.exists(old_file_path):
+						os.remove(old_file_path)
 
-					blogpost.featured_image = save_path
+					blogpost.featured_image = new_file_path
 					blogpost.save()
 
-				return HttpResponseRedirect(blogpost.get_absolute_url())
-				return HttpResponse(simplejson.dumps(dict(success=True, image_url=blogpost.featured_image.path)))
+				if request.is_ajax():
+					return HttpResponse(simplejson.dumps(dict(success=True, image_url=blogpost.featured_image.url)))
+				else:
+					return HttpResponseRedirect(blogpost.get_absolute_url())
+				
 			else:
 				error_codes.append(settings.INSUFFICIENT_DATA)
 				return json_error_response(error_codes)
@@ -827,6 +831,6 @@ def edit_blog_image(request, blogpost_id):
 			error_codes.append(settings.AJAX_ONLY_SUPPORT)
 			return json_error_response(error_codes)
 		else:
-			return HttpResponseRedirect(request.build_absolute_uri())
+			return HttpResponseRedirect(request.get_full_path())
 
 	
