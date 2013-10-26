@@ -32,22 +32,22 @@
 <script src="{% static "js/album.handlers.js" %}"></script>
 <script type="text/javascript">
     $(document).ready(function() {
-            {% get_hit_count_javascript for blog_post %}
-            install_voting_handlers();
-            install_review_voting_handler();
-            install_review_handlers();
-            var getDealList = function(){
-                    $('#load-deals').html("");
-                    {% get_deallist_url blog_post 0 10 as wishlisturl %}
-                    var link = "{{wishlisturl}}";
-                    $.get(link, {}, function(data) {
-                        $('#load-deals').html(data);
-                        install_voting_handlers($('#load-deals'));
-                        install_review_voting_handler($('#load-deals'));
-                        $('.shareDeal').on('click', sharewish_handler);
-                    });  
-            }
-            getDealList(); 
+        {% get_hit_count_javascript for blog_post %}
+        install_voting_handlers();
+        install_review_voting_handler();
+        install_review_handlers();
+        var getDealList = function(){
+                $('#load-deals').html("");
+                {% get_deallist_url blog_post 0 10 as wishlisturl %}
+                var link = "{{wishlisturl}}";
+                $.get(link, {}, function(data) {
+                    $('#load-deals').html(data);
+                    install_voting_handlers($('#load-deals'));
+                    install_review_voting_handler($('#load-deals'));
+                    $('.shareDeal').on('click', sharewish_handler);
+                });  
+        }
+        getDealList(); 
 
         $('#viewAlbum').click(function() {
             var add_link = $(this);
@@ -96,7 +96,7 @@
     <div class="span3 whiteBox" style="overflow:auto">
         {% blog_subcategories_for_blog blog_post as sub_categories_blog %}
         {% if sub_categories_blog %}
-            <div class="halfGutterInset halfGutterInsetRight">
+            <div>
                 <select id="dealsFilterSelect" class="dealsFilter">
                     <option value='empty' selected disabled>{% trans "Filter By" %}</option>
                     <option value="all">{% trans "All" %}</option>
