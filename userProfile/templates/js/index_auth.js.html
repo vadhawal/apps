@@ -264,6 +264,7 @@ function viewFeed()
     $.get(link, {}, function(data) {
         $('#load-feeds').html(data);
         install_action_handlers($('#load-feeds').children().last());
+        $('#status').hide();
     });
 }
 
