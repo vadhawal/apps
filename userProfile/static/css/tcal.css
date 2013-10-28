@@ -28,8 +28,6 @@
 	background-color: white;
 	margin-top: 2px;
 	padding: 0 2px 2px 2px;
-	border: 1px solid silver;
-
 	-moz-box-shadow: 3px 3px 4px silver;
 	-webkit-box-shadow: 3px 3px 4px silver;
 	box-shadow: 3px 3px 4px silver;
@@ -42,6 +40,10 @@
 	border-collapse: collapse;
 	border: 0;
 	width: 100%;
+	background-color: rgb(2, 151, 149);
+	font-family: titillium2;
+	font-size: 12px;
+	color: white;
 }
 #tcalControls td {
 	border-collapse: collapse;
@@ -71,25 +73,21 @@
 /* table containing week days header and calendar grid */
 #tcalGrid {
 	border-collapse: collapse;
-	border: 1px solid silver;
 	width: 100%;
 }
 #tcalGrid th {
-	border: 1px solid silver;
-	border-collapse: collapse;
 	padding: 3px 0;
 	text-align: center;
-	font-family: Tahoma, Geneva, sans-serif;
 	font-size: 10px;
-	background-color: gray;
-	color: white;
+	font-family: titillium2, Tahoma, Geneva, sans-serif;
+	color: rgb(2, 151, 149);
 }
 #tcalGrid td {
 	border: 0;
 	border-collapse: collapse;
 	padding: 2px 0;
 	text-align: center;
-	font-family: Tahoma, Geneva, sans-serif;
+	font-family: titillium2, Tahoma, Geneva, sans-serif;
 	width: 14%;
 	font-size: 11px;
 	cursor: pointer;
@@ -100,7 +98,6 @@
 #tcalGrid td.tcalSelected { background-color: #FFB3BE; }
 
 div#tcal td.disabled_days {
-font-style: italic;
 color: silver;
 cursor: auto;
 }

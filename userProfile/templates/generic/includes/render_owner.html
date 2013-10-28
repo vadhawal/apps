@@ -14,7 +14,11 @@
 					{% elif owner.get_profile.image_url %}
 						<img style="height:55px; max-height:55px;" src="{{ owner.get_profile.image_url }}">
 					{% else %}
-						<img style="height:55px; max-height:55px;" src="{% static "img/defaultProfilePic.gif" %}"> 
+                        {% if owner.get_profile.gender == "male" %}
+                            <img class="noBoxShadow" style="margin-right:5px;height:55px; max-height:55px;;" src="{% static "img/man_icon.png" %}">
+                        {% else %}
+                            <img class="noBoxShadow" style="margin-right:5px;height:55px; max-height:55px;" src="{% static "img/woman_icon.png" %}">
+                        {% endif %}
 					{% endif %}
 
 				{% elif owner|get_class_name == "BlogPost" %}
