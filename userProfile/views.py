@@ -495,7 +495,7 @@ def getTrendingDeals(request, parent_category, sub_category, sIndex=0, lIndex=0)
 			}
 
 		return HttpResponse(json.dumps(ret_data), mimetype="application/json")
-	 else:
+	else:
 	 	raise Http404()
 
 def get_filtered_deallist(request, store_id, sub_category, sIndex, lIndex):
