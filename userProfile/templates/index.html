@@ -38,13 +38,7 @@ var sIndex = 0;
 var lIndex = 5;
 $(window).load(function(){
 	/* Calling this on window.load to wait for all the images to load. */
-    $(".dealBox_h").mCustomScrollbar({
-        horizontalScroll:true,
-        theme:"dark-thick",
-		mouseWheel:true,
-      	autoHideScrollbar:true,
-      	contentTouchScroll:true
-    });
+    setupCustomScrollBar($('#topDealsForStoreCategory'), true); //second boolean parameter forces horizontal scrollbar
     $(".innerBox").mCustomScrollbar({
         theme:"dark-thick",
 		mouseWheel:true,

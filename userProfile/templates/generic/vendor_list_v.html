@@ -7,6 +7,9 @@
 {# % block title %}{% trans "vendors" %}{% endblock % #}
 
 {% block content %}
+{% if not is_incremental %}
+<div class="topStores_v scrollContainer" data-href="{% url getTrendingStores 'all' 'all' 0 'MIN_STORES_HOME_PAGE'|settings_value %}?v=1" data-chunk="5">
+{% endif %}
     {% for vendor in vendors %}
         <div class="row vendorResult">
             <div class="span1 text-center halfGutter">
@@ -48,4 +51,7 @@
             <hr class="dottedSeparator">
         {% endif %}
     {% endfor %}
+{% if not is_incremental %}
+</div>
+{% endif %}
 {% endblock %}

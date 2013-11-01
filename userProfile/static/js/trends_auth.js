@@ -1,39 +1,86 @@
 var get_trending_deals_handler_auth = function(parent_category, sub_category)
 {
-    $.get('/' + parent_category + '/'+ sub_category + '/trendingdeals?v=1', {}, function(data) {
-          $('#topDealsForStoreCategoryAuth').html(data);
-            install_voting_handlers($('#topDealsForStoreCategoryAuth'));
-            install_share_object_handler($('#topDealsForStoreCategoryAuth'));
+	var $url = '/' + parent_category + '/'+ sub_category + '/trendingdeals/0/5/?v=1';
+	var $element = $('#topDealsForStoreCategoryAuth');
+    var $scrollContainer = $element.find(".scrollContainer");
+	if ($scrollContainer && $scrollContainer.hasClass('mCustomScrollbar')) { 
+		$scrollContainer.mCustomScrollbar("scrollTo","top");
+	}
+    $.get($url, {}, function(data) {
+    		if(data.success === true) {
+	        	$scrollContainer.find('.mCSB_container').html(data.html);
+	            install_voting_handlers($element);
+	            install_share_object_handler($element);
 
-            if($("#topDealsForStoreCategoryAuth").parent().hasClass('open-content'))
-            {
-              setupCustomScrollBar($("#topDealsForStoreCategoryAuth"));
+		        $scrollContainer.attr("data-href", $url);
+	            $('a.wishimg-deal-homepage').fancybox({
+	              scrolling: 'yes',
+	              minWidth: 500,
+	              minHeight:450,
+	              autoSize: true,
+	              helpers : { overlay : { locked : false } }
+	            });
+	        } else {
+				$scrollContainer.removeAttr("data-href");
 	        }
-            $('a.wishimg-deal-homepage').fancybox({
-              scrolling: 'yes',
-              minWidth: 500,
-              minHeight:450,
-              autoSize: true,
-              helpers : { overlay : { locked : false } }
-            });
        });
     return false;
 }
 
 var get_top_stores_handler_auth = function(parent_category, sub_category)
 {
-    $.get('/' + parent_category + '/'+ sub_category + '/trendingstores?v=1', {}, function(data) {
-       $('#topStoresForStoreCategoryAuth').html(data);
-       });
+    var $element = $('#topStoresForStoreCategoryAuth');
+    if (!$element || $element.length == 0 ) {
+        return;
+    }
+    var $scrollContainer = null;
+    if ($element.hasClass("scrollContainer")) {
+        $scrollContainer = $element;
+    } else {
+        $scrollContainer = $element.find(".scrollContainer");
+    }
+    if ($scrollContainer && $scrollContainer.hasClass('mCustomScrollbar')) { 
+    	$scrollContainer.mCustomScrollbar("scrollTo","top");
+    }
+    var $url = '/' + parent_category + '/'+ sub_category + '/trendingstores/0/5/?v=1';
+    $.get($url, {}, function(data) {
+    	if(data.success === true) {
+    		$scrollContainer.find('.mCSB_container').html(data.html);
+
+		    $scrollContainer.attr("data-href", $url);
+    	} else {
+    		$scrollContainer.removeAttr("data-href");
+    	}
+    });
    	return false;
 }
 
 var get_top_reviews_handler_auth = function(parent_category, sub_category)
 {
-	$.get('/' + parent_category + '/'+ sub_category + '/trendingreviews?v=1', {}, function(data) {
-       $('#topReviewsForStoreCategoryAuth').html(data);
-       install_toggle_comment_handler();
-       });
+    var $element = $('#topReviewsForStoreCategoryAuth');
+    if (!$element || $element.length == 0 ) {
+        return;
+    }
+    var $scrollContainer = null;
+    if ($element.hasClass("scrollContainer")) {
+        $scrollContainer = $element;
+    } else {
+        $scrollContainer = $element.find(".scrollContainer");
+    }
+    if ($scrollContainer && $scrollContainer.hasClass('mCustomScrollbar')) { 
+    	$scrollContainer.mCustomScrollbar("scrollTo","top");
+    }
+    var $url = '/' + parent_category + '/'+ sub_category + '/trendingreviews/0/3/?v=1';
+    $.get($url, {}, function(data) {
+    	if(data.success === true) {
+    		$scrollContainer.find('.mCSB_container').html(data.html);
+
+		    $scrollContainer.attr("data-href", $url);
+		    install_toggle_comment_handler();
+    	} else {
+    		$scrollContainer.removeAttr("data-href");
+    	}
+    });
 	return false;
 }
 

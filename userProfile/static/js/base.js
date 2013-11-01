@@ -1,4 +1,4 @@
-var setupCustomScrollBar = function ($element) {
+var setupCustomScrollBar = function ($element, horizontal_scroll) {
     if (!$element || $element.length == 0 ) {
         return;
     }
@@ -8,17 +8,77 @@ var setupCustomScrollBar = function ($element) {
     } else {
         $scrollContainer = $element.find(".scrollContainer");
     }
+    var totalScrollCallback = function(){
+        var $href = $scrollContainer.attr("data-href");
+        if($href) {
+            var a = $('<a>', { href:$href } )[0];
+            var $pathname = a.pathname;
+            var pathsplit = $pathname.split("/");
+            var lIndex = pathsplit[pathsplit.length-2];
+            var sIndex = pathsplit[pathsplit.length-3];
+            var $chunk = $scrollContainer.data("chunk");
+            pathsplit[pathsplit.length-2] = parseInt(lIndex) + parseInt($chunk);
+            pathsplit[pathsplit.length-3] = parseInt(lIndex);
+            $pathname = pathsplit.join('/');
+            var $url = $pathname + a.search; //a,search contains any GET query parameter.
+            $.get($url, {}, function(data) {
+                if(data.success === true) {
+                    $scrollContainer.find('.mCSB_container').append(data.html);
+                    install_voting_handlers($scrollContainer);
+                    install_share_object_handler($scrollContainer);
+                    $scrollContainer.attr("data-href", $url);
+
+                    $scrollContainer.find($('a.wishimg-deal-homepage')).fancybox({
+                      scrolling: 'yes',
+                      minWidth: 500,
+                      minHeight:450,
+                      autoSize: true,
+                      helpers : { overlay : { locked : false } }
+                    });
+
+                } else {
+                    $scrollContainer.removeAttr("data-href");
+                }
+            }); 
+        }                      
+    };
 
     if ($scrollContainer && !$scrollContainer.hasClass('mCustomScrollbar')) {
         $scrollContainer.imagesLoaded({
             complete: function(images) {
-                $scrollContainer.mCustomScrollbar({
-                  verticalScroll:true,
-                  theme:"dark-thick",
-                  mouseWheel:true,
-                  autoHideScrollbar:true,
-                  contentTouchScroll:true
-                });
+                if(horizontal_scroll) {
+                    $scrollContainer.mCustomScrollbar({
+                        horizontalScroll:true,
+                        theme:"dark-thick",
+                        mouseWheel:true,
+                        autoHideScrollbar:true,
+                        contentTouchScroll:true,
+                        autoDraggerLength: true,
+                        callbacks: {
+                            onTotalScroll: totalScrollCallback, // Will be called once scroll reaches bottom.
+                            onTotalScrollOffset:100 //onTotalScroll callback will be fired 100 pixels before bottom.
+                        },
+                        advanced:{
+                            autoExpandHorizontalScroll: true, //Required to update the scrollbar size after dynamic data load.
+                            updateOnContentResize: true //Will update the scrollbar size automatically once the data is loaded.
+                        }
+                    });
+                } else {
+                    $scrollContainer.mCustomScrollbar({
+                        verticalScroll:true,
+                        theme:"dark-thick",
+                        mouseWheel:true,
+                        autoHideScrollbar:true,
+                        contentTouchScroll:true,
+                        callbacks: {
+                            onTotalScroll: totalScrollCallback,
+                            onTotalScrollOffset:100
+                        },
+                        advanced:{
+                            updateOnContentResize: true
+                        }
+                    });                    
+                }
                 $(".mCSB_draggerContainer").css("margin-left", "10px");
             }
         });

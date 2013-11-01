@@ -6,7 +6,9 @@
 {% load thumbnail %}
 
 {% block extra_head %}
-<div class="dealBox_v scrollContainer">
+{% if not is_incremental %}
+<div class="dealBox_v scrollContainer" data-href="{% url getTrendingDeals 'all' 'all' 0 'MIN_DEALS_HOME_PAGE'|settings_value %}?v=1" data-chunk="5">
+{% endif %}
 {% for deal in deal_list %}
 
 {% if deal.wishimage and deal.wishimage.image  %}
@@ -32,5 +34,7 @@
 {% empty %}
 {% trans "No wishes yet" %}
 {% endfor %}
+{% if not incremental %}
 </div>
+{% endif %}
 {% endblock %}

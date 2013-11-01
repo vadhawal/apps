@@ -242,5 +242,12 @@ $(document).ready(function() {
     $('.store_sharers').off("click", display_popup_handler).on("click", display_popup_handler);
     install_share_object_handler();
     install_delete_object_handler();
+    $('a.wishimg-deal-homepage').fancybox({
+        scrolling: 'yes',
+        minWidth: 500,
+        minHeight: 450,
+        autoSize: true,
+        helpers : { overlay : { locked : false } }
+    });
 });
 

@@ -1,47 +1,51 @@
 var get_trending_deals_handler = function(parent_category, sub_category)
 {
-    $.get('/' + parent_category + '/'+ sub_category + '/trendingdeals', {}, function(data) {
-          $('#topDealsForStoreCategory').html(data);
-            install_voting_handlers($('#topDealsForStoreCategory'));
-            $('.shareWish').on('click', sharewish_handler);
+    var $url = '/' + parent_category + '/'+ sub_category + '/trendingdeals/0/5/';
+    var $element = $('#topDealsForStoreCategory');
+    var $scrollContainer = $element.find(".scrollContainer");
+    if ($scrollContainer && $scrollContainer.hasClass('mCustomScrollbar')) { 
+      $scrollContainer.mCustomScrollbar("scrollTo","left");
+    }
+    $.get($url, {}, function(data) {
+          if(data.success === true) {
+              $scrollContainer.find('.mCSB_container').html(data.html);
+              install_voting_handlers($scrollContainer);
+              install_share_object_handler($element);
 
-            $("#topDealsForStoreCategory").imagesLoaded({
-                complete: function(images) {
-                    $(".dealBox_h").mCustomScrollbar({
-                      horizontalScroll:true,
-                      theme:"dark-thick",
-                      mouseWheel:true,
-                      autoHideScrollbar:true,
-                      contentTouchScroll:true
-                  });
-                }
-            });
+              $scrollContainer.attr("data-href", $url);
 
-            $('a.wishimg-deal-homepage').fancybox({
-              scrolling: 'yes',
-              minWidth: 500,
-              minHeight:450,
-              autoSize: true,
-              helpers : { overlay : { locked : false } }
-            });
+              $('a.wishimg-deal-homepage').fancybox({
+                scrolling: 'yes',
+                minWidth: 500,
+                minHeight:450,
+                autoSize: true,
+                helpers : { overlay : { locked : false } }
+              });
+
+          } else {
+              $scrollContainer.removeAttr("data-href");
+          }
        });
     return false;
 }
 
 var get_top_stores_handler = function(parent_category, sub_category)
 {
-    $.get('/' + parent_category + '/'+ sub_category + '/trendingstores', {}, function(data) {
-       $('#topStoresForStoreCategory').html(data);
+    $.get('/' + parent_category + '/'+ sub_category + '/trendingstores/0/5/', {}, function(data) {
+          if(data.success === true)
+            $('#topStoresForStoreCategory').html(data.html);
        });
    	return false;
 }
 
 var get_top_reviews_handler = function(parent_category, sub_category)
 {
-	$.get('/' + parent_category + '/'+ sub_category + '/trendingreviews', {}, function(data) {
-       $('#topReviewsForStoreCategory').html(data);
-       install_toggle_comment_handler();
-       });
+	$.get('/' + parent_category + '/'+ sub_category + '/trendingreviews/0/3/', {}, function(data) {
+      if(data.success === true) {
+         $('#topReviewsForStoreCategory').html(data.html);
+         install_toggle_comment_handler();
+      }
+  });
 	return false;
 }
 var update_trends_handler = function(event, elementClicked)

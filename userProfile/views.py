@@ -1,5 +1,6 @@
 from django.shortcuts import render_to_response
 from django.template import RequestContext
+from django.template.loader import render_to_string
 from userProfile.models import BroadcastForm, Broadcast, BroadcastWish, BroadcastDeal, GenericWish
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.shortcuts import render, get_object_or_404
@@ -30,6 +31,7 @@ from PIL import Image
 import datetime
 import os
 import uuid
+import json
 
 
 def json_error_response(error_codes):
@@ -376,10 +378,10 @@ def unfollowDeal(request, deal_id):
 	actions.unfollow(request.user, dealObject, send_action=False)
 	return HttpResponse('ok')
 
-def getTrendingReviews(request, parent_category, sub_category):
+def getTrendingReviews(request, parent_category, sub_category, sIndex=0, lIndex=0):
 
 	if request.method == "GET" and request.is_ajax():
-		latest = settings.REVIEWS_NUM_LATEST
+		#latest = settings.REVIEWS_NUM_LATEST
 		blog_parentcategory = None
 		
 		blog_parentcategory_slug = parent_category
@@ -392,14 +394,14 @@ def getTrendingReviews(request, parent_category, sub_category):
 			blog_subcategory = get_object_or_404(BlogCategory, slug=slugify(blog_subcategory_slug))
 
 		if blog_parentcategory_slug.lower() == "all" and blog_subcategory_slug.lower() == "all":
-			reviews = Review.objects.all().order_by('-submit_date')[:latest]
+			reviews = Review.objects.all().order_by('-submit_date') #[:latest]
 		elif blog_parentcategory_slug.lower() != "all" and blog_subcategory_slug.lower() == "all":
 			if blog_parentcategory:
 				blog_subcategories = list(BlogCategory.objects.all().filter(parent_category=blog_parentcategory))
-				reviews = Review.objects.all().filter(bought_category__in=blog_subcategories).order_by('-submit_date')[:latest]
+				reviews = Review.objects.all().filter(bought_category__in=blog_subcategories).order_by('-submit_date') #[:latest]
 		else:
 			if blog_subcategory and blog_parentcategory:
-				reviews = Review.objects.all().filter(bought_category=blog_subcategory).order_by('-submit_date')[:latest]
+				reviews = Review.objects.all().filter(bought_category=blog_subcategory).order_by('-submit_date') #[:latest]
 			else:
 				"""
 					raise 404 error, in case categories are not present.
@@ -410,16 +412,34 @@ def getTrendingReviews(request, parent_category, sub_category):
 		if isVertical == '1':
 			template = 'generic/top_reviews_v.html'
 
-		return render_to_response(template, {
-				'comments': reviews
-			}, context_instance=RequestContext(request))
+		s = (int)(""+sIndex)
+		l = (int)(""+lIndex)
+		if l == 0:
+			sub_reviews = reviews
+		else:
+			sub_reviews = reviews[s:l]
+
+		context = RequestContext(request)
+		context.update({'comments': sub_reviews,
+						'is_incremental': True})
+		if sub_reviews:
+			ret_data = {
+				'html': render_to_string(template, context_instance=context).strip(),
+				'success': True
+			}
+		else:
+			ret_data = {
+				'success': False
+			}
+
+		return HttpResponse(json.dumps(ret_data), mimetype="application/json")
 	else:
 		raise Http404()
 
-def getTrendingDeals(request, parent_category, sub_category):
+def getTrendingDeals(request, parent_category, sub_category, sIndex=0, lIndex=0):
 	if request.method == "GET" and request.is_ajax():
 		ctype = ContentType.objects.get_for_model(BlogPost)
-		latest = settings.DEALS_NUM_LATEST
+		# latest = settings.DEALS_NUM_LATEST
 		deals = []
 		blog_parentcategory = None
 		deals_queryset = None
@@ -435,30 +455,48 @@ def getTrendingDeals(request, parent_category, sub_category):
 			blog_subcategory = get_object_or_404(BlogCategory, slug=slugify(blog_subcategory_slug))
 
 		if blog_parentcategory_slug.lower() == "all" and blog_subcategory_slug.lower() == "all":
-			deals_queryset = BroadcastDeal.objects.all().filter(content_type=ctype, expiry_date__gte=today).order_by('-timestamp')[:latest]
+			deals_queryset = BroadcastDeal.objects.all().filter(content_type=ctype, expiry_date__gte=today).order_by('-timestamp') #[:latest]
 		elif blog_parentcategory_slug.lower() != "all" and blog_subcategory_slug.lower() == "all":
 			if blog_parentcategory:
 				blog_subcategories = list(BlogCategory.objects.all().filter(parent_category=blog_parentcategory))
-				deals_queryset = BroadcastDeal.objects.all().filter(content_type=ctype, blog_category__in=blog_subcategories, expiry_date__gte=today).order_by('-timestamp').distinct()[:latest]
+				deals_queryset = BroadcastDeal.objects.all().filter(content_type=ctype, blog_category__in=blog_subcategories, expiry_date__gte=today).order_by('-timestamp').distinct() #[:latest]
 		else:
 			if blog_subcategory and blog_parentcategory:
-				deals_queryset = BroadcastDeal.objects.all().filter(blog_category=blog_subcategory, expiry_date__gte=today).order_by('-timestamp')[:latest]
+				deals_queryset = BroadcastDeal.objects.all().filter(blog_category=blog_subcategory, expiry_date__gte=today).order_by('-timestamp')#[:latest]
 			else:
 				"""
 					raise 404 error, in case categories are not present.
 				"""
 				raise Http404()
 
+		s = (int)(""+sIndex)
+		l = (int)(""+lIndex)
+		if l == 0:
+			deal_chunk = deals_queryset
+		else:
+			deal_chunk = deals_queryset[s:l]
+
 		isVertical = request.GET.get('v', '0')
 		template = 'wish/deallist.html'
 		if isVertical == '1':
 			template = 'wish/deallist_v.html'
 
-		return render_to_response(template, {
-					'deal_list': deals_queryset,
-				}, context_instance=RequestContext(request))
-	else:
-		raise Http404()
+		context = RequestContext(request)
+		context.update({'deal_list': deal_chunk,
+						'is_incremental': True})
+		if deal_chunk:
+			ret_data = {
+				'html': render_to_string(template, context_instance=context).strip(),
+				'success': True
+			}
+		else:
+			ret_data = {
+				'success': False
+			}
+
+		return HttpResponse(json.dumps(ret_data), mimetype="application/json")
+	 else:
+	 	raise Http404()
 
 def get_filtered_deallist(request, store_id, sub_category, sIndex, lIndex):
 	deals_queryset = None
@@ -490,9 +528,9 @@ def get_filtered_deallist(request, store_id, sub_category, sIndex, lIndex):
 		'deal_list': deals_queryset
 	}, context_instance=RequestContext(request))
 
-def getTrendingStores(request, parent_category, sub_category):
+def getTrendingStores(request, parent_category, sub_category, sIndex=0, lIndex=0):
 	if request.method == "GET" and request.is_ajax():
-		latest = settings.STORES_NUM_LATEST
+		#latest = settings.STORES_NUM_LATEST
 		blog_parentcategory = None
 		result = None
 		"""
@@ -508,14 +546,14 @@ def getTrendingStores(request, parent_category, sub_category):
 		if blog_subcategory_slug.lower() != "all" and BlogCategory.objects.all().exists():
 			blog_subcategory = get_object_or_404(BlogCategory, slug=slugify(blog_subcategory_slug))
 		if blog_parentcategory_slug.lower() == "all" and blog_subcategory_slug.lower() == "all":
-			result = BlogPost.objects.published().extra(select={'fieldsum':'price_average + variety_average + quality_average + service_average + exchange_average + overall_average'},order_by=('-fieldsum',))[:latest]
+			result = BlogPost.objects.published().extra(select={'fieldsum':'price_average + variety_average + quality_average + service_average + exchange_average + overall_average'},order_by=('-fieldsum',)) #[:latest]
 		elif blog_parentcategory_slug.lower() != "all" and blog_subcategory_slug.lower() == "all":
 			if blog_parentcategory:
 				blog_subcategories = list(BlogCategory.objects.all().filter(parent_category=blog_parentcategory))
-				result = BlogPost.objects.published().filter(categories__in=blog_subcategories).extra(select={'fieldsum':'price_average + variety_average + quality_average + service_average + exchange_average + overall_average'},order_by=('-fieldsum',)).distinct()[:latest]
+				result = BlogPost.objects.published().filter(categories__in=blog_subcategories).extra(select={'fieldsum':'price_average + variety_average + quality_average + service_average + exchange_average + overall_average'},order_by=('-fieldsum',)).distinct() #[:latest]
 		else:
 			if blog_subcategory and blog_parentcategory:
-				result = BlogPost.objects.published().filter(categories=blog_subcategory).extra(select={'fieldsum':'price_average + variety_average + quality_average + service_average + exchange_average + overall_average'},order_by=('-fieldsum',))[:latest]
+				result = BlogPost.objects.published().filter(categories=blog_subcategory).extra(select={'fieldsum':'price_average + variety_average + quality_average + service_average + exchange_average + overall_average'},order_by=('-fieldsum',)) #[:latest]
 			else:
 				"""
 					raise 404 error, in case categories are not present.
@@ -527,9 +565,28 @@ def getTrendingStores(request, parent_category, sub_category):
 		if isVertical == '1':
 			template = 'generic/vendor_list_v.html'
 
-		return render_to_response(template, {
-				'vendors': result
-			}, context_instance=RequestContext(request))
+		s = (int)(""+sIndex)
+		l = (int)(""+lIndex)
+		if l == 0:
+			sub_result = result
+		else:
+			sub_result = result[s:l]
+
+		context = RequestContext(request)
+		context.update({'vendors': sub_result,
+						'is_incremental': True})
+		if sub_result:
+			ret_data = {
+				'html': render_to_string(template, context_instance=context).strip(),
+				'success': True
+			}
+		else:
+			ret_data = {
+				'success': False
+			}
+
+		return HttpResponse(json.dumps(ret_data), mimetype="application/json")
+
 	else:
 		raise Http404()
 

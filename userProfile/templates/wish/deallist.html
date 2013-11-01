@@ -4,22 +4,10 @@
 {% load voting_tags %}
 {% load thumbnail %}
 
-{% block extra_js %}
-<script type="text/javascript">
-    $(document).ready(function() {
-        $('a.wishimg-deal-homepage').fancybox({
-	        scrolling: 'yes',
-	        minWidth: 500,
-	        minHeight: 450,
-	        autoSize: true,
-            helpers : { overlay : { locked : false } }
-	      });
-    });
-</script>
-{% endblock %} 
-
 {% block extra_head %}             
-<div class="dealBox_h">
+{% if not is_incremental %}
+<div class="dealBox_h scrollContainer" data-href="{% url getTrendingDeals 'all' 'all' 0 'MIN_DEALS_HOME_PAGE'|settings_value %}" data-chunk="5">
+{% endif %}
 {% for deal in deal_list %}
 {#% get_wish_owner deal as deal_owner %#}
 {#% include 'generic/includes/render_owner.html' with owner=deal_owner %#}
@@ -34,7 +22,7 @@
     {% get_reldata_url deal as rel_data_url %}
 	{% thumbnail deal.wishimage.image "400x400" as img %}
     <div class="dealBox_h_elem"> 
-        <a class="wishimg-deal-homepage" href="{{  deal.wishimage.image.url }}" rel="homepage_deals" data-reldata-url="{{rel_data_url}}" style="">
+        <a class="wishimg-deal-homepage" href="{{  deal.wishimage.image.url }}" rel="homepage_deals" data-reldata-url="{{rel_data_url}}">
             <img src="{{img.url}}">
         </a>
         <div class="whiteBoxGlassy pagination-centered">
@@ -59,5 +47,7 @@
 {% empty %}
 {% trans "No wishes yet" %}
 {% endfor %}
+{% if not is_incremental %}
 </div>
+{% endif %}
 {% endblock %}

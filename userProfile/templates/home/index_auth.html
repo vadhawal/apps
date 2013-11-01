@@ -55,7 +55,7 @@
                 </div>
             </h2>
 			<div class="accordion-content">
-			    <div id="topStoresForStoreCategoryAuth" class="scrollContainer">
+			    <div id="topStoresForStoreCategoryAuth">
                         {% render_stores_for_categories 'All' 'All' 'MIN_STORES_HOME_PAGE'|settings_value 'vertical' %}
                 </div>
 			</div>
@@ -65,7 +65,7 @@
                 </div>
             </h2>
 			<div class="accordion-content"> 
-                <div id="topReviewsForStoreCategoryAuth" class="scrollContainer">
+                <div id="topReviewsForStoreCategoryAuth">
                     {% render_reviews_for_categories 'All' 'All' 'MIN_REVIEWS_HOME_PAGE'|settings_value 'vertical' %}
                 </div>
 			</div>

@@ -543,6 +543,14 @@ a.shareObject {
 	box-sizing:border-box;
 	/*padding: 0px;*/
 }
+.topStores_v {
+	height: 600px;
+	overflow: auto;
+}
+.topReviews_v {
+	height: 600px;
+	overflow: auto;
+}
 .dealBox_v {
 	height: 600px;
 	overflow: auto;
