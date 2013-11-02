@@ -669,9 +669,11 @@ def render_deals_for_stores(context, store_id, sub_category, latest=settings.DEA
 @register.simple_tag(takes_context=True)
 def render_related_stores(context, store_id, sub_category, latest=settings.STORES_NUM_LATEST, orientation='horizontal'):
     template_name = 'generic/vendor_list.html'
+    search_param = ''
 
     if orientation == 'vertical':
         template_name = 'generic/vendor_list_v.html'
+        search_param = '?v=1'
 
     template = loader.get_template(template_name)
 
@@ -692,9 +694,19 @@ def render_related_stores(context, store_id, sub_category, latest=settings.STORE
             blogPostQueryset = None
             pass
 
+    data_href = reverse('get_related_stores', kwargs={'store_id':store_id,
+                                                      'sub_category':sub_category,
+                                                      'sIndex':0,
+                                                      'lIndex':latest})
+    data_chunk = 5
+
     return template.render(RequestContext(context['request'], {
-        'vendors': blogPostQueryset
+        'vendors': blogPostQueryset,
+        'data_href' : data_href + search_param,
+        'data_chunk': data_chunk
     }))
+
+
  
 
 

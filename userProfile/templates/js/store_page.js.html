@@ -44,8 +44,22 @@ var get_related_stores_handler = function(sub_category)
 {
 	var new_url = baseURLStoresTemplate.replace("category", sub_category);
 		new_url += "?v=1";
+
+    var $element = $('#topRelatedStoreForStore');
+    var $scrollContainer = $element.find(".scrollContainer");
+    
+    if ($scrollContainer && $scrollContainer.hasClass('mCustomScrollbar')) { 
+      $scrollContainer.mCustomScrollbar("scrollTo","top");
+    }
+
     $.get(new_url, {}, function(data) {
-       $('#topRelatedStoreForStore').html(data);
+        if(data.success === true) {
+            $deal_container = $scrollContainer.find('.mCSB_container');
+            $deal_container.html(data.html);
+            $scrollContainer.attr("data-href", new_url);
+        } else {
+            $scrollContainer.removeAttr("data-href");
+        }
     });
    	return false;
 }
