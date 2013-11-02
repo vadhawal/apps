@@ -9,23 +9,33 @@ var get_filtered_deals_handler = function(sub_category)
 {
 	var new_url = baseURLDealsTemplate.replace("category", sub_category);
 	new_url += "?v=1";
+    
+    var $element = $('#topDealsForStore');
+    var $scrollContainer = $element.find(".scrollContainer");
+    if ($scrollContainer && $scrollContainer.hasClass('mCustomScrollbar')) { 
+      $scrollContainer.mCustomScrollbar("scrollTo","top");
+    }
 
     $.get(new_url, {}, function(data) {
-          $('#topDealsForStore').html(data);
-            install_voting_handlers($('#topDealsForStore'));
-            install_share_object_handler($('#topDealsForStore'));
+            if(data.success === true) {
+                $deal_container = $scrollContainer.find('.mCSB_container');
+                $deal_container.html(data.html);
+                install_voting_handlers($deal_container);
+                install_share_object_handler($deal_container);
 
-            if($("#topDealsForStore").parent().hasClass('open-content')) {
-				setupCustomScrollBar($("#topDealsForStore"));
-	        }
+                $scrollContainer.attr("data-href", new_url);
 
-            $('a.wishimg-deal-homepage').fancybox({
-				scrolling: 'yes',
-				minWidth: 500,
-				minHeight:450,
-				autoSize: true,
-				helpers : { overlay : { locked : false } }
-            });
+                $('a.wishimg-deal-homepage').fancybox({
+    				scrolling: 'yes',
+    				minWidth: 500,
+    				minHeight:450,
+    				autoSize: true,
+    				helpers : { overlay : { locked : false } }
+                });
+            } else {
+                $scrollContainer.removeAttr("data-href");
+            }
+
        });
     return false;
 }

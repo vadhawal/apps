@@ -486,9 +486,10 @@ def get_full_name(user):
 @register.simple_tag(takes_context=True)
 def render_deals_for_categories(context, parent_category, sub_category, latest=settings.DEALS_NUM_LATEST, orientation='horizontal'):
         template_name = 'wish/deallist.html'
-
+        search_param = ''
         if orientation == 'vertical':
             template_name = 'wish/deallist_v.html'
+            search_param = '?v=1'
 
         template = loader.get_template(template_name)
 
@@ -517,16 +518,25 @@ def render_deals_for_categories(context, parent_category, sub_category, latest=s
             if blog_subcategory and blog_parentcategory:
                 deals_queryset = BroadcastDeal.objects.all().filter(blog_category=blog_subcategory, expiry_date__gte=today).order_by('-timestamp')[:latest]
 
+        data_href = reverse('getTrendingDeals', kwargs={'parent_category':slugify(parent_category),
+                                                        'sub_category':slugify(sub_category),
+                                                        'sIndex':0,
+                                                        'lIndex':latest})
+        data_chunk = 5
+
         return template.render(RequestContext(context['request'], {
-            'deal_list': deals_queryset
+            'deal_list' : deals_queryset,
+            'data_href' : data_href + search_param,
+            'data_chunk': data_chunk
         }))
 
 @register.simple_tag(takes_context=True)
 def render_stores_for_categories(context, parent_category, sub_category, latest=settings.STORES_NUM_LATEST, orientation='horizontal'):
         template_name = 'generic/vendor_list.html'
-
+        search_param = ''
         if orientation == 'vertical':
             template_name = 'generic/vendor_list_v.html'
+            search_param = '?v=1'
 
         template = loader.get_template(template_name)
 
@@ -551,18 +561,26 @@ def render_stores_for_categories(context, parent_category, sub_category, latest=
         else:
             if blog_subcategory and blog_parentcategory:
                 result = BlogPost.objects.published().filter(categories=blog_subcategory).extra(select={'fieldsum':'price_average + variety_average + quality_average + service_average + exchange_average + overall_average'},order_by=('-fieldsum',))[:latest]
+        
+        data_href = reverse('getTrendingStores', kwargs={'parent_category':slugify(parent_category),
+                                                        'sub_category':slugify(sub_category),
+                                                        'sIndex':0,
+                                                        'lIndex':latest})
+        data_chunk = 5
 
         return template.render(RequestContext(context['request'], {
-            'vendors': result,
-            'sIndex':0
+            'vendors' : result,
+            'data_href' : data_href + search_param,
+            'data_chunk': data_chunk
         }))
 
 @register.simple_tag(takes_context=True)
 def render_reviews_for_categories(context, parent_category, sub_category, latest=_settings.REVIEWS_NUM_LATEST, orientation='horizontal'):
         template_name = 'generic/top_reviews.html'
-
+        search_param = ''
         if orientation == 'vertical':
             template_name = 'generic/top_reviews_v.html'
+            search_param = '?v=1'
 
         template = loader.get_template(template_name)
 
@@ -592,16 +610,25 @@ def render_reviews_for_categories(context, parent_category, sub_category, latest
                 """
                 raise Http404()
 
+        data_href = reverse('getTrendingReviews', kwargs={'parent_category':slugify(parent_category),
+                                                          'sub_category':slugify(sub_category),
+                                                          'sIndex':0,
+                                                          'lIndex':latest})
+        data_chunk = 5
+
         return template.render(RequestContext(context['request'], {
             'comments': reviews,
+            'data_href' : data_href + search_param,
+            'data_chunk': data_chunk
         }))
 
 @register.simple_tag(takes_context=True)
 def render_deals_for_stores(context, store_id, sub_category, latest=settings.DEALS_NUM_LATEST, orientation='horizontal'):
         template_name = 'wish/deallist.html'
-
+        search_param = ''
         if orientation == 'vertical':
             template_name = 'wish/deallist_v.html'
+            search_param = '?v=1'
 
         template = loader.get_template(template_name)
         try:
@@ -627,8 +654,16 @@ def render_deals_for_stores(context, store_id, sub_category, latest=settings.DEA
         else:
             return ''
 
+        data_href = reverse('get_filtered_deallist', kwargs={'store_id':store_id,
+                                                             'sub_category':sub_category,
+                                                             'sIndex':0,
+                                                             'lIndex':latest})
+        data_chunk = 5
+
         return template.render(RequestContext(context['request'], {
-            'deal_list': deals_queryset
+            'deal_list': deals_queryset,
+            'data_href' : data_href + search_param,
+            'data_chunk': data_chunk
         }))
 
 @register.simple_tag(takes_context=True)

@@ -3,7 +3,7 @@
 {% load relationship_tags static %}
 
 {% if not is_incremental %}
-<div class="topReviews_v scrollContainer" data-href="{% url getTrendingReviews 'all' 'all' 0 'MIN_REVIEWS_HOME_PAGE'|settings_value %}?v=1" data-chunk="3">
+<div class="topReviews_v scrollContainer" data-href="{{data_href}}" data-chunk="{{data_chunk}}">
 {% endif %}
 {% for review in comments %}
 <div class="row topReviews">

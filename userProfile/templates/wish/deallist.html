@@ -6,7 +6,7 @@
 
 {% block extra_head %}             
 {% if not is_incremental %}
-<div class="dealBox_h scrollContainer" data-href="{% url getTrendingDeals 'all' 'all' 0 'MIN_DEALS_HOME_PAGE'|settings_value %}" data-chunk="5">
+<div class="dealBox_h scrollContainer" data-href="{{data_href}}" data-chunk="{{data_chunk}}">
 {% endif %}
 {% for deal in deal_list %}
 {#% get_wish_owner deal as deal_owner %#}
