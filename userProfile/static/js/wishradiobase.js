@@ -218,18 +218,40 @@ var install_share_object_handler =  function($parent_element) {
     }
 }
 
-var doOpenUrlInFancyBox = function(url) {
+var doOpenUrlWithIframeFancyBox = function(url) {
     $("<a href='"+url +"'></a>").appendTo("body").addClass('cropImageFancyBox');
     $('a.cropImageFancyBox').fancybox({
-        'frameWidth'    :       500,
-        'frameHeight'   :       500,
+        'frameWidth'        :       500,
+        'frameHeight'       :       500,
         'hideOnContentClick': false, 
-        'type':'iframe',
-         onClosed: function(){
-            $('a.cropImageFancyBox').remove();
-         }
-    }); 
-    $('a.cropImageFancyBox').click();
+        'type'              :'iframe',
+         helpers            : { overlay : { locked : false } },
+         onClosed           : function(){
+                                    $('a.cropImageFancyBox').remove();
+                                }
+    }).click();
+}
+
+var doOpenUrlWithAjaxFancyBox = function(url, afterShowCallback) {
+    $("<a href='"+url +"'></a>").appendTo("body").addClass('ajaxFancybox');
+    $('a.ajaxFancybox').fancybox({
+        width               : 500,
+        autoSize            : true,
+        hideOnContentClick  : false,
+        openEffect          : 'fade',
+        closeEffect         : 'fade',
+        type                :'ajax',
+        helpers             : { overlay : { locked : false } },
+        scrolling           : 'no',
+        ajax                :   {
+                                    complete    : function(jqXHR, textStatus) {
+                                    afterShowCallback();
+                                }
+        },
+        onClosed            : function() {
+                                    $('a.ajaxFancybox').remove();
+                                }
+    }).click(); 
 }
 
 $(document).ready(function() {

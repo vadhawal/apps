@@ -135,7 +135,7 @@ $(document).ready(function() {
                 if(ret_data.success == true){
                     var crop_url = ret_data.crop_url;
                     if(crop_url) {
-                        doOpenUrlInFancyBox(crop_url);
+                        doOpenUrlWithIframeFancyBox(crop_url);
                         doBroadcastFormReset(false);
                     }
                     else {

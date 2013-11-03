@@ -55,8 +55,8 @@ var setupCustomScrollBar = function ($element, horizontal_scroll) {
                         contentTouchScroll:true,
                         autoDraggerLength: true,
                         callbacks: {
-                            onTotalScroll: totalScrollCallback, // Will be called once scroll reaches bottom.
-                            onTotalScrollOffset:100 //onTotalScroll callback will be fired 100 pixels before bottom.
+                            onTotalScroll: totalScrollCallback//, // Will be called once scroll reaches bottom.
+                            //onTotalScrollOffset:100 //onTotalScroll callback will be fired 100 pixels before bottom.
                         },
                         advanced:{
                             autoExpandHorizontalScroll: true, //Required to update the scrollbar size after dynamic data load.

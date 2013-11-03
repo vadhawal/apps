@@ -2,10 +2,12 @@
 {% load voting_tags %}      
 {% load userProfile_tags %}
 {% load url from future %}
+
 {% if object %}
 
     {% score_for_object  object as score %}
-    {% voters_for_object object as voters %}
+
+    {% voters_inc_for_object object 0 10 as voters %}
 
     {% vote_by_user request.user on object as vote %}
     {% if not vote %}
