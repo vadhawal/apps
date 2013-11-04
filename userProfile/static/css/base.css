@@ -484,7 +484,7 @@ span.clearvote{
 }
 a.categoryTag:hover {
 	color: white;
-	box-shadow: 1px 1px 1px rgb(2, 151, 149);
+	text-decoration: underline;
 }
 .manageFeed{
 	background-image: url('/static/img/manage_feed_down.png');
