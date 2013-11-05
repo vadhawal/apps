@@ -13,7 +13,9 @@
     	<a href="#reviews" style="margin-right:0px;">
     		Reviews 
     	</a>
-        <a class="broadcasters commentCount" href="{% get_commenters_url blog_post %}" style="margin-left:0px;">({{blog_post.comments_count}})</a>
+        {% get_range_commenters_url blog_post 0 5 as commenters_url %}
+
+        <a class="broadcasters commentCount" href="{{commenters_url}}" style="margin-left:0px;">({{blog_post.comments_count}})</a>
 
 		{% get_share_count blog_post as share_count %}
         {% get_share_object_url blog_post as share_store_url %}
