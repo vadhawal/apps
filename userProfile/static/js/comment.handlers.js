@@ -64,33 +64,24 @@ var comment_on_object_handler = function(event){
 var edit_review_handler = function(event) {
 	if(login_required_handler())
         return false;
-    $("<div id='pop_up'><span class='button b-close'><span>X</span></span></div>").appendTo("body").addClass('popup');
-    $('#pop_up').bPopup({
-        content:'ajax',
-        loadUrl:$(this).data("href"),
-        zIndex: 2,
-        onClose: function(){ $('#pop_up').remove(); },
-        scrollBar:'true',
-    });
-    event.preventDefault();
+
+    var $url = $(this).data("href");
+
+    doOpenUrlWithAjaxFancyBox($url);
     return false;
 };
 
 var write_review_handler = function(event) {
 	if(login_required_handler())
         return false;
-    $("<div id='pop_up'><span class='button b-close'><span>X</span></span></div>").appendTo("body").addClass('popup');
-    $('#pop_up').bPopup({
-        content:'ajax',
-        loadUrl:$(this).data("href"),
-        zIndex: 2,
-        onClose: function(){ $('#pop_up').remove(); },
-        scrollBar:'true',
-        loadCallback: function(){
-            $('.review_on_object').submit(review_submit_handler);
-        }
-    });
-    event.preventDefault();
+
+    var $url = $(this).data("href");
+    var afterShowCallback = function() {
+                                var $reviewFormContainer = $('.fancybox-inner').find('.review_on_object');
+                                $reviewFormContainer.submit(review_submit_handler);
+                            };
+
+    doOpenUrlWithAjaxFancyBox($url, afterShowCallback);
     return false;
 };
 
@@ -112,14 +103,13 @@ var review_submit_handler = function(){
                     install_toggle_comment_handler();
                     install_review_handlers(subcomments_element);
                     $form.find('.subcomment_text').trigger('autosize.resize');
-                    $('#pop_up').bPopup().close();
-                    $('#pop_up').remove();
+                    $.fancybox.close();
                 }
                 else {
                     var errors = ret_data.errors;
-                    $('#pop_up').find('.error').removeClass('error');
+                    $('.fancybox-inner').find('.error').removeClass('error');
                     $.each( errors, function( key, value ) {
-                        $('#pop_up').find('[name="' + key + '"]').parents('.controls').addClass('error');
+                        $('.fancybox-inner').find('[name="' + key + '"]').parents('.controls').addClass('error');
                     });
                 }
             },

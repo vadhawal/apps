@@ -39,21 +39,6 @@ var login_required_handler = function()
     return false;
 }
 
-var vendor_followers_handler = function(event) {
-    event.preventDefault();
-    $("<div id='pop_up'><span class='button b-close'><span>X</span></span></div>").appendTo("body").addClass('popup');
-    $('#pop_up').bPopup({
-        content:'ajax',
-        loadUrl:$(this).attr("href"),
-        zIndex: 2,
-        onClose: function(){ $('#pop_up').remove(); },
-        scrollBar:'true'
-    },
-    function() {
-            install_follow_handlers();
-    });
-};
-
 var FollowUnfollow = function($elementClicked, new_count) {
     var $element = $elementClicked.parent();
     var classes = $element.attr('class');
