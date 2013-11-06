@@ -5,6 +5,10 @@
 var baseURLDealsTemplate = "{% url "get_filtered_deallist" blog_post.id "category" 0 10 %}";
 var baseURLStoresTemplate = "{% url "get_related_stores" blog_post.id "category" 0 5 %}";
 
+var helpfulReviewsURL = "{% url "comment_thread_most_liked_view" blog_post.id %}";
+var socialReviewsURL = "{% url "comment_thread_social_view_level2" blog_post.id %}";
+var recentReviewsURL = "{% url "comment_thread_most_recent_view" blog_post.id %}";
+
 var get_filtered_deals_handler = function(sub_category)
 {
 	var new_url = baseURLDealsTemplate.replace("category", sub_category);
@@ -93,6 +97,31 @@ var manageFeedOther = function() {
     }
 }
 
+var update_reviews = function (slug) {
+    var link = ""
+    if (slug == "social") {
+        if (login_required_handler()) {
+            return false;
+        }
+        link = socialReviewsURL;
+    } else if (slug == "helpful") {
+        link = helpfulReviewsURL;
+    } else if (slug == "recent") {
+        link = recentReviewsURL;
+    }
+
+    if (link) {
+        $.get(link, {}, function(data) {
+            $('#commentContainer').html(data);
+            install_voting_handlers($('#commentContainer'));
+            install_review_voting_handler($('#commentContainer'));
+            install_review_handlers($('#commentContainer'));
+        });
+    }
+
+    return false;
+}
+
 $(document).ready(function(event){
 	$('#dealsFilterSelect').change(function(){
 		var slug = $(this).find("option:selected").text();
@@ -105,6 +134,11 @@ $(document).ready(function(event){
         minHeight: 450,
         autoSize: true,
         helpers : { overlay : { locked : false } }
+    });
+
+    $('.reviewFilter').change(function(){
+        var slug = $(this).find("option:selected").val();
+        return update_reviews(slug);
     });
 });
 </script>

@@ -15,6 +15,7 @@
 		{% include 'actstream/render_comment_text.html' with object=comment %}
     </span>
         {% if request.user == comment.user %}
+            {% comment %} 
             <span class="manageFeed" onmouseover="manageFeedOwner.call(this);" onmouseout="manageFeedOwner.call(this);">
                 <span style="height:50px;display:none;padding:0px 15px;" class="whiteBox">
                 {% get_delete_object_url comment as delete_review_url %}
@@ -25,7 +26,8 @@
                         <a class="deleteObject" data-href="{{delete_review_url}}" href="javascript:void(0)">Delete</a>
                     </span>
                 </span>
-            </span>
+            </span> 
+            {% endcomment %}
         {% else %}
             <span class="manageFeed" onmouseover="manageFeedOther.call(this);" onmouseout="manageFeedOther.call(this);">
                 <span style="height:25px;line-height:25px;display:none;padding:0px 15px;" class="whiteBox">
