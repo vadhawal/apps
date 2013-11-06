@@ -1,5 +1,5 @@
 {% load static %}
-{% load future %}
+{% load future i18n %}
 {% load comment_tags %}
 
 <div class="span7">
@@ -22,11 +22,19 @@
 <hr class="dottedSeparator">
 <div class="span7 topHalfGutter">
 	<div class="row">
-		<div class="span7">
+		<div class="span2">
 			<h6 class="fontTitillium fontSize16 categories">
 				<img src="{% static "img/shopTalk.png" %}">
 				REVIEWS
 			</h6>
+		</div>
+		<div class="span2 pull-right halfGutterRight">
+			<select class="dealsFilter reviewFilter">
+				<option value='empty' selected disabled>{% trans "Filter By" %}</option>
+				<option value="recent">{% trans "Recent Reviews" %}</option>
+				<option value="social">{% trans "Social Reviews" %}</option>
+				<option value="helpful">{% trans "Helpful Reviews" %}</option>
+			</select>
 		</div>
 	</div>
 	<div class="row">

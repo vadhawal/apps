@@ -1,5 +1,4 @@
 {% load i18n mezzanine_tags comment_tags %}
-{% load thumbnail %}
 
 <div id="comments">
 {% if settings.COMMENTS_DISQUS_SHORTNAME %}
@@ -23,7 +22,7 @@ $(function() {
 }
 </style>
 {% if object_for_comments|get_class_name == "BlogPost" %}
-{% comment_thread object_for_comments %}
+{% comment_thread_most_recent object_for_comments %}
 {% endif %}
 
 {% endif %}

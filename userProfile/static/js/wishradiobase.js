@@ -230,7 +230,8 @@ var doOpenUrlWithAjaxFancyBox = function(url, afterShowCallback) {
         scrolling           : 'no',
         ajax                :   {
                                     complete    : function(jqXHR, textStatus) {
-                                    afterShowCallback();
+                                    if(typeof afterShowCallback !== 'undefiend')
+                                        afterShowCallback();
                                 }
         },
         onClosed            : function() {

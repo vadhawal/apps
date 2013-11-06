@@ -60,19 +60,6 @@
             return false;
         });
         $('#viewAlbum').click();
-
-       $('#getComments').add('#viewComments').add('#getLikedComments').add('#getRecentComments').add('#getSocialComments').add('#getSocialLevel2Comments').click(function() {
-            var add_link = $(this);
-            $('#commentContainer').html("");
-            var link = add_link.attr('href');
-            $.get(link, {}, function(data) {
-                $('#commentContainer').html(data);
-                install_voting_handlers($('#commentContainer'));
-                install_review_voting_handler($('#commentContainer'));
-                install_review_handlers($('#commentContainer'));
-            });
-            return false;
-        });
         $('#getComments').click();
         $('#fakeselect_featured_image').click(function(event){
             $('#featured_image').click();
