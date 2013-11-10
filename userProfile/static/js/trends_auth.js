@@ -70,7 +70,7 @@ var get_top_reviews_handler_auth = function(parent_category, sub_category)
     if ($scrollContainer && $scrollContainer.hasClass('mCustomScrollbar')) { 
     	$scrollContainer.mCustomScrollbar("scrollTo","top");
     }
-    var $url = '/' + parent_category + '/'+ sub_category + '/trendingreviews/0/3/?v=1';
+    var $url = '/' + parent_category + '/'+ sub_category + '/trendingreviews/0/10/?v=1';
     $.get($url, {}, function(data) {
     	if(data.success === true) {
     		$scrollContainer.find('.mCSB_container').html(data.html);
