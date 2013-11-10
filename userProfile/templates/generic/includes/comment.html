@@ -3,6 +3,7 @@
 {% load voting_tags %}
 {% load userProfile_tags %}
 {% load inbox thumbnail %}
+{% load relationship_tags %}
 
 <div class="fontTitillium1 color5D fontSize12">
     {% for comment in comments_for_thread %}
@@ -77,6 +78,10 @@
             </div>
             <div class="row topHalfGutter radio_module">
                 {% include 'generic/includes/comment_radio_module.html' %}
+                {% if request.user.is_authenticated %}
+                {% get_relationship_type request.user comment.user as rel_type %}
+                relationship_type: {{rel_type}}
+                {% endif %}
             </div>
             {% comment_count_on_object comment as total_comments %}
             <div class="row topHalfGutter">
