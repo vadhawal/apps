@@ -7,6 +7,15 @@
 {% block meta_title %}{% trans "Search Results" %}{% endblock %}
 {% block title %}{% trans "Search Results" %}{% endblock %}
 
+{% block extra_css %}
+<link rel="stylesheet" type="text/css" href="{% static "css/searchresults.css" %}"/>
+<link rel="stylesheet" href="{% static "css/navigation.css" %}"/>
+{% endblock %}
+
+{% block extra_js %}
+<script type="text/javascript" src="{% static "js/search-result.js" %}"></script>
+{% endblock %}
+
 {% block breadcrumb_menu %}
 <li>
     <a href="{% url "home" %}">{% trans "Home" %}</a>
@@ -16,8 +25,6 @@
 {% endblock %}
 
 {% block main %}
-<link rel="stylesheet" type="text/css" href="{% static "css/searchresults.css" %}"/>
-<link rel="stylesheet" href="{% static "css/navigation.css" %}"/>
 <p>
 {% if results.paginator.count == 0 %}
 {% blocktrans %}
@@ -31,6 +38,17 @@ Showing {{ start }} to {{ end }} of {{ total }} results in {{ search_type }} mat
 </p>
 
 <div class="row">
+<select id="filtersSelect" class="dealsFilter" style="width:200px;" multiple>
+    <option value="empty" selected="" disabled="">Filter By</option>
+    <option value="price">Price</option>
+    <option value="variety">Variety</option>
+    <option value="quality">Quality</option>
+    <option value="service">Customer Service</option>
+    <option value="exchange">Exchange Experience</option>
+    <option value="overall">Overall</option>
+</select>
+<input type="button" id="searchResultFilter" value="Go">
+
 <div id="search-results" class="span6">
     {% for result in results.object_list %}
     <div class="vendorResult row">
