@@ -55,7 +55,7 @@
             var link = add_link.attr('href');
             $.get(link, {}, function(data) {
                 $("#vendorAlbum").html(data);
-                install_album_handlers($('#vendorAlbum'));
+                install_album_handlers($("#vendorAlbum"));
             });
             return false;
         });
