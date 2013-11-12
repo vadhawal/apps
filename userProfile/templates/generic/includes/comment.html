@@ -8,7 +8,10 @@
 <div class="fontTitillium1 color5D fontSize12">
     {% for comment in comments_for_thread %}
 
-    <div id="review-{{ comment.id }}" class="row topHalfGutter">
+    {% if request.user.is_authenticated %}
+        {% get_relationship_type request.user comment.user as rel_type %}
+    {% endif %}
+    <div id="review-{{ comment.id }}" class="row topHalfGutterPadding{% if rel_type == "facebook" or rel_type == "self" %} socialReview{%endif%}">
         {% editable comment.is_public comment.is_removed %}
         {% if not comment.is_removed and comment.is_public %}
         {% include 'generic/includes/render_owner.html' with owner=comment.user %}
@@ -79,8 +82,7 @@
             <div class="row topHalfGutter radio_module">
                 {% include 'generic/includes/comment_radio_module.html' %}
                 {% if request.user.is_authenticated %}
-                {% get_relationship_type request.user comment.user as rel_type %}
-                relationship_type: {{rel_type}}
+                    relationship_type: {{rel_type}}
                 {% endif %}
             </div>
             {% comment_count_on_object comment as total_comments %}
