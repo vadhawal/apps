@@ -10,3 +10,61 @@ a.albumManage:hover{
 	text-decoration: underline;
 	color: white;
 }
+.sortable.grid {
+    overflow: hidden;
+}
+.sortable li {
+    list-style: none;
+    color: #1C94C4;
+    float:left;
+    height:120px;
+    width:120px;
+}
+.handle {
+    cursor: move;
+}
+li.highlight {
+    background: #FEE25F;
+}
+li.sortable-placeholder {
+    border: 1px dashed #CCC;
+    background: none;
+    margin: 5px;
+    padding: 0px;
+}
+li.image-preview{
+	position: relative;
+	margin-right: 10px;
+	float:left;
+}
+li.image-preview span{
+	display: none;
+}
+li.image-preview:hover span{
+	font-size: 10px;
+	display: inline;
+	position: absolute;
+	top: 10px;
+	right: 5px;
+	padding: 3px;
+	background-color: white;
+}
+ul#image-thumbnails{
+	margin:0;
+}
+div.albumFormField {
+	margin-top: 5px;
+}
+div.albumFormField label {
+	display: inline;
+}
+div.albumFormField textarea{
+	margin-top: 0px;
+	margin-left: 20px;
+	min-width: 200px;	
+}
+div.albumFormField input {
+	margin-top: 0px;
+	margin-left: 20px;
+	min-width: 200px;
+}

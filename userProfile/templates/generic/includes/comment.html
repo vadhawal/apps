@@ -11,7 +11,7 @@
     {% if request.user.is_authenticated %}
         {% get_relationship_type request.user comment.user as rel_type %}
     {% endif %}
-    <div id="review-{{ comment.id }}" class="row topHalfGutterPadding{% if rel_type == "facebook" or rel_type == "self" %} socialReview{%endif%}">
+    <div id="review-{{ comment.id }}" class="row topHalfGutterPadding{% if rel_type == "facebook" or rel_type == "self" or rel_type == "level1" or rel_type == "level2" or rel_type == "twitter" %} socialReview{%endif%}">
         {% editable comment.is_public comment.is_removed %}
         {% if not comment.is_removed and comment.is_public %}
         {% include 'generic/includes/render_owner.html' with owner=comment.user %}
