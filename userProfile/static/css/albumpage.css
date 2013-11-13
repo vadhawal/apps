@@ -58,6 +58,11 @@ div.albumFormField {
 div.albumFormField label {
 	display: inline;
 }
+div.albumFormField textarea{
+	margin-top: 0px;
+	margin-left: 20px;
+	min-width: 200px;	
+}
 div.albumFormField input {
 	margin-top: 0px;
 	margin-left: 20px;
