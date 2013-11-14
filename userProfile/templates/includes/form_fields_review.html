@@ -1,0 +1,93 @@
+{% load mezzanine_tags i18n %}
+{% load widget_tweaks %}
+
+{% if form_for_fields.non_field_errors %}
+<div class="control-group error non-field-errors">
+    {% for error in form_for_fields.non_field_errors %}
+    <span class="help-inline">{{ error }}</span>
+    {% endfor %}
+</div>
+{% endif %}
+
+{% nevercache %}
+<input type="hidden" name="referrer" value="{{ request.META.HTTP_REFERER }}">
+{% csrf_token %}
+{% endnevercache %}
+
+{% for field in form_for_fields %}
+{% if field.is_hidden %}
+{{ field }}
+{% else %}
+<div class="reviewForm input_{{ field.id_for_label }} {{ field.field.type }}
+    {% if field.errors %} error{% endif %}">
+
+        {% if field.label ==  form_for_fields.title.label %}
+            <span>{{ field.label }}</span>
+            {{ field|add_class:"textField" }}
+            {% if field.errors %}
+            <span class="help-inline">
+                {% for e in field.errors %}
+                {% if not forloop.first %} / {% endif %}{{ e }}
+                {% endfor %}
+            </span>
+            {% else %}
+            {% endif %}
+        {% elif field.label ==  form_for_fields.comment.label %}
+            <span class="topHalfGutter">{{ field.label }}</span>
+            {{ field|add_class:"textField" }}
+            {% if field.errors %}
+            <span class="help-inline">
+                {% for e in field.errors %}
+                {% if not forloop.first %} / {% endif %}{{ e }}
+                {% endfor %}
+            </span>
+            {% else %}
+            {% endif %}
+        {% elif field.label ==  form_for_fields.overall_value.label %}
+            <span class="fontSize15">{% trans "Overall Rating"%}</span>
+            {{ field|add_class:"" }}
+            {% if field.errors %}
+            <span class="help-inline">
+                {% for e in field.errors %}
+                {% if not forloop.first %} / {% endif %}{{ e }}
+                {% endfor %}
+            </span>
+            {% else %}
+            {% endif %}
+        {% elif field.label ==  form_for_fields.shop_again.label %}
+            <span class="">{% trans "Would you buy from this store again?"%}</span>
+            {{ field|add_class:"" }}
+            {% if field.errors %}
+            <span class="help-inline">
+                {% for e in field.errors %}
+                {% if not forloop.first %} / {% endif %}{{ e }}
+                {% endfor %}
+            </span>
+            {% else %}
+            {% endif %}
+        {% elif field.label ==  form_for_fields.category.label %}
+            <span class="">{{ field.label }}</span>
+            {{ field|add_class:"boughtCategory" }}
+            {% if field.errors %}
+            <span class="help-inline">
+                {% for e in field.errors %}
+                {% if not forloop.first %} / {% endif %}{{ e }}
+                {% endfor %}
+            </span>
+            {% else %}
+            {% endif %}
+        {% else %}
+            <span>{{ field.label }}</span>
+            {{ field }}
+            {% if field.errors %}
+            <span class="help-inline">
+                {% for e in field.errors %}
+                {% if not forloop.first %} / {% endif %}{{ e }}
+                {% endfor %}
+            </span>
+            {% else %}
+            {% endif %}
+        {% endif %}
+</div>
+{% endif %}
+{% endfor %}
