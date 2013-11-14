@@ -108,3 +108,76 @@ a.store_sharers{
 .socialReview{
 	background-color: rgba(248,248,245,1.00);
 }
+.reviewForm{
+	font-family: titillium1;
+	font-size: 12px;
+}
+.reviewForm .textField {
+    border-radius: 0;
+    font-family: titillium2;
+    font-size: 13px;
+    height: 20px;
+    line-height: 20px;
+    padding: 2px;
+    width: 90%;
+}
+.reviewForm input[type="radio"] {
+    -webkit-appearance: checkbox;
+    -moz-appearance: checkbox;
+    -ms-appearance: checkbox;     /* not currently supported */
+    -o-appearance: checkbox;      /* not currently supported */
+    appearance:checkbox;
+    margin: 0;
+}
+.reviewForm textarea.textField{
+	height: 80px;
+    resize: none;
+    transition: height 0.2s ease 0s;
+}
+.reviewForm label{
+	display: inline;
+	font-family: titillium1;
+	font-size: 12px;
+}
+.reviewForm .controls {
+	display: inline-block;
+}
+.reviewForm ul {
+	display: inline-block;
+}
+.reviewForm ul li {
+	display: inline;
+	margin-left: 10px;
+}
+input.blockLabel {
+	display: block;
+}
+textarea.blockLabel {
+	display: block;
+}
+select.boughtCategory{
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	-ms-appearance: none;
+	-o-appearance: none;
+	-webkit-border-radius: 0px;
+	border-radius: 0px;
+	-webkit-padding-start: 10px;
+	-moz-padding-start: 10px;
+	background-color: #F9DF1E;
+	background-image: url("/static/img/selectPointer.png");
+	background-position: 94% 8px;
+	background-repeat: no-repeat;
+	border-radius: 0;
+	color: #595757;
+	font-family: fonttitillium1;
+	font-size: 12.85px;
+	height: 25px;
+	line-height: normal;
+	margin-left: 20px;
+	margin-bottom: 0px;
+	text-indent: 0.01px;
+	text-overflow: "";
+	vertical-align: top;
+	width: 200px;
+}

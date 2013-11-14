@@ -1,14 +1,11 @@
 
-{% load i18n mezzanine_tags comment_tags %}
+{% load mezzanine_tags i18n %}
 
-<span style="float:left;position:relative;left:5px;">
-    {% include "generic/includes/render_owner.html" with owner=request.user %}
-</span>
 <form class="review_on_object" method="post" id="comment" action="{{ action_url }}" >
     {% if not request.POST.replied_to %}
-        {% fields_for posted_comment_form %}
+        {% fields_for_review posted_comment_form %}
     {% else %}
-        {% fields_for unposted_comment_form %}
+        {% fields_for_review unposted_comment_form %}
     {% endif %}   
-    <input class="btn" type="submit" value="{% trans "Comment" %}">
+    <input class="rateStoreNow radioColorBackground colorWhite fontTitillium1 fontSize13 pull-right" type="submit" value="{% trans "Submit" %}">
 </form>
