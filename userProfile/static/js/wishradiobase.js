@@ -4,6 +4,9 @@
             loadedImages = [], 
             options = options;
 
+        if(images.length === 0)
+            options.complete();
+        
         images.each(function(i, image) {
             function loaded() {
                 loadedImages.push(this);

@@ -8,7 +8,11 @@ var get_trending_deals_handler_auth = function(parent_category, sub_category)
 	}
     $.get($url, {}, function(data) {
     		if(data.success === true) {
-	        	$scrollContainer.find('.mCSB_container').html(data.html);
+                var $data_container = $scrollContainer.find('.mCSB_container');
+                if(!$data_container)
+                    $data_container =  $scrollContainer
+
+	        	$data_container.html(data.html);
 	            install_voting_handlers($element);
 	            install_share_object_handler($element);
 
@@ -42,12 +46,16 @@ var get_top_stores_handler_auth = function(parent_category, sub_category)
     if ($scrollContainer && $scrollContainer.hasClass('mCustomScrollbar')) { 
     	$scrollContainer.mCustomScrollbar("scrollTo","top");
     }
-    var $url = '/' + parent_category + '/'+ sub_category + '/trendingstores/0/5/?v=1';
+    var $url = '/' + parent_category + '/'+ sub_category + '/trendingstores/0/15/?v=1';
     $.get($url, {}, function(data) {
     	if(data.success === true) {
-    		$scrollContainer.find('.mCSB_container').html(data.html);
+            var $data_container = $scrollContainer.find('.mCSB_container');
+            if(!$data_container)
+                $data_container =  $scrollContainer
 
-		    $scrollContainer.attr("data-href", $url);
+            $data_container.html(data.html);
+
+            $scrollContainer.attr("data-href", $url);
     	} else {
     		$scrollContainer.removeAttr("data-href");
     	}
@@ -73,7 +81,11 @@ var get_top_reviews_handler_auth = function(parent_category, sub_category)
     var $url = '/' + parent_category + '/'+ sub_category + '/trendingreviews/0/10/?v=1';
     $.get($url, {}, function(data) {
     	if(data.success === true) {
-    		$scrollContainer.find('.mCSB_container').html(data.html);
+            var $data_container = $scrollContainer.find('.mCSB_container');
+            if(!$data_container)
+                $data_container =  $scrollContainer
+
+            $data_container.html(data.html);
 
 		    $scrollContainer.attr("data-href", $url);
 		    install_toggle_comment_handler();
