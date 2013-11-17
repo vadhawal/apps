@@ -1,10 +1,27 @@
 var delete_album_handler = function(event) {
-    var add_link = $(this);
-    var link = add_link.attr('href');
-    $.get(link, {}, function(data) {
-        $('#vendorAlbum').html(data);
-        install_album_handlers($('#vendorAlbum'));
+    var $element = $(this);
+    $.confirm({
+        text: "Are you sure you want to delete this album?",
+        confirm: function(button) {
+        $.ajax({
+          type: "POST",
+          url: $element.attr('href'),
+          success: function(data){
+                if(data.success === true) {
+                    var $container = $element.parents('.album');
+                    $container.remove();
+                }
+          },
+          error: function(XMLHttpRequest, textStatus, errorThrown) {
+             console.log("error during image deletion");
+          }
+        });
+        },
+        cancel: function(button) {
+            // do something
+        }
     });
+
     event.stopPropagation();
     event.preventDefault();
     return false;
