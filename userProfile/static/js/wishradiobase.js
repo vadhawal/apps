@@ -162,30 +162,50 @@ var share_object_handler = function(event) {
 var delete_object_handler = function(event) {
     if(login_required_handler())
         return false;
-    
+
     var $elementClicked = $(this);
     var link =  $elementClicked.data("href");
+    /* data-object-type should be set for the objects having deleteObject class applied.
+     * Using this we determine the object type to be shown in the confirmation message.
+     */
+    var object_type =  $elementClicked.data("object-type");
 
-    $.get(link, {}, function(data) {
-        var dataResult = JSON.parse(data);
-        if(dataResult.success == true) {
-             alert('object deleted');
-        }
-        else {
-            if(dataResult.error_codes.indexOf(400) != -1) {
-                alert('Unauthorized Action!')
-            }
-            else if(dataResult.error_codes.indexOf(401) != -1) {
-                alert('Object Does Not Exist!')
-            }
-            else if(dataResult.error_codes.indexOf(402) != -1) {
-                alert('Only supported through Ajax!');
-            }
+    $.confirm({
+        text: "Are you sure you want to delete " + object_type+ " ?",
+        confirm: function(button) {
+            $.get(link, {}, function(data) {
+                var dataResult = JSON.parse(data);
+                if(dataResult.success == true) {
+                    /* Class objectToBeDeleted must be applied to the topmost element */
+                    var $objectToBeDeleted = $elementClicked.parents('.objectToBeDeleted'); 
+                    if($objectToBeDeleted) {
+                        $objectToBeDeleted.remove();
+                    } else {
+                        alert('object deleted');
+                    }
+                }
+                else {
+                    if(dataResult.error_codes.indexOf(400) != -1) {
+                        alert('Unauthorized Action!')
+                    }
+                    else if(dataResult.error_codes.indexOf(401) != -1) {
+                        alert('Object Does Not Exist!')
+                    }
+                    else if(dataResult.error_codes.indexOf(402) != -1) {
+                        alert('Only supported through Ajax!');
+                    }
+                }
+            });
+        },
+        cancel: function(button) {
+            // do something
         }
     });
+
     event.stopPropagation();
     event.preventDefault();
-    return false;    
+    return false;
+   
 }
 
 var install_delete_object_handler = function($parent_element) {

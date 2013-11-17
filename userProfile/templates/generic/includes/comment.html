@@ -11,7 +11,7 @@
     {% if request.user.is_authenticated %}
         {% get_relationship_type request.user comment.user as rel_type %}
     {% endif %}
-    <div id="review-{{ comment.id }}" class="row topHalfGutterPadding{% if rel_type == "facebook" or rel_type == "self" or rel_type == "level1" or rel_type == "level2" or rel_type == "twitter" %} socialReview{%endif%}">
+    <div id="review-{{ comment.id }}" class="row topHalfGutterPadding {% if rel_type == "facebook" or rel_type == "self" or rel_type == "level1" or rel_type == "level2" or rel_type == "twitter" %} socialReview {%endif%} objectToBeDeleted">
         {% editable comment.is_public comment.is_removed %}
         {% if not comment.is_removed and comment.is_public %}
         {% include 'generic/includes/render_owner.html' with owner=comment.user %}
@@ -72,7 +72,7 @@
                                 {% endif %}
                                 {% if request.user == comment.user %}
                                 {% get_delete_object_url comment as delete_review_url %}
-                                <a class="deleteObject pull-right halfGutter" data-href="{{delete_review_url}}" href="javascript:void(0)"><img class="noBoxShadow" width="15px" height="15px" src="/static/img/cross_button.png"></a>
+                                <a class="deleteObject pull-right halfGutter" data-href="{{delete_review_url}}" data-object-type="review" href="javascript:void(0)"><img class="noBoxShadow" width="15px" height="15px" src="/static/img/cross_button.png"></a>
                                 <a class="editReview pull-right" href="javascript:void(0)" data-href="{% url 'edit_review' comment.id %}"><img class="noBoxShadow" width="15px" height="15px" src="/static/img/edit.png"></a>
                                 {% endif %}
                         {% endif %}
