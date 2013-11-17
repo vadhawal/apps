@@ -208,12 +208,10 @@ function expandWishText() {
 
 function feedUpdater() {
     var scrollOffset = 400;
-    console.log("a = " + ($(window).scrollTop() + $(window).height()));
-    console.log("b = " + ($(document).height() - scrollOffset));
+
     if($(window).scrollTop() + $(window).height() >= $(document).height() - scrollOffset) {
        updateFeed();
        $(window).off('scroll');
-       console.log("updated");
     }  
 }
 function checkAnyLatestActivity(){
@@ -234,16 +232,16 @@ function updateFeed(){
     link = linksplit.join('/');
 
     $.get(link, {}, function(data) {
-        if(data.indexOf("No actions yet") >= 0)
+        if(data === "None")
         {
           $(window).off('scroll');
-          console.log("no actions yet");
           $('#status').hide();
           return;
-        }    
-        $('#load-feeds').append(data);
-        install_action_handlers($('#load-feeds').children().last());
-        $(window).debounce('scroll', feedUpdater, 100);
+        } else {   
+            $('#load-feeds').append(data);
+            install_action_handlers($('#load-feeds').children().last());
+            $(window).debounce('scroll', feedUpdater, 100);
+        }
     });  
 }  
 
