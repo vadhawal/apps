@@ -1,6 +1,10 @@
 {% load i18n mezzanine_tags %}
 {% load thumbnail userProfile_tags %}
 {% load relationship_tags static %}
+
+{% if not is_incremental %}
+<div class="topReviewsContainer scrollContainer" data-href="{{data_href}}" data-chunk="{{data_chunk}}">
+{% endif %}
 {% for review in comments %}
 <div class="row topReviews">
     <div class="span1 text-center ">
@@ -66,3 +70,6 @@
  -->
 
 {% endfor %}
+{% if not is_incremental %}
+</div>
+{% endif %}

@@ -8,12 +8,15 @@ var get_trending_deals_handler = function(parent_category, sub_category)
     }
     $.get($url, {}, function(data) {
           if(data.success === true) {
-              $scrollContainer.find('.mCSB_container').html(data.html);
+			var $data_container = $scrollContainer.find('.mCSB_container');
+			if(!$data_container)
+			    $data_container =  $scrollContainer
+
+              $data_container.html(data.html);
               install_voting_handlers($scrollContainer);
               install_share_object_handler($element);
 
               $scrollContainer.attr("data-href", $url);
-
               $('a.wishimg-deal-homepage').fancybox({
                 scrolling: 'yes',
                 minWidth: 500,
@@ -31,23 +34,70 @@ var get_trending_deals_handler = function(parent_category, sub_category)
 
 var get_top_stores_handler = function(parent_category, sub_category)
 {
-    $.get('/' + parent_category + '/'+ sub_category + '/trendingstores/0/5/', {}, function(data) {
-          if(data.success === true)
-            $('#topStoresForStoreCategory').html(data.html);
-       });
+	var $element = $('#topStoresForStoreCategory');
+    if (!$element || $element.length == 0 ) {
+        return;
+    }
+    var $scrollContainer = null;
+    if ($element.hasClass("scrollContainer")) {
+        $scrollContainer = $element;
+    } else {
+        $scrollContainer = $element.find(".scrollContainer");
+    }
+    if ($scrollContainer && $scrollContainer.hasClass('mCustomScrollbar')) { 
+    	$scrollContainer.mCustomScrollbar("scrollTo","top");
+    }
+
+    var $url = '/' + parent_category + '/'+ sub_category + '/trendingstores/0/15/';
+    $.get($url, {}, function(data) {
+    	if(data.success === true) {
+            var $data_container = $scrollContainer.find('.mCSB_container');
+            if(!$data_container)
+                $data_container =  $scrollContainer
+
+            $data_container.html(data.html);
+
+            $scrollContainer.attr("data-href", $url);
+    	} else {
+    		$scrollContainer.removeAttr("data-href");
+    	}
+    });
    	return false;
 }
 
 var get_top_reviews_handler = function(parent_category, sub_category)
 {
-	$.get('/' + parent_category + '/'+ sub_category + '/trendingreviews/0/3/', {}, function(data) {
-      if(data.success === true) {
-         $('#topReviewsForStoreCategory').html(data.html);
-         install_toggle_comment_handler();
-      }
-  });
+    var $element = $('#topReviewsForStoreCategory');
+    if (!$element || $element.length == 0 ) {
+        return;
+    }
+    var $scrollContainer = null;
+    if ($element.hasClass("scrollContainer")) {
+        $scrollContainer = $element;
+    } else {
+        $scrollContainer = $element.find(".scrollContainer");
+    }
+    if ($scrollContainer && $scrollContainer.hasClass('mCustomScrollbar')) { 
+    	$scrollContainer.mCustomScrollbar("scrollTo","top");
+    }
+    var $url = '/' + parent_category + '/'+ sub_category + '/trendingreviews/0/10/';
+    $.get($url, {}, function(data) {
+    	if(data.success === true) {
+            var $data_container = $scrollContainer.find('.mCSB_container');
+            if(!$data_container)
+                $data_container =  $scrollContainer
+
+            $data_container.html(data.html);
+
+		    $scrollContainer.attr("data-href", $url);
+		    install_toggle_comment_handler();
+    	} else {
+    		$scrollContainer.removeAttr("data-href");
+    	}
+    });
 	return false;
 }
+
 var update_trends_handler = function(event, elementClicked)
 {
   var $this = $(elementClicked);

@@ -37,8 +37,11 @@
 var sIndex = 0;
 var lIndex = 5;
 $(window).load(function(){
-	/* Calling this on window.load to wait for all the images to load. */
+	/* Calling this on window.load to wait for all the images to load. */    
     setupCustomScrollBar($('#topDealsForStoreCategory'), true); //second boolean parameter forces horizontal scrollbar
+    setupCustomScrollBar($('#topStoresForStoreCategory'));
+    setupCustomScrollBar($('#topReviewsForStoreCategory'));
+
     $(".innerBox").mCustomScrollbar({
         theme:"dark-thick",
 		mouseWheel:true,

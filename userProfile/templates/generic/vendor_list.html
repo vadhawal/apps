@@ -7,6 +7,9 @@
 {# % block title %}{% trans "vendors" %}{% endblock % #}
 
 {% block content %}
+{% if not is_incremental %}
+<div class="topStores scrollContainer" data-href="{{data_href}}" data-chunk="{{data_chunk}}">
+{% endif %}
     {% for vendor in vendors %}
         <div class="row vendorResult">
             <div class="span1 text-center">
@@ -48,4 +51,7 @@
             <hr class="dottedSeparator">
         {% endif %}
     {% endfor %}
+{% if not is_incremental %}
+</div>
+{% endif %}
 {% endblock %}

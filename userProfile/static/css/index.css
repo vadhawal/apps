@@ -6,6 +6,17 @@
 	height: 290px;
 	overflow: auto;
 }
+
+.topStores {
+	height: 290px;
+	overflow: auto;
+}
+
+.topReviewsContainer {
+	height: 290px;
+	overflow: auto;
+}
+
 #topDealsForStoreCategory{
 	height: 250px;
 	margin: auto 0;
