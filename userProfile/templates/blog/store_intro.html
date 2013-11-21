@@ -1,4 +1,4 @@
-{% load mezzanine_tags reviewrating_tags %}
+{% load mezzanine_tags reviewrating_tags static %}
 {% load i18n %}
 <div class="span7 color5D">
 	<div class="row topHalfGutter bottomHalfGutter">
@@ -7,8 +7,12 @@
 		{% block blog_post_detail_featured_image %}
 			
 				<img class="noBoxShadow featuredImg" src="
-				{% if settings.BLOG_USE_FEATURED_IMAGE and blog_post.featured_image %}
-					{{ MEDIA_URL }}{% thumbnail blog_post.featured_image 100 0 %}
+				{% if settings.BLOG_USE_FEATURED_IMAGE %}
+					{% if blog_post.featured_image %}
+						{{ MEDIA_URL }}{% thumbnail blog_post.featured_image 100 0 %}
+					{% else %}
+						{% static "img/store_default.png" %}
+					{% endif %}
 				{% endif %}">
 			{% if blog_post.user == request.user %}
 				 <form id="blogpost_edit_image" action="{% url edit_blog_image blog_post.id %}" method="post" role="form" class='album-form' enctype="multipart/form-data">

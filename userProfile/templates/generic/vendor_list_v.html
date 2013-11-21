@@ -1,5 +1,5 @@
 {# % extends "base.html" % #}
-{% load i18n %}
+{% load i18n static %}
 {% load thumbnail %}
 {% load follow_tags %}
 {% load hitcount_tags %}
@@ -20,7 +20,9 @@
                         </a>
                         {% endthumbnail %}
                 {% else %}
-                    IMAGE
+                    <a style="vertical-align:middle;" href='{{vendor.get_absolute_url}}'>
+                            <img class="smallIcon noBoxShadow" src="{% static "img/store_default.png" %}">
+                    </a>
                 {% endif %}
             </div>
             <div class="span2 noGutter">
