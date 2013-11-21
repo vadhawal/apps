@@ -45,6 +45,10 @@ a:hover {
 	color: rgb(2, 151, 149);
 	text-decoration: none;
 }
+a.noHover:hover{
+	color: #5D5D5D;
+	color: rgb(93, 93, 93);
+}
 a.radioColorBackground:hover{
 	color:white;
 }
@@ -94,6 +98,9 @@ a.radioColorBackground:hover{
 }
 .fontSize16{
 	font-size: 16px;
+}
+.fontSize20{
+	font-size: 20px;
 }
 
 @media (max-width: 1200px) {
@@ -601,7 +608,7 @@ a.shareObject {
 	cursor: default;
 	font-family: titillium1;
 	font-size: 17px;
-	padding: 10px 15px;
+	padding: 3px 8px;
 	box-sizing: border-box;
 }
 .searchResultRatingSmall {
@@ -617,4 +624,52 @@ a.shareObject {
 	background-image: none;
 	background-origin: padding-box;
   	color: white;
+}
+a#vendor_followers{
+	display: inline-block;
+	margin-left:0;
+}
+span#vendorFollowContainer a{
+	margin-right: 0;
+	width: initial;
+}
+span#vendorFollowContainer a.icon-follow{
+	display: inline-block;
+}
+span#vendorFollowContainer a.icon-following{
+	display: none;
+}
+span#vendorFollowContainer a.icon-unfollow{
+	display:none;
+}
+span#vendorFollowContainer.following a.icon-follow{
+	display: none;
+}
+span#vendorFollowContainer.following a.icon-following{
+	display: inline-block;
+}
+span#vendorFollowContainer.following a.icon-unfollow{
+	display: inline-block;
+	margin-left: 0px;
+}
+.icon-unfollow img {
+	background-image: url("/static/img/cross_button.png");
+	background-size: 10px;
+	background-repeat: no-repeat;
+	margin: 0px;
+	width: 12px;
+	display: inline-block;
+	padding: 12px 0 0 0;
+	height: 0px !important;
+}
+a.share_store{
+	margin-right: 0;
+}
+a.store_sharers{
+	margin: 0;
+	margin-right: 10px;
+}
+.hotDealsIcon {
+	font-family : Myriad Pro;
+	font-size : 18px;
 }

@@ -33,8 +33,9 @@
 		{% vendor_follower_subset_info_url blog_post 0 request.user|follower_count:blog_post as subset_follower_url %}
 		<a id="vendor_followers" class="vendorFollowers" class="vendor_followers" href="{{subset_follower_url}}">({{  request.user|follower_count:blog_post }})</a>
     </span>
-    <span class="socialShare fontTitillium halfGutter">
-    	+
-    </span>
+    {% if noShare == "True" %}
+    {% else %}
+        <span class="socialShare fontTitillium halfGutter">+</span>
         <button class="writeReview rateStoreNow radioColorBackground colorWhite fontTitillium1 fontSize13 pull-right" data-href="{% write_review_for_obj_url blog_post %}">Write a Review</button>
+    {% endif %}
 </div>
