@@ -6,10 +6,14 @@
 	height: 30px;
 	line-height: 30px;
 }
+.height40{
+	height: 40px;
+}
 .vendorName {
 	font-size: 2em;
 }
-.resultDesc {
+p.resultDesc {
+	line-height: normal;
 	word-wrap: break-word;
 	display:inline;
 }
@@ -53,4 +57,10 @@
 	background-color: #fff;
 	line-height: normal;
 	margin-top: 6px;
+}
+p.webUrl{
+	margin: 0;
+}
+#search-results .vendorResult:hover .radioModuleFeedRadio {
+	background-image: url('/static/img/radio_green.png');
 }
