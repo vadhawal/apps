@@ -66,10 +66,57 @@ var edit_review_handler = function(event) {
         return false;
 
     var $url = $(this).data("href");
+    var afterShowCallback = function() {
+                                var $reviewFormContainer = $('.fancybox-inner').find('.review_on_object');
+                                $reviewFormContainer.submit(review_submit_handler);
 
-    doOpenUrlWithAjaxFancyBox($url);
+                                var value = parseInt($('[name="overall_value"]').val());
+                                makeSlider($('.overall_value'), $('[name="overall_value"]'), value);
+
+                                value = parseInt($('[name="price_value"]').val());
+                                makeSlider($('.price_value'), $('[name="price_value"]') ,value);
+
+                                value = parseInt($('[name="variety_value"]').val());
+                                makeSlider($('.variety_value'), $('[name="variety_value"]'), value);
+
+                                value = parseInt($('[name="quality_value"]').val())
+                                makeSlider($('.quality_value'), $('[name="quality_value"]'), value);
+
+                                value = parseInt($('[name="service_value"]').val())
+                                makeSlider($('.service_value'), $('[name="service_value"]'), value);
+
+                                value = parseInt($('[name="exchange_value"]').val())
+                                makeSlider($('.exchange_value'), $('[name="exchange_value"]'), value);
+                            };
+
+    doOpenUrlWithAjaxFancyBox($url, afterShowCallback);
     return false;
 };
+
+var makeSlider = function($element, $serialize_to, start_val) {
+    if(!start_val)
+        start_val = 0;
+
+    $element.noUiSlider({
+         range: [0, 5]
+        ,start: start_val
+        ,step: 1
+        ,handles: 1
+        // ,serialization: {
+        //      to: $serialize_to
+        //     ,resolution: 1
+        //     ,mark: ','
+        // }
+        ,slide: function(){
+            var value = parseInt($(this).val());
+            if(value === 0) {
+                $serialize_to.val('');
+            } else {
+                $serialize_to.val(value);
+            }
+        }
+    });  
+}
 
 var write_review_handler = function(event) {
 	if(login_required_handler())
@@ -79,6 +126,12 @@ var write_review_handler = function(event) {
     var afterShowCallback = function() {
                                 var $reviewFormContainer = $('.fancybox-inner').find('.review_on_object');
                                 $reviewFormContainer.submit(review_submit_handler);
+                                makeSlider($('.overall_value'), $('[name="overall_value"]'), 0);
+                                makeSlider($('.price_value'), $('[name="price_value"]'), 0);
+                                makeSlider($('.variety_value'), $('[name="variety_value"]'), 0);
+                                makeSlider($('.quality_value'), $('[name="quality_value"]'), 0);
+                                makeSlider($('.service_value'), $('[name="service_value"]'), 0);
+                                makeSlider($('.exchange_value'), $('[name="exchange_value"]'), 0);
                             };
 
     doOpenUrlWithAjaxFancyBox($url, afterShowCallback);
@@ -98,7 +151,13 @@ var review_submit_handler = function(){
                 if(ret_data.success) {
                     var subcomments_element = $("#comments");
                     $form.trigger('reset');
-                    subcomments_element.append(ret_data.html);
+                    var $edit_review = $form.find('[name="edit_review"]');
+                    if ($edit_review.length > 0) {
+                        var element_id = $edit_review.data('element-id');
+                        $('#'+element_id).replaceWith(ret_data.html);
+                    } else {
+                        subcomments_element.prepend(ret_data.html);                       
+                    }
                     install_voting_handlers(subcomments_element);
                     install_toggle_comment_handler();
                     install_review_handlers(subcomments_element);

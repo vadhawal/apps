@@ -6,6 +6,17 @@
         {% fields_for_review posted_comment_form %}
     {% else %}
         {% fields_for_review unposted_comment_form %}
-    {% endif %}   
+    {% endif %} 
+
+    Price: <div class="price_value"></div>
+    Variety: <div class="variety_value"></div>
+    Quality: <div class="quality_value"></div>
+    Customer Service: <div class="service_value"></div> 
+    Exchange: <div class="exchange_value"></div> 
+    Overall Value: <div class="overall_value"></div>
+
+    {% if not new_review %}
+    	<input type='hidden' name='edit_review' value='1' data-element-id='review-{{ review_id }}'>
+    {% endif %}
     <input class="rateStoreNow radioColorBackground colorWhite fontTitillium1 fontSize13 pull-right" type="submit" value="{% trans "Submit" %}">
 </form>
