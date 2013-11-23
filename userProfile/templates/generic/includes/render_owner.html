@@ -9,10 +9,10 @@
 				{% if owner|get_class_name == "User" %}
 					{% if owner.get_profile.profile_photo %}
 						{% thumbnail owner.get_profile.profile_photo "100x100" as img %}
-							<img style="height:55px; max-height:55px;" src="{{img.url}}">
+							<img style="height:55px; max-height:55px;" class="noBoxShadow" src="{{img.url}}">
 						{% endthumbnail %}
 					{% elif owner.get_profile.image_url %}
-						<img style="height:55px; max-height:55px;" src="{{ owner.get_profile.image_url }}">
+						<img style="height:55px; max-height:55px;" class="noBoxShadow" src="{{ owner.get_profile.image_url }}">
 					{% else %}
                         {% if owner.get_profile.gender == "male" %}
                             <img class="noBoxShadow" style="margin-right:5px;height:55px; max-height:55px;;" src="{% static "img/man_icon.png" %}">
@@ -22,9 +22,13 @@
 					{% endif %}
 
 				{% elif owner|get_class_name == "BlogPost" %}
+					{% if owner.featured_image %}
 						{% thumbnail owner.featured_image "100x100" as img %} 
-						<img style="height:55px; max-height:55px;" src="{{img.url}}">
+						<img style="height:55px; max-height:55px;" class="noBoxShadow" src="{{img.url}}">
 						{% endthumbnail %}
+					{% else %}
+						<img style="height:55px; max-height:55px;" class="noBoxShadow" src="{% static "img/store_default.png" %}">
+					{% endif %}
 				{% else %}
 					{{owner}}
 				{% endif %}
