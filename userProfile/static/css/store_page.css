@@ -16,6 +16,8 @@ div a.siteURL{
 .rateStoreNow{
 	border: 0;
 	padding: 6px 10px;
+	box-shadow : 1px 1px 1px rgba(136, 126, 129, 0.75);
+  	filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=1, OffY=1, Color='#887E81');
 }
 .categories img{
 	box-shadow: none;
@@ -75,7 +77,7 @@ div a.siteURL{
     height: 20px;
     line-height: 20px;
     padding: 2px;
-    width: 90%;
+    width: 424px;
 }
 .reviewForm input[type="radio"] {
     -webkit-appearance: checkbox;
@@ -130,10 +132,14 @@ select.boughtCategory{
 	font-size: 12.85px;
 	height: 25px;
 	line-height: normal;
-	margin-left: 20px;
+	margin-left: 10px;
 	margin-bottom: 0px;
 	text-indent: 0.01px;
 	text-overflow: "";
 	vertical-align: top;
 	width: 200px;
+}
+.review_on_object{
+	width:430px;
+	padding:15px;
 }

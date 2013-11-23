@@ -5,16 +5,20 @@
  *		Support for box-sizing is wide spread:
  *		http://caniuse.com/#search=box-sizing
  */
+ 	.noUi-target {
+ 		display: inline-block;
+ 		width: 200px;
+ 	}
 	.noUi-target * {
--webkit-box-sizing: border-box;
-   -moz-box-sizing: border-box;
-		box-sizing: border-box;
--webkit-touch-callout: none;
-    -ms-touch-action: none;
--webkit-user-select: none;
-   -moz-user-select: none;
-    -ms-user-select: none;
-		cursor: default;
+	-webkit-box-sizing: border-box;
+	   -moz-box-sizing: border-box;
+			box-sizing: border-box;
+	-webkit-touch-callout: none;
+	    -ms-touch-action: none;
+	-webkit-user-select: none;
+	   -moz-user-select: none;
+	    -ms-user-select: none;
+			cursor: default;
 	}
 
 /*	Main slider bar;
@@ -22,28 +26,31 @@
  *		positioning unrelated to the styling.
  */
 	.noUi-base {
-		width: 100%;
-		margin: 1px;
-		height: 38px;
+		width: 185px;
+		margin-left:15px;
+		height: 6px;
 		position: relative;
-		box-shadow: 0 0 0 1px #BFBFBF;
 	}
 
 /*	Handles + active state;
  */
 	.noUi-handle {
-		top: -3px;
-		left: -23px;
-		width: 44px;
-		height: 44px;
+		top: -5px;
+		left: -5px;
+		width: 0; 
+		height: 0; 
+		border-left: 7px solid transparent;
+		border-right: 7px solid transparent;
+		border-bottom: 15px solid rgba(249, 223, 30, 1);
 		z-index: 1;
 		position: relative;
-		background: rgba(249, 223, 30, 0.9); //#EEE;
-		border: 1px solid #BFBFBF;
+		background: transparent;
+		box-shadow : 0px 1px 0px rgba(188, 170, 170, 0.75);
+  		filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=0.3, OffY=0.3, Color='#BCAAAA');
 	}
 	.noUi-active {
-		background: #F9DF1E;//#E9E9E9;
-		box-shadow: inset 0 0 5px #DDD;
+/*		background: #F9DF1E;//#E9E9E9;
+		box-shadow: inset 0 0 5px #DDD;*/
 	}
 
 /*	Styling-only classes;
@@ -52,11 +59,11 @@
  */
 	.noUi-connect {
 		background: Teal;
--webkit-transition: background 0.6s;
-		transition: background 0.6s;
+		-webkit-transition: background 0.6s;
+				transition: background 0.6s;
 	}
 	.noUi-background {
-		background: rgba(2, 151, 149, 0.3);
+		background: rgba(2, 151, 149, 0.2);
 	}
 
 /*	Functional styles for handle positioning;

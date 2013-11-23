@@ -168,7 +168,12 @@ var review_submit_handler = function(){
                     var errors = ret_data.errors;
                     $('.fancybox-inner').find('.error').removeClass('error');
                     $.each( errors, function( key, value ) {
-                        $('.fancybox-inner').find('[name="' + key + '"]').parents('.controls').addClass('error');
+                        var $element = $('.fancybox-inner').find('.' + key);
+                        if ($element.length == 0) {
+                            $('.fancybox-inner').find('[name="' + key + '"]').closest('.controls').find(".label_text").addClass('error');
+                        } else {
+                            $element.closest('.controls').find(".label_text").addClass('error');
+                        }
                     });
                 }
             },

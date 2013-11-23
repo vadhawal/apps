@@ -28,33 +28,36 @@ $(document).ready(function()
 	};
 	
 	// The Accordion Effect
-	$('.accordion-header').click(function () {
-		var $this = $(this);
-		var $nextContentElement = null;
+	var accordian_headers = $('.accordion-header');
+	if (accordian_headers.length > 1) {
+		accordian_headers.click(function () {
+			var $this = $(this);
+			var $nextContentElement = null;
 
-		if($this.is('.inactive-header')) {
-			$('.active-header').toggleClass('active-header').toggleClass('inactive-header').next().slideToggle().toggleClass('open-content');
-			$this.toggleClass('active-header').toggleClass('inactive-header');
-			$nextContentElement = $this.next();
-			$nextContentElement.slideToggle().toggleClass('open-content');
-		}
-		else {
-			/* Disabling closure of already opened header */
-			$this.toggleClass('active-header').toggleClass('inactive-header');
-			$this.next().slideToggle().toggleClass('open-content');
-			var $nextAccordianHeader = $this.next().next();
-			if ($nextAccordianHeader.length) {
-				$nextAccordianHeader.toggleClass('active-header').toggleClass('inactive-header');
-				$nextContentElement = $nextAccordianHeader.next();
-				$nextContentElement.slideToggle().toggleClass('open-content'); 
-			} else {
-				$('.accordion-header').first().toggleClass('active-header').toggleClass('inactive-header');
-				$nextContentElement = $('.accordion-content').first();
-				$nextContentElement.slideDown().toggleClass('open-content');
+			if($this.is('.inactive-header')) {
+				$('.active-header').toggleClass('active-header').toggleClass('inactive-header').next().slideToggle().toggleClass('open-content');
+				$this.toggleClass('active-header').toggleClass('inactive-header');
+				$nextContentElement = $this.next();
+				$nextContentElement.slideToggle().toggleClass('open-content');
 			}
-		}
-		setupScrollBar($nextContentElement);
-	});
+			else {
+				/* Disabling closure of already opened header */
+				$this.toggleClass('active-header').toggleClass('inactive-header');
+				$this.next().slideToggle().toggleClass('open-content');
+				var $nextAccordianHeader = $this.next().next();
+				if ($nextAccordianHeader.length) {
+					$nextAccordianHeader.toggleClass('active-header').toggleClass('inactive-header');
+					$nextContentElement = $nextAccordianHeader.next();
+					$nextContentElement.slideToggle().toggleClass('open-content'); 
+				} else {
+					$('.accordion-header').first().toggleClass('active-header').toggleClass('inactive-header');
+					$nextContentElement = $('.accordion-content').first();
+					$nextContentElement.slideDown().toggleClass('open-content');
+				}
+			}
+			setupScrollBar($nextContentElement);
+		});
+	}
 	
 	return false;
 });

@@ -8,6 +8,7 @@
 }
 .height40{
 	height: 40px;
+	line-height:40px;
 }
 .vendorName {
 	font-size: 2em;
