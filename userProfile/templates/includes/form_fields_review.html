@@ -20,7 +20,6 @@
 {% else %}
 <div class="reviewForm input_{{ field.id_for_label }} {{ field.field.type }}
     {% if field.errors %} error{% endif %}">
-
         {% if field.label ==  form_for_fields.title.label %}
             <span>{{ field.label }}</span>
             {{ field|add_class:"textField" }}
@@ -54,20 +53,66 @@
             </span>
             {% else %}
             {% endif %}
+        {% elif field.label ==  form_for_fields.category.label %}
+            <div style="display:table;border-spacing:0px 15px;">
+                <div class="topHalfGutter" style="display:table-row;">
+                    <div style="display:table-cell;">
+                        <span class="">{{ field.label }}            
+                            {% if field.errors %}
+                                <span class="help-inline">
+                                {% for e in field.errors %}
+                                    {% if not forloop.first %} / {% endif %}{{ e }}
+                                {% endfor %}
+                                </span>
+                            {% else %}
+                            {% endif %}
+                        </span>
+                    </div>
+                    <div style="display:table-cell;">{{ field|add_class:"boughtCategory" }}</div>
+                </div>
+                <div class="topHalfGutter" style="display:table-row;">
+                    <div style="display:table-cell;"></div>
+                    <div style="display:table-cell;">
+                        <div style="display:table;border-spacing:0;margin-left:20px;width:100%;">
+                            <div style="display:table-row" class="radioColor">
+                                <div style="display:table-cell;color:white;">0</div>
+                                <div style="display:table-cell;">1</div>
+                                <div style="display:table-cell;">2</div>
+                                <div style="display:table-cell;">3</div>
+                                <div style="display:table-cell;">4</div>
+                                <div style="display:table-cell;">5</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="topHalfGutter" style="display:table-row;">
+                    <div style="display:table-cell;">{% trans "Price" %}</div>
+                    <div style="display:table-cell;" class="price_value"></div>
+                </div>
+                <div class="topHalfGutter" style="display:table-row;">
+                    <div style="display:table-cell;">{% trans "Variety" %}</div>
+                    <div style="display:table-cell;" class="variety_value"></div>
+                </div>
+                <div class="topHalfGutter" style="display:table-row;">
+                    <div style="display:table-cell;">{% trans "Quality" %}</div>
+                    <div style="display:table-cell;" class="quality_value"></div>
+                </div>
+                <div class="topHalfGutter" style="display:table-row;">
+                    <div style="display:table-cell;">{% trans "Customer Service" %}</div>
+                    <div style="display:table-cell;" class="service_value"></div>
+                </div>
+                <div class="topHalfGutter" style="display:table-row;">
+                    <div style="display:table-cell;">{% trans "Exchange (Optional)" %}</div>
+                    <div style="display:table-cell;" class="exchange_value"></div>
+                </div>
+                <div class="fontSize15 topHalfGutter;" style="display:table-row;">
+                    <div style="display:table-cell;">{% trans "Overall rating" %}</div>
+                    <div style="display:table-cell;" class="overall_value"></div>
+                </div>
+            </div>
         {% elif field.label ==  form_for_fields.shop_again.label %}
             <span class="">{% trans "Would you buy from this store again?"%}</span>
             {{ field|add_class:"" }}
-            {% if field.errors %}
-            <span class="help-inline">
-                {% for e in field.errors %}
-                {% if not forloop.first %} / {% endif %}{{ e }}
-                {% endfor %}
-            </span>
-            {% else %}
-            {% endif %}
-        {% elif field.label ==  form_for_fields.category.label %}
-            <span class="">{{ field.label }}</span>
-            {{ field|add_class:"boughtCategory" }}
             {% if field.errors %}
             <span class="help-inline">
                 {% for e in field.errors %}

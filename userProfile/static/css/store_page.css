@@ -75,7 +75,7 @@ div a.siteURL{
     height: 20px;
     line-height: 20px;
     padding: 2px;
-    width: 90%;
+    width: 424px;
 }
 .reviewForm input[type="radio"] {
     -webkit-appearance: checkbox;
@@ -130,10 +130,14 @@ select.boughtCategory{
 	font-size: 12.85px;
 	height: 25px;
 	line-height: normal;
-	margin-left: 20px;
+	margin-left: 10px;
 	margin-bottom: 0px;
 	text-indent: 0.01px;
 	text-overflow: "";
 	vertical-align: top;
 	width: 200px;
+}
+.review_on_object{
+	width:430px;
+	padding:15px;
 }

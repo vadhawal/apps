@@ -18,27 +18,37 @@
 {% endblock %}
 
 {% block main %}
-{% if results.paginator.count == 0 %}
-	{% blocktrans %}
-	No results were found in {{ search_type }} matching your query: {{ query }}
-	{% endblocktrans %}
-{% else %}
-	{% blocktrans with start=results.start_index end=results.end_index total=results.paginator.count %}
-	Showing {{ start }} to {{ end }} of {{ total }} results in {{ search_type }} matching your query: {{ query }}
-	{% endblocktrans %}
-{% endif %}
 
-<div class="row topHalfGutter color5D">
+<div class="row topHalfGutter color5D fontTitillium1 fontSize13">
 	<div class="span7">
+		<div class="row">
+			<div class="span7">
+				{% if results.paginator.count == 0 %}
+					{% blocktrans %}
+					No results were found in {{ search_type }} matching your query: {{ query }}
+					{% endblocktrans %}
+				{% else %}
+					{% blocktrans with start=results.start_index end=results.end_index total=results.paginator.count %}
+					Showing {{ start }} to {{ end }} of {{ total }} results in {{ search_type }} matching your query: 
+					<span class="fontSize15 fontHelvetica">
+						{{parent_category}} |
+					</span>
+					<span class="fontTitillium1">
+						{{sub_category}}
+					</span>
+					{% endblocktrans %}
+				{% endif %}
+			</div>
+		</div>
 		<div class="row yellowBar height40">
-			<div class="span7 fontTitillium1">
+			<div class="span7">
 				<span>
 					{% trans "You searched for"%}
 				</span>
-				<span class="fontSize20 fontTitillium">
+				<span class="fontSize20 fontHelvetica">
 					{{parent_category}} |
 				</span>
-				<span class="fontSize16 fontTitillium">
+				<span class="fontSize16 fontTitillium1">
 					{{sub_category}}
 				</span>
 				<span class="pull-right"> Filter By:
@@ -55,40 +65,42 @@
 				<span>
 			</div>
 		</div>
-		<div class="row whiteBox topHalfGutter">
-			<div class="span7">
-				<div id="search-results">
-				    {% for result in results.object_list %}
-				    <div class="vendorResult row">
-				    	<div class="span2 whiteBox pagination-centered noGutter">
-				    		<a href="{{ result.get_absolute_url }}">
-							<img src="
-									{% if settings.BLOG_USE_FEATURED_IMAGE %}
-										{% if result.featured_image %}
-											{{ MEDIA_URL }}{% thumbnail result.featured_image 100 0 %}
-										{% else %}
-											{% static "img/store_default.png" %}
-										{% endif %}
-									{% endif %}"
-									class="noBoxShadow"
-									>
-							</a>
-						</div>
-						<div class="span5 fontTitillium2 fontSize13">
-						    <div>
-						        <a class="vendorName fontTitillium" href="{{ result.get_absolute_url }}">{{ result }}</a>
-						        <span class="searchResultRating searchResultRatingText searchResultRatingScheme rating-{{result.overall_average|floatformat:"0"}} pull-right">{{result.overall_average|floatformat:"1"}}</span>
-						        <p class="webUrl fontTitillium1"><a href="{{result.web_url}}" class="radioColor">{{result.web_url}}</a></p>
-						    </div>
-						    <p class="resultDesc">{{ result.description|truncatewords_html:40|safe }}</p>
-						    <a href="{{ result.get_absolute_url }}">{% trans "read more" %}</a>
-					    	<div class="row topHalfGutter bottomHalfGutter">
-								{% include 'blog/store_radio_module.html' with blog_post=result noShare="True" %}
+		<div class="row">
+			<div class="whiteBox">
+				<div class="span7 topHalfGutter">
+					<div id="search-results">
+					    {% for result in results.object_list %}
+					    <div class="vendorResult row">
+					    	<div class="span2 whiteBox pagination-centered noGutter">
+					    		<a href="{{ result.get_absolute_url }}">
+								<img src="
+										{% if settings.BLOG_USE_FEATURED_IMAGE %}
+											{% if result.featured_image %}
+												{{ MEDIA_URL }}{% thumbnail result.featured_image 100 0 %}
+											{% else %}
+												{% static "img/store_default.png" %}
+											{% endif %}
+										{% endif %}"
+										class="noBoxShadow"
+										>
+								</a>
 							</div>
-						</div>
-						<hr class="dottedSeparator span10">
-					 </div>
-				    {% endfor %}
+							<div class="span5 fontTitillium2 fontSize13">
+							    <div>
+							        <a class="vendorName fontTitillium" href="{{ result.get_absolute_url }}">{{ result }}</a>
+							        <span class="searchResultRating searchResultRatingText searchResultRatingScheme rating-{{result.overall_average|floatformat:"0"}} pull-right">{{result.overall_average|floatformat:"1"}}</span>
+							        <p class="webUrl fontTitillium1"><a href="{{result.web_url}}" class="radioColor">{{result.web_url}}</a></p>
+							    </div>
+							    <p class="resultDesc">{{ result.description|truncatewords_html:40|safe }}</p>
+							    <a href="{{ result.get_absolute_url }}">{% trans "read more" %}</a>
+						    	<div class="row topHalfGutter bottomHalfGutter">
+									{% include 'blog/store_radio_module.html' with blog_post=result noShare="True" %}
+								</div>
+							</div>
+							<hr class="dottedSeparator span10">
+						 </div>
+					    {% endfor %}
+					</div>
 				</div>
 			</div>
 		</div>
