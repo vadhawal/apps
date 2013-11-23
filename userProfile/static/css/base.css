@@ -18,6 +18,10 @@
 	font-family: titillium1;
 	src: url('/static/fonts/TitilliumMaps26L001.otf');
 }
+button {
+	box-shadow : 1px 1px 1px rgba(136, 126, 129, 0.75);
+	filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=1, OffY=1, Color='#887E81');
+}
 body{
 	line-height: normal;
 }
