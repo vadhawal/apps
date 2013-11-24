@@ -83,14 +83,12 @@ function updateFeed(){
     link = linksplit.join('/');
 
     $.get(link, {}, function(data) {
-        $('#load-feeds').append(data);
-        install_action_handlers();
-        if(data.indexOf("No actions yet") >= 0)
-        {
-            $('#status').text("No Items");
-            $('#status').show();
-        } else {
+        if (data == "None") {
+            $(window).off('scroll');
             $('#status').hide();
+        } else {
+            $('#load-feeds').append(data);
+            install_action_handlers();
         }
     }); 
 }

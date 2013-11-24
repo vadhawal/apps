@@ -13,10 +13,14 @@
 			{% elif owner.get_profile.image_url %}
 				<img class="noBoxShadow smallIcon" src="{{ owner.get_profile.image_url|add:"?width=45&height=45" }}">
 			{% else %}
-                {% if not owner.get_profile.gender or owner.get_profile.gender == "male" %}
-                    <img class="noBoxShadow smallIcon" src="{% static "img/man_icon.png" %}">
+                {% if owner.get_profile.gender %}
+                 	{% if owner.get_profile.gender == "male" %}
+                    	<img class="noBoxShadow smallIcon" src="{% static "img/man_icon.png" %}">
+                	{% else %}
+                    	<img class="noBoxShadow smallIcon" src="{% static "img/woman_icon.png" %}">
+                    {% endif %}
                 {% else %}
-                    <img class="noBoxShadow smallIcon" src="{% static "img/woman_icon.png" %}">
+                    <img class="noBoxShadow smallIcon" src="{% static "img/man_icon.png" %}">
                 {% endif %}
 			{% endif %}
 

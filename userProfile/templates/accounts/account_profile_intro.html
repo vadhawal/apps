@@ -1,4 +1,4 @@
-{% load userProfile_tags future i18n %}
+{% load userProfile_tags future i18n static %}
 <div class="span7 color5D fontTitillium1 fontSize13">
 	<div class="row topHalfGutter bottomHalfGutter">
 		<div class="span2 noGutter pagination-centered">
@@ -6,6 +6,16 @@
             	<img class="noBoxShadow" style="max-height:110px;" src="{{ profile_user.get_profile.profile_photo.url }}">
             {% elif profile_user.get_profile.image_url %}
             	<img class="noBoxShadow" style="max-height:110px;" src="{{ profile_user.get_profile.image_url|add:"?width=110&height=110" }}">	
+            {% else %}
+                {% if profile_user.get_profile.gender %}
+                 	{% if profile_user.get_profile.gender == "male" %}
+                    	<img class="noBoxShadow" style="max-height:110px;" src="{% static "img/man_icon.png" %}">
+                	{% else %}
+                    	<img class="noBoxShadow" style="max-height:110px;" src="{% static "img/woman_icon.png" %}">
+                    {% endif %}
+                {% else %}
+                    <img class="noBoxShadow" style="max-height:110px;" src="{% static "img/man_icon.png" %}">
+                {% endif %}
             {% endif %}
 		</div>
 		<div class="span5 noGutter">
