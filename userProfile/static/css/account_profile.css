@@ -1,0 +1,35 @@
+a.owned_store:hover{
+	text-decoration: underline;
+	color: #5D5D5D;
+	color: rgb(93, 93, 93);
+}
+.owned_store{
+	padding: 10px 20px;
+	background : #F9DF1E;
+	background : rgba(249, 223, 30, 1);
+	box-shadow : 1px 1px 1px rgba(153, 142, 126, 0.75);
+	filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=1, OffY=1, Color='#998E7E');
+}
+.owned_store span{
+	height: 30px;
+}
+.content {
+	margin: 0px auto;
+	height: auto;
+	overflow: auto;
+	width: 100%;
+	display: inline-block;
+}
+#status{
+	display: block;
+	background : #F9DF1E;
+	background : rgba(249, 223, 30, 1);
+	padding: 5px;
+}
+#load-feeds ul{
+	margin-top: 0px;
+	list-style-type: none;
+}
+.profileIntro:hover .radioModuleFeedRadio {
+	background-image: url('/static/img/radio_green.png');
+}

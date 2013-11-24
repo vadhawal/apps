@@ -132,7 +132,7 @@ class ReviewsByUser(template.Node):
     def render(self, context):
         user_instance = self.user.resolve(context)
         ctype = ContentType.objects.get_for_model(BlogPost)
-        context[self.context_var] = ThreadedComment.objects.filter(user=user_instance, content_type=ctype)
+        context[self.context_var] = Review.objects.filter(user=user_instance, content_type=ctype)
         return  ''
 
 @register.tag
