@@ -194,6 +194,12 @@ var manageFeedOther = function() {
                         <a class="radioColor" href ="{% url render_review review.content_object.slug review.id %}">&nbsp;Read Full Review</a>
                     </div>
                 </div>
+                {% empty %}
+                <div class="row">
+                    <div class="span2">
+                        No Reviews written
+                    </div>
+                </div>
                 {% endfor %}
             </div>
             {% endif %}

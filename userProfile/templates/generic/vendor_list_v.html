@@ -52,6 +52,12 @@
         {% if forloop.counter < 'MIN_STORES_HOME_PAGE'|settings_value %}
             <hr class="dottedSeparator">
         {% endif %}
+        {% empty %}
+        <div class="row">
+            <div class="span2">
+                {% trans "No stores to list" %}
+            </div>
+        </div>
     {% endfor %}
 {% if not is_incremental %}
 </div>
