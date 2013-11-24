@@ -576,15 +576,15 @@ a.shareObject {
 	/*padding: 0px;*/
 }
 .topStores_v {
-	max-height: 600px;
+	max-height: 400px;
 	overflow: auto;
 }
 .topReviews_v {
-	max-height: 600px;
+	max-height: 400px;
 	overflow: auto;
 }
 .dealBox_v {
-	max-height: 600px;
+	max-height: 400px;
 	overflow: auto;
 }
 .dealBox_v_elem {
@@ -699,6 +699,6 @@ a.store_sharers{
 	font-size : 18px;
 }
 img.smallIcon{
-	max-width: 55px;
-	max-height: 55px;
+	max-width: 45px;
+	max-height: 45px;
 }

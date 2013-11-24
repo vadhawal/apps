@@ -14,13 +14,17 @@
             <img class="reviewUserImage smallIcon" src="{{ MEDIA_URL }}{{img}}">
             {% endthumbnail %}
         {% elif review.user.get_profile.image_url %}
-            <img class="reviewUserImage smallIcon" src="{{ review.user.get_profile.image_url|add:"?width=55&height=55" }}">
+            <img class="reviewUserImage smallIcon" src="{{ review.user.get_profile.image_url|add:"?width=45&height=45" }}">
         {% else %}
-            <img class="reviewUserImage smallIcon" src="{% static 'img/defaultProfilePic.gif' %}"> 
+            {% if not owner.get_profile.gender or owner.get_profile.gender == "male" %}
+                <img class="reviewUserImage noBoxShadow smallIcon" src="{% static "img/man_icon.png" %}">
+            {% else %}
+                <img class="reviewUserImage noBoxShadow smallIcon" src="{% static "img/woman_icon.png" %}">
+            {% endif %}
         {% endif %}
         </a>
     </div>
-    <div class="span2 noGutter">
+    <div class="span2 halfGutter">
         <div>
             <a class="fontTitillium1 fontSize13 radioColor" href="{{review.user.get_absolute_url}}">{% get_full_name review.user %}</a>
         </div>
