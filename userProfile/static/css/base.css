@@ -707,3 +707,7 @@ img.smallIcon{
 	max-width: 45px;
 	max-height: 45px;
 }
+#status{
+	color: #5D5D5D;
+	color: rgb(93, 93, 93);
+}
