@@ -2,25 +2,45 @@
 {% load userProfile_tags %}
 {% load comment_tags %}
 {% load voting_tags %}
-{% load thumbnail %}
-{% block extra_head %}
+{% load thumbnail static %}
 
-<ul>
+{% if is_incremental != "true" %}
+<div class="dealBox_v scrollContainer" data-href="{{data_href}}" data-chunk="{{data_chunk}}">
+{% endif %}
 {% for wish in wish_list %}
-<li>
-{% get_wish_owner wish as wish_owner %}
-{% include 'generic/includes/render_owner.html' with owner=wish_owner %}
+    {% get_reldata_url wish as rel_data_url %}
+    {% comment_count_on_object wish as total_comments %}
+    <div class="dealBox_v_elem"> 
+    	{% if wish.wishimage and wish.wishimage.image  %}
+			{% thumbnail wish.wishimage.image "400x400" as img %}
+        <a class="wishimg-deal-homepage" href="{{  wish.wishimage.image.url }}" rel="userpage_wish" data-reldata-url="{{rel_data_url}}" style="">
+        	<span class="fontSize12">
+        		{{ wish.message }}
+        	</span>
+            <img src="{{img.url}}">
+        </a>
+            {% endthumbnail %}
+        {% else %}
+        <a class="wishimg-deal-homepage" href="{% static "img/default_wish.jpg" %}" rel="userpage_wish" data-reldata-url="{{rel_data_url}}" style="">
+        	<span class="fontSize12">
+        		{{ wish.message }}
+        	</span>
+            <img src="{% static "img/default_wish.jpg" %}">
+        </a>
+        {% endif %}
+        <div class="whiteBoxGlassy pagination-centered">
+            {% include 'generic/includes/render_voting.html' with object=wish %}
+            {% include 'actstream/render_share_action.html' with object=wish %}
+			<a href="#" class="comment_radio_d" style="margin-right:0px;">Comment</a>
+				{% comment_count_on_object wish as total_comments %}
+			<a class="broadcasters commentCount" href="{% get_commenters_url wish %}" style="margin-left:0px;">({{total_comments}})</a>
+        </div>
+    </div>
 
-{% render_wish wish %}
-{{wish.timestamp}}
-{% include 'generic/includes/render_voting.html' with object=wish %}
-
-{% include 'actstream/render_subcomments.html' with object=wish %}
-
-<a class="shareWish" href="#" data-href="{% share_wish_url wish %}" >share</a>
-</li>
 {% empty %}
-{% trans "No wishes posted" %}
+    {% trans "No wishes posted" %}
 {% endfor %}
-</ul>
-{% endblock %}
+
+{% if is_incremental != "true" %}
+</div>
+{% endif %}

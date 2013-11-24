@@ -130,6 +130,11 @@ a.radioColorBackground:hover{
 		font-size: 14px;
 	}
 }
+@media (max-width: 979px){ 
+	.navbar-fixed-top, .navbar-fixed-bottom {
+		position: fixed;
+	}
+}
 .storeTopMargin {
 	margin-top: 5px;
 }
@@ -701,4 +706,8 @@ a.store_sharers{
 img.smallIcon{
 	max-width: 45px;
 	max-height: 45px;
+}
+#status{
+	color: #5D5D5D;
+	color: rgb(93, 93, 93);
 }

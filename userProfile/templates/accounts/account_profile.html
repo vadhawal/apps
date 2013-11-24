@@ -18,47 +18,48 @@
 <script src="{% static "js/vallenato.js" %}"></script>
 <script src="http://connect.facebook.net/en_US/all.js"></script>
 <script type="text/javascript">
-          var sIndex = 0;
-          var lIndex = 10;
-		  $(document).ready(function() {
-            $('#followerCountBox').add('#followingCountBox').add('#followingVendorCountBox').on("click", display_popup_handler);
-            $('#sendInvitesFB').click(function() {
-                FB.init({ 
-                    appId: {% settings_value 'FACEBOOK_APP_ID' %}, cookie:true, 
-                    status:true, xfbml:true 
-                });
-                FB.ui({ method: 'apprequests', 
-                    message: 'Check out this cool application! Make your own network of friends, Share reviews, Get best vendors in town and much more...',
-                    new_style_message: true
-                });
-                return false;
-            });
-            var getFeed = function(){
-                $('#load-feeds').html("");
-                {% actor_url_subset profile_user 0 10 as feed %}
-                var link = "{{feed}}";
-                $.get(link, {}, function(data) {
-                    $('#load-feeds').html(data);
-                    install_action_handlers();
-                    $('#status').hide();
-                });
-            }
-            $('#status').text('Loading Timeline');
-            $('#status').show();
-            getFeed();
-            var getWishList = function(){
-                $('#load-wish').html("");
-                {% get_wishlist_url profile_user 0 10 as wishlisturl %}
-                var link = "{{wishlisturl}}";
-                $.get(link, {}, function(data) {
-                    $('#load-wish').html(data);
-                        install_voting_handlers($('#load-wish'));
-                        $('.shareWish').on('click', sharewish_handler);
-                });  
-            }
-            getWishList();
-            $(window).debounce('scroll', feedUpdater, 100);
+  var sIndex = 0;
+  var lIndex = 10;
+  $(document).ready(function() {
+    $('#followerCountBox').add('#followingCountBox').add('#followingVendorCountBox').on("click", display_popup_handler);
+    $('#sendInvitesFB').click(function() {
+        FB.init({ 
+            appId: {% settings_value 'FACEBOOK_APP_ID' %}, cookie:true, 
+            status:true, xfbml:true 
         });
+        FB.ui({ method: 'apprequests', 
+            message: 'Check out this cool application! Make your own network of friends, Share reviews, Get best vendors in town and much more...',
+            new_style_message: true
+        });
+        return false;
+    });
+    var getFeed = function(){
+        $('#load-feeds').html("");
+        {% actor_url_subset profile_user 0 'MIN_DEALS_HOME_PAGE'|settings_value as feed %}
+        var link = "{{feed}}";
+        $.get(link, {}, function(data) {
+            $('#load-feeds').html(data);
+            install_action_handlers();
+            $('#status').hide();
+        });
+    }
+    $('#status').text('Loading Timeline');
+    $('#status').show();
+    getFeed();
+    getWishList();
+    $(window).debounce('scroll', feedUpdater, 100);
+});
+
+function getWishList() {
+    $('#load-wish').html("");
+    {% get_wishlist_url profile_user 0 'MIN_DEALS_HOME_PAGE'|settings_value as wishlisturl %}
+    var link = "{{wishlisturl}}";
+    $.get(link, {}, function(data) {
+        $('#load-wish').html(data.html);
+            install_voting_handlers($('#load-wish'));
+            $('.shareWish').on('click', sharewish_handler);
+    });  
+}
 
 function feedUpdater() {
     var scrollOffset = 400;
@@ -83,14 +84,12 @@ function updateFeed(){
     link = linksplit.join('/');
 
     $.get(link, {}, function(data) {
-        $('#load-feeds').append(data);
-        install_action_handlers();
-        if(data.indexOf("No actions yet") >= 0)
-        {
-            $('#status').text("No Items");
-            $('#status').show();
-        } else {
+        if (data == "None") {
+            $(window).off('scroll');
             $('#status').hide();
+        } else {
+            $('#load-feeds').append(data);
+            install_action_handlers();
         }
     }); 
 }
@@ -194,6 +193,12 @@ var manageFeedOther = function() {
                     <div class="span2 noGutter">
                         {{ review.introchars }}
                         <a class="radioColor" href ="{% url render_review review.content_object.slug review.id %}">&nbsp;Read Full Review</a>
+                    </div>
+                </div>
+                {% empty %}
+                <div class="row">
+                    <div class="span2">
+                        No Reviews written
                     </div>
                 </div>
                 {% endfor %}
