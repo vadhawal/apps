@@ -32,7 +32,9 @@ import datetime
 import os
 import uuid
 import json
+
 from django.core.urlresolvers import reverse
+from storages.backends.s3boto import S3BotoStorage
 
 def json_error_response(error_codes):
     return HttpResponse(simplejson.dumps(dict(success=False,
@@ -867,6 +869,21 @@ def get_object_owner_helper(content_type_id, object_id):
 
 	return owner
 
+def save_file_s3(file, path=''):
+    ''' Little helper to save a file
+    '''
+    filename = file._get_name()
+    new_filename =  u'{name}.{ext}'.format(  name=uuid.uuid4().hex,
+                                             ext=os.path.splitext(filename)[1].strip('.'))
+
+    dir_path =  str(path) #'%s/%s' % (settings.MEDIA_URL, str(path))
+
+    save_path = os.path.join(dir_path, new_filename)
+    storage=S3BotoStorage(location=settings.STORAGE_ROOT)
+    storage.save(save_path, file)
+
+    return save_path
+
 def save_file(file, path=''):
     ''' Little helper to save a file
     '''
@@ -874,7 +891,7 @@ def save_file(file, path=''):
     new_filename =  u'{name}.{ext}'.format(  name=uuid.uuid4().hex,
                                              ext=os.path.splitext(filename)[1].strip('.'))
 
-    dir_path =  '%s/%s' % (settings.MEDIA_ROOT, str(path))
+    dir_path =  '%s/%s' % (settings.MEDIA_URL, str(path))
 
     if not os.path.exists(dir_path):
     	os.makedirs(dir_path)
@@ -911,17 +928,19 @@ def edit_blog_image(request, blogpost_id):
 				featuredImageObj = request.FILES['featured_image']
 				if featuredImageObj:
 					new_file_rel_path = 'users/store/%s/images/' % (blogpost.id)
-					new_file_path = save_file(featuredImageObj, new_file_rel_path)
+					new_file_path = save_file_s3(featuredImageObj, new_file_rel_path)
 					if blogpost.featured_image:
-						old_file_path = '%s/%s' % (settings.MEDIA_ROOT, str(blogpost.featured_image.path))
-						if os.path.exists(old_file_path):
-							os.remove(old_file_path)
-
+						old_file_path = blogpost.featured_image.path #'%s/%s' % (settings.MEDIA_URL, str(blogpost.featured_image.path))
+						storage = S3BotoStorage(location=settings.STORAGE_ROOT)
+						if storage.exists(old_file_path):
+							storage.delete(old_file_path)
+						
 					blogpost.featured_image = new_file_path
 					blogpost.save()
 
 				if request.is_ajax():
-					return HttpResponse(simplejson.dumps(dict(success=True, image_url=blogpost.featured_image.url)))
+					url = os.path.join(settings.MEDIA_URL, blogpost.featured_image.path)
+					return HttpResponse(simplejson.dumps(dict(success=True, image_url=url)))
 				else:
 					return HttpResponseRedirect(blogpost.get_absolute_url())
 				
