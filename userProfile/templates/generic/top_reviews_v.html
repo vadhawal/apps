@@ -14,7 +14,7 @@
             <img class="reviewUserImage smallIcon" src="{{ MEDIA_URL }}{{img}}">
             {% endthumbnail %}
         {% elif review.user.get_profile.image_url %}
-            <img class="reviewUserImage smallIcon" src="{{ review.user.get_profile.image_url }}">
+            <img class="reviewUserImage smallIcon" src="{{ review.user.get_profile.image_url|add:"?width=55&height=55" }}">
         {% else %}
             <img class="reviewUserImage smallIcon" src="{% static 'img/defaultProfilePic.gif' %}"> 
         {% endif %}

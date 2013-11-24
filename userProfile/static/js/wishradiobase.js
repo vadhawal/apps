@@ -266,6 +266,7 @@ var doOpenUrlWithAjaxFancyBox = function(url, afterShowCallback) {
 $(document).ready(function() {
     install_follow_handlers();
     $('.vendorFollowers').on("click", display_popup_handler);
+    $('.followerCountBox').on("click", display_popup_handler);
     $('.shareaction').off("click", share_action_handler).on("click", share_action_handler);
     $(".imgIframe").off("click", img_iframe_handler).on("click", img_iframe_handler);
     $('.shareDeal').off("click", sharewish_handler).on('click', sharewish_handler);
