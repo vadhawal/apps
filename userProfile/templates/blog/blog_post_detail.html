@@ -106,9 +106,9 @@
             </div>
         </div>
     </div>
-    <div class="span3 whiteBox" style="overflow:auto">
-        {% blog_subcategories_for_blog blog_post as sub_categories_blog %}
+    {% blog_subcategories_for_blog blog_post as sub_categories_blog %}
         {% if sub_categories_blog %}
+        <div class="span3 whiteBox" style="overflow:auto">
             <div>
                 <select id="dealsFilterSelect" class="dealsFilter">
                     <option value='empty' selected disabled>{% trans "Filter By" %}</option>
@@ -139,7 +139,7 @@
                         {% render_related_stores blog_post.id 'All' 'MIN_STORES_HOME_PAGE'|settings_value 'vertical' %}
                 </div>
             </div> 
-        {% endif %}
-    </div>
+        </div>
+    {% endif %}
 </div>
 {% endblock %}
