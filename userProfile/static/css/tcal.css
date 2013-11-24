@@ -65,10 +65,10 @@
 	font-weight: bold;
 	white-space: nowrap;
 }
-#tcalPrevYear { background-image: url('../img/prev_year.gif'); }
-#tcalPrevMonth { background-image: url('../img/prev_mon.gif'); }
-#tcalNextMonth { background-image: url('../img/next_mon.gif'); }
-#tcalNextYear { background-image: url('../img/next_year.gif'); }
+#tcalPrevYear { background-image: url('../img/prev_year.png'); background-size: 11px 8px;}
+#tcalPrevMonth { background-image: url('../img/prev_month.png'); background-size: 5px 8px;}
+#tcalNextMonth { background-image: url('../img/next_month.png'); background-size: 5px 8px;}
+#tcalNextYear { background-image: url('../img/next_year.png'); background-size: 11px 8px;}
 
 /* table containing week days header and calendar grid */
 #tcalGrid {
@@ -92,13 +92,13 @@
 	font-size: 11px;
 	cursor: pointer;
 }		
-#tcalGrid td.tcalOtherMonth { color: silver; }
-#tcalGrid td.tcalWeekend { background-color: #ACD6F5; }
-#tcalGrid td.tcalToday { border: 1px solid red; }
-#tcalGrid td.tcalSelected { background-color: #FFB3BE; }
+#tcalGrid td.tcalOtherMonth { opacity: 0.6;}
+#tcalGrid td.tcalWeekend { /*background-color: #ACD6F5;*/ }
+#tcalGrid td.tcalToday {  background-image: url('../img/yellow_calendar_today.png'); background-size: contain; background-repeat: no-repeat; background-position: 3px center;}
+#tcalGrid td.tcalSelected { background-image: url('../img/green_calendar_selection.png'); background-size: contain; background-repeat: no-repeat; background-position: 3px center; color: white;}
 
 div#tcal td.disabled_days {
-color: silver;
+	opacity: 0.3;
 cursor: auto;
 }
 		
