@@ -130,6 +130,10 @@ a.radioColorBackground:hover{
 		font-size: 14px;
 	}
 }
+@media (max-width: 979px){ 
+.navbar-fixed-top, .navbar-fixed-bottom {
+	position: fixed;
+}
 .storeTopMargin {
 	margin-top: 5px;
 }
