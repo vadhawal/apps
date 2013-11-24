@@ -3,8 +3,7 @@
 {% load comment_tags %}
 {% load voting_tags %}
 {% load thumbnail %}
-
-{% block extra_head %}             
+ 
 {% if not is_incremental %}
 <div class="dealBox_h scrollContainer" data-href="{{data_href}}" data-chunk="{{data_chunk}}">
 {% endif %}
@@ -45,9 +44,8 @@
 {% endif %}
 
 {% empty %}
-{% trans "No wishes yet" %}
+{% trans "No Deals posted" %}
 {% endfor %}
 {% if not is_incremental %}
 </div>
 {% endif %}
-{% endblock %}
