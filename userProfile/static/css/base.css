@@ -129,6 +129,9 @@ a.radioColorBackground:hover{
 	.fontSize16{
 		font-size: 14px;
 	}
+	.fontSize20{
+	font-size: 17px;
+	}
 }
 @media (max-width: 979px){ 
 	.navbar-fixed-top, .navbar-fixed-bottom {
@@ -170,6 +173,17 @@ a.radioColorBackground:hover{
 	background : #F9DF1E;
 	background : rgba(249, 223, 30, 1);
 	height: 30px;
+	-webkit-box-shadow: 1.25px 1.25px 1.25px rgba(132,125,125,0.75);
+	box-shadow: 1.25px 1.25px 1.25px rgba(132, 125, 125, 0.75);
+	filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=1.25, OffY=1.25, Color='#847D7D');
+}
+.greyBar
+{
+	background : #63625E;
+	background : rgba(99, 98, 94, 1);
+	-webkit-box-shadow: 1.25px 1.25px 1.25px rgba(132,125,125,0.75);
+	box-shadow: 1.25px 1.25px 1.25px rgba(132, 125, 125, 0.75);
+	filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=1.25, OffY=1.25, Color='#847D7D');
 }
 .makeButton{
 	padding: 6px 10px;

@@ -276,7 +276,7 @@ $(document).ready(function() {
     install_delete_object_handler();
     $('a.wishimg-deal-homepage').fancybox({
         scrolling: 'yes',
-        minWidth: 500,
+        minWidth: 300,
         minHeight: 450,
         autoSize: true,
         helpers : { overlay : { locked : false } }

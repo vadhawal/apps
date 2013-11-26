@@ -56,8 +56,8 @@ function getWishList() {
     var link = "{{wishlisturl}}";
     $.get(link, {}, function(data) {
         $('#load-wish').html(data.html);
-            install_voting_handlers($('#load-wish'));
-            $('.shareWish').on('click', sharewish_handler);
+        install_voting_handlers($('#load-wish'));
+        $('.shareWish').on('click', sharewish_handler);
     });  
 }
 
