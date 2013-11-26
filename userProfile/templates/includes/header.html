@@ -78,7 +78,7 @@
                     <a class="fontSize13 fontTitillium" href="{% url "login" %}?next={{ request.get_full_path }}">{% trans " Log in" %}</a>
                      | <a class="fontSize13 fontTitillium" href="{% url "signup" %}?next={{ request.get_full_path }}">{% trans "Sign up" %}</a>
                 </span>
-                <a href="#google">
+                <a href="{% url "socialauth_begin" "google-oauth2" %}">
                    <span class="socialLogin googleLogin pull-right" style="margin-top:10px;">
                    </span>
                 </a>

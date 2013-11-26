@@ -78,7 +78,7 @@ post_save.connect(create_user_profile, sender=User)
 
 from social_auth.backends.facebook import FacebookBackend
 from social_auth.backends.twitter import TwitterBackend
-from social_auth.backends import google
+from social_auth.backends.google import GoogleOAuth2Backend
 from social_auth.signals import socialauth_registered
 from social_auth.signals import pre_update
 from social_auth.models import UserSocialAuth
@@ -86,44 +86,52 @@ from social_auth.models import UserSocialAuth
 def new_users_handler(sender, user, response, details, **kwargs):
     user.is_new = True
     if user.is_new:
-        if "id" in response:
-            from urllib2 import urlopen, HTTPError
-            from django.template.defaultfilters import slugify
-            from django.core.files.base import ContentFile
-            
-            try:
-                #url = None
-                #if sender == FacebookBackend:
-                #    url = "http://graph.facebook.com/%s/picture?type=large" \
-                #                % response["id"]
-                #elif sender == TwitterBackend:
-                #    url = "https://api.twitter.com/1/users/profile_image?screen_name=twitterapi&size=bigger"
+        from urllib2 import urlopen, HTTPError
+        from django.template.defaultfilters import slugify
+        from django.core.files.base import ContentFile
+        
+        try:
+            #url = None
+            #if sender == FacebookBackend:
+            #    url = "http://graph.facebook.com/%s/picture?type=large" \
+            #                % response["id"]
+            #elif sender == TwitterBackend:
+            #    url = "https://api.twitter.com/1/users/profile_image?screen_name=twitterapi&size=bigger"
 
-                #elif sender == google.GoogleOAuth2Backend and "picture" in response:
-                #    url = response["picture"]
-    
-                #if url:
-                #    avatar = urlopen(url)
-                    profile = UserProfile.objects.get(user=user)
-                    #profile = user.get_profile()
-                    if sender == FacebookBackend:
+            #elif sender == google.GoogleOAuth2Backend and "picture" in response:
+            #    url = response["picture"]
+
+            #if url:
+            #    avatar = urlopen(url)
+                profile = UserProfile.objects.get(user=user)
+                #profile = user.get_profile()
+                if sender == FacebookBackend:
+                    if "id" in response:
                         profile.image_url = "http://graph.facebook.com/%s/picture" \
                                 % response["id"]
-                        user_birthday = user.social_auth.get(provider='facebook').extra_data['birthday']
-                        profile.birthday = datetime_.datetime.strptime(user_birthday, '%m/%d/%Y').strftime('%Y-%m-%d')
 
-                        user_location = user.social_auth.get(provider='facebook').extra_data['location']
-                        profile.location = user_location['name']
-                        profile.gender = user.social_auth.get(provider='facebook').extra_data['gender']
-                        #'https://graph.facebook.com/' + user.social_auth.filter(provider="facebook")[0] + '/picture'
-                        #profile.profile_photo.save(slugify(user.username + " social") + '.jpg', ContentFile(avatar.read()))              
-                    elif sender == TwitterBackend: 
-                        profile.image_url = user.social_auth.get(provider='twitter').extra_data['profile_image_url']
-                        profile.location = user.social_auth.get(provider='twitter').extra_data['location']
-                    profile.save()
-    
-            except HTTPError:
-                pass
+                    social_user = user.social_auth.get(provider='facebook')
+                    user_birthday = social_user.extra_data['birthday']
+                    profile.birthday = datetime_.datetime.strptime(user_birthday, '%m/%d/%Y').strftime('%Y-%m-%d')
+
+                    user_location = social_user.extra_data['location']
+                    profile.location = user_location['name']
+                    profile.gender = social_user.extra_data['gender']
+                    #'https://graph.facebook.com/' + user.social_auth.filter(provider="facebook")[0] + '/picture'
+                    #profile.profile_photo.save(slugify(user.username + " social") + '.jpg', ContentFile(avatar.read()))              
+                elif sender == TwitterBackend: 
+                    social_user = user.social_auth.get(provider='twitter')
+                    profile.image_url = social_user.extra_data['profile_image_url']
+                    profile.location = social_user.extra_data['location']
+                elif sender == GoogleOAuth2Backend:
+                    social_user =  user.social_auth.get(provider='google-oauth2')
+                    profile.image_url = social_user.extra_data['picture']
+                    profile.gender = social_user.extra_data['gender']
+                    profile.birthday = social_user.extra_data['birthday']
+                profile.save()
+
+        except HTTPError:
+            pass
     
     return False
  
@@ -213,6 +221,7 @@ class BroadcastDeal(GenericWish):
 User.profile = property(lambda u: UserProfile.objects.get_or_create(user=u)[0]) 
 pre_update.connect(new_users_handler, sender=FacebookBackend)
 pre_update.connect(new_users_handler, sender=TwitterBackend)
+pre_update.connect(new_users_handler, sender=GoogleOAuth2Backend)
 
 utils.register(GenericWish)
 utils.register(BroadcastWish)
