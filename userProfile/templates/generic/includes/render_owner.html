@@ -2,40 +2,42 @@
 {% load static thumbnail userProfile_tags %}
 
 {% if owner %}
+	<div class="span1">
 	{% if owner.get_absolute_url %}
-		<div class="span1">
-			<div style="width:55px;height:55px;">
-				<a href="{{ owner.get_absolute_url }}">
-				{% if owner|get_class_name == "User" %}
-					{% if owner.get_profile.profile_photo %}
-						{% thumbnail owner.get_profile.profile_photo "100x100" as img %}
-							<img style="height:55px; max-height:55px;" class="noBoxShadow" src="{{img.url}}">
-						{% endthumbnail %}
-					{% elif owner.get_profile.image_url %}
-						<img style="height:55px; max-height:55px;" class="noBoxShadow" src="{{ owner.get_profile.image_url }}">
-					{% else %}
-                        {% if owner.get_profile.gender == "male" %}
-                            <img class="noBoxShadow" style="margin-right:5px;height:55px; max-height:55px;;" src="{% static "img/man_icon.png" %}">
-                        {% else %}
-                            <img class="noBoxShadow" style="margin-right:5px;height:55px; max-height:55px;" src="{% static "img/woman_icon.png" %}">
-                        {% endif %}
-					{% endif %}
+		<a href="{{ owner.get_absolute_url }}">
+		{% if owner|get_class_name == "User" %}
+			{% if owner.get_profile.profile_photo %}
+				{% thumbnail owner.get_profile.profile_photo "100x100" as img %}
+					<img class="smallIcon noBoxShadow" src="{{img.url}}">
+				{% endthumbnail %}
+			{% elif owner.get_profile.image_url %}
+				<img class="noBoxShadow smallIcon" src="{{ owner.get_profile.image_url|add:"?width=45&height=45" }}">
+			{% else %}
+                {% if owner.get_profile.gender %}
+                 	{% if owner.get_profile.gender == "male" %}
+                    	<img class="noBoxShadow smallIcon" src="{% static "img/man_icon.png" %}">
+                	{% else %}
+                    	<img class="noBoxShadow smallIcon" src="{% static "img/woman_icon.png" %}">
+                    {% endif %}
+                {% else %}
+                    <img class="noBoxShadow smallIcon" src="{% static "img/man_icon.png" %}">
+                {% endif %}
+			{% endif %}
 
-				{% elif owner|get_class_name == "BlogPost" %}
-					{% if owner.featured_image %}
-						{% thumbnail owner.featured_image "100x100" as img %} 
-						<img style="height:55px; max-height:55px;" class="noBoxShadow" src="{{img.url}}">
-						{% endthumbnail %}
-					{% else %}
-						<img style="height:55px; max-height:55px;" class="noBoxShadow" src="{% static "img/store_default.png" %}">
-					{% endif %}
-				{% else %}
-					{{owner}}
-				{% endif %}
-				</a>
-			</div>
-		</div>
+		{% elif owner|get_class_name == "BlogPost" %}
+			{% if owner.featured_image %}
+				{% thumbnail owner.featured_image "100x100" as img %} 
+				<img class="noBoxShadow smallIcon" src="{{img.url}}">
+				{% endthumbnail %}
+			{% else %}
+				<img class="noBoxShadow smallIcon" src="{% static "img/store_default.png" %}">
+			{% endif %}
+		{% else %}
+			<img class="noBoxShadow smallIcon" src="{% static "img/man_icon.png" %}">
+		{% endif %}
+		</a>
 	{% else %}
-		{{owner}}
+		<img class="noBoxShadow smallIcon" src="{% static "img/man_icon.png" %}">
 	{% endif %}
+	</div>
 {% endif %}

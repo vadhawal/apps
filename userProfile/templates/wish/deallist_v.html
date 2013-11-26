@@ -5,7 +5,6 @@
 {% load activity_tags %}
 {% load thumbnail %}
 
-{% block extra_head %}
 {% if not is_incremental %}
 <div class="dealBox_v scrollContainer" data-href="{{data_href}}" data-chunk="{{data_chunk}}">
 {% endif %}
@@ -30,11 +29,9 @@
     </div>
     {% endthumbnail %}
 {% endif %}
-
 {% empty %}
-{% trans "No wishes yet" %}
+    {% trans "No Deals Posted" %}
 {% endfor %}
 {% if not incremental %}
 </div>
 {% endif %}
-{% endblock %}

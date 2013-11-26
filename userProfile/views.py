@@ -32,7 +32,7 @@ import datetime
 import os
 import uuid
 import json
-
+from django.core.urlresolvers import reverse
 
 def json_error_response(error_codes):
     return HttpResponse(simplejson.dumps(dict(success=False,
@@ -227,17 +227,38 @@ def get_wishlist(request, content_type_id, object_id, sIndex, lIndex):
 
 	ctype = get_object_or_404(ContentType, pk=content_type_id)
 	wishset = BroadcastWish.objects.all().filter(content_type=ctype, object_id=object_id)
-	wishlist = list(wishset)
 
-	wishlist =  sorted(wishlist, key=operator.attrgetter('timestamp'), reverse=True)
-
+	is_incremental = "false"
 	s = (int)(""+sIndex)
 	l = (int)(""+lIndex)
-	wishlist = wishlist[s:l]
-	return render_to_response('wish/wishlist.html', {
-		'wish_list': wishlist,
-		'ctype': ctype, 'sIndex':s
-	}, context_instance=RequestContext(request))
+	if s > 0:
+		is_incremental = "true"
+
+	if wishset:
+		wishset = wishset.order_by('-timestamp')[s:l]
+
+	data_href =	reverse('get_wishlist', kwargs={
+            'content_type_id': ctype.pk, 'object_id': object_id, 'sIndex':s, 'lIndex':l})
+
+
+	context = RequestContext(request)
+	context.update({'is_incremental':is_incremental,
+		'wish_list': wishset,
+		'ctype': ctype, 'sIndex':s,
+		'data_chunk': settings.MIN_DEALS_HOME_PAGE,
+		'data_href': data_href})
+
+	if wishset:
+		ret_data = {
+			'html': render_to_string('wish/wishlist.html', context_instance=context).strip(),
+			'success': True
+		}
+	else:
+		ret_data = {
+			'success': False
+		}
+
+	return HttpResponse(json.dumps(ret_data), mimetype="application/json")
 
 def get_deallist(request, content_type_id, object_id, sIndex, lIndex):
 

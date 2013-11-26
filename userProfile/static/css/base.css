@@ -130,6 +130,11 @@ a.radioColorBackground:hover{
 		font-size: 14px;
 	}
 }
+@media (max-width: 979px){ 
+	.navbar-fixed-top, .navbar-fixed-bottom {
+		position: fixed;
+	}
+}
 .storeTopMargin {
 	margin-top: 5px;
 }
@@ -141,6 +146,7 @@ a.radioColorBackground:hover{
 	color: rgb(2, 151, 149);
 }
 .radioColorBackground{
+	background-color: #029795;
 	background-color: rgb(2, 151, 149);
 }
 .color5D{
@@ -164,6 +170,26 @@ a.radioColorBackground:hover{
 	background : #F9DF1E;
 	background : rgba(249, 223, 30, 1);
 	height: 30px;
+}
+.makeButton{
+	padding: 6px 10px;
+	background : rgb(2, 151, 149);
+	box-shadow : 1px 1px 1px rgba(153, 142, 126, 0.75);
+	filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=1, OffY=1, Color='#998E7E');
+}
+.makeYellowButton{
+	padding: 6px 6px;
+	background : rgba(249, 223, 30, 1);
+	box-shadow : 1px 1px 1px rgba(153, 142, 126, 0.75);
+	filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=1, OffY=1, Color='#998E7E');
+}
+.greyBackground{
+	background-color: #5D5D5D;
+	background-color: rgb(93,93,93);
+}
+a.colorWhite:hover{
+	color: white;
+	text-decoration: underline;
 }
 .socialLogin{
 	width: 20px;
@@ -555,15 +581,15 @@ a.shareObject {
 	/*padding: 0px;*/
 }
 .topStores_v {
-	height: 600px;
+	max-height: 400px;
 	overflow: auto;
 }
 .topReviews_v {
-	height: 600px;
+	max-height: 400px;
 	overflow: auto;
 }
 .dealBox_v {
-	height: 600px;
+	max-height: 400px;
 	overflow: auto;
 }
 .dealBox_v_elem {
@@ -618,7 +644,7 @@ a.shareObject {
 .searchResultRatingSmall {
 	width:19px;
 	height:11px;
-	padding: 1px 3px;
+	padding: 2px 3px;
 	box-sizing: border-box;
 }
 .searchResultRatingScheme {
@@ -676,4 +702,12 @@ a.store_sharers{
 .hotDealsIcon {
 	font-family : Myriad Pro;
 	font-size : 18px;
+}
+img.smallIcon{
+	max-width: 45px;
+	max-height: 45px;
+}
+#status{
+	color: #5D5D5D;
+	color: rgb(93, 93, 93);
 }
