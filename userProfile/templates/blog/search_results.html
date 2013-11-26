@@ -21,7 +21,7 @@
 
 <div class="row topHalfGutter color5D fontTitillium1 fontSize13">
 	<div class="span7">
-		<div class="row">
+<!-- 		<div class="row">
 			<div class="span7">
 				{% if results.paginator.count == 0 %}
 					{% blocktrans %}
@@ -39,30 +39,29 @@
 					{% endblocktrans %}
 				{% endif %}
 			</div>
-		</div>
-		<div class="row yellowBar height40">
+		</div> -->
+		<div class="row greyBar height26 colorWhite fontTitillium2 fontSize13">
 			<div class="span7">
 				<span>
 					{% trans "You searched for"%}
 				</span>
-				<span class="fontSize20 fontHelvetica">
+				<span class="fontSize16 fontHelvetica">
 					{{parent_category}} |
 				</span>
-				<span class="fontSize16 fontTitillium1">
+				<span class="fontSize14">
 					{{sub_category}}
 				</span>
-				<span class="pull-right"> Filter By:
-					<select id="filtersSelect" class="dealsFilter" style="width:200px;" multiple>
-					    <option value="empty" selected="" disabled="">Filter By</option>
-					    <option value="price">Price</option>
-					    <option value="variety">Variety</option>
-					    <option value="quality">Quality</option>
-					    <option value="service">Customer Service</option>
-					    <option value="exchange">Exchange Experience</option>
-					    <option value="overall">Overall</option>
-					</select>
-					<input type="button" id="searchResultFilter" value="Go">
-				<span>
+			</div>
+		</div>
+		<div class="row yellowBar height26auto color5D fontTitillium2 fontSize13 topHalfGutter">
+			<div class="span7 searchFilter"><span class="fontTitillium1">{% trans "Filter By"%}</span>					
+				<label for="price"><input type="checkbox" value="price" name="price"></input>{% trans "Price" %}</label>
+				<label for="variety"><input type="checkbox" value="variety" name="variety"></input>{% trans "Variety" %}</label>
+				<label for="quality"><input type="checkbox" value="quality" name="quality"></input>{% trans "Quality" %}</label>
+				<label for="service"><input type="checkbox" value="service" name="service"></input>{% trans "Customer Service" %}</label>
+				<label for="exchange"><input type="checkbox" value="exchange" name="exchange"></input>{% trans "Exchange Experience" %}</label>
+				<label for="overall"><input type="checkbox" value="overall" name="overall"></input>{% trans "Overall" %}</label>
+				<button id="searchResultFilter" class="fontTitillium1 fontSize13">{% trans "Go" %}</button>
 			</div>
 		</div>
 		<div class="row">

@@ -307,6 +307,8 @@
 						} else if (isString(element)) {
 							type    = 'html';
 							content = element;
+						} else if (element.data("force-ajax")) {
+							type = "ajax";
 						}
 					}
 

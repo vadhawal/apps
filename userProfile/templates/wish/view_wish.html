@@ -1,0 +1,43 @@
+{% load i18n %}
+{% load userProfile_tags %}
+{% load comment_tags %}
+{% load voting_tags %}
+{% load thumbnail static %}
+
+<div class="color5d fontTitillium1 row">
+    <div class="pagination-centered {% if wishurlPreviewContent %}fontSize13 span6 {% else %}fontSize20 span3 {% endif %}">
+        <span class="message">
+            {{ wish.message|urlize }}
+        </span>
+    </div>
+{% if wish.wishimage and wish.wishimage.image %}
+    <div class="row" style="margin-top:10px; margin-bottom:10px;">
+        <div class="span3 pagination-centered">
+            {% get_reldata_url wish as rel_data_url %}
+            {% thumbnail wish.wishimage.image "800x400" as img %} 
+                <a class="wishimg-wish{{wish.id}}" href="{{  wish.wishimage.image.url }}" data-reldata-url="{{rel_data_url}}">
+                    <img src="{{ MEDIA_URL }}{{img}}" style="max-height:250px;">
+                </a> 
+                <script type="text/javascript">
+                      $('a.wishimg-wish{{wish.id}}').fancybox({
+                        scrolling: 'yes',
+                        minWidth:500,
+                        minHeight:450,
+                        autoSize: true,
+                        helpers : { overlay : { locked : false } }
+                      });
+                </script> 
+            {% endthumbnail %}
+        </div>
+    </div>
+{% endif %}
+{% if wishurlPreviewContent %}f
+<div class="row fontSize12">
+    <div class="span6">
+        {% autoescape off %}
+            {{wish.urlPreviewContent}}
+        {% endautoescape %}
+    </div>
+</div>
+{% endif %}
+</div>
