@@ -4,8 +4,8 @@
 {% load voting_tags %}
 {% load thumbnail static %}
 
-<div class="color5d fontTitillium1" style="width:300px;">
-    <div class="pagination-centered {% if wishurlPreviewContent %}fontSize13{% else %}fontSize20{% endif %}" style="width:300px;">
+<div class="color5d fontTitillium1 row">
+    <div class="pagination-centered {% if wishurlPreviewContent %}fontSize13 span6 {% else %}fontSize20 span3 {% endif %}">
         <span class="message">
             {{ wish.message|urlize }}
         </span>
