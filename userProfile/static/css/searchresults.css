@@ -10,6 +10,10 @@
 	height: 26px;
 	line-height:26px;
 }
+.height26auto{
+	height: auto;
+	line-height:26px;
+}
 .vendorName {
 	font-size: 2em;
 }
@@ -71,13 +75,15 @@ p.webUrl{
 .searchFilter label{
 	display: inline-block;
 	margin: 0;
-	margin-left: 5px;
+	margin-left: 10px;
 }
 .searchFilter input[type="checkbox"]{
 	margin: 0;
+	margin-right:5px;
 }
 #searchResultFilter{
 	border: 0;
+	margin-left: 10px;
 	color: white;
 	background : #63625E;
 	background : rgba(99, 98, 94, 1);

@@ -129,6 +129,9 @@ a.radioColorBackground:hover{
 	.fontSize16{
 		font-size: 14px;
 	}
+	.fontSize20{
+	font-size: 17px;
+	}
 }
 @media (max-width: 979px){ 
 	.navbar-fixed-top, .navbar-fixed-bottom {
