@@ -171,6 +171,13 @@ a.radioColorBackground:hover{
 	background : rgba(249, 223, 30, 1);
 	height: 30px;
 }
+.greyBar
+{
+  background : #63625E;
+  background : rgba(99, 98, 94, 1);
+  box-shadow : 0.54px 0.54px 0.54px rgba(198, 190, 190, 0.75);
+  filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=0.54, OffY=0.54, Color='#C6BEBE') ;
+}
 .makeButton{
 	padding: 6px 10px;
 	background : rgb(2, 151, 149);

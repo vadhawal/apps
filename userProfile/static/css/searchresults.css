@@ -6,9 +6,9 @@
 	height: 30px;
 	line-height: 30px;
 }
-.height40{
-	height: 40px;
-	line-height:40px;
+.height26{
+	height: 26px;
+	line-height:26px;
 }
 .vendorName {
 	font-size: 2em;
@@ -64,4 +64,23 @@ p.webUrl{
 }
 #search-results .vendorResult:hover .radioModuleFeedRadio {
 	background-image: url('/static/img/radio_green.png');
+}
+#accordion-container .accordion-header:first-child{
+	margin-top: 0px;
+}
+.searchFilter label{
+	display: inline-block;
+	margin: 0;
+	margin-left: 5px;
+}
+.searchFilter input[type="checkbox"]{
+	margin: 0;
+}
+#searchResultFilter{
+	border: 0;
+	color: white;
+	background : #63625E;
+	background : rgba(99, 98, 94, 1);
+	box-shadow : 1px 1px 1px rgba(153, 142, 126, 0.75);
+	filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=1, OffY=1, Color='#998E7E');
 }
