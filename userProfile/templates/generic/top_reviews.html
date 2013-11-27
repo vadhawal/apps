@@ -68,7 +68,8 @@
         <a href="{% url render_review review.content_object.slug review.id %}">Full Review</a>
     </p>
  -->
-
+{% empty %}
+{% trans "No Reviews Found." %}
 {% endfor %}
 {% if not is_incremental %}
 </div>
