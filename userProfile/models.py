@@ -59,7 +59,7 @@ class UserProfile(models.Model):
         )
     profile_photo = ResizedImageField(upload_to=get_image_path, max_width=1000, max_height=800, blank=True, null=True, storage=S3BotoStorage(location=settings.STORAGE_ROOT))
     gender = models.CharField(max_length=10, blank=True, choices=GENDER_CHOICES, verbose_name=_("Gender"))
-    image_url = models.URLField(blank=True, verbose_name=_("Imageurl"), editable=False)
+    image_url = models.URLField(blank=True, verbose_name=_("Imageurl"), editable=False, null=True)
     description = models.TextField(blank=True, verbose_name=_("Description"), help_text=_("Tell us about yourself!"))
     location = models.CharField(verbose_name=_("Location"), max_length=100, help_text=_("Tell us about your location!"), null=True, blank=True)
     birthday = models.DateField(_("Your Birthday!"), null=True, blank=True)
