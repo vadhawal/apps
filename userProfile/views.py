@@ -14,6 +14,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.utils import simplejson
 from django.core.exceptions import MultipleObjectsReturned
 from django.core.files import File
+from django.template import Template
 
 from mezzanine.blog.models import BlogPost, BlogCategory, BlogParentCategory
 from mezzanine.generic.models import Review
@@ -253,10 +254,16 @@ def get_wishlist(request, content_type_id, object_id, sIndex, lIndex):
 			'html': render_to_string('wish/wishlist.html', context_instance=context).strip(),
 			'success': True
 		}
+	elif s == 0:
+		template = Template('<span>No Deals found.</span>')
+		ret_data = {
+			'html': template.render(context).strip(),
+			'success': True
+		}
 	else:
 		ret_data = {
 			'success': False
-		}
+		}		
 
 	return HttpResponse(json.dumps(ret_data), mimetype="application/json")
 
@@ -448,10 +455,16 @@ def getTrendingReviews(request, parent_category, sub_category, sIndex=0, lIndex=
 				'html': render_to_string(template, context_instance=context).strip(),
 				'success': True
 			}
+		elif s == 0:
+			template = Template('<span>No Reviews found.</span>')
+			ret_data = {
+				'html': template.render(context).strip(),
+				'success': True
+			}
 		else:
 			ret_data = {
 				'success': False
-			}
+			}			
 
 		return HttpResponse(json.dumps(ret_data), mimetype="application/json")
 	else:
@@ -508,12 +521,19 @@ def getTrendingDeals(request, parent_category, sub_category, sIndex=0, lIndex=0)
 		if deal_chunk:
 			ret_data = {
 				'html': render_to_string(template, context_instance=context).strip(),
-				'success': True
+				'success': True,
+				'more':True
+			}
+		elif s == 0:
+			template = Template('<span>No Deals found.</span>')
+			ret_data = {
+				'html': template.render(context).strip(),
+				'success': False
 			}
 		else:
 			ret_data = {
 				'success': False
-			}
+			}			
 
 		return HttpResponse(json.dumps(ret_data), mimetype="application/json")
 	else:
@@ -553,17 +573,23 @@ def get_filtered_deallist(request, store_id, sub_category, sIndex, lIndex):
 			'html': render_to_string(template, context_instance=context).strip(),
 			'success': True
 		}
+	elif s == 0:
+		template = Template('<span>No Deals found.</span>')
+		ret_data = {
+			'html': template.render(context).strip(),
+			'success': True
+		}
 	else:
 		ret_data = {
 			'success': False
-		}
+		}		
 
 	return HttpResponse(json.dumps(ret_data), mimetype="application/json")
 
 
 def getTrendingStores(request, parent_category, sub_category, sIndex=0, lIndex=0):
 	if request.method == "GET" and request.is_ajax():
-		#latest = settings.STORES_NUM_LATEST
+		latest = settings.STORES_NUM_LATEST
 		blog_parentcategory = None
 		result = None
 		"""
@@ -591,7 +617,10 @@ def getTrendingStores(request, parent_category, sub_category, sIndex=0, lIndex=0
 				"""
 					raise 404 error, in case categories are not present.
 				"""
-				raise Http404()
+				ret_data = {
+					'success': False
+				}
+				return HttpResponse(json.dumps(ret_data), mimetype="application/json")
 
 		isVertical = request.GET.get('v', '0')
 		template = 'generic/vendor_list.html'
@@ -613,11 +642,16 @@ def getTrendingStores(request, parent_category, sub_category, sIndex=0, lIndex=0
 				'html': render_to_string(template, context_instance=context).strip(),
 				'success': True
 			}
+		elif s == 0:
+			template = Template('<span>No Stores listed for this category.</span>')
+			ret_data = {
+				'html': template.render(context).strip(),
+				'success': True
+			}
 		else:
 			ret_data = {
 				'success': False
-			}
-
+			}			
 		return HttpResponse(json.dumps(ret_data), mimetype="application/json")
 
 	else:
@@ -658,10 +692,16 @@ def get_related_stores(request, store_id, sub_category, sIndex, lIndex):
 			'html': render_to_string(template, context_instance=context).strip(),
 			'success': True
 		}
+	elif s == 0:
+		template = Template('<span>No related stores found</span>')
+		ret_data = {
+			'html': template.render(context).strip(),
+			'success': True
+		}
 	else:
 		ret_data = {
 			'success': False
-		}
+		}		
 
 	return HttpResponse(json.dumps(ret_data), mimetype="application/json")
 
