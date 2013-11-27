@@ -1,4 +1,4 @@
-{% load i18n %}
+{% load i18n static %}
 {% if comment.price_value %}
       <span>Price<span class="searchResultRatingSmall ratingSeparator searchResultRatingScheme rating-{{comment.price_value|floatformat:"0"}}" style="display:inline-block;"></span>{{comment.price_value}}</span>
       <span>|</span>
@@ -19,8 +19,8 @@
       <span>Exchange<span class="searchResultRatingSmall ratingSeparator searchResultRatingScheme rating-{{comment.exchange_value|floatformat:"0"}}" style="display:inline-block;"></span>{{comment.exchange_value}}</span>
 {% endif %}
 {% ifequal comment.shop_again|slugify '0' %}
-<img class="pull-right noBoxShadow halfGutter" src="/static/img/shop_again_no.png">
+<img class="pull-right noBoxShadow halfGutter" src="{% static 'img/shop_again_no.png' %}">
 {% else %}
-<img class="pull-right noBoxShadow halfGutter" src="/static/img/shop_again_yes.png">
+<img class="pull-right noBoxShadow halfGutter" src="{% static 'img/shop_again_yes.png' %}">
 {% endifequal %}
 <span class="pull-right">{% trans "Shop Again" %}</span>
