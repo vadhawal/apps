@@ -13,6 +13,7 @@ from django import forms
 from django.contrib.comments.signals import comment_was_posted
 from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
+from django.http import HttpResponse
 
 from mezzanine.blog.models import BlogPost, BlogCategory, BlogParentCategory
 from mezzanine.conf import settings as _settings
@@ -90,48 +91,66 @@ def new_users_handler(sender, user, response, details, **kwargs):
         from django.template.defaultfilters import slugify
         from django.core.files.base import ContentFile
         
+        profile = None
         try:
-            #url = None
-            #if sender == FacebookBackend:
-            #    url = "http://graph.facebook.com/%s/picture?type=large" \
-            #                % response["id"]
-            #elif sender == TwitterBackend:
-            #    url = "https://api.twitter.com/1/users/profile_image?screen_name=twitterapi&size=bigger"
-
-            #elif sender == google.GoogleOAuth2Backend and "picture" in response:
-            #    url = response["picture"]
-
-            #if url:
-            #    avatar = urlopen(url)
-                profile = UserProfile.objects.get(user=user)
-                #profile = user.get_profile()
-                if sender == FacebookBackend:
-                    if "id" in response:
-                        profile.image_url = "http://graph.facebook.com/%s/picture" \
-                                % response["id"]
-
-                    social_user = user.social_auth.get(provider='facebook')
-                    user_birthday = social_user.extra_data['birthday']
-                    profile.birthday = datetime_.datetime.strptime(user_birthday, '%m/%d/%Y').strftime('%Y-%m-%d')
-
-                    user_location = social_user.extra_data['location']
-                    profile.location = user_location['name']
-                    profile.gender = social_user.extra_data['gender']
-                    #'https://graph.facebook.com/' + user.social_auth.filter(provider="facebook")[0] + '/picture'
-                    #profile.profile_photo.save(slugify(user.username + " social") + '.jpg', ContentFile(avatar.read()))              
-                elif sender == TwitterBackend: 
-                    social_user = user.social_auth.get(provider='twitter')
-                    profile.image_url = social_user.extra_data['profile_image_url']
-                    profile.location = social_user.extra_data['location']
-                elif sender == GoogleOAuth2Backend:
-                    social_user =  user.social_auth.get(provider='google-oauth2')
-                    profile.image_url = social_user.extra_data['picture']
-                    profile.gender = social_user.extra_data['gender']
-                    profile.birthday = social_user.extra_data['birthday']
-                profile.save()
-
+            """
+                If account is merged, get the profile of existing user. Else get_or_create a new one.
+            """
+            existing_user = User.objects.get(email=user.email)
+            profile = existing_user.get_profile()
         except:
+            profile, created = UserProfile.objects.get_or_create(user=user)
             pass
+
+        if sender == FacebookBackend:
+            if "id" in response:
+                profile.image_url = "http://graph.facebook.com/%s/picture" \
+                        % response["id"]
+
+            social_user = user.social_auth.get(provider='facebook')
+
+            user_birthday = social_user.extra_data['birthday']
+            if user_birthday:
+                profile.birthday = datetime_.datetime.strptime(user_birthday, '%m/%d/%Y').strftime('%Y-%m-%d')
+
+            user_location = social_user.extra_data['location']
+            if user_location and user_location['name']:
+                profile.location = user_location['name']
+
+            gender = social_user.extra_data['gender']
+            if gender:
+                profile.gender = gender
+             
+        elif sender == TwitterBackend: 
+            social_user = user.social_auth.get(provider='twitter')
+            
+            image_url = social_user.extra_data['profile_image_url']
+            if image_url:
+                profile.image_url = image_url
+
+            location = social_user.extra_data['location']
+            if location:
+                profile.location = location
+
+        elif sender == GoogleOAuth2Backend:
+            social_user =  user.social_auth.get(provider='google-oauth2')
+            image_url = social_user.extra_data['picture']
+            if image_url:
+                profile.image_url = image_url
+
+            gender = social_user.extra_data['gender']
+            if gender:
+                profile.gender = gender
+
+            birthday = social_user.extra_data['birthday']
+            if birthday:
+                profile.birthday = birthday
+
+        profile.save()
+        return True
+
+        # except: 
+        #     pass
     
     return False
  
