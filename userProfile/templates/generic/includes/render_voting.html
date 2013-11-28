@@ -1,4 +1,4 @@
-{% load i18n %}
+{% load i18n static %}
 {% load voting_tags %}      
 {% load userProfile_tags %}
 {% load url from future %}
@@ -14,43 +14,43 @@
         {% if object|get_class_name == "Review" %}
             <span class="radioColor"><span></span>
                 <a class="upvote" href="#" data-href="{% url 'vote_on_reviews' object.id 'up' %}" style="margin-right:0px;"><span>Like</span>
-                    <img class="noBoxShadow" src="/static/img/1transparent.png">
+                    <img class="noBoxShadow" src="{% static 'img/1transparent.png' %}">
                 </a>
             </span>
         {% elif object|get_class_name == "Album" %}
             <span class="radioColor"><span></span>
                 <a class="upvote" href="#" data-href="{% url 'vote_on_albums' object.id 'up' %}" style="margin-right:0px;"><span>Like</span>
-                    <img class="noBoxShadow" src="/static/img/1transparent.png">
+                    <img class="noBoxShadow" src="{% static 'img/1transparent.png' %}">
                 </a>
             </span>
         {% elif object|get_class_name == "Image" %}
             <span class="radioColor"><span></span>
                 <a class="upvote" href="#" data-href="{% url 'vote_on_images' object.id 'up' %}" style="margin-right:0px;"><span>Like</span>
-                    <img class="noBoxShadow" src="/static/img/1transparent.png">
+                    <img class="noBoxShadow" src="{% static 'img/1transparent.png' %}">
                 </a>
             </span>
         {% elif object|get_class_name == "ThreadedComment" %}
             <span class="radioColor"><span></span>
                 <a class="upvote" href="#" data-href="{% url 'vote_on_comments' object.id 'up' %}" style="margin-right:0px;"><span>Like</span>
-                    <img class="noBoxShadow" src="/static/img/1transparent.png">
+                    <img class="noBoxShadow" src="{% static 'img/1transparent.png' %}">
                 </a>
             </span>
         {% elif object|get_class_name == "GenericWish" %}
             <span class="radioColor"><span></span>
                 <a class="upvote" href="#" data-href="{% url 'vote_on_post' object.id 'up' %}" style="margin-right:0px;"><span>Like</span>
-                    <img class="noBoxShadow" src="/static/img/1transparent.png">
+                    <img class="noBoxShadow" src="{% static 'img/1transparent.png' %}">
                 </a>
             </span>
         {% elif object|get_class_name == "BroadcastWish" %}
             <span class="radioColor"><span></span>
                 <a class="upvote" href="#" data-href="{% url 'vote_on_wish' object.id 'up' %}" style="margin-right:0px;"><span>Like</span>
-                    <img class="noBoxShadow" src="/static/img/1transparent.png">
+                    <img class="noBoxShadow" src="{% static 'img/1transparent.png' %}">
                 </a>
             </span>
         {% elif object|get_class_name == "BroadcastDeal" %}
             <span class="radioColor"><span></span>
                 <a class="upvote" href="#" data-href="{% url 'vote_on_deal' object.id 'up' %}" style="margin-right:0px;"><span>Like</span>
-                    <img class="noBoxShadow" src="/static/img/1transparent.png">
+                    <img class="noBoxShadow" src="{% static 'img/1transparent.png' %}">
                 </a>
             </span>
         {% endif %}
@@ -59,43 +59,43 @@
         {% if object|get_class_name == "Review" %}
             <span class="radioColor"><span class="clearvote">Like</span>
                 <a class="clearvote" href="#" data-href="{% url 'vote_on_reviews' object.id 'clear' %}"><span></span>
-                    <img class="noBoxShadow" src="/static/img/1transparent.png">
+                    <img class="noBoxShadow" src="{% static 'img/1transparent.png' %}">
                 </a>
             </span>
         {% elif object|get_class_name == "Album" %}
             <span class="radioColor"><span class="clearvote">Like</span>
                 <a class="clearvote" href="#" data-href="{% url 'vote_on_albums' object.id 'clear' %}"><span></span>
-                    <img class="noBoxShadow" src="/static/img/1transparent.png">
+                    <img class="noBoxShadow" src="{% static 'img/1transparent.png' %}">
                 </a>
             </span>
         {% elif object|get_class_name == "Image" %}
             <span class="radioColor"><span class="clearvote">Like</span>
                 <a class="clearvote" href="#" data-href="{% url 'vote_on_images' object.id 'clear' %}"><span></span>
-                    <img class="noBoxShadow" src="/static/img/1transparent.png">
+                    <img class="noBoxShadow" src="{% static 'img/1transparent.png' %}">
                 </a>
             </span>
         {% elif object|get_class_name == "ThreadedComment" %}
             <span class="radioColor"><span class="clearvote">Like</span>
                 <a class="clearvote" href="#" data-href="{% url 'vote_on_comments' object.id 'clear' %}"><span></span>
-                    <img class="noBoxShadow" src="/static/img/1transparent.png">
+                    <img class="noBoxShadow" src="{% static 'img/1transparent.png' %}">
                 </a>
             </span>
         {% elif object|get_class_name == "GenericWish" %}
             <span class="radioColor"><span class="clearvote">Like</span>
                 <a class="clearvote" href="#" data-href="{% url 'vote_on_post' object.id 'clear' %}"><span></span>
-                    <img class="noBoxShadow" src="/static/img/1transparent.png">
+                    <img class="noBoxShadow" src="{% static 'img/1transparent.png' %}">
                 </a>
             </span>
         {% elif object|get_class_name == "BroadcastWish" %}
             <span class="radioColor"><span class="clearvote">Like</span>
                 <a class="clearvote" href="#" data-href="{% url 'vote_on_wish' object.id 'clear' %}"><span></span>
-                    <img class="noBoxShadow" src="/static/img/1transparent.png">
+                    <img class="noBoxShadow" src="{% static 'img/1transparent.png' %}">
                 </a>
             </span>
         {% elif object|get_class_name == "BroadcastDeal" %}
             <span class="radioColor"><span class="clearvote">Like</span>
                 <a class="clearvote" href="#" data-href="{% url 'vote_on_deal' object.id 'clear' %}"><span></span>
-                    <img class="noBoxShadow" src="/static/img/1transparent.png">
+                    <img class="noBoxShadow" src="{% static 'img/1transparent.png' %}">
                 </a>
             </span>
         {% endif %}
