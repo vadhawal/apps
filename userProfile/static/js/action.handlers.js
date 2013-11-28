@@ -1,15 +1,3 @@
-var delete_action_handler = function(event) {
-    var add_link = $(this);
-    var link = add_link.attr('href');
-    $.get(link, {}, function(data) {
-        if(data == 'ok')
-          $('#action'+add_link.attr('data-action-id')).html("");
-    });
-    event.stopPropagation();
-	event.preventDefault();
-    return false;
-};
-
 var share_action_handler = function(event) {
     if(login_required_handler())
         return false;
@@ -97,7 +85,7 @@ var install_action_handlers = function($parent_element){
     install_share_object_handler($parent_element);
     if($parent_element)
     {
-	    $parent_element.find('.deleteAction').off("click", delete_action_handler).on("click", delete_action_handler);
+	    install_delete_object_handler($parent_element);
 	    $parent_element.find('.shareaction').off("click", share_action_handler).on("click", share_action_handler);
 	    $parent_element.find('.followpost').off("click", follow_post_handler).on("click", follow_post_handler);
 	    $parent_element.find('.unfollowpost').off("click", unfollow_post_handler).on("click", unfollow_post_handler);
@@ -107,7 +95,7 @@ var install_action_handlers = function($parent_element){
 	}
 	else
 	{
-	    $('.deleteAction').off("click", delete_action_handler).on("click", delete_action_handler);
+	    install_delete_object_handler();
 	    $('.shareaction').off("click", share_action_handler).on("click", share_action_handler);
 	    $('.followpost').off("click", follow_post_handler).on("click", follow_post_handler);
 	    $('.unfollowpost').off("click", unfollow_post_handler).on("click", unfollow_post_handler);

@@ -171,7 +171,7 @@ var delete_object_handler = function(event) {
     var object_type =  $elementClicked.data("object-type");
 
     $.confirm({
-        text: "Are you sure you want to delete " + object_type+ " ?",
+        text: "Are you sure you want to delete this " + object_type+ " ?",
         confirm: function(button) {
             $.get(link, {}, function(data) {
                 var dataResult = JSON.parse(data);
@@ -179,9 +179,17 @@ var delete_object_handler = function(event) {
                     /* Class objectToBeDeleted must be applied to the topmost element */
                     var $objectToBeDeleted = $elementClicked.parents('.objectToBeDeleted'); 
                     if($objectToBeDeleted) {
-                        $objectToBeDeleted.remove();
+                        if (object_type === "activity") {
+                            var $seperator = $objectToBeDeleted.next();
+                            if( $seperator.hasClass('dottedSeparator') ) {
+                                $seperator.remove();
+                            }
+                            $objectToBeDeleted.remove();
+                        } else {
+                            $objectToBeDeleted.remove();
+                        }
                     } else {
-                        alert('object deleted');
+                        console.log("Object is deleted silently");
                     }
                 }
                 else {
