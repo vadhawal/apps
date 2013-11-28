@@ -25,7 +25,7 @@
 						<div class="span3">
 							<span class="fontTitillium1 fontSize20 weightBold">{{ profile_user.get_full_name }}</span>
 							{% if request.user = profile_user %}
-								<a href="{% url "profile_update" %}" title="{% trans "Edit Profile" %}"><img style="margin-top:-5px;" class="noBoxShadow" width="15px" height="15px" src="/static/img/edit.png"></a>
+								<a href="{% url "profile_update" %}" title="{% trans "Edit Profile" %}"><img style="margin-top:-5px;" class="noBoxShadow" width="15px" height="15px" src="{% static 'img/edit.png' %}"></a>
 							{% endif %}
 						</div>
 					</div>

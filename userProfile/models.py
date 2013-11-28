@@ -130,7 +130,7 @@ def new_users_handler(sender, user, response, details, **kwargs):
                     profile.birthday = social_user.extra_data['birthday']
                 profile.save()
 
-        except HTTPError:
+        except:
             pass
     
     return False
