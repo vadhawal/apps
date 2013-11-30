@@ -725,3 +725,7 @@ img.smallIcon{
 	color: #5D5D5D;
 	color: rgb(93, 93, 93);
 }
+.leftRightPadding{
+	padding-left: 10px;
+	padding-right: 10px;
+}

@@ -1,6 +1,35 @@
+{% load i18n %}
+{% load thumbnail %}
+{% load comment_tags  %}
+{% load userProfile_tags %}
 
 {% if object %}
-	{% include 'generic/includes/render_voting.html' with object=object %}
-
-	{% include 'actstream/render_subcomments.html' with object=object %}
+{% get_wish_owner object as object_owner %}
+<div class="fancybox-data-inner fontTitillium1 color5d fontSize13">
+	<hr class="dottedSeparator">
+	{% if  object.blog_category %}
+	<div class="row topHalfGutter bottomHalfGutter">
+		<div class="span3">
+       		<a href="{{ object.blog_category.get_absolute_url }}" class="radioColor"> {{object.blog_category}} </a>
+       	</div>
+	</div>
+	<hr class="dottedSeparator">
+	{% endif %}
+	<div class="row topHalfGutter bottomHalfGutter fancyBoxSplitHidden">
+		<div class="span3">
+		{{ object.message }}
+		</div>
+	</div>
+	<hr class="dottedSeparator fancyBoxSplitHidden">
+	<div class="row topHalfGutter bottomHalfGutter radio_module">
+		{% include 'generic/render_dealwishfancybox_radio_module.html' with object=object %}
+	</div>
+	<hr class="dottedSeparator">
+    {% comment_count_on_object object as total_comments %}
+    <div class="row">
+        <div class="span3 whiteBoxLarge topHalfGutter subcomments_container {% if total_comments == 0 %}hide{% endif %}">
+	       {% include 'generic/render_subcomments_deal.html' with object=object %}
+        </div>
+    </div>
+</div>
 {% endif %}

@@ -81,9 +81,6 @@
             </div>
             <div class="row topHalfGutter radio_module">
                 {% include 'generic/includes/comment_radio_module.html' %}
-                {% if request.user.is_authenticated %}
-                    relationship_type: {{rel_type}}
-                {% endif %}
             </div>
             {% comment_count_on_object comment as total_comments %}
             <div class="row topHalfGutter">
