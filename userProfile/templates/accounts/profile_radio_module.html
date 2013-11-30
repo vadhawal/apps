@@ -23,7 +23,7 @@
         {% follower_subset_url profile_user 0 10 as follower_url %}
 		<a id="vendor_followers" class="vendorFollowers" class="vendor_followers" href="{{follower_url}}">({{ profile_user.relationships.followers.count }})</a>
     </span>
-    <span class="socialShare fontTitillium halfGutter">+</span>
+    <span class="socialShare makeButton fontTitillium halfGutter">+</span>
     <a class="makeButton radioColorBackground colorWhite pull-right" href="{% url "messages_compose_to" profile_user.username %}">Send Message</a>
 </div>
 {% if profile_user == request.user %}
