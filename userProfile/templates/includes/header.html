@@ -58,8 +58,8 @@
                             {% elif request.user.get_profile.image_url %}
                                 <img style="margin-right:5px;max-height:30px;" src="{{ request.user.get_profile.image_url }}">
                             {% else %}
-                                {% if owner.get_profile.gender %}
-                                    {% if owner.get_profile.gender == "male" %}
+                                {% if request.user.get_profile.gender %}
+                                    {% if request.user.get_profile.gender == "male" %}
                                         <img class="noBoxShadow" style="margin-right:5px;max-height:30px;" src="{% static "img/man_icon.png" %}">
                                     {% else %}
                                         <img class="noBoxShadow" style="margin-right:5px;max-height:30px;" src="{% static "img/woman_icon.png" %}">
@@ -68,6 +68,9 @@
                                     <img class="noBoxShadow" style="margin-right:5px;max-height:30px;" src="{% static "img/man_icon.png" %}">
                                 {% endif %}
                             {% endif %}
+                            </a>
+                        {% else %}
+                            <img class="noBoxShadow" style="margin-right:5px;max-height:30px;" src="{% static "img/man_icon.png" %}">
                         {% endif %}
                     {% endif %}
                     {% include 'actstream/render_actor_name.html' with actor=request.user %}
