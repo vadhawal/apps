@@ -36,6 +36,12 @@ var setupCustomScrollBar = function ($element, horizontal_scroll) {
                       helpers : { overlay : { locked : false } }
                     });
 
+                    if (horizontal_scroll) {
+                        // this needs to be done for horizontal scrollbar as the size doesnt seem to get update manually
+                        var horizontalUpdateTimer = setTimeout(function(){
+                            $scrollContainer.mCustomScrollbar("update", true);
+                        }, 500);
+                    }
                 } else {
                     $scrollContainer.removeAttr("data-href");
                 }
@@ -59,7 +65,7 @@ var setupCustomScrollBar = function ($element, horizontal_scroll) {
                             //onTotalScrollOffset:100 //onTotalScroll callback will be fired 100 pixels before bottom.
                         },
                         advanced:{
-                            autoExpandHorizontalScroll: true, //Required to update the scrollbar size after dynamic data load.
+                            //autoExpandHorizontalScroll: true, // Dont switch on this flag!! This causes a flicker with css:hover as elements are wrapped unwrapped
                             updateOnContentResize: true //Will update the scrollbar size automatically once the data is loaded.
                         }
                     });

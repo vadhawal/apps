@@ -227,7 +227,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/lgpl.html.
 				}
 			});
 		},
-		update:function(){
+		update:function(updateHorizontal){
 			var $this=$(this),
 				mCustomScrollBox=$this.children(".mCustomScrollBox"),
 				mCSB_container=mCustomScrollBox.children(".mCSB_container");
@@ -241,7 +241,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/lgpl.html.
 				var mCSB_buttonLeft=mCSB_scrollTools.children(".mCSB_buttonLeft"),
 					mCSB_buttonRight=mCSB_scrollTools.children(".mCSB_buttonRight"),
 					mCustomScrollBoxW=mCustomScrollBox.width();
-				if($this.data("autoExpandHorizontalScroll")){
+				if((typeof updateHorizontal !== "undefined" && updateHorizontal) || $this.data("autoExpandHorizontalScroll")){
 					mCSB_container.css({"position":"absolute","width":"auto"}).wrap("<div class='mCSB_h_wrapper' style='position:relative; left:0; width:999999px;' />").css({"width":mCSB_container.outerWidth(),"position":"relative"}).unwrap();
 				}
 				var mCSB_containerW=mCSB_container.outerWidth();
