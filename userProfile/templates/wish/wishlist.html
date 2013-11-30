@@ -5,20 +5,20 @@
 {% load thumbnail static %}
 
 {% if is_incremental != "true" %}
-<div class="dealBox_v scrollContainer" data-href="{{data_href}}" data-chunk="{{data_chunk}}">
+<div class="dealBox_v scrollContainer fontTitillium1" data-href="{{data_href}}" data-chunk="{{data_chunk}}">
 {% endif %}
 {% for wish in wish_list %}
     {% get_reldata_url wish as rel_data_url %}
     {% comment_count_on_object wish as total_comments %}
-    <div class="dealBox_v_elem"> 
+    <div class="dealBox_v_elem bottomHalfGutter topHalfGutter"> 
     	{% if wish.wishimage and wish.wishimage.image  %}
 			{% thumbnail wish.wishimage.image "400x400" as img %}
                 <a class="wishimg-deal-homepage" href="{{  wish.wishimage.image.url }}" rel="userpage_wish" data-reldata-url="{{rel_data_url}}" style="">
-        	       <span class="fontSize12">
-        		  {{ wish.message|urlize }}
-        	   </span>
-                <img src="{{img.url}}">
-            </a>
+        	       <span class="fontSize13 bottomHalfGutter" style="display:inline-block;">
+        		      {{ wish.message|urlize }}
+        	       </span>
+                    <img class="noBoxShadow" src="{{img.url}}">
+                </a>
             <div class="whiteBoxGlassy pagination-centered">
                 {% include 'generic/includes/render_voting.html' with object=wish %}
                 {% include 'actstream/render_share_action.html' with object=wish %}
@@ -28,8 +28,8 @@
             </div>
             {% endthumbnail %}
         {% else %}
-        <a class="wishimg-deal-homepage" href="{% url view_wish wish.id %}" rel="userpage_wish" data-reldata-url="{{rel_data_url}}" data-force-ajax="true">
-        	<span class="fontSize12">
+        <a class="wishimg-deal-homepage" href="{% url view_wish wish.id %}" rel="userpage_wish" data-reldata-url="{{rel_data_url}}" data-force-ajax="true" data-split-vertical="true">
+        	<span class="fontSize13">
         		{{ wish.message|urlize }}
         	</span>
         </a>

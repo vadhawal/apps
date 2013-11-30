@@ -50,6 +50,10 @@ var comment_on_object_handler = function(event){
                 $total_comments.text(total_comments);
                 $loaded_comments.text(loaded_comments);
                 $form.find('.subcomment_text').trigger('autosize.resize');
+                if ($formParent.parents('.fancybox-data').length > 0) {
+                    // isInsideFancyBox = true;
+                    $formParent.find('.span5').removeClass('span5').addClass('span2');
+                }
             },
             error: function(data) {
                 console.log(data);
@@ -187,7 +191,8 @@ var review_submit_handler = function(){
 var view_previous_comments_handler = function(event){
     var add_link = $(this);
     $.get(add_link.attr('href'), {}, function(data) {
-        var $subcomments = add_link.closest('.subcomments_container').find('.subcomments');
+        var $subcomments_container = add_link.closest('.subcomments_container');
+        var $subcomments = $subcomments_container.find('.subcomments');
         $subcomments.prepend(data);
         var link = add_link.attr('href');
         var linksplit = link.split("/");
@@ -204,8 +209,17 @@ var view_previous_comments_handler = function(event){
             add_link.parent().find('.loaded_comments').text(loaded_comments + 5);
         }
         else {
-            $('.viewPreviousComments').parent().next().remove(); // remove the next HR
-            $('.viewPreviousComments').parent().remove(); // remove the entire view previos comment
+            var $prevCommentsTab = $subcomments_container.find('.viewPreviousComments');
+            if ($prevCommentsTab) {
+                var $prevCommentsParent = $prevCommentsTab.parent();
+                if ($prevCommentsParent) {
+                    var $parentNextSibling = $prevCommentsTab.parent().next();
+                    if ($parentNextSibling.length > 0 && $parentNextSibling.prop('tagName').toLowerCase() === "hr") {
+                        $parentNextSibling.remove();// remove the next HR
+                    }
+                    $prevCommentsParent.remove(); // remove the entire view previous comment tab
+                }
+            }
             //add_link.parent().find('.loaded_comments').text(total_comments);
         }
         install_voting_handlers($subcomments.children().first());

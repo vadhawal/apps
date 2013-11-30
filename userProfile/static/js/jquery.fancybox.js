@@ -251,7 +251,8 @@
 					rez,
 					hrefParts,
 					relDataUrl,
-					selector;
+					selector,
+					splitVertical;
 
 				if ($.type(element) === "object") {
 					// Check if is DOM element
@@ -264,6 +265,7 @@
 							href    	: element.data('fancybox-href') || element.attr('href'),
 							title   	: element.data('fancybox-title') || element.attr('title'),
 							relDataUrl	: element.data('reldata-url'),
+							splitVertical: element.data('split-vertical'),
 							isDom   	: true,
 							element 	: element
 						};
@@ -279,6 +281,7 @@
 
 				href  = opts.href  || obj.href || (isString(element) ? element : null);
 				title = opts.title !== undefined ? opts.title : obj.title || '';
+				splitVertical = opts.splitVertical || obj.splitVertical || false;
 
 				content = opts.content || obj.content;
 				type    = content ? 'html' : (opts.type  || obj.type);
@@ -345,7 +348,8 @@
 					content  	: content,
 					title    	: title,
 					selector 	: selector,
-					relDataUrl 	: relDataUrl
+					relDataUrl 	: relDataUrl,
+					splitVertical: splitVertical
 				});
 
 				group[ i ] = obj;
@@ -1167,10 +1171,17 @@
 			F.transitions[ F.isOpened ? current.nextMethod : current.openMethod ]();
 
 			F._preloadImages();
-			/* Custome code to load the data related to the image/deal */
+			/* Custom code to load the data related to the image/deal */
 			var reldata_url = F.group[F.current.index].relDataUrl;
 			if(reldata_url)
 			{
+				var splitVertical = F.group[F.current.index].splitVertical;
+				if (splitVertical) {
+					$('.fancybox-outer').addClass("split-vertical");
+					$('.fancybox-inner').css("height", "auto")
+				} else {
+					$('.fancybox-outer').removeClass("split-vertical");
+				}
 				$.get(reldata_url, {}, function(data) {
 					$('.fancybox-data').html(data);
 					install_voting_handlers($('.fancybox-data'));
@@ -1181,12 +1192,13 @@
 	                  mouseWheel:true,
 	                  autoHideScrollbar:true,
 	                  contentTouchScroll:true
-	                });	
+	                });
 				});
 			}
-			else
+			else {
 				$('.fancybox-data').css({width:'0px'});
-				/* Custome Code End */
+			}
+				/* Custom Code End */
 		},
 
 		_setDimension: function () {
@@ -1197,6 +1209,7 @@
 				wrap       = F.wrap,
 				skin       = F.skin,
 				inner      = F.inner,
+				outer		= F.outer,
 				current    = F.current,
 				width      = current.width,
 				height     = current.height,
@@ -1395,8 +1408,16 @@
 			canShrink = (width_ > maxWidth_ || height_ > maxHeight_) && width > minWidth && height > minHeight;
 			canExpand = current.aspectRatio ? (width < origMaxWidth && height < origMaxHeight && width < origWidth && height < origHeight) : ((width < origMaxWidth || height < origMaxHeight) && (width < origWidth || height < origHeight));
 			
-			skin.width(inner.width() + $('.fancybox-data').width());
-			skin.height(inner.height());
+			var rel_data = $('.fancybox-data');
+			var height = inner.height();
+			var width = inner.width();
+			if (outer.hasClass("split-vertical")) {
+				height = height + rel_data.height();
+			} else {
+				width = width + rel_data.width();
+			}
+			skin.height(height);
+			skin.width(width);
 			$('.fancybox-data').css({
 				'max-height': skin.height()+'px'
 			});

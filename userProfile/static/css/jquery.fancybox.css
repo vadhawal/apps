@@ -39,7 +39,7 @@
 	width: 300px;
 	height:auto;
 	position:relative;
-	left: 10px;
+	left: 15px;
 	overflow-y: auto;
 	overflow-x: hidden;
 }
@@ -282,4 +282,35 @@
 		background-image: url('../img/fancybox_loading@2x.gif');
 		background-size: 24px 24px; /*The size of the normal image, half the size of the hi-res image*/
 	}
+}
+.fancybox-outer.split-vertical .fancybox-inner {
+	float: none;
+	max-width: 300px;
+	height: auto !important;
+	min-height: 0px;
+}
+.fancybox-outer.split-vertical .fancybox-data {
+	float: none;
+	max-width: 300px;
+	height: 400px;
+}
+.fancybox-outer.split-vertical .fancyBoxSplitHidden{
+	display: none !important;
+}
+.fancybox-outer .subcomment_text{
+	max-width: 150px;
+}
+.radioModuleFeedContainer a {
+	margin-left: 5px;
+	margin-right: 5px;
+}
+a.shareObject {
+	margin-right: 0px;
+}
+a.store_sharers {
+	margin: 0;
+	margin-right: 5px;
+}
+a.clearvote {
+	margin: 0px;
 }
