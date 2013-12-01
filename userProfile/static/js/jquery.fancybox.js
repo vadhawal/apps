@@ -1172,10 +1172,10 @@
 
 			F._preloadImages();
 			/* Custom code to load the data related to the image/deal */
-			var reldata_url = F.group[F.current.index].relDataUrl;
+			var reldata_url = current.group[current.index].relDataUrl;
 			if(reldata_url)
 			{
-				var splitVertical = F.group[F.current.index].splitVertical;
+				var splitVertical = current.group[current.index].splitVertical;
 				if (splitVertical) {
 					$('.fancybox-outer').addClass("split-vertical");
 					$('.fancybox-inner').css("height", "auto")
@@ -1409,12 +1409,26 @@
 			canExpand = current.aspectRatio ? (width < origMaxWidth && height < origMaxHeight && width < origWidth && height < origHeight) : ((width < origMaxWidth || height < origMaxHeight) && (width < origWidth || height < origHeight));
 			
 			var rel_data = $('.fancybox-data');
+			var reldata_url = current.group[current.index].relDataUrl;
+			var hasSplitVertical = current.group[current.index].splitVertical;
 			var height = inner.height();
 			var width = inner.width();
-			if (outer.hasClass("split-vertical")) {
+			if (hasSplitVertical) {
+				/* Default width for fancybox-data is 0. This is to avoid glitches due to resize.
+				 * In case of splitVertical set the width to auto and skin height should be increased by fancybox-data's height.
+				 */
+				$('.fancybox-data').css({width:'auto'});
 				height = height + rel_data.height();
 			} else {
-				width = width + rel_data.width();
+				if(reldata_url) {
+					/* In case related data is present, give some width to fancybox-data.
+					 * Increase the skin width by fancybox-data's width.
+					*/
+					$('.fancybox-data').css({width:'300px'});
+					width = width + rel_data.width();
+				} else {
+					//do nothing.
+				}
 			}
 			skin.height(height);
 			skin.width(width);

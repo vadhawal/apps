@@ -31,16 +31,28 @@
     }
 })(jQuery);
 
+var openLoginForm = function($url) {
+    var afterShowCallback = function() {
+                                var $accountFormContainer = $('.fancybox-inner').find('.accountForm');
+                                if($accountFormContainer.length > 0) {
+                                    $accountFormContainer.on('submit', {action_url: $url}, account_form_submit_handler);
+                                }
+                            };
+
+    doOpenUrlWithAjaxFancyBox($url, afterShowCallback);
+    return false;
+};
+
 var login_required_handler = function()
 {
     if(!is_authenticated)
     {
         var goto_url = login_url +'?next=' + window.location.pathname;
-        document.location.href = goto_url; 
+        openLoginForm(goto_url);
         return true;
     }
     return false;
-}
+};
 
 var FollowUnfollow = function($elementClicked, new_count) {
     var $element = $elementClicked.parent();
@@ -259,17 +271,74 @@ var doOpenUrlWithAjaxFancyBox = function(url, afterShowCallback) {
         type                :'ajax',
         helpers             : { overlay : { locked : false } },
         scrolling           : 'no',
-        ajax                :   {
-                                    complete    : function(jqXHR, textStatus) {
+        afterShow           : function() {
                                     if(typeof afterShowCallback !== 'undefined')
                                         afterShowCallback();
-                                }
         },
         onClosed            : function() {
                                     $('a.ajaxFancybox').remove();
                                 }
+        //,                
+        // ajax                :   {
+        //                             complete    : function(jqXHR, textStatus) {
+        //                             if(typeof afterShowCallback !== 'undefined')
+        //                                 afterShowCallback();
+        //                         }
+        // },
     }).click(); 
 }
+
+var login_handler = function(event) {    
+    var $url = $(this).attr("href");
+    // var afterShowCallback = function() {
+    //                             var $accountFormContainer = $('.fancybox-inner').find('.accountForm');
+    //                             if($accountFormContainer.length > 0) {
+    //                                 $accountFormContainer.on('submit', {action_url: $url}, account_form_submit_handler);
+    //                             }
+    //                         };
+
+    // doOpenUrlWithAjaxFancyBox($url, afterShowCallback);
+    openLoginForm($url);
+    event.stopPropagation();
+    event.preventDefault();
+    return false;
+};
+
+var account_form_submit_handler = function(event) {
+    var $form = $(this);
+    var $action_url = event.data.action_url;
+    $('.fancybox-inner').find('.errors').remove();
+    $.ajax({
+        type: $form.attr('method'),
+        url: $action_url,
+        data: $form.serialize(),
+        success: function (data) {
+            var ret_data = JSON.parse(data);
+            if(ret_data.success === true) {
+                $.fancybox.close();
+                var url = ret_data.url;
+                window.location.assign(url);
+            } else {
+                var $errors = ret_data.errors.__all__;
+                var $albumFormContainer = $('.fancybox-inner').find('.accountForm');
+                $('<div/>', {
+                    'class':'errors',
+                    'style':'border-style:solid;border-width:thin;border-color:red;',
+                    'html':'<span>'+$errors+'</span>'
+                }).appendTo($albumFormContainer);
+                $.fancybox.update();
+            }
+        },
+        error: function(xhr) {
+            var errors = JSON.parse(xhr.responseText);
+            $('.fancybox-inner').find('.error').removeClass('error');
+            $.each( errors, function( key, value ) {
+                $('.fancybox-inner').find('[name="' + key + '"]').addClass('error');
+            });
+        }
+    });
+    return false;
+};
 
 $(document).ready(function() {
     install_follow_handlers();
@@ -289,5 +358,6 @@ $(document).ready(function() {
         autoSize: true,
         helpers : { overlay : { locked : false } }
     });
+    $('.doLogin').on('click', login_handler);
 });
 
