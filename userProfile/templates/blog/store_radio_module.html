@@ -10,7 +10,7 @@
     	<a href="#">
     		Views ({% get_hit_count for blog_post %})
     	</a>
-    	<a href="{% if wholeReviewLink == "True" %}{{blog_bost.get_absolute_url}}#reviews{% else %}#reviews{% endif %}" style="margin-right:0px;">
+    	<a href='{% if wholeReviewLink == "True" %}{{ blog_post.get_absolute_url }}#comments{% else %}#comments{% endif %}' style="margin-right:0px;">
     		Reviews 
     	</a>
         {% get_range_commenters_url blog_post 0 5 as commenters_url %}
