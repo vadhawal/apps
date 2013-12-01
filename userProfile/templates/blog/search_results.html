@@ -46,10 +46,10 @@
 					{% trans "You searched for"%}
 				</span>
 				<span class="fontSize16 fontHelvetica">
-					{{parent_category}} |
+					{{parent_category_title}} |
 				</span>
 				<span class="fontSize14">
-					{{sub_category}}
+					{{sub_category_title}}
 				</span>
 			</div>
 		</div>
@@ -91,7 +91,7 @@
 					    <p class="resultDesc">{{ result.description|truncatewords_html:40|safe }}</p>
 					    <a href="{{ result.get_absolute_url }}">{% trans "read more" %}</a>
 				    	<div class="row topHalfGutter bottomHalfGutter">
-							{% include 'blog/store_radio_module.html' with blog_post=result noShare="True" %}
+							{% include 'blog/store_radio_module.html' with blog_post=result noShare="True" wholeReviewLink="True" %}
 						</div>
 					</div>
 					<hr class="dottedSeparator span7">
