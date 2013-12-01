@@ -4,23 +4,52 @@
 {% load userProfile_tags %}
 
 {% if object %}
-{% get_wish_owner object as object_owner %}
 <div class="fancybox-data-inner fontTitillium1 color5d fontSize13">
 	<hr class="dottedSeparator">
-	{% if  object.blog_category %}
-	<div class="row topHalfGutter bottomHalfGutter">
-		<div class="span3">
-       		<a href="{{ object.blog_category.get_absolute_url }}" class="radioColor"> {{object.blog_category}} </a>
-       	</div>
-	</div>
-	<hr class="dottedSeparator">
-	{% endif %}
-	<div class="row topHalfGutter bottomHalfGutter fancyBoxSplitHidden">
-		<div class="span3">
-		{{ object.message }}
+	{% if object.blog_category %}
+		<div class="row topHalfGutter bottomHalfGutter">
+			<div class="span3">
+	       		<a href="{{ object.blog_category.get_absolute_url }}" class="categoryTag radioColor"> {{object.blog_category}} </a>
+	       	</div>
 		</div>
-	</div>
-	<hr class="dottedSeparator fancyBoxSplitHidden">
+		<hr class="dottedSeparator">
+	{% endif %}
+	{% if object.tagged_categories and object.tagged_categories.all %}
+		<div class="row topHalfGutter">
+			<div class="span3">
+				{% for category in object.tagged_categories.all %}
+					<span style="display:inline-block;margin-right:10px;" class="bottomHalfGutter">
+						<a href="{{ category.get_absolute_url }}" class="categoryTag radioColor">{{category}}</a>
+					</span>
+				{% endfor %}
+	       	</div>
+		</div>
+		<hr class="dottedSeparator">
+	{% endif %}
+	{% if  object.message %}
+		<div class="row topHalfGutter bottomHalfGutter fancyBoxSplitHidden">
+			<div class="span3">
+			{{ object.message }}
+			</div>
+		</div>
+		<hr class="dottedSeparator fancyBoxSplitHidden">
+	{% endif %}
+	{% if object.title and object.title|lower != "untitled" %}
+		<div class="row topHalfGutter bottomHalfGutter fancyBoxSplitHidden">
+			<div class="span3">
+			{{ object.title }}
+			</div>
+		</div>
+		<hr class="dottedSeparator fancyBoxSplitHidden">
+	{% endif %}
+	{% if object.description %}
+		<div class="row topHalfGutter bottomHalfGutter fancyBoxSplitHidden">
+			<div class="span3">
+			{{ object.description }}
+			</div>
+		</div>
+		<hr class="dottedSeparator fancyBoxSplitHidden">
+	{% endif %}
 	<div class="row topHalfGutter bottomHalfGutter radio_module">
 		{% include 'generic/render_dealwishfancybox_radio_module.html' with object=object %}
 	</div>

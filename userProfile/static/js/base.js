@@ -45,8 +45,8 @@ var setupCustomScrollBar = function ($element, horizontal_scroll) {
                 } else {
                     $scrollContainer.removeAttr("data-href");
                 }
-            }); 
-        }                      
+            });
+        }
     };
 
     if ($scrollContainer && !$scrollContainer.hasClass('mCustomScrollbar')) {

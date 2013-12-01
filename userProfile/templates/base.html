@@ -106,22 +106,22 @@ category_namespace.categories = categories;
 </div>
 
 <footer>
-    <div class="container">
-        {% page_menu "pages/menus/footer.html" %}
+<!--     <div class="container">
+        {# page_menu "pages/menus/footer.html" #}
         <p>
-            {% trans "Powered by" %}
+            {# trans "Powered by" #}
             <a href="http://mezzanine.jupo.org">Mezzanine</a>{% ifinstalled cartridge.shop %},
             <a href="http://cartridge.jupo.org">Cartridge</a>{% endifinstalled %}
-            {% trans "and" %}
+            {# trans "and" #}
             <a href="http://www.djangoproject.com">Django</a>
             <span class="separator">|</span>
-            {% trans "Theme by" %} <a href="http://twitter.github.com/bootstrap/">Bootstrap</a>
-            {% ifinstalled mezzanine.mobile %}
+            {# trans "Theme by" #} <a href="http://twitter.github.com/bootstrap/">Bootstrap</a>
+            {# ifinstalled mezzanine.mobile #}
             <span class="separator">|</span>
-            <a href="{% url "set_device" "mobile" %}?next={{ request.path }}">{% trans "View Mobile Site" %}</a>
-            {% endifinstalled %}
+            <a href="{% url "set_device" "mobile" %}?next={{ request.path }}">{# trans "View Mobile Site" #}</a>
+            {# endifinstalled #}
         </p>
-    </div>
+    </div> -->
 </footer>
 
 {% include "includes/footer_scripts.html" %}
