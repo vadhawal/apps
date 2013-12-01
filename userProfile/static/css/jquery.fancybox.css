@@ -288,6 +288,7 @@
 	max-width: 300px;
 	height: auto !important;
 	min-height: 0px;
+	overflow: visible;
 }
 .fancybox-outer.split-vertical .fancybox-data {
 	float: none;
