@@ -36,7 +36,7 @@
 
 .fancybox-data {
 	float: right;
-	width: 325px;
+	width: 300px;
 	height:auto;
 	position:relative;
 	left: 15px;
@@ -291,7 +291,7 @@
 }
 .fancybox-outer.split-vertical .fancybox-data {
 	float: none;
-	max-width: 325px;
+	max-width: 300px;
 	height: 400px;
 }
 .fancybox-outer.split-vertical .fancyBoxSplitHidden{
