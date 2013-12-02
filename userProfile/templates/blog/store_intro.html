@@ -1,5 +1,5 @@
 {% load mezzanine_tags reviewrating_tags static %}
-{% load i18n %}
+{% load i18n thumbnail %}
 <div class="span7 color5D">
 	<div class="row topHalfGutter bottomHalfGutter">
 		<div class="span4 pagination-centered">
@@ -9,7 +9,9 @@
 				<img class="noBoxShadow featuredImg" src="
 				{% if settings.BLOG_USE_FEATURED_IMAGE %}
 					{% if blog_post.featured_image %}
-						{{ MEDIA_URL }}{% thumbnail blog_post.featured_image 100 0 %}
+						{% thumbnail blog_post.featured_image "100x100" as img %}
+							{{ img.url }}
+						{% endthumbnail %}
 					{% else %}
 						{% static "img/store_default.png" %}
 					{% endif %}
