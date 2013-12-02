@@ -3,10 +3,35 @@
 {% if request.user.is_authenticated %}
     <p>{% trans "You're already logged in." %}</p>
 {% else %}
-	{% include 'accounts/render_form.html' with form=form %}
-    {% url "signup" as signup_url %}
-    <p>{% blocktrans with request.GET.next as next %}If you don't have an account you can <a href="{{ signup_url }}?next={{ next }}">sign up</a> for one now.{% endblocktrans %}</p>
-    {% url "mezzanine_password_reset" as password_reset_url %}
-    {% url "profile_update" as profile_update_url %}
-    {% blocktrans %}<p>You can also <a href="{{ password_reset_url }}?next={{ profile_update_url }}">reset your password</a> if you've forgotten it.</p>{% endblocktrans %}</p>
+	<div class="loginPopup">
+		<div class="socialLoginForm">
+
+		</div>
+		<div class="fontTitillium1 fontSize13 color5D">
+			{% include 'accounts/render_form.html' with form=form %}
+			<p class="fontTitillium radioColor fontSize15 halfGutter" style="margin-top:10px;">or</p>
+			<a href="{% url "socialauth_begin" "facebook" %}">
+                <span class="socialLogin facebookLogin" style="margin-top:10px;">
+                </span>
+            </a>
+            <a href="{% url "socialauth_begin" "google-oauth2" %}">
+               <span class="socialLogin googleLogin" style="margin-top:10px;">
+               </span>
+            </a>
+            <a href="{% url "socialauth_begin" "twitter" %}">
+                <span class="socialLogin twitterLogin" style="margin-top:10px;">
+                </span>
+            </a>
+		    {% url "signup" as signup_url %}
+	    	{% blocktrans with request.GET.next as next %}
+	    		<p class="fontTitillium fontSize15 hintText">Don’t have an account yet? It’s never too late to Wishradio.&nbsp;<a class="radioColor" href="{{ signup_url }}?next={{ next }}">Sign up</a>&nbsp;now!
+				</p>
+	    	{% endblocktrans %}
+		    {% url "mezzanine_password_reset" as password_reset_url %}
+		    {% blocktrans %}
+			    <p class="fontTitillium fontSize15 hintText">We’re all forgetful at times. Just&nbsp;<a class="radioColor" href="{{ password_reset_url }}?next={{ profile_update_url }}">Reset Your Password</a>&nbsp;here
+			    </p>
+		    {% endblocktrans %}
+		</div>
+	</div>
 {% endif %}
