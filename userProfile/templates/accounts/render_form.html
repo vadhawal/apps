@@ -2,6 +2,7 @@
 {% load widget_tweaks %}
 
 <form class="accountForm" method="post" {% if form.is_multipart %} enctype="multipart/form-data"{% endif %}>
+	{% csrf_token %}
    	{% for field in form %}
 	   	<div class="bottomHalfGutter{% if forloop.last %} topHalfGutter{% endif %}">
 	   		{{field.label}}
