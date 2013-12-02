@@ -192,6 +192,7 @@ a.radioColorBackground:hover{
 	filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=1, OffY=1, Color='#998E7E');
 }
 .makeYellowButton{
+	border: 0px;
 	padding: 6px 6px;
 	background : rgba(249, 223, 30, 1);
 	box-shadow : 1px 1px 1px rgba(153, 142, 126, 0.75);
@@ -728,4 +729,48 @@ img.smallIcon{
 .leftRightPadding{
 	padding-left: 10px;
 	padding-right: 10px;
+}
+.loginPopup{
+	width: 488px;
+	height:270px;
+}
+input[type="submit"].loginSubmit{
+	width: 78px;
+	height: 29px;
+	margin-left:38px;
+}
+.accountForm input.textField:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 50px white inset;
+}
+.accountForm input.textField:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0 50px white inset;
+}
+.accountForm input.textField{
+	width: 363px;
+	height: 23px;
+	font-family: Georgia, fontTitillium2;
+    font-size: 12px;
+    font-style: italic;
+    border-radius: 0px;
+	box-shadow : -1px -1px 1px rgba(188, 170, 170, 0.75);
+	filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=1, OffY=1, Color='#998E7E');
+	margin:0;
+}
+.accountForm input.textField:focus{
+	box-shadow : -1px -1px 1px rgba(188, 170, 170, 0.75);
+}
+.loginLabel{
+	margin-bottom: 9px;
+}
+.accountForm {
+	margin:0;
+}
+.loginPopup p{
+	margin: 0;
+}
+p.hintText{
+	margin-top: 10px;
+}
+input[type="password"].textField{
+	width: 243px;
 }

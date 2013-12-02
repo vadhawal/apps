@@ -1,11 +1,16 @@
 {% load i18n mezzanine_tags %}
+{% load widget_tweaks %}
 
-<fieldset>
-    <legend>{{ title }}</legend>
-    <form class="accountForm" method="post" {% if form.is_multipart %} enctype="multipart/form-data"{% endif %}>
-    {% fields_for form %}
-    <div class="form-actions">
-        <input class="btn btn-primary btn-large" type="submit" value="{{ title }}">
-    </div>
-    </form>
-</fieldset>
+<form class="accountForm" method="post" {% if form.is_multipart %} enctype="multipart/form-data"{% endif %}>
+   	{% for field in form %}
+	   	<div class="bottomHalfGutter{% if forloop.last %} topHalfGutter{% endif %}">
+	   		{{field.label}}
+	   	</div>
+	   	<div>
+	   		{{ field|add_class:"textField" }}
+	   		{% if forloop.last %}
+	   		   	<input class="fontTitillium fontSize16 radioColor loginSubmit makeYellowButton" type="submit" value="GO">
+	   		{% endif %}
+	   	</div>
+   	{% endfor %}
+</form>
