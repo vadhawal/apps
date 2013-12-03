@@ -1,4 +1,4 @@
-{% load userProfile_tags static %}
+{% load i18n userProfile_tags static %}
 
 <div class="row">
     <div class="span3"> 
@@ -8,7 +8,7 @@
                     <div class="boxTitle">
                         <h6 class="fontTitillium fontSize16 categories">
                             <img src="{% static "img/categories.png" %}">
-                            CATEGORIES
+                            {% trans "CATEGORIES" %}
                         </h6>
                         <div class="yellowLineContainer">
                             <hr class="yellowLine"/>
@@ -17,7 +17,7 @@
                     <div class="innerBox whiteBox">
                         <div class="span1HalfGutter span1Height imageCategoryBox imageCategoryBoxSelected updateTrends">
                             <span class="categoryName fontTitillium">
-                                All
+                                {% trans "All" %}
                             </span>
                         </div>
                         {% if parent_categories %}
@@ -41,7 +41,7 @@
                     <div class="boxTitle">
                         <h6 class="fontTitillium fontSize16">
                             <img src="{% static "img/topStores.png" %}">
-                            TOP STORES
+                            {% trans "TOP STORES" %}
                         </h6>
                         <div class="yellowLineContainer">
                             <hr class="yellowLine"/>
@@ -57,7 +57,7 @@
                     <div class="boxTitle">
                         <h6 class="fontTitillium fontSize16">
                             <img src="{% static "img/storeReviews.png" %}">
-                            STORE REVIEWS
+                            {% trans "STORE REVIEWS" %}
                         </h6>
                         <div class="yellowLineContainer">
                             <hr class="yellowLine"/>

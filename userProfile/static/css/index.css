@@ -80,6 +80,7 @@
 .boxTitle h6 img{
 	box-shadow: none;
 	display: inline-block;
+	max-width: none;
 }
 .topReviews{
 	background-color: #fff;

@@ -32,7 +32,7 @@
 			{% block blog_post.web_url %}
 				{% editable  blog_post.web_url %}
 				<div>
-					<a class="siteURL fontTitillium fontSize13" href="{{blog_post.web_url}}">Visit Site</a>
+					<a class="siteURL fontTitillium fontSize13"  target="_blank" href="{{blog_post.web_url}}">{% trans "Visit Site" %}</a>
 				</div>
 				{% endeditable %}
 			{% endblock %}
@@ -52,7 +52,7 @@
 	<div class="row topHalfGutter bottomHalfGutter">
 		<div class="span7">
 			<div class="fontTitillium fontSize15 bottomHalfGutter">
-				What People Say
+				{% trans "What People Say" %}
 			</div>
 			{% reviewrating_for blog_post %}
 		</div>
