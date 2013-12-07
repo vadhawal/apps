@@ -483,6 +483,18 @@ def get_full_name(user):
 		return (user.first_name + " " + user.last_name).title()
 	return ""
 
+@register.simple_tag
+def get_first_name(user):
+    if user:
+        return (user.first_name).title()
+    return ""
+
+@register.simple_tag
+def get_last_name(user):
+    if user:
+        return (user.last_name).title()
+    return ""
+
 @register.simple_tag(takes_context=True)
 def render_deals_for_categories(context, parent_category, sub_category, latest=settings.DEALS_NUM_LATEST, orientation='horizontal'):
         template_name = 'wish/deallist.html'

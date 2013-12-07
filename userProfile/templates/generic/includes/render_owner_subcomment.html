@@ -2,22 +2,21 @@
 {% load static thumbnail userProfile_tags %}
 
 {% if owner %}
-	<div class="span1 halfGutter">
-		<div style="width:32px;height:32px;">
+	<div class="span0_25 span0_25Height">
 		{% if owner.get_absolute_url %}
 			<a href="{{ owner.get_absolute_url }}">
 			{% if owner|get_class_name == "User" %}
 				{% if owner.get_profile.profile_photo %}
 					{% thumbnail owner.get_profile.profile_photo "100x100" as img %}
-						<img style="height:32px; max-height:32px;" src="{{img.url}}">
+						<img class="smallIcon noBoxShadow" src="{{img.url}}">
 					{% endthumbnail %}
 				{% elif owner.get_profile.image_url %}
-					<img style="height:32px; max-height:32px;" src="{{ owner.get_profile.image_url }}">
+					<img class="smallIcon noBoxShadow" src="{{ owner.get_profile.image_url|add:"?width=45&height=45"  }}">
 				{% else %}
                     {% if owner.get_profile.gender == "male" %}
-                        <img class="noBoxShadow" style="margin-right:5px;height:32px;max-height:32px;" src="{% static "img/man_icon.png" %}">
+                        <img class="noBoxShadow smallIcon" src="{% static "img/man_icon.png" %}">
                     {% else %}
-                        <img class="noBoxShadow" style="margin-right:5px;height:32px;max-height:32px;" src="{% static "img/woman_icon.png" %}">
+                        <img class="noBoxShadow smallIcon" src="{% static "img/woman_icon.png" %}">
                     {% endif %}
 				{% endif %}
 
@@ -26,12 +25,11 @@
 					<img style="height:55px; max-height:55px;" src="{{img.url}}">
 					{% endthumbnail %}
 			{% else %}
-				<img class="noBoxShadow" style="margin-right:5px;height:32px;max-height:32px;" src="{% static "img/man_icon.png" %}">
+				<img class="noBoxShadow smallIcon" src="{% static "img/man_icon.png" %}">
 			{% endif %}
 			</a>
 		{% else %}
-			<img class="noBoxShadow" style="margin-right:5px;height:32px;max-height:32px;" src="{% static "img/man_icon.png" %}">
+			<img class="noBoxShadow smallIcon" src="{% static "img/man_icon.png" %}">
 		{% endif %}
-		</div>
 	</div>
 {% endif %}

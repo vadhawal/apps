@@ -82,6 +82,9 @@ a.radioColorBackground:hover{
 .weightBold{
 	font-weight: bold;
 }
+.fontSize8{
+	font-size: 8px;
+}
 .fontSize9{
 	font-size: 9px;
 }
@@ -138,11 +141,14 @@ a.radioColorBackground:hover{
 		position: fixed;
 	}
 }
-.storeTopMargin {
-	margin-top: 5px;
-}
 .noGutter {
 	margin-left: 0px;
+}
+.imageMarginReviews {
+	margin-left: 16px;
+}
+.storeTopMargin {
+	margin-top: 5px;
 }
 .radioColor{
 	color: #029795;
@@ -271,7 +277,7 @@ a.colorWhite:hover{
 	font-size: 12.85px;
 	text-indent: 0.01px;
 	text-overflow: '';
-	font-family: helvetica;
+	font-family: titillium1;
 	color:rgba(89,87,87,1.00);
 	background-color:rgba(229,244,244,1.00);
 	background-image: url('/static/img/selectPointer.png');
@@ -289,8 +295,9 @@ a.colorWhite:hover{
 	width: 100%;
 	vertical-align: top;
 	margin-top: 17.5px;
-	line-height: normal;
-	/*padding: 0px;*/
+	line-height: 25px;
+	padding: 0px;
+	padding-left: 5px;
 }
 div span.wantText{
 	color:white;
@@ -319,20 +326,27 @@ div span.wantText{
 	-webkit-box-shadow : 1.25px 1.25px 1.25px rgba(132,125,125,0.75);
 	box-shadow : 1.25px 1.25px 1.25px rgba(132, 125, 125, 0.75);
 	filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=1.25, OffY=1.25, Color='#847D7D');
+	border-width: 1px;
+	border-color: rgba(132,125,125,0.4);
+	border-bottom-width: 0px;
+	border-right-width: 0px;
+	border-style: solid;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
 }
 .whiteBoxLarge {
 	overflow: hidden;
 	background : #FFFFFF;
 	background : rgba(255, 255, 255, 1);
 	border-color: rgba(198, 190, 190, 0.75);
-	border-width: 1px;
-	border-style: solid;
+	border-width: 0px;
+/*	border-style: solid;
 	-webkit-box-shadow : 1px 1px 1px rgba(198, 190, 190, 0.75);
 	box-shadow : 1px 1px 1px rgba(198, 190, 190, 0.75);
-	filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=1.65, OffY=1.65, Color='#C6BEBE') ;
+	filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=1.65, OffY=1.65, Color='#C6BEBE') ;*/
 }
 .whiteBoxGlassy {
-	background-color:rgba(255,255,255,0.4);
+	background-color:rgba(255,255,255,0.6);
 }
 .logo{
 	height: 150px;
@@ -451,10 +465,10 @@ form.comment_on_object{
 	margin-top: 6px;
 }
 .dottedSeparatorIncresedMargin{
-	margin-top: 8px;
+	margin-top: 6px;
 }
 .dottedSeparatorIncresedMarginBottom {
-	margin-bottom: 8px;
+	margin-bottom: 6px;
 }
 .radioModuleFeedRadio{
 	background-image: url('/static/img/radio_grey.png');
@@ -473,14 +487,17 @@ form.comment_on_object{
 	border-style : Solid;
 	border-color : #D1D3D2;
 	border-color : rgba(209, 211, 210, 1);
-	border-width : 0px;
-	-webkit-box-shadow : 0px 1px 1px rgba(197,189,189,0.75);
-	box-shadow : 0px 1px 1px rgba(197,189,189,0.75);
+	border-width : 1px;
+	-webkit-box-shadow: 1px 1px 1px rgba(197,189,189,0.75) inset;
+	box-shadow: 1px 1px 1px rgba(197,189,189,0.75) inset;
 	height: 24px;
 	vertical-align: top;
 	line-height: 24px;
 	margin-left: 20px;
 	position: relative;
+	padding: 0px 5px;
+	border-top-width: 0px;
+	border-left-width: 0px;
 }
 .radioModuleFeedContainer a{
 	margin-left: 10px;
@@ -530,7 +547,7 @@ span.clearvote{
 	font-size: 18px;
 }
 .categoryTag {
-	background-color: rgb(2, 151, 149);
+	background-color: rgba(93,93,93,1.00);
 	padding: 3px 5px;
 	color: white;
 }
@@ -571,7 +588,7 @@ a.shareObject {
 	font-size: 12.85px;
 	text-indent: 0.01px;
 	text-overflow: '';
-	font-family: helvetica;
+	font-family: titillium1;
 	margin-top: 5px;
 	margin-bottom: 5px;
 	color:rgba(89,87,87,1.00);
@@ -593,7 +610,8 @@ a.shareObject {
 	line-height: normal;
 	margin: 0px;
 	box-sizing:border-box;
-	/*padding: 0px;*/
+	padding: 0px;
+	padding-left: 5px;
 }
 .topStores_v {
 	max-height: 400px;
@@ -608,9 +626,13 @@ a.shareObject {
 	overflow: auto;
 }
 .dealBox_v_elem {
-	width: 90%;
-	margin-bottom: 8px;
+	width: 95%;
+	margin-bottom: 6px;
 	position: relative;
+}
+.topStores_v .vendorResult .span0_5Height {
+	padding-left: 0px;
+	background-position: left;
 }
 .dealBox_v_elem div {
 	position: absolute;
@@ -625,7 +647,7 @@ a.shareObject {
 	display: block;
 }
 .dealBox_v_elem div:hover {
-	background-color: rgba(255, 255, 255, 0.7);
+	background-color: rgba(255, 255, 255, 0.8);
 }
 .dealBox_h_elem {
 	position: relative;
@@ -643,7 +665,7 @@ a.shareObject {
 	display: block;
 }
 .dealBox_h_elem div:hover {
-	background-color: rgba(255, 255, 255, 0.7);
+	background-color: rgba(255, 255, 255, 0.8);
 }
 .dealRadio {
 	display: table;
@@ -652,8 +674,8 @@ a.shareObject {
 .searchResultRating {
 	cursor: default;
 	font-family: titillium1;
-	font-size: 17px;
-	padding: 3px 8px;
+	font-size: 25px;
+	padding: 10px 15px;
 	box-sizing: border-box;
 }
 .searchResultRatingSmall {
@@ -719,7 +741,6 @@ a.store_sharers{
 	font-size : 18px;
 }
 img.smallIcon{
-	max-width: 45px;
 	max-height: 45px;
 }
 #status{
@@ -773,4 +794,17 @@ p.hintText{
 }
 input[type="password"].textField{
 	width: 243px;
+}
+.timestamp{
+	line-height: normal;
+	margin-top: 6px;
+}
+div.vendorImage{
+	background-image: url("/static/img/vendor_background.png");
+	background-size: 45px 45px;
+	background-position: center;
+	background-repeat: no-repeat;
+}
+.top6Margin {
+	margin-top: 6px;
 }

@@ -12,13 +12,13 @@
 {% endif %}
     {% for vendor in vendors %}
         <div class="row vendorResult">
-            <div class="span1 text-center">
+            <div class="span0_5 vendorImage span0_5Height text-center">
                 {% if vendor|get_class_name == "BlogPost" and vendor.featured_image %}
-                        {% thumbnail vendor.featured_image "100x100" as img %} 
+                    {% thumbnail vendor.featured_image "100x100" as img %} 
                         <a style="vertical-align:middle;" href='{{vendor.get_absolute_url}}'>
                             <img class="smallIcon" src="{{ MEDIA_URL }}{{img}}">
                         </a>
-                        {% endthumbnail %}
+                    {% endthumbnail %}
                 {% else %}
                     <a style="vertical-align:middle;" href='{{vendor.get_absolute_url}}'>
                             <img class="smallIcon noBoxShadow" src="{% static "img/store_default.png" %}">

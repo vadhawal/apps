@@ -21,32 +21,23 @@
 	height: 250px;
 	margin: auto 0;
 }
+#topStoresForStoreCategory .topStores{
+	padding-top: 6px;
+}
 #topStoresForStoreCategory img.smallIcon{
 	max-height: 45px;
-	max-width: 45px;
 	vertical-align:middle;
 	display:inline-block;
-	margin-left: -7px;
-}
-.vendorResult{
-	margin-top: 6px;
 }
 #topStoresForStoreCategoryAuth img.smallIcon, 
 #topReviewsForStoreCategoryAuth img.smallIcon {
 	max-height: 45px;
-	max-width: 45px;
 	vertical-align:middle;
 	display:inline-block;
-	margin-left: 8px;
-}
-
-#topReviewsForStoreCategoryAuth div.topReviews{
-	margin-top: 6px;
 }
 .dealBox {
 	height: 250px;
 	line-height: 250px;
-	margin-top: -20px;
 }
 
 /* dealBox_h will be applied on the deals listed on home page. */
@@ -58,8 +49,10 @@
 }
 .dealBox_h_elem {
 	display:inline-block;
-	height:210px;
-	margin:auto 5px;
+	height:216px;
+	margin:auto;
+	margin-left: 16px;
+	margin-right: 0px;
 	vertical-align: middle;
 }
 .dealBox_h img {
@@ -86,6 +79,9 @@
 	background-color: #fff;
 	line-height: normal;
 	margin-top: 8px;
+}
+#topReviewsForStoreCategoryAuth .topReviews{
+	margin-top: 0px;
 }
 .categoryName{
 	font-size : 10px;
@@ -171,4 +167,7 @@
 	overflow: auto;
 	width: 100%;
 	display: inline-block;
+}
+.dealImageMarginRight{
+	margin-right: 16px;
 }

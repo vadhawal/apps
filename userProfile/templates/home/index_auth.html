@@ -39,7 +39,7 @@
             </select>
         </div>
         <div id="accordion-container">
-			<h2 class="accordion-header"><span class="hotDealsIcon">%&nbsp;</span>{% trans "HOT DEALS" %}
+			<h2 class="accordion-header accordion-header-color-3"><span class="hotDealsIcon">%&nbsp;</span>{% trans "HOT DEALS" %}
                 <div class="yellowLineContainer">
                     <hr class="whiteLine"/>
                 </div>
@@ -49,7 +49,7 @@
             		{% render_deals_for_categories 'All' 'All'  'MIN_DEALS_HOME_PAGE'|settings_value 'vertical' %}
         		</div>
 			</div>
-			<h2 class="accordion-header"><img src="{% static "img/top_stores_white.png" %}">{% trans "TOP STORES" %}
+			<h2 class="accordion-header accordion-header-color-2"><img src="{% static "img/top_stores_white.png" %}">{% trans "TOP STORES" %}
                 <div class="yellowLineContainer">
                     <hr class="whiteLine"/>
                 </div>
@@ -59,7 +59,7 @@
                         {% render_stores_for_categories 'All' 'All' 'MIN_STORES_HOME_PAGE'|settings_value 'vertical' %}
                 </div>
 			</div>
-			<h2 class="accordion-header"><img src="{% static "img/store_reviews_white.png" %}">{% trans "STORE REVIEWS" %}
+			<h2 class="accordion-header accordion-header-color-1"><img src="{% static "img/store_reviews_white.png" %}">{% trans "STORE REVIEWS" %}
                 <div class="yellowLineContainer">
                     <hr class="whiteLine"/>
                 </div>
