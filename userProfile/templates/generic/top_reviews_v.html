@@ -6,7 +6,7 @@
 <div class="topReviews_v scrollContainer" data-href="{{data_href}}" data-chunk="{{data_chunk}}">
 {% endif %}
 {% for review in comments %}
-<div class="row topReviews">
+<div class="row topReviews {% if not forloop.first %}top6Margin{% endif %}">
     <div class="span1 text-center halfGutter">
         <a style="vertical-align:middle;" href='{{review.user.get_absolute_url}}'>
         {% if review.user.get_profile.profile_photo %}    

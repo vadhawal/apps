@@ -11,7 +11,7 @@
 <div class="topStores_v scrollContainer" data-href="{{data_href}}" data-chunk="{{data_chunk}}">
 {% endif %}
     {% for vendor in vendors %}
-        <div class="row vendorResult">
+        <div class="row vendorResult {% if not forloop.first %}top6Margin{% endif %}">
             <div class="span0_5 vendorImage span0_5Height text-center">
                 {% if vendor|get_class_name == "BlogPost" and vendor.featured_image %}
                     {% thumbnail vendor.featured_image "100x100" as img %} 
@@ -21,7 +21,7 @@
                     {% endthumbnail %}
                 {% else %}
                     <a style="vertical-align:middle;" href='{{vendor.get_absolute_url}}'>
-                            <img class="smallIcon noBoxShadow" src="{% static "img/store_default.png" %}">
+                        <img class="smallIcon noBoxShadow" src="{% static "img/store_default.png" %}">
                     </a>
                 {% endif %}
             </div>

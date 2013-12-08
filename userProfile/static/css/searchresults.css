@@ -56,7 +56,6 @@ p.resultDesc {
 .vendorResult {
 	background-color: #fff;
 	line-height: normal;
-	margin-top: 6px;
 }
 p.webUrl{
 	margin: 0;
@@ -84,4 +83,12 @@ p.webUrl{
 	background : rgba(99, 98, 94, 1);
 	box-shadow : 1px 1px 1px rgba(153, 142, 126, 0.75);
 	filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=1, OffY=1, Color='#998E7E');
+}
+div.vendorImageLarge{
+	height: 100px;
+	line-height: 100px;
+	background-image: url("/static/img/vendor_background.png");
+	background-size: 100px 100px;
+	background-position: center;
+	background-repeat: no-repeat;
 }

@@ -78,10 +78,6 @@
 .topReviews{
 	background-color: #fff;
 	line-height: normal;
-	margin-top: 8px;
-}
-#topReviewsForStoreCategoryAuth .topReviews{
-	margin-top: 0px;
 }
 .categoryName{
 	font-size : 10px;
@@ -96,7 +92,7 @@
 .reviewUserImage {
 	vertical-align:middle;
 	display:inline-block;
-	margin-left:8px;
+	margin-left:6px;
 }
 .statusBox {
 	background : #FFFFFF;
