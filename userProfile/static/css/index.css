@@ -21,8 +21,8 @@
 	height: 250px;
 	margin: auto 0;
 }
-#topStoresForStoreCategory .topStores{
-	padding-top: 6px;
+#topStoresForStoreCategory .vendorResult{
+	margin-top: 6px;
 }
 #topStoresForStoreCategory img.smallIcon{
 	max-height: 45px;
