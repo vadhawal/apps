@@ -143,3 +143,7 @@ select.boughtCategory{
 	width:430px;
 	padding:15px;
 }
+.aboutStore p{
+	margin-bottom: 0;
+	line-height: normal;
+}

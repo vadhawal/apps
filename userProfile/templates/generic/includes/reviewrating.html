@@ -8,7 +8,7 @@
                 {% trans "Excellent" %}&nbsp;&nbsp;
             </div>
             <div class="span2 progress halfGutter">
-                <div class="bar bar-success" role="progressbar" aria-valuenow="{% widthratio overall_excellentR overall_count 100 %}" aria-valuemin="0" aria-valuemax="100" style="width: {% widthratio overall_excellentR overall_count 100 %}%">
+                <div class="bar bar-success rating-5" role="progressbar" aria-valuenow="{% widthratio overall_excellentR overall_count 100 %}" aria-valuemin="0" aria-valuemax="100" style="width: {% widthratio overall_excellentR overall_count 100 %}%">
                 </div>
             </div>
             <div class="span1 halfGutter">
@@ -20,7 +20,7 @@
                 {% trans "Very Good" %}&nbsp;&nbsp;
             </div>
             <div class="span2 progress halfGutter">
-                <div class="bar bar-success" role="progressbar" aria-valuenow="{% widthratio overall_verygoodR overall_count 100 %}" aria-valuemin="0" aria-valuemax="100" style="width: {% widthratio overall_verygoodR overall_count 100 %}%">
+                <div class="bar bar-success rating-4" role="progressbar" aria-valuenow="{% widthratio overall_verygoodR overall_count 100 %}" aria-valuemin="0" aria-valuemax="100" style="width: {% widthratio overall_verygoodR overall_count 100 %}%">
                 </div>
             </div>
             <div class="span1 halfGutter">
@@ -32,7 +32,7 @@
                 {% trans "Average" %}&nbsp;&nbsp;
             </div>
             <div class="span2 progress halfGutter">
-                <div class="bar bar-success" role="progressbar" aria-valuenow="{% widthratio overall_averageR overall_count 100 %}" aria-valuemin="0" aria-valuemax="100" style="width: {% widthratio overall_averageR overall_count 100 %}%">
+                <div class="bar bar-success rating-3" role="progressbar" aria-valuenow="{% widthratio overall_averageR overall_count 100 %}" aria-valuemin="0" aria-valuemax="100" style="width: {% widthratio overall_averageR overall_count 100 %}%">
                 </div>
             </div>
             <div class="span1 halfGutter">
@@ -44,7 +44,7 @@
                 {% trans "Poor" %}&nbsp;&nbsp;
             </div>
             <div class="span2 progress halfGutter">
-                <div class="bar bar-success" role="progressbar" aria-valuenow="{% widthratio overall_poorR overall_count 100 %}" aria-valuemin="0" aria-valuemax="100" style="width: {% widthratio overall_poorR overall_count 100 %}%">
+                <div class="bar bar-success rating-2" role="progressbar" aria-valuenow="{% widthratio overall_poorR overall_count 100 %}" aria-valuemin="0" aria-valuemax="100" style="width: {% widthratio overall_poorR overall_count 100 %}%">
                 </div>
             </div>
             <div class="span1 halfGutter">
@@ -56,7 +56,7 @@
                 {% trans "Terrible" %}&nbsp;&nbsp;
             </div>
             <div class="span2 progress halfGutter" style="margin-bottom:0;">
-                <div class="bar bar-success" role="progressbar" aria-valuenow="{% widthratio overall_terribleR overall_count 100 %}" aria-valuemin="0" aria-valuemax="100" style="width: {% widthratio overall_terribleR overall_count 100 %}%">
+                <div class="bar bar-success rating-1" role="progressbar" aria-valuenow="{% widthratio overall_terribleR overall_count 100 %}" aria-valuemin="0" aria-valuemax="100" style="width: {% widthratio overall_terribleR overall_count 100 %}%">
                 </div>
             </div>
             <div class="span1 halfGutter">
@@ -66,10 +66,10 @@
     </div>
     <div class="span3">
         <div class="row">
-            <div class="span1">
+            <div class="span0_5">
                 {% trans "Overall Rating" %}
             </div>
-            <div class="span2 noGutter">
+            <div class="span1 noGutter" style="margin-left:5px;">
                 <span class="searchResultRating searchResultRatingScheme rating-{{overall_average|floatformat:"0"}}">
                 {% if overall_average %}
                     {{ overall_average|floatformat:"1" }}
@@ -78,15 +78,22 @@
                 {% endif %}
                 </span>
             </div>
-        </div>
-        <div class="row topHalfGutter">
-            <div class="span3">
-                Based on {{overall_count}} vote{{ overall_count|pluralize }}
+            <div class="span1 noGutter" style="text-align:left;">
+                <div class="row">
+                    <div class="span1">
+                        {% trans "Based on" %}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="span1">
+                        {{overall_count}}&nbsp;{% trans "vote" %}{{ overall_count|pluralize }}
+                    </div>
+                </div>
             </div>
         </div>
         <div class="row topHalfGutter">
             <div class="span3">
-                <button class="writeReview rateStoreNow radioColorBackground colorWhite fontTitillium1 fontSize13" data-href="{% write_review_for_obj_url blog_post %}">Rate {{blog_post.title}} Now</button>
+                <button class="writeReview rateStoreNow radioColorBackground colorWhite fontTitillium1 fontSize13" data-href="{% write_review_for_obj_url blog_post %}">{% trans "Rate" %}&nbsp;{{blog_post.title}}&nbsp;{% trans "Now" %}</button>
             </div>
         </div>
     </div>

@@ -5,7 +5,7 @@
 
 {% if deal %}
 {% get_wish_owner deal as object_owner %}
-<div class="fancybox-data-inner fontTitillium1 color5d fontSize13">
+<div class="fancybox-data-inner fontTitillium2 color5d fontSize13">
     <hr class="dottedSeparator">
     {% if  deal.blog_category %}
     <div class="row topHalfGutter bottomHalfGutter">
@@ -27,7 +27,7 @@
     <hr class="dottedSeparator">
     {% comment_count_on_object deal as total_comments %}
     <div class="row">
-        <div class="span3 whiteBoxLarge topHalfGutter subcomments_container {% if total_comments == 0 %}hide{% endif %}">
+        <div class="span3 whiteBoxLarge fontSize12 subcomments_container {% if total_comments == 0 %}hide{% endif %}">
            {% include 'generic/render_subcomments_deal.html' with object=deal %}
         </div>
     </div>
