@@ -8,13 +8,13 @@
 
 	{% if comments|length and comments|length == 3 and comments|length < total_comments %}
 		<div class="leftRightPadding dottedSeparatorIncresedMargin dottedSeparatorIncresedMarginBottom">
-			<a href="{{feed}}" class="viewPreviousComments">{% trans "View previous comments" %}</a>
+			<a href="{{feed}}?small=1" class="viewPreviousComments">{% trans "View previous comments" %}</a>
 			<span class="pull-right"><span class="loaded_comments">{{comments|length}}</span>{% trans " of " %}<span class="total_comments">{{total_comments}}</span></span>
 		</div>
 		<hr class="dottedSeparator">
 	{% endif %}
 
-	<div class="subcomments">
+	<div class="row subcomments">
 		{% for comment in comments %}
 			{% editable comment.is_public comment.is_removed %}
 	        {% if not comment.is_removed and comment.is_public %}

@@ -65,38 +65,40 @@
 			</div>
 		</div>
 		<div class="row">
-			<div id="search-results"  class="whiteBox span7 topHalfGutter">
-			    {% for result in results.object_list %}
-			    <div class="vendorResult row">
-			    	<div class="span2 whiteBox pagination-centered noGutter">
-			    		<a href="{{ result.get_absolute_url }}">
-						<img src="
-								{% if settings.BLOG_USE_FEATURED_IMAGE %}
-									{% if result.featured_image %}
-										{{ MEDIA_URL }}{% thumbnail result.featured_image 100 0 %}
-									{% else %}
-										{% static "img/store_default.png" %}
-									{% endif %}
-								{% endif %}"
-								class="noBoxShadow"
-								>
-						</a>
-					</div>
-					<div class="span5 fontTitillium2 fontSize13">
-					    <div>
-					        <a class="vendorName fontTitillium" href="{{ result.get_absolute_url }}">{{ result }}</a>
-					        <span class="searchResultRating searchResultRatingText searchResultRatingScheme rating-{{result.overall_average|floatformat:"0"}} pull-right">{{result.overall_average|floatformat:"1"}}</span>
-					        <p class="webUrl fontTitillium1"><a href="{{result.web_url}}" class="radioColor">{{result.web_url}}</a></p>
-					    </div>
-					    <p class="resultDesc">{{ result.description|truncatewords_html:40|safe }}</p>
-					    <a href="{{ result.get_absolute_url }}">{% trans "read more" %}</a>
-				    	<div class="row topHalfGutter bottomHalfGutter">
-							{% include 'blog/store_radio_module.html' with blog_post=result noShare="True" wholeReviewLink="True" %}
+			<div class="whiteBox topHalfGutter">
+				<div id="search-results"  class="span7">
+				    {% for result in results.object_list %}
+				    <div class="vendorResult topHalfGutter row">
+				    	<div class="span1_5 vendorImageLarge pagination-centered halfGutter">
+				    		<a style="vertical-align:middle;" href="{{ result.get_absolute_url }}">
+							<img src="
+									{% if settings.BLOG_USE_FEATURED_IMAGE %}
+										{% if result.featured_image %}
+											{{ MEDIA_URL }}{% thumbnail result.featured_image 100 0 %}
+										{% else %}
+											{% static "img/store_default.png" %}
+										{% endif %}
+									{% endif %}"
+									class="noBoxShadow"
+									>
+							</a>
 						</div>
-					</div>
-					<hr class="dottedSeparator span7">
-				 </div>
-			    {% endfor %}
+						<div class="span5 fontTitillium2 fontSize13 halfGutter">
+						    <div>
+						        <a class="vendorName fontTitillium" href="{{ result.get_absolute_url }}">{{ result }}</a>
+						        <span class="searchResultRating searchResultRatingText searchResultRatingScheme rating-{{result.overall_average|floatformat:"0"}} pull-right">{{result.overall_average|floatformat:"1"}}</span>
+						        <p class="webUrl fontTitillium1"><a href="{{result.web_url}}" class="radioColor">{{result.web_url}}</a></p>
+						    </div>
+						    <p class="resultDesc">{{ result.description|truncatewords_html:40|safe }}</p>
+						    <a href="{{ result.get_absolute_url }}">{% trans "read more" %}</a>
+					    	<div class="row topHalfGutter bottomHalfGutter">
+								{% include 'blog/store_radio_module.html' with blog_post=result noShare="True" wholeReviewLink="True" %}
+							</div>
+						</div>
+						<hr class="dottedSeparator span7">
+					 </div>
+				    {% endfor %}
+				</div>
 			</div>
 		</div>
 	</div>

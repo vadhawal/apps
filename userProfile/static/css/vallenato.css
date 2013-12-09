@@ -29,10 +29,10 @@
 	display: table;
 	font-size: 15px;
 	line-height: 25px;
-	padding-left: 15px;
-	padding-right:10px;
-	margin-top: 5px;
-	margin-bottom: 5px;
+	padding-left: 6px;
+	padding-right: 6px;
+	margin-top: 6px;
+	margin-bottom: 6px;
 	cursor: pointer;
 	color: white;
 	background : #029795;
@@ -55,6 +55,19 @@
 
 .accordion-content {
 	display: none;
-	padding: 0px 10px 0px 15px;
+	padding: 0px 6px 0px 6px;
 	background: #ffffff;
+}
+
+.accordion-header-color-1{
+	background-color:#009794;
+}
+.accordion-header-color-2{
+	background-color:#34ACA9;
+}
+.accordion-header-color-3{
+	background-color:#80CBC9;
+}
+.accordion-header-color-4{
+	background-color:#ACDDDC;
 }

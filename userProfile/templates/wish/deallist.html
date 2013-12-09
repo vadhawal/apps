@@ -20,7 +20,7 @@
 {% if deal.wishimage and deal.wishimage.image %}
     {% get_reldata_url deal as rel_data_url %}
 	{% thumbnail deal.wishimage.image "400x400" as img %}
-    <div class="dealBox_h_elem"> 
+    <div class="dealBox_h_elem {% if forloop.last %}dealImageMarginRight{% endif %}">
         <a class="wishimg-deal-homepage" href="{{  deal.wishimage.image.url }}" rel="homepage_deals" data-reldata-url="{{rel_data_url}}">
             <img src="{{img.url}}">
         </a>
