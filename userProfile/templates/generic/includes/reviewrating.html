@@ -64,36 +64,40 @@
             </div>
         </div>
     </div>
-    <div class="span3">
+    <div class="span2_5 pull-right">
         <div class="row">
-            <div class="span0_5">
-                {% trans "Overall Rating" %}
-            </div>
-            <div class="span1 noGutter" style="margin-left:5px;">
-                <span class="searchResultRating searchResultRatingScheme rating-{{overall_average|floatformat:"0"}}">
-                {% if overall_average %}
-                    {{ overall_average|floatformat:"1" }}
-                {% else %}
-                    0
-                {% endif %}
-                </span>
-            </div>
-            <div class="span1 noGutter" style="text-align:left;">
-                <div class="row">
-                    <div class="span1">
-                        {% trans "Based on" %}
+            <div class="span2_5">
+                <div class="row pagination-centered">
+                    <div class="span0_5 clearFloatDisplayInline">
+                        {% trans "Overall Rating" %}
                     </div>
-                </div>
-                <div class="row">
-                    <div class="span1">
-                        {{overall_count}}&nbsp;{% trans "vote" %}{{ overall_count|pluralize }}
+                    <div class="span1 noGutter clearFloatDisplayInline" style="margin-left:5px">
+                        <span class="searchResultRating searchResultRatingScheme rating-{{overall_average|floatformat:"0"}}">
+                        {% if overall_average %}
+                            {{ overall_average|floatformat:"1" }}
+                        {% else %}
+                            0
+                        {% endif %}
+                        </span>
+                    </div>
+                    <div class="span1 noGutter clearFloatDisplayInline" style="text-align:left;width:auto;">
+                        <div class="row">
+                            <div class="span1 clearFloatDisplayInline" style="width:auto;">
+                                {% trans "Based on" %}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="span1 clearFloatDisplayInline" style="width:auto;">
+                                {{overall_count}}&nbsp;{% trans "vote" %}{{ overall_count|pluralize }}
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
         <div class="row topHalfGutter">
-            <div class="span3">
-                <button class="writeReview rateStoreNow radioColorBackground colorWhite fontTitillium1 fontSize13" data-href="{% write_review_for_obj_url blog_post %}">{% trans "Rate" %}&nbsp;{{blog_post.title}}&nbsp;{% trans "Now" %}</button>
+            <div class="span2_5">
+                <button style="width:100%" class="writeReview rateStoreNow radioColorBackground colorWhite fontTitillium1 fontSize13" data-href="{% write_review_for_obj_url blog_post %}">{% trans "Rate" %}&nbsp;{{blog_post.title}}&nbsp;{% trans "Now" %}</button>
             </div>
         </div>
     </div>

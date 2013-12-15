@@ -6,7 +6,6 @@
 .accordion-header img{
 	-webkit-box-shadow:none;
 	box-shadow: none;
-	margin-right:5px; 
 }
 
 .accordion-header h2 {
@@ -22,9 +21,10 @@
 	height: 0px;
 	line-height: 0px;
 	font-size: 0px;
+	display: none;
 }
 .accordion-header {
-	font-family: helvetica;
+	font-family: titillium1;
 	white-space: nowrap;
 	display: table;
 	font-size: 15px;

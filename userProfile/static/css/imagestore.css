@@ -42,7 +42,7 @@ img.current {
     margin-right: 300px;
 }
 .album-list .album {
-    width: 130px;
+    width: 100px;
     display: inline-block;
     vertical-align: top;
 }

@@ -28,25 +28,6 @@ p.resultDesc {
 .darken{
 	font-weight: 500;
 }
-.rating-0 {
-	background-color: #E2DEC7;
-	background-color: rgba(226, 222, 199, 1);
-}
-.rating-1 {
-	background-color: #BC0D0D !important;
-}
-.rating-2 {
-	background-color: #E55413 !important;
-}
-.rating-3 {
-	background-color: #F7AA21 !important;
-}
-.rating-4 {
-	background-color: #9CBC2A !important;
-}
-.rating-5 {
-	background-color: #3F7C1C !important;
-}
 .infoSpace{
 	margin-right: 4px;
 }
