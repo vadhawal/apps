@@ -4,15 +4,15 @@
 {% load userProfile_tags %}
 
 {% if object %}
-<div class="fancybox-data-inner fontTitillium2 color5d fontSize13">
-	<hr class="dottedSeparator">
+<div class="fancybox-data-inner fontTitillium2 color5d fontSize13 halfGutterRight">
+	<hr class="dottedSeparator fullSeparator">
 	{% if  object.message %}
 		<div class="row topHalfGutter fontSize15 fontTitillium1 bottomHalfGutter fancyBoxSplitHidden">
 			<div class="span3">
 			{{ object.message }}
 			</div>
 		</div>
-		<hr class="dottedSeparator fancyBoxSplitHidden">
+		<hr class="dottedSeparator fullSeparator fancyBoxSplitHidden">
 	{% endif %}
 	{% if object.blog_category %}
 		<div class="row topHalfGutter bottomHalfGutter">
@@ -20,7 +20,7 @@
 	       		<a href="{{ object.blog_category.get_absolute_url }}" class="categoryTag radioColor"> {{object.blog_category}} </a>
 	       	</div>
 		</div>
-		<hr class="dottedSeparator">
+		<hr class="dottedSeparator fullSeparator">
 	{% endif %}
 	{% if object.title and object.title|lower != "untitled" %}
 		<div class="row topHalfGutter bottomHalfGutter fancyBoxSplitHidden">
@@ -28,7 +28,7 @@
 			{{ object.title }}
 			</div>
 		</div>
-		<hr class="dottedSeparator fancyBoxSplitHidden">
+		<hr class="dottedSeparator fullSeparator fancyBoxSplitHidden">
 	{% endif %}
 	{% if object.description %}
 		<div class="row topHalfGutter bottomHalfGutter fancyBoxSplitHidden">
@@ -36,7 +36,7 @@
 			{{ object.description }}
 			</div>
 		</div>
-		<hr class="dottedSeparator fancyBoxSplitHidden">
+		<hr class="dottedSeparator fullSeparator fancyBoxSplitHidden">
 	{% endif %}
 	{% if object.tagged_categories and object.tagged_categories.all %}
 		<div class="row topHalfGutter">
@@ -48,12 +48,12 @@
 				{% endfor %}
 	       	</div>
 		</div>
-		<hr class="dottedSeparator">
+		<hr class="dottedSeparator fullSeparator">
 	{% endif %}
 	<div class="row topHalfGutter bottomHalfGutter radio_module">
 		{% include 'generic/render_dealwishfancybox_radio_module.html' with object=object %}
 	</div>
-	<hr class="dottedSeparator">
+	<hr class="dottedSeparator fullSeparator">
     {% comment_count_on_object object as total_comments %}
     <div class="row">
         <div class="span3 whiteBoxLarge subcomments_container fontSize12 {% if total_comments == 0 %}hide{% endif %}">
