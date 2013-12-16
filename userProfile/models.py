@@ -37,6 +37,7 @@ import uuid
 from storages.backends.s3boto import S3BotoStorage
 
 MESSAGE_MAX_LENGTH = getattr(_settings,'MESSAGE_MAX_LENGTH',3000)
+STORAGE_ROOT = getattr(settings,'STORAGE_ROOT', 'static/media')
 
 def get_image_path(instance, filename):
     ext = filename.split('.')[-1]
@@ -57,7 +58,7 @@ class UserProfile(models.Model):
         (_('other'), _('Other')),
         ('', '')
         )
-    profile_photo = ResizedImageField(upload_to=get_image_path, max_width=1000, max_height=800, blank=True, null=True, storage=S3BotoStorage(location=settings.STORAGE_ROOT))
+    profile_photo = ResizedImageField(upload_to=get_image_path, max_width=1000, max_height=800, blank=True, null=True, storage=S3BotoStorage(location=STORAGE_ROOT))
     gender = models.CharField(max_length=10, blank=True, choices=GENDER_CHOICES, verbose_name=_("Gender"))
     image_url = models.URLField(blank=True, verbose_name=_("Imageurl"), editable=False, null=True)
     description = models.TextField(blank=True, verbose_name=_("Description"), help_text=_("Tell us about yourself!"))
