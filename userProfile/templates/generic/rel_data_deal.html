@@ -5,26 +5,26 @@
 
 {% if deal %}
 {% get_wish_owner deal as object_owner %}
-<div class="fancybox-data-inner fontTitillium2 color5d fontSize13">
-    <hr class="dottedSeparator">
+<div class="fancybox-data-inner fontTitillium2 color5d fontSize13 halfGutterRight">
+    <hr class="dottedSeparator fullSeparator">
     {% if  deal.blog_category %}
     <div class="row topHalfGutter bottomHalfGutter">
         <div class="span3">
             <a href="{{ deal.blog_category.get_absolute_url }}" class="categoryTag radioColor"> {{deal.blog_category}} </a>
         </div>
     </div>
-    <hr class="dottedSeparator">
+    <hr class="dottedSeparator fullSeparator">
     {% endif %}
     <div class="row topHalfGutter bottomHalfGutter fancyBoxSplitHidden">
         <div class="span3">
         {{ deal.message }}
         </div>
     </div>
-    <hr class="dottedSeparator fancyBoxSplitHidden">
+    <hr class="dottedSeparator fullSeparator fancyBoxSplitHidden">
     <div class="row topHalfGutter bottomHalfGutter radio_module">
         {% include 'generic/render_dealwishfancybox_radio_module.html' with object=deal %}
     </div>
-    <hr class="dottedSeparator">
+    <hr class="dottedSeparator fullSeparator">
     {% comment_count_on_object deal as total_comments %}
     <div class="row">
         <div class="span3 whiteBoxLarge fontSize12 subcomments_container {% if total_comments == 0 %}hide{% endif %}">

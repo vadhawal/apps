@@ -26,7 +26,7 @@
                 {% endif %}
             </div>
             <div class="span2 noGutter">
-                <div class="storeTopMargin radioColor fontHelvetica fontSize15">
+                <div class="storeTopMargin radioColor fontHelvetica fontSize13">
                     {# forloop.counter #}
                     <a class="radioColor" href='{{vendor.get_absolute_url}}'>
                         {{ vendor }}
@@ -36,12 +36,12 @@
                 </div>
 
                 <div>
-                    <a class="infoSpace fontTitillium3 fontSize13 color5D" href="{{ vendor.get_absolute_url }}#comments">{% spaceless %}
+                    <a class="infoSpace fontTitillium3 fontSize12 color5D" href="{{ vendor.get_absolute_url }}#comments">{% spaceless %}
                         {% blocktrans count vendor.comments_count as comments_count %}<span class="fontTitillium1">1</span>&nbsp;review{% plural %}<span class="fontTitillium1">{{ comments_count }}</span> reviews{% endblocktrans %}
                         {% endspaceless %}
                     </a>
                         {% vendor_follower_subset_info_url vendor 0 request.user|follower_count:vendor as subset_follower_url %}
-                    <a class="infoSpace fontTitillium3 vendorFollowers fontSize13 color5D" href="{{subset_follower_url}}"><span class="fontTitillium1">{{ request.user|follower_count:vendor }}</span>&nbsp;{% trans "follower" %}{{ request.user|follower_count:vendor|pluralize }}
+                    <a class="infoSpace fontTitillium3 vendorFollowers fontSize12 color5D" href="{{subset_follower_url}}"><span class="fontTitillium1">{{ request.user|follower_count:vendor }}</span>&nbsp;{% trans "follower" %}{{ request.user|follower_count:vendor|pluralize }}
                     </a>
 <!--                     <span class="infoSpace">
                         <span class="fontTitillium1">{# get_hit_count for vendor #}</span> views

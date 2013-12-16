@@ -38,8 +38,6 @@
 	float: right;
 	width: 0px;
 	height:auto;
-	position:relative;
-	left: 15px;
 	overflow-y: auto;
 	overflow-x: hidden;
 }
@@ -285,14 +283,14 @@
 }
 .fancybox-outer.split-vertical .fancybox-inner {
 	float: none;
-	max-width: 300px;
+	max-width: 315px;
 	height: auto !important;
 	min-height: 0px;
 	overflow: visible;
 }
 .fancybox-outer.split-vertical .fancybox-data {
 	float: none;
-	max-width: 300px;
+	max-width: 315px;
 	height: 400px;
 }
 .fancybox-outer.split-vertical .fancyBoxSplitHidden{

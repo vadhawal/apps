@@ -47,12 +47,6 @@ div a.siteURL{
 [id*="review"]:hover .radioModuleFeedRadio {
 	background-image: url('/static/img/radio_green.png');
 }
-#topRelatedStoreForStore img.smallIcon{
-	height: 45px;
-	vertical-align: middle;
-	display: inline-block;
-	margin-left: -4px;
-}
 .ratingSeparator{
 	margin-left: 6px;
 	margin-right: 3px;

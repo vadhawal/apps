@@ -137,7 +137,7 @@
 
 			// HTML templates
 			tpl: {
-				wrap     : '<div class="fancybox-wrap" tabIndex="-1"><div class="fancybox-skin"><div class="fancybox-outer"><div class="fancybox-inner"></div><div class="fancybox-data"></div></div></div></div>',
+				wrap     : '<div class="fancybox-wrap" tabIndex="-1"><div class="fancybox-skin"><div class="fancybox-outer"><div class="fancybox-inner"></div><div class="fancybox-data halfGutter"></div></div></div></div>',
 				image    : '<img class="fancybox-image" src="{href}" alt="" />',
 				iframe   : '<iframe id="fancybox-frame{rnd}" name="fancybox-frame{rnd}" class="fancybox-iframe" frameborder="0" vspace="0" hspace="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen' + (IE ? ' allowtransparency="true"' : '') + '></iframe>',
 				error    : '<p class="fancybox-error">The requested content cannot be loaded.<br/>Please try again later.</p>',
@@ -1417,15 +1417,17 @@
 				/* Default width for fancybox-data is 0. This is to avoid glitches due to resize.
 				 * In case of splitVertical set the width to auto and skin height should be increased by fancybox-data's height.
 				 */
-				$('.fancybox-data').css({width:'auto'});
-				height = height + rel_data.height();
+				if(reldata_url) {
+					$('.fancybox-data').css({width:'auto'});
+					height = height + rel_data.outerHeight();
+				}
 			} else {
 				if(reldata_url) {
 					/* In case related data is present, give some width to fancybox-data.
 					 * Increase the skin width by fancybox-data's width.
 					*/
 					$('.fancybox-data').css({width:'300px'});
-					width = width + rel_data.width();
+					width = width + 315; // not 300; including space for some margin
 				} else {
 					//do nothing.
 				}
