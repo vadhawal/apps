@@ -63,13 +63,14 @@
 	background-color:rgba(2, 151, 149, 1);
 }
 .accordion-header-color-2{
-	background-color:rgba(2, 151, 149, 0.7);
+	background-color:rgba(2, 151, 149, 0.9);
 }
 .accordion-header-color-3{
-	background-color:rgba(2, 151, 149, 0.5);
+	background-color:rgba(2, 151, 149, 0.8);
 }
 .accordion-header-color-4{
-	background-color:rgba(2, 151, 149, 0.3);
-	color: #5D5D5D;
-	color: rgb(93, 93, 93);
+	background-color:rgba(2, 151, 149, 0.7);
+}
+.accordion-header-color-5{
+	background-color:rgba(2, 151, 149, 0.6);
 }
