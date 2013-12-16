@@ -1,14 +1,14 @@
 {% load userProfile_tags blog_tags i18n %}
 {% get_owned_blog request.user as blog %}
 <div class="whiteBox">
-    <div class="span7 topHalfGutter">
+    <div class="span7 halfGutter topHalfGutter">
         <span class="fontTitillium1 fontSize13 colorDarkerGrey">{% if blog %}{% trans "Radio your Deals" %}{% else %}{% trans "Radio your Wishes" %}{% endif %}</span>
     </div>
     <form id="broadcast" action="/userwish/" method="post" role="form" class='album-form' enctype="multipart/form-data">
         {% csrf_token %}
 
         <div id="previewLoading"></div>
-        <div class="span4 statusBox topHalfGutter">
+        <div class="span4 statusBox halfGutter topHalfGutter">
             <textarea id="text" name="message"></textarea>
             <output id="previewimg"></output>
             <div style="width:100%;margin-bottom:0px;" >

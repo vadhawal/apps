@@ -333,8 +333,6 @@ div span.wantText{
 }
 .whiteBoxLarge {
 	overflow: hidden;
-	background : #FFFFFF;
-	background : rgba(255, 255, 255, 1);
 	border-color: rgba(198, 190, 190, 0.75);
 	border-width: 0px;
 /*	border-style: solid;
@@ -466,6 +464,10 @@ form.comment_on_object{
 }
 .dottedSeparatorIncresedMarginBottom {
 	margin-bottom: 6px;
+}
+.fullSeparator{
+	width: 100%;
+	margin-left:0;
 }
 .radioModuleFeedRadio{
 	background-image: url('/static/img/radio_grey.png');
@@ -689,6 +691,25 @@ a.shareObject {
 	background-origin: padding-box;
   	color: white;
 }
+.rating-0 {
+	background-color: #E2DEC7;
+	background-color: rgba(226, 222, 199, 1);
+}
+.rating-1 {
+	background-color: #BC0D0D !important;
+}
+.rating-2 {
+	background-color: #E55413 !important;
+}
+.rating-3 {
+	background-color: #F7AA21 !important;
+}
+.rating-4 {
+	background-color: #9CBC2A !important;
+}
+.rating-5 {
+	background-color: #3F7C1C !important;
+}
 a#vendor_followers{
 	display: inline-block;
 	margin-left:0;
@@ -804,4 +825,14 @@ div.vendorImage{
 }
 .top6Margin {
 	margin-top: 6px;
+}
+.clearFloatDisplayInline {
+	float: none;
+	display: inline-block;
+}
+.top6PxPadding{
+	padding-top: 6px;
+}
+.imageFeed{
+	max-height:150px;
 }

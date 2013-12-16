@@ -6,7 +6,6 @@
 .accordion-header img{
 	-webkit-box-shadow:none;
 	box-shadow: none;
-	margin-right:5px; 
 }
 
 .accordion-header h2 {
@@ -22,9 +21,10 @@
 	height: 0px;
 	line-height: 0px;
 	font-size: 0px;
+	display: none;
 }
 .accordion-header {
-	font-family: helvetica;
+	font-family: titillium1;
 	white-space: nowrap;
 	display: table;
 	font-size: 15px;
@@ -60,14 +60,16 @@
 }
 
 .accordion-header-color-1{
-	background-color:#009794;
+	background-color:rgba(2, 151, 149, 1);
 }
 .accordion-header-color-2{
-	background-color:#34ACA9;
+	background-color:rgba(2, 151, 149, 0.7);
 }
 .accordion-header-color-3{
-	background-color:#80CBC9;
+	background-color:rgba(2, 151, 149, 0.5);
 }
 .accordion-header-color-4{
-	background-color:#ACDDDC;
+	background-color:rgba(2, 151, 149, 0.3);
+	color: #5D5D5D;
+	color: rgb(93, 93, 93);
 }
