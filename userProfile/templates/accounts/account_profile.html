@@ -137,7 +137,7 @@ var manageFeedOther = function() {
         <div id="accordion-container">
             {% get_owned_blog profile_user as blog %}
             {% if blog %}
-            <h2 class="accordion-header accordion-header-color-3"><span class="hotDealsIcon">%&nbsp;</span>{{ blog.title|upper }} {% trans "DEALS" %}
+            <h2 class="accordion-header accordion-header-color-4"><span class="hotDealsIcon">%&nbsp;</span>{{ blog.title|upper }} {% trans "DEALS" %}
                 <div class="yellowLineContainer">
                     <hr class="whiteLine"/>
                 </div>
@@ -148,7 +148,7 @@ var manageFeedOther = function() {
                 </div>
             </div> 
             {% else %}
-            <h2 class="accordion-header accordion-header-color-4">{% trans "Wishlist" %}
+            <h2 class="accordion-header accordion-header-color-5">{% trans "Wishlist" %}
                 <div class="yellowLineContainer">
                     <hr class="whiteLine"/>
                 </div>
@@ -160,7 +160,7 @@ var manageFeedOther = function() {
             {% endif %}
             {% if blog %}
             {% else %}
-            <h2 class="accordion-header accordion-header-color-3">{% trans "Reviews" %}
+            <h2 class="accordion-header accordion-header-color-4">{% trans "Reviews" %}
                 <div class="yellowLineContainer">
                     <hr class="whiteLine"/>
                 </div>
@@ -204,7 +204,7 @@ var manageFeedOther = function() {
                 {% endfor %}
             </div>
             {% endif %}
-            <h2 class="accordion-header accordion-header-color-2">{% trans "Followers" %}
+            <h2 class="accordion-header accordion-header-color-3">{% trans "Followers" %}
                 <div class="yellowLineContainer">
                     <hr class="whiteLine"/>
                 </div>
@@ -212,7 +212,7 @@ var manageFeedOther = function() {
             <div class="accordion-content"> 
                 {% render_follower_subset profile_user 0 'MIN_FOLLOWERS_CHUNK'|settings_value 'MIN_FOLLOWERS_CHUNK'|settings_value %}
             </div>
-            <h2 class="accordion-header accordion-header-color-1">{% trans "Following" %}
+            <h2 class="accordion-header accordion-header-color-2">{% trans "Following" %}
                 <div class="yellowLineContainer">
                     <hr class="whiteLine"/>
                 </div>
@@ -220,7 +220,7 @@ var manageFeedOther = function() {
             <div class="accordion-content"> 
                 {% render_following_subset profile_user 0 'MIN_FOLLOWERS_CHUNK'|settings_value 'MIN_FOLLOWERS_CHUNK'|settings_value %}
             </div>
-            <h2 class="accordion-header">{% trans "Following Stores" %}
+            <h2 class="accordion-header accordion-header-color-1">{% trans "Following Stores" %}
                 <div class="yellowLineContainer">
                     <hr class="whiteLine"/>
                 </div>
