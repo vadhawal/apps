@@ -36,7 +36,23 @@ function updateCheckBoxes () {
 	}
 }
 
+function updateSearchCategory () {
+	var pathstr = window.location.pathname;
+	var patharr = pathstr.split ("/");
+	if (patharr[1].toLowerCase() == "getvendors") {
+		var parentCategory = decodeURIComponent(patharr[2]);
+		var subCategory = decodeURIComponent(patharr[3]);
+		var parentSelect = $(".blog_parentcategories");
+		var subSelect = $(".blog_subcategories");
+		parentSelect.val(parentCategory);
+		parentSelect.trigger("change");
+		subSelect.val(subCategory);
+		subSelect.trigger("change");
+	}
+}
+
 $(document).ready(function(event){
 	$('#searchResultFilter').on('click', filterSearchHandler);
 	updateCheckBoxes();
+	updateSearchCategory();
 });
