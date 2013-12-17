@@ -340,6 +340,46 @@ var account_form_submit_handler = function(event) {
     return false;
 };
 
+function getParameters () {
+    var prmstr = window.location.search.substr(1);
+    var prmarr = prmstr.split ("&");
+    var params = {};
+
+    prmarr = prmarr.filter(function(value) {
+        return value !== "" && value !== null;
+    });
+
+    for ( var i = 0; i < prmarr.length; i++) {
+        var tmparr = prmarr[i].split("=");
+        params[tmparr[0]] = tmparr[1];
+    }
+
+    return params;
+}
+
+var update_url = function (query_params, navigate) {
+    var location = window.location;
+    var baseUrl = location.protocol + '//' + location.host + location.pathname;
+    var params = '';
+    if(!$.isEmptyObject(query_params))
+    {   
+        params = '?';
+        for(param in query_params) {
+            params += param + '=' + query_params[param] + '&';
+        }
+        if(params.charAt(params.length - 1) === '&') {
+            params = params.slice(0, -1);
+        }
+    }
+    var newUrl = baseUrl + params;
+
+    if(navigate) {
+        document.location.href = newUrl;
+    } else {
+        window.history.pushState('','',newUrl);
+    }
+}
+
 $(document).ready(function() {
     install_follow_handlers();
     $('.vendorFollowers').on("click", display_popup_handler);

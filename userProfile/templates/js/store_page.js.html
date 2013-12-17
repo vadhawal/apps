@@ -116,10 +116,43 @@ var update_reviews = function (slug) {
             install_voting_handlers($('#commentContainer'));
             install_review_voting_handler($('#commentContainer'));
             install_review_handlers($('#commentContainer'));
+            install_review_pagination_handler();
+
+            var params = getParameters();
+            if(params.hasOwnProperty("page")) {
+                params.page = "1";
+            }
+            
+            reviewFilter = $('.reviewFilter').find("option:selected").val();
+            if(reviewFilter !== 'empty')
+                params.reviewFilter = reviewFilter;
+
+            update_url(params, false);
         });
     }
 
     return false;
+}
+
+var reviewPaginationHandler = function() {
+    var $href = $(this).attr('href');
+    var nextPageIndex = $href.split('=')[1];
+
+    var params = getParameters();
+    if(nextPageIndex) {
+        params.page = nextPageIndex;
+    }
+    
+    reviewFilter = $('.reviewFilter').find("option:selected").val();
+    if(reviewFilter && reviewFilter !== 'empty')
+        params.reviewFilter = reviewFilter;
+
+    update_url(params, true);
+    return false;   
+}
+
+var install_review_pagination_handler = function() {
+    $('#comments div.pagination ul > li > a').on('click', reviewPaginationHandler);
 }
 
 $(document).ready(function(event){
@@ -140,5 +173,8 @@ $(document).ready(function(event){
         var slug = $(this).find("option:selected").val();
         return update_reviews(slug);
     });
+
+    install_review_pagination_handler();
+
 });
 </script>

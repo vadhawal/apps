@@ -141,3 +141,8 @@ select.boughtCategory{
 	margin-bottom: 0;
 	line-height: normal;
 }
+#comments div.pagination ul > li {
+	display: inline;
+	padding: 0px;
+	border: none;
+}

@@ -21,8 +21,15 @@ $(function() {
     box-shadow: 1px 1px 0 #DDDDDD;
 }
 </style>
+
 {% if object_for_comments|get_class_name == "BlogPost" %}
-{% comment_thread_most_recent object_for_comments %}
+    {% if reviewFilter == "social" %}
+        {% comment_thread_social_level2 object_for_comments %}
+    {% elif reviewFilter == "helpful" %}
+        {% comment_thread_most_liked object_for_comments %}
+    {% else %}
+        {% comment_thread_most_recent object_for_comments %}
+    {% endif %}
 {% endif %}
 
 {% endif %}
