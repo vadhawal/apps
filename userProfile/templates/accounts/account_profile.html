@@ -21,6 +21,7 @@
   var sIndex = 0;
   var lIndex = 10;
   $(document).ready(function() {
+    {% get_hit_count_javascript for profile_user %}
     $('#followerCountBox').add('#followingCountBox').add('#followingVendorCountBox').on("click", display_popup_handler);
     $('#sendInvitesFB').click(function() {
         FB.init({ 
@@ -186,7 +187,7 @@ var manageFeedOther = function() {
                         </div>
                         <div>
                             <a class="fontSize13 radioColor fontHelvetica" href="{{ review.content_object.get_absolute_url }}">
-                                {{ review.content_object }}
+                                {{ review.content_object|title }}
                             </a>
                         </div>
                     </div>

@@ -25,7 +25,7 @@
 		<div class="span3">
 			{% block title %}
 			{% editable blog_post.title %}
-				<span class="fontHelvetica fontSize15 weightBold">{{ blog_post.title }}</span>
+				<span class="fontHelvetica fontSize15 weightBold">{{ blog_post.title|title }}</span>
 			{% endeditable %}
 			{% endblock %}
 			{% block blog_post.web_url %}
