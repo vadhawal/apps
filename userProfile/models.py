@@ -54,9 +54,7 @@ class UserProfile(models.Model):
     user = models.OneToOneField(User, unique=True)
     GENDER_CHOICES = (
         (_('male'), _('Male')),
-        (_('female'), _('Female')),
-        (_('other'), _('Other')),
-        ('', '')
+        (_('female'), _('Female'))
         )
     profile_photo = ResizedImageField(upload_to=get_image_path, max_width=1000, max_height=800, blank=True, null=True, storage=S3BotoStorage(location=STORAGE_ROOT))
     gender = models.CharField(max_length=10, blank=True, choices=GENDER_CHOICES, verbose_name=_("Gender"))
