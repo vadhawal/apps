@@ -21,6 +21,7 @@
   var sIndex = 0;
   var lIndex = 10;
   $(document).ready(function() {
+    {% get_hit_count_javascript for profile_user %}
     $('#followerCountBox').add('#followingCountBox').add('#followingVendorCountBox').on("click", display_popup_handler);
     $('#sendInvitesFB').click(function() {
         FB.init({ 
