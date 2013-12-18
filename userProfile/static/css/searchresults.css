@@ -13,6 +13,8 @@
 .height26auto{
 	height: auto;
 	line-height:26px;
+	-webkit-box-shadow: 1.25px 1.25px 1.25px rgba(132,125,125,0.75);
+	box-shadow: 1.25px 1.25px 1.25px rgba(132, 125, 125, 0.75);
 }
 .vendorName {
 	font-size: 2em;
@@ -51,10 +53,13 @@ p.webUrl{
 	display: inline-block;
 	margin: 0;
 	margin-left: 10px;
+	line-height: 26px;
+	height: 26px;
 }
 .searchFilter input[type="checkbox"]{
 	margin: 0;
 	margin-right:5px;
+	margin-bottom: 3px;
 }
 #searchResultFilter{
 	border: 0;
@@ -64,6 +69,8 @@ p.webUrl{
 	background : rgba(99, 98, 94, 1);
 	box-shadow : 1px 1px 1px rgba(153, 142, 126, 0.75);
 	filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=1, OffY=1, Color='#998E7E');
+	position: relative;
+	bottom: 1px;
 }
 div.vendorImageLarge{
 	height: 100px;
