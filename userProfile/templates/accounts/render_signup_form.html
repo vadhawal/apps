@@ -1,0 +1,23 @@
+{% load i18n mezzanine_tags %}
+{% load widget_tweaks %}
+
+<div class="row">
+	<div class="offset3 span4 fontTitillium1 fontSize13 color5D" style="line-height:25px;">
+		<form class="accountForm" method="post" {% if form.is_multipart %} enctype="multipart/form-data"{% endif %}>
+			{% csrf_token %}
+		   	{% for field in form %}
+		   		{% if field.label != form.description.label %}
+					<div class="topHalfGutter">
+						{% if field.label == form.gender.label %}
+							{{field.label_tag}}
+						{% endif %}
+							{% render_field field placeholder=field.label class="textField signUptextField" %}
+						{% if forloop.last %}
+						   	<input class="fontTitillium fontSize16 radioColor loginSubmit makeYellowButton" type="submit" value="GO"/>
+						{% endif %}
+					</div>
+			   	{% endif %}
+		   	{% endfor %}
+		</form>
+	</div>
+</div>

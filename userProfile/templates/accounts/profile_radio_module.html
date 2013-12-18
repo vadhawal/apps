@@ -1,22 +1,20 @@
-{% load hitcount_tags static %}
-{% load follow_tags %}
+{% load i18n hitcount_tags static %}
+{% load follow_tags userProfile_tags %}
 {% load relationship_tags future %}
 
 <div class="span5 topHalfGutter" style="height:25px;">
     <span class="radioModuleFeedRadio"></span>
     <span class="radioModuleFeedContainer fontTitillium1 fontSize12">
     	<span style="margin-left:10px;">
-    		Views&nbsp;({% get_hit_count for profile_user %})
+    		{% trans "Views" %}&nbsp;({% get_hit_count for profile_user %})
     	</span>
     	<span style="margin-left:10px;">
-    		Appreciations
-    	</span>
-        <span class="broadcasters commentCount" href="#" style="margin-left:0px;">({{profile_user.num_likes}})</span>
+    		{% trans "Reviews" %}&nbsp;</span>{% get_reviews_by_user profile_user as totalReviews %}<span class="broadcasters commentCount" href="#" style="margin-left:0px;">({{totalReviews|length}})</span>
 
-		<span id="vendorFollowContainer" class="{% if_relationship request.user profile_user "following" %} following {% endif_relationship %}" >
-			<a href="#" class="follow-btn icon-follow" data-id="vendor_followers" data-href="{{ profile_user|add_relationship_url:"following" }}">Follow</a>
+		<span id="vendorFollowContainer" style="margin-left:5px;" class="{% if_relationship request.user profile_user "following" %} following {% endif_relationship %}" >
+			<a href="#" class="follow-btn icon-follow" data-id="vendor_followers" data-href="{{ profile_user|add_relationship_url:"following" }}">{% trans "Follow" %}</a>
 
-			<a class="icon-following radioColor" data-id="vendor_followers">Follow</a>
+			<a class="icon-following radioColor" data-id="vendor_followers">{% trans "Follow" %}</a>
 
 			<a href="#" class="unfollow-btn icon-unfollow" data-id="vendor_followers" data-href="{{ profile_user|remove_relationship_url:"following" }}"><img class="noBoxShadow" src="{% static 'img/1transparent.png' %}"></a>
 		</span>
@@ -24,14 +22,14 @@
 		<a id="vendor_followers" style="margin-right:10px;" class="vendorFollowers" class="vendor_followers" href="{{follower_url}}">({{ profile_user.relationships.followers.count }})</a>
     </span>
     <span class="socialShare makeButton fontTitillium halfGutter">+</span>
-    <a class="makeButton radioColorBackground colorWhite pull-right" href="{% url "messages_compose_to" profile_user.username %}">Send Message</a>
+    <a class="makeButton radioColorBackground colorWhite pull-right" href="{% url "messages_compose_to" profile_user.username %}">{% trans "Send Message" %}</a>
 </div>
 {% if profile_user == request.user %}
     {% if request.user.is_authenticated %}
         {% for sa in request.user.social_auth.all %}
             {% if sa.provider == "facebook" %}
             <div class="span5 topHalfGutter" >
-                <a id="sendInvitesFB" class="makeButton colorWhite greyBackground pull-right" href="#" >Invite Friends</a>
+                <a id="sendInvitesFB" class="makeButton colorWhite greyBackground pull-right" href="#" >{% trans "Invite Friends" %}</a>
             </div>
             {% elif sa.provider == "twitter" %}
                 <!-- TBD for twitter/google -->
