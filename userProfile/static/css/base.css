@@ -787,9 +787,10 @@ input[type="submit"].loginSubmit{
 .accountForm input.textField{
 	width: 363px;
 	height: 23px;
-	font-family: Georgia, fontTitillium2;
-    font-size: 12px;
-    font-style: italic;
+	font-family: fontTitillium2, Georgia;
+    font-size: 13px;
+    padding: 0px 6px;
+    /*font-style: italic;*/
     border-radius: 0px;
 	box-shadow : -1px -1px 1px rgba(188, 170, 170, 0.75);
 	filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=1, OffY=1, Color='#998E7E');
@@ -812,6 +813,39 @@ p.hintText{
 }
 input[type="password"].textField{
 	width: 243px;
+}
+input[type="password"].signUptextField{
+	width: 363px;
+}
+select.signUptextField{
+	margin: 0;
+	font-size: 12.85px;
+	text-indent: 0.01px;
+	text-overflow: '';
+	font-family: titillium1;
+	color:white;
+	background-color: rgb(2, 151, 149);
+	background-image: url('/static/img/selectPointer.png');
+	background-repeat: no-repeat;
+	background-position: 94% 8px;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	-ms-appearance: none;
+	-o-appearance: none;
+	-webkit-border-radius: 0px;
+	border-radius: 0px;
+	-webkit-padding-start: 10px;
+	-moz-padding-start: 10px;
+	height: 25px;
+	width: 100px;
+	vertical-align: top;
+	line-height: 25px;
+	padding: 0px;
+	padding-left: 5px;
+}
+.accountForm label[for=id_gender]{
+	display: inline;
+	margin-right: 10px;
 }
 .timestamp{
 	line-height: normal;

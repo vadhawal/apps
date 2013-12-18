@@ -193,13 +193,13 @@ var manageFeedOther = function() {
                     </div>
                     <div class="span2 noGutter">
                         {{ review.introchars }}
-                        <a class="radioColor" href ="{% url render_review review.content_object.slug review.id %}">&nbsp;Read Full Review</a>
+                        <a class="radioColor" href ="{% url render_review review.content_object.slug review.id %}">&nbsp;{% trans "More" %}</a>
                     </div>
                 </div>
                 {% empty %}
                 <div class="row">
                     <div class="span2">
-                        No Reviews written
+                        {% trans "No Reviews written" %}
                     </div>
                 </div>
                 {% endfor %}
