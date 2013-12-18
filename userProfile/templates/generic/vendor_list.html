@@ -29,7 +29,7 @@
                 <div class="storeTopMargin radioColor fontHelvetica fontSize15">
                     {# forloop.counter #}
                     <a class="radioColor" href='{{vendor.get_absolute_url}}'>
-                        {{ vendor }}
+                        {{ vendor.title|title }}
                     </a>
                      <span class="searchResultRatingSmall searchResultRatingScheme fontSize9 fontHelvetica weightBold rating-{{vendor.overall_average|floatformat:"0"}}">{{vendor.overall_average|floatformat:"1"}}
                      </span>

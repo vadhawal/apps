@@ -51,7 +51,7 @@ $(document).ready(function() {
         </strong>
 
         <p>{{ comment.comment|comment_filter }}</p>
-        <p>On <a href="{{ comment.content_object.get_absolute_url }}">{{comment.content_object}}</a></p>
+        <p>On <a href="{{ comment.content_object.get_absolute_url }}">{{comment.content_object|title}}</a></p>
         {% include 'generic/includes/render_voting.html' with object=comment %}
         {% include 'actstream/render_subcomments.html' with object=comment %}
 

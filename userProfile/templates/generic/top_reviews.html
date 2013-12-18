@@ -43,7 +43,7 @@
         <div style="margin-top:-2px;">
             <span class="fontHelvetica"> <span class="forText fontSize11">for </span>
                 <a class="fontSize12 radioColor" href="{{ review.content_object.get_absolute_url }}">
-                    {{ review.content_object }}
+                    {{ review.content_object.title|title }}
                 </a>
         </div>
     </div>
