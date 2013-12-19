@@ -1,5 +1,25 @@
 {% load i18n mezzanine_tags %}
-{% load widget_tweaks %}
+{% load widget_tweaks future %}
+
+<div class="row">
+	<div class="offset3 span4 fontTitillium1 fontSize15 radioColor">
+		<div class="socialLoginForm">
+			<a href="{% url "socialauth_begin" "facebook" %}" style="font-size:1px">
+                <span class="socialLogin facebookLogin" style="margin-top:0;">
+                </span>
+            </a>
+            <a href="{% url "socialauth_begin" "google-oauth2" %}" style="font-size:1px">
+               <span class="socialLogin googleLogin" style="margin-top:0;">
+               </span>
+            </a>
+            <a href="{% url "socialauth_begin" "twitter" %}" style="font-size:1px">
+                <span class="socialLogin twitterLogin" style="margin-top:0;">
+                </span>
+            </a>
+            <span class="fullGutter"> {% trans "or" %}</span>
+		</div>
+	</div>
+</div>
 
 <div class="row">
 	<div class="offset3 span4 fontTitillium1 fontSize13 color5D" style="line-height:25px;">
@@ -7,15 +27,29 @@
 			{% csrf_token %}
 		   	{% for field in form %}
 		   		{% if field.label != form.description.label %}
-					<div class="topHalfGutter">
+		   			{% if field.label != form.location.label %}
+					<div class="topHalfGutter" {% if forloop.last %}style="height:72px; line-height:72px;"{% endif %}>
+					{% endif %}
+						{{field.errors}}
 						{% if field.label == form.gender.label %}
 							{{field.label_tag}}
+						{% elif field.label == form.profile_photo.label %}
+							<output id="previewimg"></output>
 						{% endif %}
+						{% if field.label == form.location.label %}
+							<span class="pull-right">
+								{{field.label_tag}}
+								{% render_field field class="textField smallTextField" %}
+							</span>
+						{% else %}
 							{% render_field field placeholder=field.label class="textField signUptextField" %}
-						{% if forloop.last %}
-						   	<input class="fontTitillium fontSize16 radioColor loginSubmit makeYellowButton" type="submit" value="GO"/>
 						{% endif %}
+						{% if forloop.last %}
+							<input class="fontTitillium fontSize16 radioColor loginSubmit signupSubmit pull-right makeYellowButton" type="submit" value="GO"/>
+						{% endif %}
+					{% if field.label != form.gender.label %}
 					</div>
+					{% endif %}
 			   	{% endif %}
 		   	{% endfor %}
 		</form>

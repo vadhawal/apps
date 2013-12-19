@@ -59,8 +59,8 @@ class UserProfile(models.Model):
     gender = models.CharField(max_length=10, blank=True, choices=GENDER_CHOICES, verbose_name=_("Gender"))
     image_url = models.URLField(blank=True, verbose_name=_("Imageurl"), editable=False, null=True)
     description = models.TextField(blank=True, verbose_name=_("Description"), help_text=_("Tell us about yourself!"))
-    location = models.CharField(verbose_name=_("Location"), max_length=100, help_text=_("Tell us about your location!"), null=True, blank=True)
-    birthday = models.DateField(_("Your Birthday!"), null=True, blank=True)
+    location = models.CharField(verbose_name=_("City"), max_length=100, help_text=_("Tell us about your location!"), null=True, blank=True)
+    birthday = models.DateField(_("Birthday"), null=True, blank=True)
 
     def __str__(self):  
         return "%s's profile" % self.user  
