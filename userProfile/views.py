@@ -470,8 +470,9 @@ def getTrendingReviews(request, parent_category, sub_category, sIndex=0, lIndex=
 	else:
 		raise Http404()
 
+from django.db.models import Sum, F
 def getTrendingDeals(request, parent_category, sub_category, sIndex=0, lIndex=0):
-	if request.method == "GET" and request.is_ajax():
+	if request.method == "GET": #and request.is_ajax():
 		ctype = ContentType.objects.get_for_model(BlogPost)
 		# latest = settings.DEALS_NUM_LATEST
 		deals = []
@@ -485,23 +486,32 @@ def getTrendingDeals(request, parent_category, sub_category, sIndex=0, lIndex=0)
 
 		blog_subcategory = None
 		blog_subcategory_slug = sub_category
+
 		if blog_subcategory_slug.lower() != "all" and BlogCategory.objects.all().exists():
 			blog_subcategory = get_object_or_404(BlogCategory, slug=slugify(blog_subcategory_slug))
 
 		if blog_parentcategory_slug.lower() == "all" and blog_subcategory_slug.lower() == "all":
-			deals_queryset = BroadcastDeal.objects.all().filter(content_type=ctype, expiry_date__gte=today).order_by('-timestamp') #[:latest]
+			deals_queryset = BroadcastDeal.objects.all().filter(content_type=ctype, expiry_date__gte=today) #[:latest]
 		elif blog_parentcategory_slug.lower() != "all" and blog_subcategory_slug.lower() == "all":
 			if blog_parentcategory:
 				blog_subcategories = list(BlogCategory.objects.all().filter(parent_category=blog_parentcategory))
-				deals_queryset = BroadcastDeal.objects.all().filter(content_type=ctype, blog_category__in=blog_subcategories, expiry_date__gte=today).order_by('-timestamp').distinct() #[:latest]
+				deals_queryset = BroadcastDeal.objects.all().filter(content_type=ctype, blog_category__in=blog_subcategories, expiry_date__gte=today).distinct() #[:latest]
 		else:
 			if blog_subcategory and blog_parentcategory:
-				deals_queryset = BroadcastDeal.objects.all().filter(blog_category=blog_subcategory, expiry_date__gte=today).order_by('-timestamp')#[:latest]
+				deals_queryset = BroadcastDeal.objects.all().filter(blog_category=blog_subcategory, expiry_date__gte=today)#[:latest]
 			else:
 				"""
 					raise 404 error, in case categories are not present.
 				"""
 				raise Http404()
+
+		model_type = ContentType.objects.get_for_model(BroadcastDeal)
+		table_name = Broadcast._meta.db_table
+
+		deals_queryset = deals_queryset.extra(select={
+			'score': 'SELECT COALESCE(SUM(vote),0) FROM %s WHERE content_type_id=%d AND object_id=%s.id' % (Vote._meta.db_table, int(model_type.id), table_name),
+			'sharecount': "SELECT COALESCE(COUNT(*),0) FROM %s WHERE verb='%s' AND target_content_type_id=%d AND target_object_id::int=%s.id" % (Action._meta.db_table, settings.SHARE_VERB, int(model_type.id), table_name)
+		}).order_by('-score', '-sharecount', '-timestamp',)
 
 		s = (int)(""+sIndex)
 		l = (int)(""+lIndex)
@@ -528,7 +538,7 @@ def getTrendingDeals(request, parent_category, sub_category, sIndex=0, lIndex=0)
 			template = Template('<span>No Deals found.</span>')
 			ret_data = {
 				'html': template.render(context).strip(),
-				'success': False
+				'success': True
 			}
 		else:
 			ret_data = {
