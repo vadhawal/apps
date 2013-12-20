@@ -42,13 +42,13 @@
 }
 
 .active-header {
-	background: url(/static/img/accordian_open.png) rgba(2, 151, 149, 1);
+	background: url(/static/img/arrow_white_up.png) rgba(2, 151, 149, 1);
 	background-repeat: no-repeat;
 	background-position: 95% 50%;
 }
 
 .inactive-header {
-	background: url(/static/img/accordian_close.png) rgba(2, 151, 149, 1);
+	background: url(/static/img/arrow_white_down.png) rgba(2, 151, 149, 1);
 	background-repeat: no-repeat;
 	background-position: 95% 50%;
 }
