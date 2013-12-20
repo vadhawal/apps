@@ -796,6 +796,10 @@ input[type="submit"].loginSubmit{
 	filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=1, OffY=1, Color='#998E7E');
 	margin:0;
 }
+.accountForm input.signUptextField{
+	width: 100%;
+	box-sizing:border-box;
+}
 .accountForm input.textField:focus{
 	box-shadow : -1px -1px 1px rgba(188, 170, 170, 0.75);
 }
@@ -811,11 +815,65 @@ input[type="submit"].loginSubmit{
 p.hintText{
 	margin-top: 10px;
 }
+.accountForm input.smallTextField{
+	width: 150px;
+}
 input[type="password"].textField{
 	width: 243px;
 }
 input[type="password"].signUptextField{
-	width: 363px;
+	width: 100%;
+	box-sizing:border-box;
+}
+.accountForm input[type="file"].signUptextField {
+	display: inline;
+	width: 88px;
+	-webkit-box-shadow:none;
+	box-shadow:none;
+}
+.accountForm ul {
+	list-style: none;
+	margin: 0;
+}
+.accountForm output:before {
+	content: 'Profile Photo';
+	font-family: titillum1;
+	color: #B5B4B3;
+}
+.accountForm output{
+	width: 82px;
+	height: 72px;
+	background-color: #EEEEEE;
+	display: inline-block;
+	text-align: center;
+	vertical-align: middle;
+	line-height: 72px
+}
+.signupSubmit {
+	margin-top: 21px;
+}
+.accountForm output img {
+	position: relative;
+	top: -72px;
+	max-width: 78px;
+	max-height: 68px;
+}
+.accountForm input[type="file"]:before{
+	content: 'Upload';
+	display: inline-block;
+	color: white;
+	background-color: rgb(2, 151, 149);
+	padding: 0px 20px;
+	outline: none;
+	white-space: nowrap;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	-o-user-select: none;
+	user-select: none;
+	cursor: pointer;
+	font-family: titillium1;
+	font-size: 10pt;
 }
 select.signUptextField{
 	margin: 0;
@@ -825,9 +883,9 @@ select.signUptextField{
 	font-family: titillium1;
 	color:white;
 	background-color: rgb(2, 151, 149);
-	background-image: url('/static/img/selectPointer.png');
+	background-image: url('/static/img/arrow_white_down.png');
 	background-repeat: no-repeat;
-	background-position: 94% 8px;
+	background-position: 94% 6px;
 	-webkit-appearance: none;
 	-moz-appearance: none;
 	-ms-appearance: none;
@@ -843,7 +901,7 @@ select.signUptextField{
 	padding: 0px;
 	padding-left: 5px;
 }
-.accountForm label[for=id_gender]{
+.accountForm label[for=id_gender], .accountForm label[for=id_profile_photo] , .accountForm label[for=id_location] {
 	display: inline;
 	margin-right: 10px;
 }

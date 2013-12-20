@@ -22,18 +22,17 @@
 		<a id="vendor_followers" style="margin-right:10px;" class="vendorFollowers" class="vendor_followers" href="{{follower_url}}">({{ profile_user.relationships.followers.count }})</a>
     </span>
     <span class="socialShare makeButton fontTitillium halfGutter">+</span>
-    <a class="makeButton radioColorBackground colorWhite pull-right" href="{% url "messages_compose_to" profile_user.username %}">{% trans "Send Message" %}</a>
-</div>
-{% if profile_user == request.user %}
-    {% if request.user.is_authenticated %}
-        {% for sa in request.user.social_auth.all %}
-            {% if sa.provider == "facebook" %}
-            <div class="span5 topHalfGutter" >
-                <a id="sendInvitesFB" class="makeButton colorWhite greyBackground pull-right" href="#" >{% trans "Invite Friends" %}</a>
-            </div>
-            {% elif sa.provider == "twitter" %}
-                <!-- TBD for twitter/google -->
-            {% endif %}
-        {% endfor %}
+    {% if request.user != profile_user %}
+        <a class="makeButton radioColorBackground colorWhite pull-right" href="{% url "messages_compose_to" profile_user.username %}">{% trans "Send Message" %}</a>
+    {% else %}
+        {% if request.user.is_authenticated %}
+            {% for sa in request.user.social_auth.all %}
+                {% if sa.provider == "facebook" %}
+                    <a id="sendInvitesFB" class="makeButton colorWhite greyBackground pull-right" href="#" >{% trans "Invite Friends" %}</a>
+                {% elif sa.provider == "twitter" %}
+                    <!-- TBD for twitter/google -->
+                {% endif %}
+            {% endfor %}
+        {% endif %}
     {% endif %}
-{% endif %}
+</div>

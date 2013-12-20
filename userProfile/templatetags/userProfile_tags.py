@@ -7,7 +7,7 @@ from mezzanine.generic.models import ThreadedComment
 from django.contrib.contenttypes.models import ContentType
 from django.template import Node, TemplateSyntaxError, loader, Context, RequestContext
 from django.core.urlresolvers import reverse
-from userProfile.models import BroadcastDeal, BroadcastWish
+from userProfile.models import BroadcastDeal, BroadcastWish, Broadcast
 from django.http import HttpResponse
 from django.utils import simplejson
 from follow.models import Follow
@@ -16,6 +16,8 @@ from mezzanine.conf import settings as _settings
 from django.shortcuts import render, get_object_or_404
 from django.template.defaultfilters import slugify
 from mezzanine.generic.models import Review
+from voting.models import Vote
+from actstream.models import Action
 import datetime
 
 def json_error_response(error_message):
@@ -521,14 +523,24 @@ def render_deals_for_categories(context, parent_category, sub_category, latest=s
             blog_subcategory = get_object_or_404(BlogCategory, slug=slugify(blog_subcategory_slug))
 
         if blog_parentcategory_slug.lower() == "all" and blog_subcategory_slug.lower() == "all":
-            deals_queryset = BroadcastDeal.objects.all().filter(content_type=ctype, expiry_date__gte=today).order_by('-timestamp')[:latest]
+            deals_queryset = BroadcastDeal.objects.all().filter(content_type=ctype, expiry_date__gte=today)
         elif blog_parentcategory_slug.lower() != "all" and blog_subcategory_slug.lower() == "all":
             if blog_parentcategory:
                 blog_subcategories = list(BlogCategory.objects.all().filter(parent_category=blog_parentcategory))
-                deals_queryset = BroadcastDeal.objects.all().filter(content_type=ctype, blog_category__in=blog_subcategories, expiry_date__gte=today).order_by('-timestamp').distinct()[:latest]
+                deals_queryset = BroadcastDeal.objects.all().filter(content_type=ctype, blog_category__in=blog_subcategories, expiry_date__gte=today).distinct()
         else:
             if blog_subcategory and blog_parentcategory:
-                deals_queryset = BroadcastDeal.objects.all().filter(blog_category=blog_subcategory, expiry_date__gte=today).order_by('-timestamp')[:latest]
+                deals_queryset = BroadcastDeal.objects.all().filter(blog_category=blog_subcategory, expiry_date__gte=today)
+
+        model_type = ContentType.objects.get_for_model(BroadcastDeal)
+        table_name = Broadcast._meta.db_table
+
+        deals_queryset = deals_queryset.extra(select={
+            'score': 'SELECT COALESCE(SUM(vote),0) FROM %s WHERE content_type_id=%d AND object_id=%s.id' % (Vote._meta.db_table, int(model_type.id), table_name),
+            'sharecount': "SELECT COALESCE(COUNT(*),0) FROM %s WHERE verb='%s' AND target_content_type_id=%d AND target_object_id::int=%s.id" % (Action._meta.db_table, settings.SHARE_VERB, int(model_type.id), table_name)
+        }).order_by('-score', '-sharecount', '-timestamp',)
+
+        deals_list = deals_queryset[:latest]
 
         data_href = reverse('getTrendingDeals', kwargs={'parent_category':slugify(parent_category),
                                                         'sub_category':slugify(sub_category),
@@ -537,7 +549,7 @@ def render_deals_for_categories(context, parent_category, sub_category, latest=s
         data_chunk = 5
 
         return template.render(RequestContext(context['request'], {
-            'deal_list' : deals_queryset,
+            'deal_list' : deals_list,
             'data_href' : data_href + search_param,
             'data_chunk': data_chunk
         }))
