@@ -10,7 +10,7 @@
 {% for wish in wish_list %}
     {% get_reldata_url wish as rel_data_url %}
     {% comment_count_on_object wish as total_comments %}
-    <div class="dealBox_v_elem bottomHalfGutter topHalfGutter"> 
+    <div class="dealBox_v_elem bottomHalfGutter topHalfGutter objectToBeDeleted"> 
     	{% if wish.wishimage and wish.wishimage.image  %}
 			{% thumbnail wish.wishimage.image "400x400" as img %}
                 <a class="wishimg-deal-homepage" href="{{  wish.wishimage.image.url }}" rel="userpage_wish" data-reldata-url="{{rel_data_url}}" style="">
@@ -34,8 +34,15 @@
         	</span>
         </a>
         {% endif %}
+
+        {% get_wish_owner wish as owner %}
+
+        {% if request.user == owner %}
+            {% get_delete_object_url wish as delete_wish_url %}
+            <a class="deleteObject" data-object-type="wish" data-href="{{delete_wish_url}}" href="javascript:void(0);">X</a>
+        {% endif %}
+        <hr class="dottedSeparator"/>
     </div>
-    <hr class="dottedSeparator"/>
 
 {% empty %}
     {% trans "No wishes posted" %}

@@ -20,6 +20,7 @@ from mezzanine.blog.models import BlogPost, BlogCategory, BlogParentCategory
 from mezzanine.generic.models import Review
 from mezzanine.generic.models import ThreadedComment, RequiredReviewRating, OptionalReviewRating
 
+from actstream import models
 from actstream.models import Action
 from itertools import chain
 from mezzanine.conf import settings
@@ -798,8 +799,8 @@ def deleteObject(request, content_type_id, object_id ):
     #    return json_error_response(error_codes)
 
     try:
-		ctype = ContentType.objects.get(pk=content_type_id)
-		object = ctype.model_class().objects.get(pk=object_id)
+        ctype = ContentType.objects.get(pk=content_type_id)
+        object = ctype.model_class().objects.get(pk=object_id)
     except:
         error_codes.append(settings.OBJECT_DOES_NOT_EXIST)
         return json_error_response(error_codes)
@@ -807,83 +808,86 @@ def deleteObject(request, content_type_id, object_id ):
     owner = get_object_owner_helper(content_type_id, object_id)
 
     """
-    	Check whehter use is authorized to delete the object.
+        Check whehter use is authorized to delete the object.
     """
     if request.user != owner:
         error_codes.append(settings.UNAUTHORIZED_OPERATION)
         return json_error_response(error_codes)
 
     if object:
-    	"""
-    		Delete related activities and actstream follow objects.
-    	"""
-        _follow = None
-        try:
-            _follow = _Follow.objects.get(follow_object=object)
-        except:
-            pass
-
-        if _follow:
-            stream = models.action_object_stream(_follow)
-            activity = stream 
-            stream = models.target_stream(_follow)
-            activity = activity | stream 
+        """
+        Delete related activities and actstream follow objects.
+        """            
+        stream = models.action_object_stream(object)
+        activity = stream 
+        stream = models.target_stream(object)
+        activity = activity | stream 
             
-            if activity: 
-            	activity.delete()
-            
-            _follow.delete()
+        if activity:
+            activity.delete()
 
-    	"""
-    		Delete django-follow objects.
-    	"""
+        _followList = _Follow.objects.filter(content_type=ctype, object_id=str(object_id))
+        for _followObj in _followList:
+            _followObj.delete()
+
+        """
+            Delete django-follow objects.
+        """
         follow = None
         try:
-        	follow = Follow.objects.get_follows(object)
+            follow = Follow.objects.get_follows(object)
         except:
-        	pass
+            pass
 
         if follow:
             follow.delete() 
 
-    	"""
-    		Delete voting objects.
-    	"""
+        """
+            Delete voting objects.
+        """
         voteObjects = Vote.objects.filter(content_type=ctype,
                          object_id=object._get_pk_val() )
         if voteObjects:
             voteObjects.delete()
 
-    	"""
-    		Delete related objects for Reviews.
-    	"""
+        """
+           Delete comments associated with the object.
+        """
+        comments_queryset = object.comments.all()
+        if comments_queryset:
+            comments_queryset.delete()
+
+        """
+            Delete related objects for Reviews.
+        """
+
         if isinstance(object, Review):
-        	try:
-        		requiredReviewRatingObj = RequiredReviewRating.objects.get(commentid=object._get_pk_val())
-        	except:
-        		requiredReviewRatingObj = None
-        		pass
+            try:
+                requiredReviewRatingObj = RequiredReviewRating.objects.get(commentid=object._get_pk_val())
+            except:
+                requiredReviewRatingObj = None
+                pass
 
-        	if requiredReviewRatingObj:
-        		requiredReviewRatingCtype = ContentType.objects.get_for_model(requiredReviewRatingObj)
-        		requiredReviewRatingVoteObjects = Vote.objects.filter(content_type=requiredReviewRatingCtype,
-                         								object_id=requiredReviewRatingObj._get_pk_val() )
-        	
-        		if requiredReviewRatingVoteObjects:
-        			requiredReviewRatingVoteObjects.delete()
-        		requiredReviewRatingObj.delete()
-        	try:
-        		OptionalReviewRatingObj = OptionalReviewRating.objects.get(commentid=object._get_pk_val())
-        	except:
-        		OptionalReviewRatingObj = None
-        		pass
+            if requiredReviewRatingObj:
+                requiredReviewRatingCtype = ContentType.objects.get_for_model(requiredReviewRatingObj)
+                requiredReviewRatingVoteObjects = Vote.objects.filter(content_type=requiredReviewRatingCtype,
+                                                                      object_id=requiredReviewRatingObj._get_pk_val() )
+        
+                if requiredReviewRatingVoteObjects:
+                    requiredReviewRatingVoteObjects.delete()
+                requiredReviewRatingObj.delete()
+            try:
+                OptionalReviewRatingObj = OptionalReviewRating.objects.get(commentid=object._get_pk_val())
+            except:
+                OptionalReviewRatingObj = None
+                pass
 
-        	if OptionalReviewRatingObj:
-        		OptionalReviewRatingObj.delete()
+            if OptionalReviewRatingObj:
+                OptionalReviewRatingObj.delete()
 
-    	"""
-    		Finally nuke the actual object.
-    	"""
+        """
+            Finally nuke the actual object.
+        """
         object.delete()           
 
         return json_success_response()
@@ -904,16 +908,16 @@ def get_object_owner_helper(content_type_id, object_id):
 	if isinstance(object, Review) or isinstance(object, BlogPost):
 		owner = object.user
 
-	elif isinstance(object, BroadcastWish) or isinstance(object, GenericWish):
-		owner_ctype = object.content_type
-		owner_id   = object.object_id
-		owner = owner_ctype.model_class().objects.get(pk=owner_id)
-
 	elif isinstance(object, BroadcastDeal):
 		owner_ctype = object.content_type
 		owner_id   = object.object_id
 		owner_blog_post = owner_ctype.model_class().objects.get(pk=owner_id)
 		owner = owner_blog_post.user
+
+	elif isinstance(object, BroadcastWish) or isinstance(object, GenericWish):
+		owner_ctype = object.content_type
+		owner_id   = object.object_id
+		owner = owner_ctype.model_class().objects.get(pk=owner_id)
 
 	return owner
 

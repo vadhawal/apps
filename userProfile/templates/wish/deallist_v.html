@@ -8,6 +8,7 @@
 {% if not is_incremental %}
 <div class="dealBox_v scrollContainer" data-href="{{data_href}}" data-chunk="{{data_chunk}}">
 {% endif %}
+
 {% for deal in deal_list %}
 
 {% if deal.wishimage and deal.wishimage.image  %}
@@ -15,7 +16,7 @@
     {% comment_count_on_object deal as total_comments %}
 
 	{% thumbnail deal.wishimage.image "400x400" as img %}
-    <div class="dealBox_v_elem"> 
+    <div class="dealBox_v_elem objectToBeDeleted"> 
         <a class="wishimg-deal-homepage" href="{{  deal.wishimage.image.url }}" rel="homepage_deals" data-reldata-url="{{rel_data_url}}" style="">
             <img src="{{img.url}}">
         </a>
@@ -26,6 +27,13 @@
 				{% comment_count_on_object deal as total_comments %}
 			<a class="broadcasters commentCount" href="{% get_commenters_url deal %}" style="margin-left:0px;">({{total_comments}})</a>
         </div>
+        {% get_wish_owner deal as owner %}
+
+        {% if request.user == owner.user %}
+            {% get_delete_object_url deal as delete_deal_url %}
+            <a class="deleteObject" data-object-type="deal" data-href="{{delete_deal_url}}" href="javascript:void(0);">X</a>
+        {% endif %}
+
     </div>
     {% endthumbnail %}
 {% endif %}
