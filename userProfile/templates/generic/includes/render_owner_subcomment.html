@@ -13,13 +13,16 @@
 				{% elif owner.get_profile.image_url %}
 					<img class="smallIcon noBoxShadow" src="{{ owner.get_profile.image_url|add:"?width=45&height=45"  }}">
 				{% else %}
-                    {% if owner.get_profile.gender == "male" %}
-                        <img class="noBoxShadow smallIcon" src="{% static "img/man_icon.png" %}">
+					{% if request.user.get_profile.gender %}
+                    	{% if owner.get_profile.gender == "male" %}
+                        	<img class="noBoxShadow smallIcon" src="{% static "img/man_icon.png" %}">
+                    	{% else %}
+                        	<img class="noBoxShadow smallIcon" src="{% static "img/woman_icon.png" %}">
+                    	{% endif %}
                     {% else %}
-                        <img class="noBoxShadow smallIcon" src="{% static "img/woman_icon.png" %}">
+                        <img class="noBoxShadow smallIcon" src="{% static "img/man_icon.png" %}">
                     {% endif %}
 				{% endif %}
-
 			{% elif owner|get_class_name == "BlogPost" %}
 					{% thumbnail owner.featured_image "100x100" as img %} 
 					<img style="height:55px; max-height:55px;" src="{{img.url}}">
