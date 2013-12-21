@@ -9,7 +9,9 @@
     		{% trans "Views" %}&nbsp;({% get_hit_count for profile_user %})
     	</span>
     	<span style="margin-left:10px;">
-    		{% trans "Reviews" %}&nbsp;</span>{% get_reviews_by_user profile_user as totalReviews %}<span class="broadcasters commentCount" href="#" style="margin-left:0px;">({{totalReviews.count}})</span>
+    		{% trans "Reviews" %}&nbsp;</span>{% get_reviews_by_user profile_user as totalReviews %}<span class="broadcasters commentCount" href="#" style="margin-left:0px; {% if request.user == profile_user %}
+                                            margin-right:10px;
+                                        {% endif %}">({{totalReviews.count}})</span>
 
 		{% if request.user != profile_user %}
             <span id="vendorFollowContainer" style="margin-left:5px;" class="{% if_relationship request.user profile_user "following" %} following {% endif_relationship %}" >
