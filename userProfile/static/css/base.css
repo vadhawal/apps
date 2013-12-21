@@ -710,7 +710,11 @@ a.shareObject {
 .rating-5 {
 	background-color: #3F7C1C !important;
 }
-a#vendor_followers{
+.radioModuleFeedContainer a.vendorFollowers{
+	display: inline-block;
+	margin-left:0;	
+}
+a.vendorFollowers{
 	display: inline-block;
 	margin-left:0;
 }
@@ -737,7 +741,6 @@ span.vendorFollowContainer.following a.icon-following{
 }
 span.vendorFollowContainer.following a.icon-unfollow{
 	display: inline-block;
-	margin-left: 0px;
 	width: auto;
 }
 .icon-unfollow img {
