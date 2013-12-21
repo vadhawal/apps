@@ -714,26 +714,26 @@ a#vendor_followers{
 	display: inline-block;
 	margin-left:0;
 }
-span#vendorFollowContainer a{
+span.vendorFollowContainer a{
 	margin-right: 0;
 	width: initial;
 }
-span#vendorFollowContainer a.icon-follow{
+span.vendorFollowContainer a.icon-follow{
 	display: inline-block;
 }
-span#vendorFollowContainer a.icon-following{
+span.vendorFollowContainer a.icon-following{
 	display: none;
 }
-span#vendorFollowContainer a.icon-unfollow{
+span.vendorFollowContainer a.icon-unfollow{
 	display:none;
 }
-span#vendorFollowContainer.following a.icon-follow{
+span.vendorFollowContainer.following a.icon-follow{
 	display: none;
 }
-span#vendorFollowContainer.following a.icon-following{
+span.vendorFollowContainer.following a.icon-following{
 	display: inline-block;
 }
-span#vendorFollowContainer.following a.icon-unfollow{
+span.vendorFollowContainer.following a.icon-unfollow{
 	display: inline-block;
 	margin-left: 0px;
 }
