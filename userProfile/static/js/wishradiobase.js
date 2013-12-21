@@ -396,6 +396,7 @@ $(document).ready(function() {
         minWidth: 300,
         minHeight: 450,
         autoSize: true,
+        scrolling: 'no',
         helpers : { overlay : { locked : false } }
     });
     $('.doLogin').on('click', login_handler);
