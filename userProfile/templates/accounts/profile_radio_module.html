@@ -14,7 +14,7 @@
                                         {% endif %}">({{totalReviews.count}})</span>
 
 		{% if request.user != profile_user %}
-            <span id="vendorFollowContainer" style="margin-left:5px;" class="{% if_relationship request.user profile_user "following" %} following {% endif_relationship %}" >
+            <span id="vendorFollowContainer" style="margin-left:5px;" class="vendorFollowContainer {% if_relationship request.user profile_user "following" %} following {% endif_relationship %}" >
     			<a href="#" class="follow-btn icon-follow" data-id="vendor_followers" data-href="{{ profile_user|add_relationship_url:"following" }}">{% trans "Follow" %}</a>
 
     			<a class="icon-following radioColor" data-id="vendor_followers">{% trans "Follow" %}</a>
