@@ -62,12 +62,12 @@ div a.siteURL{
 	background-color: rgba(248,248,245,1.00);
 }
 .reviewForm{
-	font-family: titillium1;
+	font-family: titillium1, helvetica;
 	font-size: 12px;
 }
 .reviewForm .textField {
     border-radius: 0;
-    font-family: titillium2;
+    font-family: titillium2, helvetica;
     font-size: 13px;
     height: 20px;
     line-height: 20px;
@@ -89,7 +89,7 @@ div a.siteURL{
 }
 .reviewForm label{
 	display: inline;
-	font-family: titillium1;
+	font-family: titillium1, helvetica;
 	font-size: 12px;
 }
 .reviewForm .controls {
@@ -123,7 +123,7 @@ select.boughtCategory{
 	background-repeat: no-repeat;
 	border-radius: 0;
 	color: #595757;
-	font-family: fonttitillium1;
+	font-family: fonttitillium1, helvetica;
 	font-size: 12.85px;
 	height: 25px;
 	line-height: normal;

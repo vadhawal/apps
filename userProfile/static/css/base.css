@@ -20,7 +20,7 @@
 }
 button {
 	box-shadow : 1px 1px 1px rgba(136, 126, 129, 0.75);
-	filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=1, OffY=1, Color='#887E81');
+	/*filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=1, OffY=1, Color='#887E81');*/
 }
 body{
 	line-height: normal;
@@ -34,7 +34,7 @@ div p span {
 img {
 	-webkit-box-shadow: 0 0 3px #bbb;
 	box-shadow: 0 0 3px #bbb;
-	filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='#bbb');
+	/*filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='#bbb');*/
 }
 img.noBoxShadow{
 	-webkit-box-shadow: none;
@@ -66,17 +66,17 @@ a.radioColorBackground:hover{
 	font-family: helvetica;
 }
 .fontTitillium {
-	font-family: titillium;
+	font-family: titillium, helvetica;
 	/*boldest*/
 }
 .fontTitillium1 {
-	font-family: titillium1;
+	font-family: titillium1, helvetica;
 }
 .fontTitillium2 {
-	font-family: titillium2;
+	font-family: titillium2, helvetica;
 }
 .fontTitillium3 {
-	font-family: titillium3;
+	font-family: titillium3, helvetica;
 	/*lightest*/
 }
 .weightBold{
@@ -274,7 +274,7 @@ a.colorWhite:hover{
 	font-size: 12.85px;
 	text-indent: 0.01px;
 	text-overflow: '';
-	font-family: titillium1;
+	font-family: titillium1, helvetica;
 	color:rgba(89,87,87,1.00);
 	background-color:rgba(229,244,244,1.00);
 	background-image: url('/static/img/selectPointer.png');
@@ -298,7 +298,7 @@ a.colorWhite:hover{
 }
 div span.wantText{
 	color:white;
-	font-family: titillium1;
+	font-family: titillium1, helvetica;
 	display: inline-block;
 	margin-top: 15px;
 	padding-left:30px;
@@ -404,7 +404,7 @@ div span.wantText{
 	display: none !important;
 }
 .subcomment_text{
-	font-family: titillium2;
+	font-family: titillium2, helvetica;
 	font-size: 13px;
 	height: 20px;
 	line-height: 20px;
@@ -587,7 +587,7 @@ a.shareObject {
 	font-size: 12.85px;
 	text-indent: 0.01px;
 	text-overflow: '';
-	font-family: titillium1;
+	font-family: titillium1, helvetica;
 	margin-top: 5px;
 	margin-bottom: 5px;
 	color:rgba(89,87,87,1.00);
@@ -672,7 +672,7 @@ a.shareObject {
 }
 .searchResultRating {
 	cursor: default;
-	font-family: titillium1;
+	font-family: titillium1, helvetica;
 	font-size: 25px;
 	padding: 10px 15px;
 	box-sizing: border-box;
@@ -872,7 +872,7 @@ input[type="password"].signUptextField{
 	-o-user-select: none;
 	user-select: none;
 	cursor: pointer;
-	font-family: titillium1;
+	font-family: titillium1, helvetica;
 	font-size: 10pt;
 }
 select.signUptextField{
@@ -880,7 +880,7 @@ select.signUptextField{
 	font-size: 12.85px;
 	text-indent: 0.01px;
 	text-overflow: '';
-	font-family: titillium1;
+	font-family: titillium1, helvetica;
 	color:white;
 	background-color: rgb(2, 151, 149);
 	background-image: url('/static/img/arrow_white_down.png');
