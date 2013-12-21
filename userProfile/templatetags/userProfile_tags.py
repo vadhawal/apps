@@ -146,6 +146,26 @@ def get_reviews_by_user(parser, token):
         raise template.TemplateSyntaxError("second argument to '%s' tag must be 'as'" % bits[0])
     return ReviewsByUser(bits[1], bits[3])
 
+class WishesByUser(template.Node):
+    def __init__(self, user, context_var):
+        self.user = template.Variable(user)
+        self.context_var = context_var
+
+    def render(self, context):
+        user_instance = self.user.resolve(context)
+        content_type = ContentType.objects.get_for_model(user_instance).pk
+        context[self.context_var] = BroadcastWish.objects.all().filter(content_type=content_type, object_id=user_instance.pk)
+        return  ''
+
+@register.tag
+def get_wishes_by_user(parser, token):
+    bits = token.contents.split()
+    if len(bits) != 4:
+        raise template.TemplateSyntaxError("'%s' tag takes exactly three arguments" % bits[0])
+    if bits[2] != 'as':
+        raise template.TemplateSyntaxError("second argument to '%s' tag must be 'as'" % bits[0])
+    return WishesByUser(bits[1], bits[3])
+
 @register.inclusion_tag("wish/render_post.html", takes_context=True)
 def render_post(context, post):
     context.update({
@@ -668,16 +688,25 @@ def render_deals_for_stores(context, store_id, sub_category, latest=settings.DEA
         if blog_subcategory_slug.lower() != "all" and blog_subcategory_slug.lower() != '':
             try:
                 blog_subcategory = BlogCategory.objects.get(slug=slugify(blog_subcategory_slug))
-                deals_queryset = BroadcastDeal.objects.all().filter(content_type=ctype, object_id=store_id, blog_category=blog_subcategory, expiry_date__gte=today).order_by('-timestamp')[:latest]
+                deals_queryset = BroadcastDeal.objects.all().filter(content_type=ctype, object_id=store_id, blog_category=blog_subcategory, expiry_date__gte=today)
             except:
                 blog_subcategory = None
                 pass
 
         elif blog_subcategory_slug.lower() == "all" or blog_subcategory_slug.lower() == '':
-            deals_queryset = BroadcastDeal.objects.all().filter(content_type=ctype, object_id=store_id, expiry_date__gte=today).order_by('-timestamp')[:latest]
+            deals_queryset = BroadcastDeal.objects.all().filter(content_type=ctype, object_id=store_id, expiry_date__gte=today)
         else:
             return ''
 
+        model_type = ContentType.objects.get_for_model(BroadcastDeal)
+        table_name = Broadcast._meta.db_table
+
+        deals_queryset = deals_queryset.extra(select={
+            'score': 'SELECT COALESCE(SUM(vote),0) FROM %s WHERE content_type_id=%d AND object_id=%s.id' % (Vote._meta.db_table, int(model_type.id), table_name),
+            'sharecount': "SELECT COALESCE(COUNT(*),0) FROM %s WHERE verb='%s' AND target_content_type_id=%d AND target_object_id::int=%s.id" % (Action._meta.db_table, settings.SHARE_VERB, int(model_type.id), table_name)
+        }).order_by('-score', '-sharecount', '-timestamp',)
+
+        deals_list = deals_queryset[:latest]
         data_href = reverse('get_filtered_deallist', kwargs={'store_id':store_id,
                                                              'sub_category':sub_category,
                                                              'sIndex':0,
@@ -685,7 +714,7 @@ def render_deals_for_stores(context, store_id, sub_category, latest=settings.DEA
         data_chunk = 5
 
         return template.render(RequestContext(context['request'], {
-            'deal_list': deals_queryset,
+            'deal_list': deals_list,
             'data_href' : data_href + search_param,
             'data_chunk': data_chunk
         }))
