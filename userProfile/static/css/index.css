@@ -141,9 +141,6 @@
 	filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=-0.57, OffY=-0.57, Color='#000000') ;
 }
 /* dealBox_v will be applied on the deals listed on logged-in home page. */
-[id*="action"]:hover .radioModuleFeedRadio {
-	background-image: url('/static/img/radio_green.png');
-}
 #refreshActivity{
 	display: block;
 	background : #F9DF1E;
