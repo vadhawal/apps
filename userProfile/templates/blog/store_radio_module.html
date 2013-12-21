@@ -19,16 +19,11 @@
 		{% broadcasters_for_object blog_post as broadcasters_url %}
 		<a class="store_sharers sharedCount" href="{{broadcasters_url}}" data-href="#">({{share_count}})</a>
 
-		<span id="vendorFollowContainer" class="vendorFollowContainer {% if request.user|is_following:blog_post %}following{% endif %}" >
-			<a href="#" class="follow-btn icon-follow" data-id="vendor_followers" data-href="{% follow_url blog_post %}">{% trans "Follow" %}</a>
+		<span class="vendorFollowContainer {% if request.user|is_following:blog_post %}following{% endif %}" >
+			<a href="#" class="follow-btn icon-follow" data-href="{% follow_url blog_post %}">{% trans "Follow" %}</a>
 
-			<a class="icon-following radioColor" data-id="vendor_followers">{% trans "Follow" %}</a>
-
-			<a href="#" class="unfollow-btn icon-unfollow" data-id="vendor_followers" data-href="{% follow_url blog_post %}"><img class="noBoxShadow" src="{% static 'img/1transparent.png' %}"></a>
-		</span>
-		{% vendor_follower_subset_info_url blog_post 0 request.user|follower_count:blog_post as subset_follower_url %}
-		<a id="vendor_followers" class="vendorFollowers" class="vendor_followers" href="{{subset_follower_url}}">({{  request.user|follower_count:blog_post }})</a>
-    </span>
+			<a class="icon-following radioColor">{% trans "Follow" %}</a><a href="#" class="unfollow-btn icon-unfollow" data-href="{% follow_url blog_post %}"><img class="noBoxShadow" src="{% static 'img/1transparent.png' %}"></a>
+		</span>{% vendor_follower_subset_info_url blog_post 0 request.user|follower_count:blog_post as subset_follower_url %}<a class="vendorFollowers" href="{{subset_follower_url}}">({{  request.user|follower_count:blog_post }})</a></span>
     {% if noShare == "True" %}
     {% else %}
         <span class="socialShare makeButton fontTitillium halfGutter">+</span>

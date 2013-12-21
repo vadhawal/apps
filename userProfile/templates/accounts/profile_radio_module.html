@@ -14,16 +14,16 @@
                                         {% endif %}">({{totalReviews.count}})</span>
 
 		{% if request.user != profile_user %}
-            <span id="vendorFollowContainer" style="margin-left:5px;" class="vendorFollowContainer {% if_relationship request.user profile_user "following" %} following {% endif_relationship %}" >
-    			<a href="#" class="follow-btn icon-follow" data-id="vendor_followers" data-href="{{ profile_user|add_relationship_url:"following" }}">{% trans "Follow" %}</a>
+            <span style="margin-left:5px;" class="vendorFollowContainer {% if_relationship request.user profile_user "following" %} following {% endif_relationship %}" >
+    			<a href="#" class="follow-btn icon-follow" data-href="{{ profile_user|add_relationship_url:"following" }}">{% trans "Follow" %}</a>
 
-    			<a class="icon-following radioColor" data-id="vendor_followers">{% trans "Follow" %}</a>
+    			<a class="icon-following radioColor">{% trans "Follow" %}</a>
 
-    			<a href="#" class="unfollow-btn icon-unfollow" data-id="vendor_followers" data-href="{{ profile_user|remove_relationship_url:"following" }}"><img class="noBoxShadow" src="{% static 'img/1transparent.png' %}"></a>
+    			<a href="#" class="unfollow-btn icon-unfollow" data-href="{{ profile_user|remove_relationship_url:"following" }}"><img class="noBoxShadow" src="{% static 'img/1transparent.png' %}"></a>
     		</span>
 
             {% follower_subset_url profile_user 0 10 as follower_url %}
-    		<a id="vendor_followers" style="margin-right:10px;" class="vendorFollowers" class="vendor_followers" href="{{follower_url}}">({{ profile_user.relationships.followers.count }})</a>
+    		<a style="margin-right:10px;" class="vendorFollowers" href="{{follower_url}}">({{ profile_user.relationships.followers.count }})</a>
         {% endif %}
     </span>
     <span class="socialShare makeButton fontTitillium halfGutter">+</span>
