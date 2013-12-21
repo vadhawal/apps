@@ -166,7 +166,10 @@ class Broadcast(models.Model):
     objects = BroadcastManager()
 
     def __unicode__(self):
-        return self.message 
+        return self.message
+
+    class Meta:
+        db_table = "broadcast" 
 
 class GenericWishManager(models.Manager):
     def create_generic_wish_object(self, user, message, content_type, object_id, wishimage, urlPreviewContent):
@@ -205,6 +208,9 @@ class GenericWish(Broadcast):
     def __unicode__(self):
         return self.message
 
+    class Meta:
+        db_table = "genericwish"
+
 class BroadcastWish(GenericWish):
     blog_category = models.ForeignKey(BlogCategory,
                                         verbose_name=_("Category_wish"),
@@ -217,6 +223,9 @@ class BroadcastWish(GenericWish):
     def get_absolute_url(self):
         return ('view_wish', [self.id])
     get_absolute_url = models.permalink(get_absolute_url)
+
+    class Meta:
+        db_table = "broadcastwish"
 
 class BroadcastDeal(GenericWish):
     blog_category = models.ForeignKey(BlogCategory,
@@ -233,6 +242,9 @@ class BroadcastDeal(GenericWish):
     def get_absolute_url(self):
         return ('view_deal', [self.id])
     get_absolute_url = models.permalink(get_absolute_url)
+
+    class Meta:
+        db_table = "broadcastdeal"
 
 
 User.profile = property(lambda u: UserProfile.objects.get_or_create(user=u)[0]) 
