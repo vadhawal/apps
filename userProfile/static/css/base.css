@@ -663,6 +663,9 @@ a.shareObject {
 .dealBox_h_elem:hover div {
 	display: block;
 }
+.dealBox_v_elem .whiteBoxGlassy a{
+	margin-right: 5px;
+}
 .dealBox_h_elem div:hover {
 	background-color: rgba(255, 255, 255, 0.8);
 }
