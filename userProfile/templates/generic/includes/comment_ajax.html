@@ -5,7 +5,6 @@
 {% load inbox thumbnail %}
 {% load relationship_tags %}
 
-<div class="fontTitillium1 color5D fontSize12">
     {% if request.user.is_authenticated %}
         {% get_relationship_type request.user comment.user as rel_type %}
     {% endif %}
@@ -13,116 +12,114 @@
         <div class="span7 top6PxPadding{% if rel_type == "facebook" or rel_type == "self" or rel_type == "level1" or rel_type == "level2" or rel_type == "twitter" %} socialReview {%endif%}">
             <div class="row">
                 {% editable comment.is_public comment.is_removed %}
-                {% if not comment.is_removed and comment.is_public %}
-                {% include 'generic/includes/render_owner.html' with owner=comment.user timestamp=comment.submit_date %}
-                <div class="span6 noGutter">
-                    <div class="row">
-                        <div class="span6">
-                            {% include "actstream/render_actor_name.html" with actor=comment.user %}
-                        </div>
-                    </div>
-                    {% if comment.title %}
-                    <div class="row">
-                        <div class="span6 fontSize13">
-                            {{comment.title}}
-                            {% if comment.overall_value %}
-                                <span class="searchResultRatingSmall pull-right fontSize9 fontHelvetica searchResultRatingScheme rating-{{comment.overall_value|floatformat:"0"}}" style="display:inline-block;">{{comment.overall_value|floatformat:"1"}}
-                                </span>
+                    {% if not comment.is_removed and comment.is_public %}
+                        {% include 'generic/includes/render_owner.html' with owner=comment.user timestamp=comment.submit_date %}
+                        <div class="span6 noGutter">
+                            <div class="row">
+                                <div class="span6">
+                                    {% include "actstream/render_actor_name.html" with actor=comment.user %}
+                                </div>
+                            </div>
+                            {% if comment.title %}
+                                <div class="row">
+                                    <div class="span6 fontSize13">
+                                        {{comment.title}}
+                                        {% if comment.overall_value %}
+                                            <span class="searchResultRatingSmall pull-right fontSize9 fontHelvetica searchResultRatingScheme rating-{{comment.overall_value|floatformat:"0"}}" style="display:inline-block;">{{comment.overall_value|floatformat:"1"}}
+                                            </span>
+                                        {% endif %}
+                                    </div>
+                                </div>
                             {% endif %}
-                        </div>
-                    </div>
-                    {% endif %}
-                    <div class="row">
-                        <div class="span6 fontSize12">
-                            {{ comment.comment|comment_filter }}
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="span6 whiteBox topHalfGutter" style="padding: 8px 10px;">
-                            {% include 'generic/includes/each_review_rating.html' %}
-                        </div>
-                    </div>
-                    <div class="row topHalfGutter">
-                        <div class="span6 fontSize12">
-                            {% get_vendors_url comment.bought_category as search_url %}
-                            {% if comment.bought_category %}<a class="categoryTag" href="{{ search_url }}">{{comment.bought_category}}</a>{% endif %}
-                        </div>
-                    </div>
-                    <div class="row topHalfGutter">
-                        <div class="span6">
-                            {% with comment|get_reviewrating_obj as review_rating_obj %}
-                                {% if review_rating_obj %}
-                                        {% vote_by_user request.user on review_rating_obj as vote %}
-                                        {% voters_for_object review_rating_obj as voters %}
-                                        {% score_for_object review_rating_obj as score %}
-                                        {% if not vote %}
-                                            <span>{% trans "Was this review helpful?" %}</span>
-                                            <a class="found-helpful radioColorBackground colorWhite fontSize11" href="javascript:void(0)" data-href="{% url 'rating_on_reviews' review_rating_obj.id 'up' %}"><span>Yes</span>
-                                                <img class="noBoxShadow" src="{% static 'img/1transparent.png' %}">
-                                            </a>
-                                            <a class="pScore" href="{{ voters }}">({{score.num_up_votes}})</a>
-                                            {# <a class="not-found-helpful" href="javascript:void(0)" data-href="{% url 'rating_on_reviews' review_rating_obj.id 'down' %}">No</a> #}
-                                        {% else %}
-                                            <span>{% trans "You found this review helpful." %}</span>
-                                            <a class="clear-helpful colorWhite fontSize11" href="javascript:void(0)" data-href="{% url 'rating_on_reviews' review_rating_obj.id 'clear' %}"><span></span>
-                                                <img class="noBoxShadow" src="{% static 'img/1transparent.png' %}">
-                                            </a>
-                                            <a class="pScore" href="{{ voters }}">({{score.num_up_votes}})</a>
+                            <div class="row">
+                                <div class="span6 fontSize12">
+                                    {{ comment.comment|comment_filter }}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="span6 whiteBox topHalfGutter" style="padding: 8px 10px;">
+                                    {% include 'generic/includes/each_review_rating.html' %}
+                                </div>
+                            </div>
+                            <div class="row topHalfGutter">
+                                <div class="span6 fontSize12">
+                                    {% get_vendors_url comment.bought_category as search_url %}
+                                    {% if comment.bought_category %}<a class="categoryTag" href="{{ search_url }}">{{comment.bought_category}}</a>{% endif %}
+                                </div>
+                            </div>
+                            <div class="row topHalfGutter">
+                                <div class="span6">
+                                    {% with comment|get_reviewrating_obj as review_rating_obj %}
+                                        {% if review_rating_obj %}
+                                                {% vote_by_user request.user on review_rating_obj as vote %}
+                                                {% voters_for_object review_rating_obj as voters %}
+                                                {% score_for_object review_rating_obj as score %}
+                                                {% if not vote %}
+                                                    <span>{% trans "Was this review helpful?" %}</span>
+                                                    <a class="found-helpful radioColorBackground colorWhite fontSize11" href="javascript:void(0)" data-href="{% url 'rating_on_reviews' review_rating_obj.id 'up' %}"><span>Yes</span>
+                                                        <img class="noBoxShadow" src="{% static 'img/1transparent.png' %}">
+                                                    </a>
+                                                    <a class="pScore" href="{{ voters }}">({{score.num_up_votes}})</a>
+                                                    {# <a class="not-found-helpful" href="javascript:void(0)" data-href="{% url 'rating_on_reviews' review_rating_obj.id 'down' %}">No</a> #}
+                                                {% else %}
+                                                    <span>{% trans "You found this review helpful." %}</span>
+                                                    <a class="clear-helpful colorWhite fontSize11" href="javascript:void(0)" data-href="{% url 'rating_on_reviews' review_rating_obj.id 'clear' %}"><span></span>
+                                                        <img class="noBoxShadow" src="{% static 'img/1transparent.png' %}">
+                                                    </a>
+                                                    <a class="pScore" href="{{ voters }}">({{score.num_up_votes}})</a>
+                                                {% endif %}
+                                                {% if request.user == comment.user %}
+                                                {% get_delete_object_url comment as delete_review_url %}
+                                                <a class="deleteObject pull-right halfGutter" data-href="{{delete_review_url}}" data-object-type="review" href="javascript:void(0)"><img class="noBoxShadow" width="15px" height="15px" src="{% static 'img/cross_button.png' %}"></a>
+                                                <a class="editReview pull-right" href="javascript:void(0)" data-href="{% url 'edit_review' comment.id %}"><img class="noBoxShadow" width="15px" height="15px" src="{% static 'img/edit.png' %}"></a>
+                                                {% endif %}
                                         {% endif %}
-                                        {% if request.user == comment.user %}
-                                        {% get_delete_object_url comment as delete_review_url %}
-                                        <a class="deleteObject pull-right halfGutter" data-href="{{delete_review_url}}" data-object-type="review" href="javascript:void(0)"><img class="noBoxShadow" width="15px" height="15px" src="{% static 'img/cross_button.png' %}"></a>
-                                        <a class="editReview pull-right" href="javascript:void(0)" data-href="{% url 'edit_review' comment.id %}"><img class="noBoxShadow" width="15px" height="15px" src="{% static 'img/edit.png' %}"></a>
-                                        {% endif %}
-                                {% endif %}
-                            {% endwith %}
+                                    {% endwith %}
+                                </div>
+                            </div>
+                            <div class="row topHalfGutter radio_module">
+                                {% include 'generic/includes/comment_radio_module.html' %}
+                            </div>
+                            {% comment_count_on_object comment as total_comments %}
+
+                            <div class="row topHalfGutter">
+                                <div class="span6 whiteBoxLarge subcomments_container {% if total_comments == 0 %}hide{% endif %}">
+                                    {% include 'actstream/render_subcomments_actstream.html' with object=comment %}
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="row topHalfGutter radio_module">
-                        {% include 'generic/includes/comment_radio_module.html' %}
-                    </div>
-                    {% comment_count_on_object comment as total_comments %}
-                    <div class="row topHalfGutter">
-                        <div class="span6 whiteBoxLarge subcomments_container {% if total_comments == 0 %}hide{% endif %}">
-                            {% include 'actstream/render_subcomments_actstream.html' with object=comment %}
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        {% else %}
-            {% if request.user.is_superuser %}
-                <strong>
-                    {% if comment.url %}
-                    <a href="{{ comment.url }}">
-                        <img src="{% gravatar_url comment.email %}">
-                        {{ comment.user_name }}
-                    </a>
                     {% else %}
-                    <img src="{% gravatar_url comment.email %}">
-                    {{ comment.user_name }}
+                        {% if request.user.is_superuser %}
+                            <strong>
+                                {% if comment.url %}
+                                <a href="{{ comment.url }}">
+                                    <img src="{% gravatar_url comment.email %}">
+                                    {{ comment.user_name }}
+                                </a>
+                                {% else %}
+                                <img src="{% gravatar_url comment.email %}">
+                                {{ comment.user_name }}
+                                {% endif %}
+                            </strong>
+                            <p>{{ comment.comment|comment_filter }}</p>
+                        {% endif %}
+
+                        <p>
+                            {% if comment.is_removed %}
+                            {% trans "Comment deleted" %}
+                            {% else %}
+                            {% trans "Comment awaiting approval" %}
+                            {% endif %}
+                            <span class="timespan">{{ comment.submit_date|timesince }} {% trans "ago" %}</span>
+                        </p>
                     {% endif %}
-                </strong>
-                <p>{{ comment.comment|comment_filter }}</p>
-            {% endif %}
-
-            <p>
-                {% if comment.is_removed %}
-                {% trans "Comment deleted" %}
-                {% else %}
-                {% trans "Comment awaiting approval" %}
-                {% endif %}
-                <span class="timespan">{{ comment.submit_date|timesince }} {% trans "ago" %}</span>
-            </p>
-
-        {% endif %}
-        {% endeditable %}
+                {% endeditable %}
+            </div>
+            <hr class="dottedSeparator fullSeparator" style="margin-top:0;">
+        </div>
 
         {% if settings.COMMENTS_USE_RATINGS %}
-        {% rating_for comment %}
+            {% rating_for comment %}
         {% endif %}
-        
-        {% comment_thread comment %}
+        {# comment_thread comment #}
     </div>
-    <hr class="dottedSeparator fullSeparator" style="margin-top:0;">
-</div>

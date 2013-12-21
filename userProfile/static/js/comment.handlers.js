@@ -153,7 +153,7 @@ var review_submit_handler = function(){
             success: function (data) {
                 var ret_data = data;
                 if(ret_data.success) {
-                    var subcomments_element = $("#comments");
+                    var subcomments_element = $("#comments").find('.reviewContainer');
                     $form.trigger('reset');
                     var $edit_review = $form.find('[name="edit_review"]');
                     if ($edit_review.length > 0) {
