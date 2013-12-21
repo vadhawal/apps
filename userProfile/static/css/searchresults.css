@@ -55,6 +55,7 @@ p.webUrl{
 	margin-left: 10px;
 	line-height: 26px;
 	height: 26px;
+	font-size: 13px;
 }
 .searchFilter input[type="checkbox"]{
 	margin: 0;
