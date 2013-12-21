@@ -104,30 +104,33 @@
                         <a href="/"><img src="{% static 'img/wishRadioLogo.png' %}"/></a>
                     </div>
                 </div>
-                <div class="span8">
-                    <span class="wantText" style="float:left;">
-                            {% trans "I want" %}
-                    </span>
-                    {% blog_parentcategories_abs as parent_categories %}
-                    {% if parent_categories %}
-                    <div class="span2 halfGutterRight">
-                        <select name="blog_parentcategories" class="blog_parentcategories">
-                            <option value='empty' selected disabled>{% trans "By Category" %}</option>
-                            <option value="all">{% trans "All" %}</option>
-                            {% for category in parent_categories %}
-                            <option value="{{ category }}">{{ category }}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                    <div class="span2 halfGutterRight">
-                        <select name="blog_subcategories" class="blog_subcategories">
-                            <option value='empty' selected disabled>By Sub-category</option>
-                        </select>
-                    </div>
-                    {% endif %}
-                    <div class="span1">
-                        <div id="getvendorsdiv" style="display:inline-block;">
-                            <a id="getvendors" href="#"></a>
+                <div class="span8 noGutter">
+                    <div class="row">
+                        <div class="span2 colorWhite fontTitillium13 halfGutterRight">
+                            <span class="wantText">{% trans "For all wishes money can buy" %}&nbsp;<span class="colorYellow">{% trans "search here" %}</span>
+                            </span>
+                        </div>
+                        {% blog_parentcategories_abs as parent_categories %}
+                        {% if parent_categories %}
+                            <div class="span2 halfGutterRight">
+                                <select name="blog_parentcategories" class="blog_parentcategories">
+                                    <option value='empty' selected disabled>{% trans "By Category" %}</option>
+                                    <option value="all">{% trans "All" %}</option>
+                                    {% for category in parent_categories %}
+                                    <option value="{{ category }}">{{ category }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="span2 halfGutterRight">
+                                <select name="blog_subcategories" class="blog_subcategories">
+                                    <option value='empty' selected disabled>By Sub-category</option>
+                                </select>
+                            </div>
+                        {% endif %}
+                        <div class="span1">
+                            <div id="getvendorsdiv" style="display:inline-block;">
+                                <a id="getvendors" href="#"></a>
+                            </div>
                         </div>
                     </div>
                 </div>
