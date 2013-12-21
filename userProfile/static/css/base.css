@@ -720,6 +720,7 @@ span.vendorFollowContainer a{
 }
 span.vendorFollowContainer a.icon-follow{
 	display: inline-block;
+	width: auto;
 }
 span.vendorFollowContainer a.icon-following{
 	display: none;
@@ -732,10 +733,12 @@ span.vendorFollowContainer.following a.icon-follow{
 }
 span.vendorFollowContainer.following a.icon-following{
 	display: inline-block;
+	width: auto;
 }
 span.vendorFollowContainer.following a.icon-unfollow{
 	display: inline-block;
 	margin-left: 0px;
+	width: auto;
 }
 .icon-unfollow img {
 	background-image: url("/static/img/cross_button.png");
