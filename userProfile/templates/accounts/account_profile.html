@@ -150,7 +150,8 @@ var manageFeedOther = function() {
                 </div>
             </div> 
             {% else %}
-            <h2 class="accordion-header accordion-header-color-5">{% trans "Wishlist" %}
+            {% get_wishes_by_user profile_user as wishes %}
+            <h2 class="accordion-header accordion-header-color-5">{% trans "Wishlist" %} ({{wishes.count}})
                 <div class="yellowLineContainer">
                     <hr class="whiteLine"/>
                 </div>
@@ -162,13 +163,13 @@ var manageFeedOther = function() {
             {% endif %}
             {% if blog %}
             {% else %}
-            <h2 class="accordion-header accordion-header-color-4">{% trans "Reviews" %}
+            {% get_reviews_by_user profile_user as reviews %}
+            <h2 class="accordion-header accordion-header-color-4">{% trans "Reviews" %} ({{reviews.count}})
                 <div class="yellowLineContainer">
                     <hr class="whiteLine"/>
                 </div>
             </h2>
             <div class="accordion-content">
-                {% get_reviews_by_user profile_user as reviews %}
                 {% for review in reviews %}
                 <div class="row">
                     <div class="span1 text-center halfGutter">
@@ -208,7 +209,7 @@ var manageFeedOther = function() {
                 {% endfor %}
             </div>
             {% endif %}
-            <h2 class="accordion-header accordion-header-color-3">{% trans "Followers" %}
+            <h2 class="accordion-header accordion-header-color-3">{% trans "Followers" %} ({{profile_user.relationships.followers.count}})
                 <div class="yellowLineContainer">
                     <hr class="whiteLine"/>
                 </div>
@@ -216,7 +217,7 @@ var manageFeedOther = function() {
             <div class="accordion-content"> 
                 {% render_follower_subset profile_user 0 'MIN_FOLLOWERS_CHUNK'|settings_value 'MIN_FOLLOWERS_CHUNK'|settings_value %}
             </div>
-            <h2 class="accordion-header accordion-header-color-2">{% trans "Following" %}
+            <h2 class="accordion-header accordion-header-color-2">{% trans "Following" %} ({{profile_user.relationships.following.count}})
                 <div class="yellowLineContainer">
                     <hr class="whiteLine"/>
                 </div>
@@ -224,7 +225,7 @@ var manageFeedOther = function() {
             <div class="accordion-content"> 
                 {% render_following_subset profile_user 0 'MIN_FOLLOWERS_CHUNK'|settings_value 'MIN_FOLLOWERS_CHUNK'|settings_value %}
             </div>
-            <h2 class="accordion-header accordion-header-color-1">{% trans "Following Stores" %}
+            <h2 class="accordion-header accordion-header-color-1">{% trans "Following Stores" %} ({{profile_user|vendor_following_count}})
                 <div class="yellowLineContainer">
                     <hr class="whiteLine"/>
                 </div>

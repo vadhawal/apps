@@ -146,6 +146,26 @@ def get_reviews_by_user(parser, token):
         raise template.TemplateSyntaxError("second argument to '%s' tag must be 'as'" % bits[0])
     return ReviewsByUser(bits[1], bits[3])
 
+class WishesByUser(template.Node):
+    def __init__(self, user, context_var):
+        self.user = template.Variable(user)
+        self.context_var = context_var
+
+    def render(self, context):
+        user_instance = self.user.resolve(context)
+        content_type = ContentType.objects.get_for_model(user_instance).pk
+        context[self.context_var] = BroadcastWish.objects.all().filter(content_type=content_type, object_id=user_instance.pk)
+        return  ''
+
+@register.tag
+def get_wishes_by_user(parser, token):
+    bits = token.contents.split()
+    if len(bits) != 4:
+        raise template.TemplateSyntaxError("'%s' tag takes exactly three arguments" % bits[0])
+    if bits[2] != 'as':
+        raise template.TemplateSyntaxError("second argument to '%s' tag must be 'as'" % bits[0])
+    return WishesByUser(bits[1], bits[3])
+
 @register.inclusion_tag("wish/render_post.html", takes_context=True)
 def render_post(context, post):
     context.update({

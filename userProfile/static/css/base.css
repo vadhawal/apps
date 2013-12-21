@@ -322,7 +322,7 @@ div span.wantText{
 	background-color:rgba(255,255,255,1);
 	-webkit-box-shadow : 1.25px 1.25px 1.25px rgba(132,125,125,0.75);
 	box-shadow : 1.25px 1.25px 1.25px rgba(132, 125, 125, 0.75);
-	filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=1.25, OffY=1.25, Color='#847D7D');
+	/*filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=1.25, OffY=1.25, Color='#847D7D');*/
 	border-width: 1px;
 	border-color: rgba(132,125,125,0.4);
 	border-bottom-width: 0px;
