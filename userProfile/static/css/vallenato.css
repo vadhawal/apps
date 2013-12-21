@@ -24,7 +24,7 @@
 	display: none;
 }
 .accordion-header {
-	font-family: titillium1;
+	font-family: titillium1, helvetica;
 	white-space: nowrap;
 	display: table;
 	font-size: 15px;
