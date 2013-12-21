@@ -39,7 +39,11 @@
 
         {% if request.user == owner %}
             {% get_delete_object_url wish as delete_wish_url %}
-            <a class="deleteObject" data-object-type="wish" data-href="{{delete_wish_url}}" href="javascript:void(0);">X</a>
+            <div class="topRight">
+                <a class="deleteObject" data-object-type="wish" data-href="{{delete_wish_url}}" href="javascript:void(0);">
+                    <img class="noBoxShadow" width="15px" height="15px" style="display:inline-block" src="{% static 'img/cross_button.png' %}">
+                </a>
+            </div>
         {% endif %}
         <hr class="dottedSeparator"/>
     </div>
