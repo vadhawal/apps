@@ -936,3 +936,6 @@ div.vendorImage{
 .imageFeed{
 	max-height:150px;
 }
+[id*="action"]:hover .radioModuleFeedRadio {
+	background-image: url('/static/img/radio_green.png');
+}
