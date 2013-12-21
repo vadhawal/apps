@@ -168,6 +168,9 @@ a.radioColorBackground:hover{
 .colorBlack{
 	color: black;
 }
+.colorYellow{
+	color: #F9DF1E;
+}
 .colorDarkerGrey{
 	color : #64635F;
 	color : rgb(100, 99, 95);
@@ -279,7 +282,7 @@ a.colorWhite:hover{
 	background-color:rgba(229,244,244,1.00);
 	background-image: url('/static/img/selectPointer.png');
 	background-repeat: no-repeat;
-	background-position: 94% 8px;
+	background-position: 95% 8px;
 	-webkit-appearance: none;
 	-moz-appearance: none;
 	-ms-appearance: none;
@@ -297,13 +300,8 @@ a.colorWhite:hover{
 	padding-left: 5px;
 }
 div span.wantText{
-	color:white;
-	font-family: titillium1, helvetica;
 	display: inline-block;
 	margin-top: 15px;
-	padding-left:30px;
-	padding-right: 10px;
-	font-size: 28px;
 }
 #getvendorsdiv{
 	height: 60px;
@@ -594,7 +592,7 @@ a.shareObject {
 	background-color:rgba(249, 223, 30, 1);
 	background-image: url('/static/img/selectPointer.png');
 	background-repeat: no-repeat;
-	background-position: 94% 8px;
+	background-position: 97% 8px;
 	-webkit-appearance: none;
 	-moz-appearance: none;
 	-ms-appearance: none;
@@ -937,4 +935,7 @@ div.vendorImage{
 }
 .imageFeed{
 	max-height:150px;
+}
+[id*="action"]:hover .radioModuleFeedRadio {
+	background-image: url('/static/img/radio_green.png');
 }
