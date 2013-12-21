@@ -31,8 +31,14 @@ function updateSearchCategory () {
 		var subCategory = decodeURIComponent(patharr[3]);
 		var parentSelect = $(".blog_parentcategories");
 		var subSelect = $(".blog_subcategories");
+		if (parentCategory.toLowerCase() == "all") {
+			parentCategory = parentCategory.toLowerCase()
+		}
 		parentSelect.val(parentCategory);
 		parentSelect.trigger("change");
+		if (subCategory.toLowerCase() == "all") {
+			subCategory = subCategory.toLowerCase()
+		}
 		subSelect.val(subCategory);
 		subSelect.trigger("change");
 	}
