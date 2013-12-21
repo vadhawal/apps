@@ -64,7 +64,7 @@ var FollowUnfollow = function($elementClicked, new_count) {
         classes = classes.replace('following', '');
     }
     $element.attr('class', classes); 
-    var $followerCountElement = $("#" + $elementClicked.data("id"));
+    var $followerCountElement = $elementClicked.parent().parent().find('.vendorFollowers');
     if ($followerCountElement) {
         console.log($followerCountElement.html());
         var newHTML = "("+new_count+")";
