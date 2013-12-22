@@ -172,22 +172,23 @@
 #closePreview{
 	float: right;
 	margin-right: -66px;
-	background-image: url('../img/close.png');
+	background-image: url('../img/cross_button.png');
 	background-repeat: no-repeat;
-	background-position: left 0px;
+/*	background-position: left 0px;*/
 	height: 15px;
 	width: 15px;
 	cursor: pointer;
+	opacity: 0.7;
 }
 #closePreview:hover{
-	background-image: url('../img/close.png');
-	background-repeat: no-repeat;
-	background-position: left -32px;
+	background-image: url('../img/cross_button.png');
+	opacity: 1;
+/*	background-position: left -32px;*/
 }
 #closePreview:active{
-	background-image: url('../img/close.png');
-	background-repeat: no-repeat;
-	background-position: left -48px;
+	background-image: url('../img/cross_button.png');
+	opacity: 1;
+/*	background-position: left -48px;*/
 }
 .postPreviewButton{
 	padding: 4px 16px;
