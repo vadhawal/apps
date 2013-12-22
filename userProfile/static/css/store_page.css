@@ -147,3 +147,17 @@ select.boughtCategory{
 	padding: 0px;
 	border: none;
 }
+div.vendorLogoImage{
+	height: 150px;
+	line-height: 150px;
+	background-image: url("/static/img/vendor_background.png");
+	background-size: 150px 150px;
+	background-position: center;
+	background-repeat: no-repeat;
+}
+div.vendorLogoImage img{
+	width: 140px;
+	max-height: 140px;
+	padding: 5px;
+	display: inline-block;
+}
