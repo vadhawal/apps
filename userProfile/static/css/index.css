@@ -25,13 +25,17 @@
 	margin-top: 6px;
 }
 #topStoresForStoreCategory img.smallIcon{
-	max-height: 45px;
+	max-height: 41px;
+	width: 41px;
+	padding: 2px;
 	vertical-align:middle;
 	display:inline-block;
 }
 #topStoresForStoreCategoryAuth img.smallIcon, 
 #topReviewsForStoreCategoryAuth img.smallIcon {
-	max-height: 45px;
+	padding: 2px;
+	max-height: 41px;
+	width: 41px;
 	vertical-align:middle;
 	display:inline-block;
 }

@@ -775,7 +775,9 @@ a.store_sharers{
 	font-size : 18px;
 }
 img.smallIcon{
-	max-height: 45px;
+	max-height: 41px;
+	width: 41px;
+	padding: 2px;
 }
 #status{
 	color: #5D5D5D;
