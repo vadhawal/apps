@@ -10,14 +10,14 @@
 {% for wish in wish_list %}
     {% get_reldata_url wish as rel_data_url %}
     {% comment_count_on_object wish as total_comments %}
-    <div class="dealBox_v_elem bottomHalfGutter topHalfGutter objectToBeDeleted"> 
+    <div class="dealBox_v_elem objectToBeDeleted"> 
     	{% if wish.wishimage and wish.wishimage.image  %}
 			{% thumbnail wish.wishimage.image "400x400" as img %}
                 <a class="wishimg-deal-homepage" href="{{  wish.wishimage.image.url }}" rel="userpage_wish" data-reldata-url="{{rel_data_url}}" style="">
-        	       <span class="fontSize13 bottomHalfGutter" style="display:inline-block;">
+        	       <span class="fontSize13" style="display:inline-block;">
         		      {{ wish.message|urlize }}
         	       </span>
-                    <img class="noBoxShadow" src="{{img.url}}">
+                    <img class="noBoxShadow top6Margin" src="{{img.url}}">
                 </a>
             <div class="whiteBoxGlassy pagination-centered">
                 {% include 'generic/includes/render_voting.html' with object=wish %}
