@@ -18,7 +18,9 @@ $(document).ready(function()
 	
 	//Open The First Accordion Section When Page Loads
 	$('.accordion-header').first().toggleClass('active-header').toggleClass('inactive-header');
-	$('.accordion-content').first().slideDown().toggleClass('open-content');
+	$('.accordion-content').first().slideDown(400, function(){
+		setupScrollBar($(this));
+	}).toggleClass('open-content');
 
 	var setupScrollBar = function ($contentElement) {
 		/* If accordian is being opened and scrolling is not enabled alredy, enable it now. */
@@ -38,7 +40,9 @@ $(document).ready(function()
 				$('.active-header').toggleClass('active-header').toggleClass('inactive-header').next().slideToggle().toggleClass('open-content');
 				$this.toggleClass('active-header').toggleClass('inactive-header');
 				$nextContentElement = $this.next();
-				$nextContentElement.slideToggle().toggleClass('open-content');
+				$nextContentElement.slideToggle(400, function(){
+					setupScrollBar($nextContentElement);
+				}).toggleClass('open-content');
 			}
 			else {
 				/* Disabling closure of already opened header */
@@ -48,14 +52,17 @@ $(document).ready(function()
 				if ($nextAccordianHeader.length) {
 					$nextAccordianHeader.toggleClass('active-header').toggleClass('inactive-header');
 					$nextContentElement = $nextAccordianHeader.next();
-					$nextContentElement.slideToggle().toggleClass('open-content'); 
+					$nextContentElement.slideToggle(400, function(){
+						setupScrollBar($nextContentElement);
+					}).toggleClass('open-content'); 
 				} else {
 					$('.accordion-header').first().toggleClass('active-header').toggleClass('inactive-header');
 					$nextContentElement = $('.accordion-content').first();
-					$nextContentElement.slideDown().toggleClass('open-content');
+					$nextContentElement.slideDown(400, function(){
+						setupScrollBar($nextContentElement);
+					}).toggleClass('open-content');
 				}
 			}
-			setupScrollBar($nextContentElement);
 		});
 	}
 	

@@ -60,6 +60,8 @@ function getWishList() {
         $('#load-wish').html(data.html);
         install_voting_handlers($('#load-wish'));
         $('.shareWish').on('click', sharewish_handler);
+        $contentElement = $('.accordion-content').first();
+        setupCustomScrollBar($contentElement);
     });  
 }
 
@@ -170,48 +172,7 @@ var manageFeedOther = function() {
                 </div>
             </h2>
             <div class="accordion-content">
-                {% for review in reviews %}
-                <div class="row top6Margin">
-                    <div class="span0_5 vendorImage span0_5Height text-center" style="padding-left: 0px;
-background-position: left;">
-                        <a href='{{review.content_object.get_absolute_url}}'>
-                            <img src="
-                            {% if settings.BLOG_USE_FEATURED_IMAGE %}
-                                {% if review.content_object.featured_image %}
-                                    {% thumbnail review.content_object.featured_image "100x100" as img %}
-                                        {{ img.url }}
-                                    {% endthumbnail %}
-                                {% else %}
-                                    {% static "img/store_default.png" %}
-                                {% endif %}
-                            {% endif %}"
-                            class="noBoxShadow smallIcon"
-                            >
-                        </a>
-                    </div>
-                    <div class="span2 noGutter fontTitillium2 fontSize12">
-                        <div class="row">
-                            <div class="span2">
-                                <a class="fontSize13 radioColor fontHelvetica" href="{{ review.content_object.get_absolute_url }}">{{ review.content_object|title }}
-                                </a>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="span2">
-                                {{ review.introchars }}
-                                <a class="radioColor" href ="{% url render_review review.content_object.slug review.id %}">&nbsp;{% trans "More" %}</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <hr class="dottedSeparator">
-                {% empty %}
-                <div class="row">
-                    <div class="span2">
-                        {% trans "No Reviews written" %}
-                    </div>
-                </div>
-                {% endfor %}
+                 {% render_reviews_for_user profile_user 'REVIEWS_PER_PAGE'|settings_value 'vertical' %}
             </div>
             {% endif %}
             <h2 class="accordion-header accordion-header-color-3">{% trans "Followers" %} ({{profile_user.relationships.followers.count}})

@@ -518,6 +518,31 @@ def get_last_name(user):
     return ""
 
 @register.simple_tag(takes_context=True)
+def render_reviews_for_user(context, user, latest=settings.MIN_REVIEWS_FOR_USER, orientation='horizontal'):
+    template_name = 'generic/user_reviews.html'
+    search_param = ''
+    if orientation == 'vertical':
+        template_name = 'generic/user_reviews_v.html'
+        search_param = '?v=1'
+
+    template = loader.get_template(template_name)
+    ctype = ContentType.objects.get_for_model(BlogPost)
+    reviews_queryset = Review.objects.filter(user=user, content_type=ctype)
+    reviews_list = reviews_queryset[:latest]
+
+    data_href = reverse('getUserReviews', kwargs={'user_id':user.id,
+                                                  'sIndex':0,
+                                                  'lIndex':latest})
+    data_chunk = 5
+
+    return template.render(RequestContext(context['request'], {
+        'reviews' : reviews_list,
+        'data_href' : data_href + search_param,
+        'data_chunk': data_chunk
+    }))
+
+
+@register.simple_tag(takes_context=True)
 def render_deals_for_categories(context, parent_category, sub_category, latest=settings.DEALS_NUM_LATEST, orientation='horizontal'):
         template_name = 'wish/deallist.html'
         search_param = ''
