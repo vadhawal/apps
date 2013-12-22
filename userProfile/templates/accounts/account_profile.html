@@ -5,6 +5,7 @@
 {% load hitcount_tags %}
 {% load userProfile_tags %}
 {% load follow_tags %}
+{% load thumbnail %}
 
 {% block meta_title %}{{ profile_user.username }}{% endblock %}
 {% block title %}{{ profile_user.username }} | Wishradio{% endblock %}
@@ -170,33 +171,40 @@ var manageFeedOther = function() {
             </h2>
             <div class="accordion-content">
                 {% for review in reviews %}
-                <div class="row">
-                    <div class="span1 text-center halfGutter">
-                        <div>
-                            <a style="vertical-align:middle;" href='{{review.content_object.get_absolute_url}}'>
-                                <img style="max-height:55px;max-width:55px" src="
-                                {% if settings.BLOG_USE_FEATURED_IMAGE %}
-                                    {% if review.content_object.featured_image %}
-                                        {{ MEDIA_URL }}{% thumbnail review.content_object.featured_image 100 0 %}
-                                    {% else %}
-                                        {% static "img/store_default.png" %}
-                                    {% endif %}
-                                {% endif %}"
-                                class="noBoxShadow"
-                                >
-                            </a>
-                        </div>
-                        <div>
-                            <a class="fontSize13 radioColor fontHelvetica" href="{{ review.content_object.get_absolute_url }}">
-                                {{ review.content_object|title }}
-                            </a>
-                        </div>
+                <div class="row top6Margin">
+                    <div class="span0_5 vendorImage span0_5Height text-center" style="padding-left: 0px;
+background-position: left;">
+                        <a href='{{review.content_object.get_absolute_url}}'>
+                            <img src="
+                            {% if settings.BLOG_USE_FEATURED_IMAGE %}
+                                {% if review.content_object.featured_image %}
+                                    {% thumbnail review.content_object.featured_image "100x100" as img %}
+                                        {{ img.url }}
+                                    {% endthumbnail %}
+                                {% else %}
+                                    {% static "img/store_default.png" %}
+                                {% endif %}
+                            {% endif %}"
+                            class="noBoxShadow smallIcon"
+                            >
+                        </a>
                     </div>
-                    <div class="span2 noGutter">
-                        {{ review.introchars }}
-                        <a class="radioColor" href ="{% url render_review review.content_object.slug review.id %}">&nbsp;{% trans "More" %}</a>
+                    <div class="span2 noGutter fontTitillium2 fontSize12">
+                        <div class="row">
+                            <div class="span2">
+                                <a class="fontSize13 radioColor fontHelvetica" href="{{ review.content_object.get_absolute_url }}">{{ review.content_object|title }}
+                                </a>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="span2">
+                                {{ review.introchars }}
+                                <a class="radioColor" href ="{% url render_review review.content_object.slug review.id %}">&nbsp;{% trans "More" %}</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
+                <hr class="dottedSeparator">
                 {% empty %}
                 <div class="row">
                     <div class="span2">
