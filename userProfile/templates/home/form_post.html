@@ -16,25 +16,6 @@
                 <input id="fakeselect" type="button"/> <span class="fontTitillium1 fontSize11 colorDarkerGrey">{% trans "Upload an Image" %}</span>
             </div>
             <input type="hidden" name="urlPreviewContent" id="urlPreviewContent" value="" />
-                    <div id="preview">
-                        <div id="previewImages">
-                            <div id="previewImage"><img src='{{STATIC_URL}}img/loader.gif' style='margin-left: 43%; margin-top: 39%;' ></img></div>
-                            <input type="hidden" id="photoNumber" value="0" />
-                        </div>
-                        <div id="previewContent">
-                            <div id="closePreview" title="Remove" ></div>
-                            <div id="previewTitle"></div>
-                            <div id="previewUrl"></div>
-                            <div id="previewDescription"></div>
-                            <div id="hiddenDescription"></div>
-                            <div id="previewButtons" >
-                                <div id='previewPreviousImg' class="buttonLeftDeactive" ></div><div id='previewNextImg' class="buttonRightDeactive"  ></div>  <div class="photoNumbers" ></div> <div class="chooseThumbnail">{% trans "Choose a thumbnail" %}</div>
-                            </div>
-                            <input type="checkbox" id="noThumb" class="noThumbCb" />
-                            <div class="nT"  ><span id="noThumbDiv" >{% trans "No thumbnail" %}</span></div>
-                        </div>
-                        <div style="clear: both"></div>
-                    </div>
             <div class="previewPostedList"></div>
         </div>
         <div class="span2 topHalfGutter">
@@ -90,7 +71,27 @@
             <input id="submitwithurl" class="radioPost" style="display:none;" type="button" value="" />
         </div>
     </form>
-
+    <div id="previewContainer" class="span7 halfGutter bottomHalfGutter">
+        <div id="preview">
+            <div id="previewImages">
+                <div id="previewImage"><img src='{{STATIC_URL}}img/loader.gif' style='margin-left: 43%; margin-top: 39%;' ></img></div>
+                <input type="hidden" id="photoNumber" value="0" />
+            </div>
+            <div id="previewContent">
+                <div id="closePreview" title="Remove" ></div>
+                <div id="previewTitle"></div>
+                <div id="previewUrl"></div>
+                <div id="previewDescription"></div>
+                <div id="hiddenDescription"></div>
+                <div id="previewButtons" >
+                    <div id='previewPreviousImg' class="buttonLeftDeactive" ></div><div id='previewNextImg' class="buttonRightDeactive"  ></div>  <div class="photoNumbers" ></div> <div class="chooseThumbnail">{% trans "Choose a thumbnail" %}</div>
+                </div>
+                <input type="checkbox" id="noThumb" class="noThumbCb" />
+                <div class="nT"  ><span id="noThumbDiv" >{% trans "No thumbnail" %}</span></div>
+            </div>
+            <div style="clear: both"></div>
+        </div>
+    </div>
     <div class="progress" style="display:None;position:relative;">
         <div class="bar"></div >
         <div class="percent">0%</div >
