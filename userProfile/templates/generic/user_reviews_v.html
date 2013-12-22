@@ -1,0 +1,51 @@
+{% load i18n  static %}
+{% load thumbnail %}
+
+
+{% if not is_incremental %}
+<div class="scrollContainer" style="max-height:400px; overflow: hidden;" data-href="{{data_href}}" data-chunk="{{data_chunk}}">
+{% endif %}
+{% for review in reviews %}
+<div class="row top6Margin">
+    <div class="span0_5 vendorImage span0_5Height text-center" style="padding-left: 0px;background-position: left;">
+        <a href='{{review.content_object.get_absolute_url}}'>
+            <img src="
+            {% if settings.BLOG_USE_FEATURED_IMAGE %}
+                {% if review.content_object.featured_image %}
+                    {% thumbnail review.content_object.featured_image "100x100" as img %}
+                        {{ img.url }}
+                    {% endthumbnail %}
+                {% else %}
+                    {% static "img/store_default.png" %}
+                {% endif %}
+            {% endif %}"
+            class="noBoxShadow smallIcon"
+            >
+        </a>
+    </div>
+    <div class="span2 noGutter fontTitillium2 fontSize12">
+        <div class="row">
+            <div class="span2">
+                <a class="fontSize13 radioColor fontHelvetica" href="{{ review.content_object.get_absolute_url }}">{{ review.content_object|title }}
+                </a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="span2">
+                {{ review.introchars }}
+                <a class="radioColor" href ="{% url render_review review.content_object.slug review.id %}">&nbsp;{% trans "More" %}</a>
+            </div>
+        </div>
+    </div>
+</div>
+<hr class="dottedSeparator">
+{% empty %}
+<div class="row">
+    <div class="span2">
+        {% trans "No Reviews written" %}
+    </div>
+</div>
+{% endfor %}
+{% if not is_incremental %}
+</div>
+{% endif %}

@@ -407,6 +407,52 @@ def unfollowDeal(request, deal_id):
 	actions.unfollow(request.user, dealObject, send_action=False)
 	return HttpResponse('ok')
 
+def getUserReviews(request, user_id, sIndex=0, lIndex=0):
+	if request.method == "GET" and request.is_ajax():
+		try:
+			user_instance = User.objects.get(id=user_id)
+		except:
+			return []
+
+		ctype = ContentType.objects.get_for_model(BlogPost)
+		reviews = Review.objects.filter(user=user_instance, content_type=ctype)
+
+		isVertical = request.GET.get('v', '0')
+		template = 'generic/user_reviews.html'
+		if isVertical == '1':
+			template = 'generic/user_reviews_v.html'
+
+		s = (int)(""+sIndex)
+		l = (int)(""+lIndex)
+		if l == 0:
+			sub_reviews = reviews
+		else:
+			sub_reviews = reviews[s:l]
+
+		context = RequestContext(request)
+		context.update({'reviews': sub_reviews,
+						'is_incremental': True})
+
+		if sub_reviews:
+			ret_data = {
+				'html': render_to_string(template, context_instance=context).strip(),
+				'success': True
+			}
+		elif s == 0:
+			template = Template('<span>No Reviews found.</span>')
+			ret_data = {
+				'html': template.render(context).strip(),
+				'success': True
+			}
+		else:
+			ret_data = {
+				'success': False
+			}			
+
+		return HttpResponse(json.dumps(ret_data), mimetype="application/json")
+	else:
+		raise Http404()
+
 def getTrendingReviews(request, parent_category, sub_category, sIndex=0, lIndex=0):
 
 	if request.method == "GET" and request.is_ajax():
