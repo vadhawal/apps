@@ -81,3 +81,9 @@ div.vendorImageLarge{
 	background-position: center;
 	background-repeat: no-repeat;
 }
+div.vendorImageLarge img{
+	width: 94px;
+	max-height: 94px;
+	padding: 3px;
+	display: inline-block;
+}

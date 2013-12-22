@@ -67,7 +67,7 @@
 				    {% for result in results.object_list %}
 				    <div class="vendorResult topHalfGutter row">
 				    	<div class="span1_5 vendorImageLarge pagination-centered halfGutter">
-				    		<a style="vertical-align:middle;" href="{{ result.get_absolute_url }}">
+				    		<a href="{{ result.get_absolute_url }}">
 							<img src="
 									{% if settings.BLOG_USE_FEATURED_IMAGE %}
 										{% if result.featured_image %}
