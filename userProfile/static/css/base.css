@@ -640,6 +640,14 @@ a.shareObject {
 	font-size: 11px;
 	display: none;
 }
+.dealBox_v_elem div.topRight{
+	top:0px;
+	right:10px;
+	left: auto;
+	bottom: auto;
+	width: auto;
+	line-height: normal;
+}
 .dealBox_v_elem:hover div {
 	display: block;
 }

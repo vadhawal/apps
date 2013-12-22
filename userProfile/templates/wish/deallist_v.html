@@ -3,7 +3,7 @@
 {% load comment_tags %}
 {% load voting_tags %}
 {% load activity_tags %}
-{% load thumbnail %}
+{% load thumbnail static %}
 
 {% if not is_incremental %}
 <div class="dealBox_v scrollContainer" data-href="{{data_href}}" data-chunk="{{data_chunk}}">
@@ -31,7 +31,11 @@
 
         {% if request.user == owner.user %}
             {% get_delete_object_url deal as delete_deal_url %}
-            <a class="deleteObject" data-object-type="deal" data-href="{{delete_deal_url}}" href="javascript:void(0);">X</a>
+            <div class="topRight">
+                <a class="deleteObject" data-object-type="deal" data-href="{{delete_deal_url}}" href="javascript:void(0);">
+                    <img class="noBoxShadow" width="15px" height="15px" style="display:inline-block" src="{% static 'img/cross_button.png' %}">
+                </a>
+            </div>
         {% endif %}
 
     </div>
