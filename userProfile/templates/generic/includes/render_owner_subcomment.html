@@ -2,37 +2,41 @@
 {% load static thumbnail userProfile_tags %}
 
 {% if owner %}
-	<div class="span0_25 span0_25Height">
+	<div class="span0_25 span0_25Height" style="margin-top:3px;">
 		{% if owner.get_absolute_url %}
 			<a href="{{ owner.get_absolute_url }}">
 			{% if owner|get_class_name == "User" %}
 				{% if owner.get_profile.profile_photo %}
 					{% thumbnail owner.get_profile.profile_photo "100x100" as img %}
-						<img class="smallIcon noBoxShadow" src="{{img.url}}">
+						<img src="{{img.url}}">
 					{% endthumbnail %}
 				{% elif owner.get_profile.image_url %}
-					<img class="smallIcon noBoxShadow" src="{{ owner.get_profile.image_url|add:"?width=45&height=45"  }}">
+					<img style="padding:1px;" src="{{ owner.get_profile.image_url|add:"?width=30&height=30"  }}">
 				{% else %}
 					{% if request.user.get_profile.gender %}
                     	{% if owner.get_profile.gender == "male" %}
-                        	<img class="noBoxShadow smallIcon" src="{% static "img/man_icon.png" %}">
+                        	<img src="{% static "img/man_icon.png" %}">
                     	{% else %}
-                        	<img class="noBoxShadow smallIcon" src="{% static "img/woman_icon.png" %}">
+                        	<img src="{% static "img/woman_icon.png" %}">
                     	{% endif %}
                     {% else %}
-                        <img class="noBoxShadow smallIcon" src="{% static "img/man_icon.png" %}">
+                        <img src="{% static "img/man_icon.png" %}">
                     {% endif %}
 				{% endif %}
 			{% elif owner|get_class_name == "BlogPost" %}
+				{% if owner.featured_image %}
 					{% thumbnail owner.featured_image "100x100" as img %} 
-					<img style="height:55px; max-height:55px;" src="{{img.url}}">
+						<img src="{{img.url}}">
 					{% endthumbnail %}
+				{% else %}
+					<img src="{% static "img/store_default.png" %}">
+				{% endif %}
 			{% else %}
-				<img class="noBoxShadow smallIcon" src="{% static "img/man_icon.png" %}">
+				<img src="{% static "img/man_icon.png" %}">
 			{% endif %}
 			</a>
 		{% else %}
-			<img class="noBoxShadow smallIcon" src="{% static "img/man_icon.png" %}">
+			<img src="{% static "img/man_icon.png" %}">
 		{% endif %}
 	</div>
 {% endif %}

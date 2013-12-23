@@ -822,7 +822,7 @@ def get_reviews_by_user(request, user_id, template="generic/includes/reviews_pag
     """
     user_instance = User.objects.get(id=user_id)
     ctype = ContentType.objects.get_for_model(BlogPost)
-    reviews = ThreadedComment.objects.filter(user=user_instance, content_type=ctype)
+    reviews = Review.objects.filter(user=user_instance, content_type=ctype)
 
     return render_to_response('generic/includes/reviews_page.html', {
        'reviews': reviews, 
