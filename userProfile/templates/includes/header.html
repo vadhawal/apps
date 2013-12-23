@@ -1,6 +1,6 @@
 {% load future %}
 {% load i18n static %}
-{% load blog_tags %}
+{% load blog_tags mezzanine_tags %}
 
 <div class="yellowBar navbar navbar-fixed-top">
 </div>
@@ -132,6 +132,7 @@
                                 <a id="getvendors" href="#"></a>
                             </div>
                         </div>
+                        {% search_form "blog.BlogPost" %}
                     </div>
                 </div>
             </div>

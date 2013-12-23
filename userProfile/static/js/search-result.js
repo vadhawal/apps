@@ -1,11 +1,15 @@
 var filterSearchHandler = function(event) {
-	var $url = [location.protocol, '//', location.host, location.pathname].join('');
-	$url = $url + '?filter=';
+	//var $url = [location.protocol, '//', location.host, location.pathname].join('');
+	var params = getParameters();
+
+	var $filterQuery = '';
 	$('.searchFilter :checked').each(function(i, selected){ 
-  		$url += $(selected).val().toLowerCase() + '-'; 
+  		$filterQuery += $(selected).val().toLowerCase() + '-'; 
 	});
-	$url = $url.slice(0,-1); //remove the extra last '-' seperator.
-	window.location.href = $url;
+	$filterQuery = $filterQuery.slice(0,-1); //remove the extra last '-' seperator.
+
+    params.filter = $filterQuery;
+	update_url(params, true);
 }
 
 function updateCheckBoxes () {
