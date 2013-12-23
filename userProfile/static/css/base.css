@@ -731,12 +731,15 @@ span.vendorFollowContainer a{
 span.vendorFollowContainer a.icon-follow{
 	display: inline-block;
 	width: auto;
+	margin-top: 0px;
 }
 span.vendorFollowContainer a.icon-following{
 	display: none;
+	margin-top: 0px;
 }
 span.vendorFollowContainer a.icon-unfollow{
 	display:none;
+	margin-top: 0px;
 }
 span.vendorFollowContainer.following a.icon-follow{
 	display: none;
