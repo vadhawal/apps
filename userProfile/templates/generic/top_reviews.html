@@ -7,20 +7,24 @@
 {% endif %}
 {% for review in comments %}
 <div class="row topReviews top6Margin">
-    <div class="span1 text-center ">
+    <div class="span1 text-center" style="margin-right:12px;">
         <a style="vertical-align:middle;" href='{{review.user.get_absolute_url}}'>
         {% if review.user.get_profile.profile_photo %}    
             {% thumbnail review.user.get_profile.profile_photo "100x100" as img %}
             <img class="reviewUserImage" src="{{ MEDIA_URL }}{{img}}">
             {% endthumbnail %}
         {% elif review.user.get_profile.image_url %}
-            <img class="reviewUserImage" src="{{ review.user.get_profile.image_url|add:"?width=70&height=70" }}">
+            <img class="reviewUserImage"  src="{{ review.user.get_profile.image_url|add:"?width=70&height=70" }}">
         {% else %}
-            <img class="reviewUserImage" src="{% static 'img/defaultProfilePic.gif' %}"> 
+            {% if not owner.get_profile.gender or owner.get_profile.gender == "male" %}
+                <img class="reviewUserImage" src="{% static "img/man_icon.png" %}">
+            {% else %}
+                <img class="reviewUserImage" src="{% static "img/woman_icon.png" %}">
+            {% endif %}
         {% endif %}
         </a>
     </div>
-    <div class="span3 noGutter imageMarginReviews">
+    <div class="span3 noGutter">
         <div>
             <a class="fontTitillium1 fontSize13 radioColor" href="{{review.user.get_absolute_url}}">{% get_full_name review.user %}</a>
         </div>

@@ -96,7 +96,10 @@
 .reviewUserImage {
 	vertical-align:middle;
 	display:inline-block;
-	margin-left:6px;
+	margin-left: 6px;
+}
+.topReviews_v .topReviews .span0_5Height .reviewUserImage {
+	margin-left: 0px;
 }
 .statusBox {
 	background : #FFFFFF;

@@ -7,7 +7,7 @@
 {% endif %}
 {% for review in comments %}
 <div class="row topReviews {% if not forloop.first %}top6Margin{% endif %}">
-    <div class="span1 text-center halfGutter">
+    <div class="span0_5 vendorImage span0_5Height text-center">
         <a style="vertical-align:middle;" href='{{review.user.get_absolute_url}}'>
         {% if review.user.get_profile.profile_photo %}    
             {% thumbnail review.user.get_profile.profile_photo "100x100" as img %} 
@@ -17,9 +17,9 @@
             <img class="reviewUserImage smallIcon" src="{{ review.user.get_profile.image_url|add:"?width=45&height=45" }}">
         {% else %}
             {% if not owner.get_profile.gender or owner.get_profile.gender == "male" %}
-                <img class="reviewUserImage noBoxShadow smallIcon" src="{% static "img/man_icon.png" %}">
+                <img class="reviewUserImage smallIcon" src="{% static "img/man_icon.png" %}">
             {% else %}
-                <img class="reviewUserImage noBoxShadow smallIcon" src="{% static "img/woman_icon.png" %}">
+                <img class="reviewUserImage smallIcon" src="{% static "img/woman_icon.png" %}">
             {% endif %}
         {% endif %}
         </a>
