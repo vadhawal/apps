@@ -144,9 +144,6 @@ a.radioColorBackground:hover{
 .noGutter {
 	margin-left: 0px;
 }
-.imageMarginReviews {
-	margin-left: 12px;
-}
 .storeTopMargin {
 	margin-top: 5px;
 }
@@ -627,7 +624,7 @@ a.shareObject {
 	margin-bottom: 6px;
 	position: relative;
 }
-.topStores_v .vendorResult .span0_5Height {
+.topStores_v .vendorResult .span0_5Height, .topReviews_v .topReviews .span0_5Height {
 	padding-left: 0px;
 	background-position: left;
 }
@@ -734,12 +731,15 @@ span.vendorFollowContainer a{
 span.vendorFollowContainer a.icon-follow{
 	display: inline-block;
 	width: auto;
+	margin-top: 0px;
 }
 span.vendorFollowContainer a.icon-following{
 	display: none;
+	margin-top: 0px;
 }
 span.vendorFollowContainer a.icon-unfollow{
 	display:none;
+	margin-top: 0px;
 }
 span.vendorFollowContainer.following a.icon-follow{
 	display: none;
