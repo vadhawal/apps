@@ -270,6 +270,17 @@ a.colorWhite:hover{
 	border-color: red !important;
 	border-style: solid !important;
 }
+input.search-query{
+	font-family: titillium1, helvetica;
+	height: 25px;
+	margin-top: 12.5px;
+}
+.searchOr{
+	float: left;
+	display: inline-block;
+	height: 60px;
+	line-height: 60px;
+}
 .blog_parentcategories, .blog_subcategories{
 	font-size: 12.85px;
 	text-indent: 0.01px;
