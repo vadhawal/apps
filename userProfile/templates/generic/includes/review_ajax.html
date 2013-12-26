@@ -1,5 +1,3 @@
-{% extends "base.html" %}
-
 {% load i18n static mezzanine_tags comment_tags rating_tags %}
 {% load mezzanine_tags i18n future comment_tags %}
 {% load voting_tags %}
@@ -7,47 +5,6 @@
 {% load inbox thumbnail %}
 {% load relationship_tags %}
 
-{% block extra_css %}
-<link rel="stylesheet" type="text/css" href="{% static "css/store_page.css" %}"/>
-<link rel="stylesheet" type="text/css" href="{% static "css/searchresults.css" %}"/>
-<link rel="stylesheet" type="text/css" href="{% static "css/jquery.nouislider.css" %}"/>
-{% endblock %}
-
-{% block extra_js %}
-<script src="{% static "js/jquery.nouislider.js" %}"></script>
-<script type="text/javascript">
-$(document).ready(function() {
-    install_review_handlers($('.reviewContainer'));
-});
-var manageFeedOwner = function() {
-    var $this = $(this); 
-    if ($this.hasClass('manageFeedUp')) {
-        $this.removeClass('manageFeedUp');
-        $this.parent().find('.whiteBox').hide();
-    }
-    else { 
-        $this.addClass('manageFeedUp');
-        $this.parent().find('.whiteBox').show().css({'display': 'inline-block', 'position': 'relative', 'left': '10px'});
-    }
-}
-
-var manageFeedOther = function() {
-    if ($(this).hasClass('manageFeedUp')) {
-        $(this).removeClass('manageFeedUp');
-        $(this).parent().find('.whiteBox').hide();
-    } else {
-        $(this).addClass('manageFeedUp');
-        $(this).parent().find('.whiteBox').show().css({'display': 'inline-block', 'position': 'relative', 'left': '10px'});
-    }
-}
-</script>
-{% endblock %}
-
-{% block main %}
-
-<div id="comments" class="row topHalfGutter">
-<div class="fontTitillium1 reviewContainer color5D fontSize12">
-    {% for comment in reviews %}
     {% if request.user.is_authenticated %}
         {% get_relationship_type request.user comment.user as rel_type %}
     {% endif %}
@@ -166,10 +123,4 @@ var manageFeedOther = function() {
             {% rating_for comment %}
         {% endif %}
         {# comment_thread comment #}
-        <!-- <a class="btn small primary share-twitter" target="_blank" href="http://twitter.com/home?status={{'BASE_URL'|settings_value}}{% url 'render_review' comment.content_object.slug comment.id %}">Share on Twitter</a>
-        <a class="btn small primary share-facebook" target="_blank" href="http://facebook.com/sharer.php?u={{'BASE_URL'|settings_value}}{% url 'render_review' comment.content_object.slug comment.id %}&amp;t=review">{% trans "Share on Facebook" %}</a> -->
     </div>
-    {% endfor %}
-</div>
-</div>
-{% endblock %}
