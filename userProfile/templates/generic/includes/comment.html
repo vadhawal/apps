@@ -5,7 +5,7 @@
 {% load inbox thumbnail %}
 {% load relationship_tags %}
 
-<div class="fontTitillium1 reviewContainer color5D fontSize12">
+<div class="fontTitillium1 reviewContainer color5D fontSize12 {% if no_comments %} noReviews {% endif %}">
     {% for comment in comments_for_thread.object_list %}
 
     {% if request.user.is_authenticated %}

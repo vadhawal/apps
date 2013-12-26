@@ -160,7 +160,12 @@ var review_submit_handler = function(){
                         var element_id = $edit_review.data('element-id');
                         $('#'+element_id).replaceWith(ret_data.html);
                     } else {
-                        subcomments_element.prepend(ret_data.html);                       
+                    	if(subcomments_element.hasClass('noReviews')) {
+                    		subcomments_element.removeClass('noReviews');
+                    		subcomments_element.html(ret_data.html);
+                    	} else {
+                        	subcomments_element.prepend(ret_data.html);    
+                        }                   
                     }
                     install_voting_handlers(subcomments_element);
                     install_toggle_comment_handler();
