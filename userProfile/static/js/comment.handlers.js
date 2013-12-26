@@ -274,6 +274,7 @@ var comment_on_object_key_handler = function(event){
 var install_review_handlers = function($parent_element) {
     install_delete_object_handler($parent_element);
     install_comment_on_object_handler($parent_element);
+    install_review_voting_handler($parent_element);
     if($parent_element) {
         $parent_element.find('.editReview').off('click', edit_review_handler ).on('click', edit_review_handler);
         $parent_element.find('.writeReview').off('click', write_review_handler).on('click', write_review_handler);
