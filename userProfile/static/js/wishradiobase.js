@@ -63,8 +63,17 @@ var FollowUnfollow = function($elementClicked, new_count) {
     else {
         classes = classes.replace('following', '');
     }
-    $element.attr('class', classes); 
-    var $followerCountElement = $elementClicked.parent().parent().find('.vendorFollowers');
+    $element.attr('class', classes);
+    var $followerCountElement;
+    var $accordionContent = $elementClicked.parents('.accordion-content');
+    if($accordionContent.length > 0) {
+        var $accordionHeader = $accordionContent.prev();
+        if($accordionHeader) {
+            $followerCountElement = $accordionHeader.find('.objectCount');
+        }
+    } else {
+        $followerCountElement = $elementClicked.parent().parent().find('.vendorFollowers');
+    }
     if ($followerCountElement) {
         console.log($followerCountElement.html());
         var newHTML = "("+new_count+")";
@@ -190,7 +199,8 @@ var delete_object_handler = function(event) {
                 if(dataResult.success == true) {
                     /* Class objectToBeDeleted must be applied to the topmost element */
                     var $objectToBeDeleted = $elementClicked.parents('.objectToBeDeleted'); 
-                    if($objectToBeDeleted) {
+                    var $accordionContent = $objectToBeDeleted.parents('.accordion-content');
+                    if($objectToBeDeleted.length > 0) {
                         if (object_type === "activity") {
                             var $seperator = $objectToBeDeleted.next();
                             if( $seperator.hasClass('dottedSeparator') ) {
@@ -199,6 +209,18 @@ var delete_object_handler = function(event) {
                             $objectToBeDeleted.remove();
                         } else {
                             $objectToBeDeleted.remove();
+                        }
+                        var $countElement;
+                        if($accordionContent.length > 0) {
+                            var $accordionHeader = $accordionContent.prev();
+                            if($accordionHeader) {
+                                $countElement = $accordionHeader.find('.objectCount');
+                            }
+                        }
+                        if($countElement && $countElement.length > 0) {
+                            var prevCount = $countElement.html();
+                            var newCount = parseInt(prevCount) - 1;
+                            $countElement.html(newCount);
                         }
                     } else {
                         console.log("Object is deleted silently");
