@@ -291,7 +291,7 @@ var install_comment_on_object_handler = function($parent_element) {
     {
         $parent_element.find('.comment_on_object').off('submit', comment_on_object_handler).on('submit', comment_on_object_handler);
         $parent_element.find('.subcomment_text').off('keydown', comment_on_object_key_handler).on('keydown', comment_on_object_key_handler);
-        $parent_element.find('.subcomment_text').autosize({append: "\n"});
+        $parent_element.find('.subcomment_text').autosize();
         $parent_element.find('.viewPreviousComments').off('click', view_previous_comments_handler).on('click', view_previous_comments_handler);
         $parent_element.find('.comment_radio').off('click', comment_radio_handler).on('click', comment_radio_handler);
         
@@ -300,7 +300,7 @@ var install_comment_on_object_handler = function($parent_element) {
     {
         $('.comment_on_object').off('submit', comment_on_object_handler).on('submit', comment_on_object_handler);
         $('.subcomment_text').off('keydown', comment_on_object_key_handler).on('keydown', comment_on_object_key_handler);
-        $('.subcomment_text').autosize({append: "\n"});
+        $('.subcomment_text').autosize();
         $('.viewPreviousComments').off('click', view_previous_comments_handler).on('click', view_previous_comments_handler);
         $('.comment_radio').off('click', comment_radio_handler).on('click', comment_radio_handler);
     }
