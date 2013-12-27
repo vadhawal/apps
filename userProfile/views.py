@@ -19,7 +19,7 @@ from django.template import Template
 from mezzanine.blog.models import BlogPost, BlogCategory, BlogParentCategory
 from mezzanine.generic.models import Review
 from mezzanine.generic.models import ThreadedComment, RequiredReviewRating, OptionalReviewRating
-from mezzanine.utils.views import render, paginate
+from mezzanine.utils.views import paginate
 
 from actstream import models
 from actstream.models import Action
