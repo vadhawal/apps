@@ -22,7 +22,7 @@
             <div class="whiteBoxGlassy pagination-centered">
                 {% include 'generic/includes/render_voting.html' with object=wish %}
                 {% include 'actstream/render_share_action.html' with object=wish %}
-                <a href="#" class="comment_radio_d" style="margin-right:0px;">Comment</a>
+                <a href="javascript:void(0);" class="comment_radio_d" style="margin-right:0px;" onclick="$(this).parents('.dealBox_v_elem').find('.wishimg-deal-homepage').click();return false;">Comment</a>
                     {% comment_count_on_object wish as total_comments %}
                 <a class="broadcasters commentCount" href="{% get_commenters_url wish %}" style="margin-left:0px;">({{total_comments}})</a>
             </div>
