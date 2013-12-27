@@ -183,7 +183,7 @@ var manageFeedOther = function() {
             <div class="accordion-content"> 
                 {% render_follower_subset profile_user 0 'MIN_FOLLOWERS_CHUNK'|settings_value 'MIN_FOLLOWERS_CHUNK'|settings_value %}
             </div>
-            <h2 class="accordion-header accordion-header-color-2">{% trans "Following" %} <span class="objectCount">({{profile_user.relationships.following.count}})</span>
+            <h2 class="accordion-header accordion-header-color-2">{% trans "Following" %} (<span class="objectCount">{{profile_user.relationships.following.count}}</span>)
                 <div class="yellowLineContainer">
                     <hr class="whiteLine"/>
                 </div>

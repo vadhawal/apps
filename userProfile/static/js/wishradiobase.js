@@ -57,8 +57,10 @@ var login_required_handler = function()
 var FollowUnfollow = function($elementClicked, new_count) {
     var $element = $elementClicked.parent();
     var classes = $element.attr('class');
+    var follow = false;
     if (classes.indexOf('following') == -1) {
-        classes+= ' following';
+        classes += ' following';
+        follow = true;
     }
     else {
         classes = classes.replace('following', '');
@@ -70,14 +72,24 @@ var FollowUnfollow = function($elementClicked, new_count) {
         var $accordionHeader = $accordionContent.prev();
         if($accordionHeader) {
             $followerCountElement = $accordionHeader.find('.objectCount');
+            if ($followerCountElement && $followerCountElement.length > 0) {
+                var prevCount = $followerCountElement.html();
+                var newHTML = prevCount;
+                if(follow === true) {
+                    newHTML = parseInt(prevCount) + 1;
+                } else {
+                    if(parseInt(prevCount) > 0)
+                        newHTML = parseInt(prevCount) - 1;
+                }
+                $followerCountElement.text(newHTML);
+            }
         }
     } else {
         $followerCountElement = $elementClicked.parent().parent().find('.vendorFollowers');
-    }
-    if ($followerCountElement) {
-        console.log($followerCountElement.html());
-        var newHTML = "("+new_count+")";
-        $followerCountElement.text(newHTML);
+        if ($followerCountElement && $followerCountElement.length > 0) {
+            var newHTML = "("+new_count+")";
+            $followerCountElement.text(newHTML);
+        }
     }
 }
 
