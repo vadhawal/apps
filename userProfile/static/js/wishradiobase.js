@@ -283,10 +283,12 @@ var install_share_object_handler =  function($parent_element) {
 var doOpenUrlWithIframeFancyBox = function(url) {
     $("<a href='"+url +"'></a>").appendTo("body").addClass('cropImageFancyBox');
     $('a.cropImageFancyBox').fancybox({
-        'frameWidth'        :       500,
-        'frameHeight'       :       500,
+        'frameWidth'        :  500,
+        'frameHeight'       :  500,
+        'scrolling'         : 'no',
         'hideOnContentClick': false, 
         'type'              :'iframe',
+        'iframe'            : {'scrolling': 'no'},
          helpers            : { overlay : { locked : false } },
          onClosed           : function(){
                                     $('a.cropImageFancyBox').remove();
