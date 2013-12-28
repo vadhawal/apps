@@ -160,8 +160,12 @@ $(document).ready(function() {
     $('#refreshActivity').click(function() {
         var add_link = $(this);
         $.get(add_link.attr('href'), {}, function(data) {
-            if(data.indexOf("No actions yet") < 0 && data.indexOf('No New Actions') < 0)
+            if(data !== 'None')
             {
+                var $noActions = $('#load-feeds').find('.noActions');
+                if($noActions && $noActions.length > 0) {
+                    $noActions.parent().remove();
+                } 
                 $('#load-feeds').prepend(data);
             	install_action_handlers($('#load-feeds').children().first());
             }
@@ -237,7 +241,7 @@ function updateFeed(){
           $(window).off('scroll');
           $('#status').hide();
           return;
-        } else {   
+        } else {  
             $('#load-feeds').append(data);
             install_action_handlers($('#load-feeds').children().last());
             $(window).debounce('scroll', feedUpdater, 100);
