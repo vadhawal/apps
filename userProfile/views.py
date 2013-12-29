@@ -940,6 +940,14 @@ def deleteObject(request, content_type_id, object_id ):
             if OptionalReviewRatingObj:
                 OptionalReviewRatingObj.delete()
 
+        elif isinstance(object, GenericWish):
+            try:
+                storage, path = object.wishimage.image.storage, object.wishimage.image.path
+                storage.delete(path)
+            except:
+            	pass
+            object.wishimage.delete()
+
         """
             Finally nuke the actual object.
         """
