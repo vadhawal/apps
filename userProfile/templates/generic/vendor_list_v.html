@@ -41,8 +41,10 @@
                         {% endspaceless %}
                     </a>
                         {% vendor_follower_subset_info_url vendor 0 request.user|follower_count:vendor as subset_follower_url %}
-                    <a class="infoSpace fontTitillium3 vendorFollowers fontSize12 color5D" href="{{subset_follower_url}}"><span class="fontTitillium1">{{ request.user|follower_count:vendor }}</span>&nbsp;{% trans "follower" %}{{ request.user|follower_count:vendor|pluralize }}
-                    </a>
+                    {% with request.user|follower_count:vendor as follower_count %}
+                        <a class="infoSpace fontTitillium3 vendorFollowers fontSize12 color5D {% if follower_count == 0 %} countZero {% endif %}" href="{{subset_follower_url}}"><span class="fontTitillium1">{{ follower_count }}</span>&nbsp;{% trans "follower" %}{{ follower_count|pluralize }}
+                        </a>
+                    {% endwith %}
 <!--                     <span class="infoSpace">
                         <span class="fontTitillium1">{# get_hit_count for vendor #}</span> views
                     </span> -->

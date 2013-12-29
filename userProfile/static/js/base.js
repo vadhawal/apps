@@ -26,6 +26,7 @@ var setupCustomScrollBar = function ($element, horizontal_scroll) {
                     $scrollContainer.find('.mCSB_container').append(data.html);
                     install_voting_handlers($scrollContainer);
                     install_share_object_handler($scrollContainer);
+                    $scrollContainer.find('.vendorFollowers').on("click", display_popup_handler);
                     $scrollContainer.attr("data-href", $url);
 
                     $scrollContainer.find($('a.wishimg-deal-homepage')).fancybox({

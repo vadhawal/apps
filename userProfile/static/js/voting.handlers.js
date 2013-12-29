@@ -6,7 +6,7 @@ var VOTING_STRING = {
 };
 
 var display_popup_handler = function(event) {
-	if($(this).html() === '(0)') {
+	if($(this).html() === '(0)' || $(this).hasClass('countZero')) {
 		return false;
 	}
 
