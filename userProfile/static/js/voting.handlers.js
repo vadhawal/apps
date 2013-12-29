@@ -6,6 +6,10 @@ var VOTING_STRING = {
 };
 
 var display_popup_handler = function(event) {
+	if($(this).html() === '(0)') {
+		return false;
+	}
+
 	var $url = $(this).attr("href");
 	var afterShowCallback = function() {
 								install_follow_handlers();
