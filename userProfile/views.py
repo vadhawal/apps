@@ -36,6 +36,8 @@ import os
 import uuid
 import json
 from django.core.urlresolvers import reverse
+import StringIO
+from django.core.files.uploadedfile import InMemoryUploadedFile
 
 def json_error_response(error_codes):
     return HttpResponse(simplejson.dumps(dict(success=False,
@@ -72,9 +74,6 @@ def broadcast(request):
 	else:
 		return render_to_response('broadcast_success.html', {}, RequestContext(request))
 
-import  cStringIO, StringIO
-from django.core.files.base import ContentFile
-from django.core.files.uploadedfile import InMemoryUploadedFile
 @login_required
 def userwish(request):
 	if request.method == "POST":
