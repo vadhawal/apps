@@ -1,3 +1,4 @@
+from __future__ import division
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.template.loader import render_to_string
@@ -76,6 +77,7 @@ def broadcast(request):
 	else:
 		return render_to_response('broadcast_success.html', {}, RequestContext(request))
 
+
 @login_required
 def userwish(request):
 	if request.method == "POST":
@@ -95,8 +97,19 @@ def userwish(request):
 			img = Image.open(wishimageobj)
 			width, height = img.size
 
+			quality 	= getattr(settings, 'IMAGESTORE_IMAGE_QUALITY', 95)
+			MAX_WIDTH 	= getattr(settings, 'MAX_IMAGE_WIDTH', 1000.0)
+			MAX_HEIGHT 	= getattr(settings, 'MAX_IMAGE_HEIGHT', 1000.0)
+			factor 		= min(MAX_WIDTH/width, MAX_HEIGHT/height)
+
 			resizedImageFile = StringIO.StringIO()
-			img.save(resizedImageFile, format="JPEG", qualtiy=60)
+			if width > int(MAX_WIDTH) and height > int(MAX_HEIGHT):
+				newwidth 	= width * factor
+				newheight 	= height * factor
+				img.resize((int(newwidth), int(newheight)), Image.ANTIALIAS).save(resizedImageFile, format="JPEG", qualtiy=quality)
+			else:
+				img.save(resizedImageFile, format="JPEG", qualtiy=quality)
+
 			resizedImageFile.seek(0)
 
 			convertedFile = InMemoryUploadedFile(resizedImageFile, None, 'temp.jpeg', 'image/jpeg', resizedImageFile.len, None)
@@ -870,9 +883,9 @@ def deleteFileS3(file):
 
 def deleteObject(request, content_type_id, object_id ):
     error_codes = []
-    #if not request.is_ajax():
-    #    error_codes.append(settings.AJAX_ONLY_SUPPORT)
-    #    return json_error_response(error_codes)
+    if not request.is_ajax():
+       error_codes.append(settings.AJAX_ONLY_SUPPORT)
+       return json_error_response(error_codes)
 
     try:
         ctype = ContentType.objects.get(pk=content_type_id)
@@ -1002,7 +1015,9 @@ def get_object_owner_helper(content_type_id, object_id):
 		owner_ctype = object.content_type
 		owner_id   = object.object_id
 		owner = owner_ctype.model_class().objects.get(pk=owner_id)
-
+		if isinstance(owner, BlogPost):
+			owner = owner.user
+			
 	return owner
 
 def save_file_s3(file, path=''):
