@@ -72,6 +72,9 @@ def broadcast(request):
 	else:
 		return render_to_response('broadcast_success.html', {}, RequestContext(request))
 
+import  cStringIO, StringIO
+from django.core.files.base import ContentFile
+from django.core.files.uploadedfile import InMemoryUploadedFile
 @login_required
 def userwish(request):
 	if request.method == "POST":
@@ -90,7 +93,13 @@ def userwish(request):
 			wishimageobj = request.FILES['wishimage']
 			img = Image.open(wishimageobj)
 			width, height = img.size
-			originalImageObj = Original.objects.create(image=wishimageobj, image_width=width, image_height=height)
+
+			resizedImageFile = StringIO.StringIO()
+			img.save(resizedImageFile, format="JPEG", qualtiy=60)
+			resizedImageFile.seek(0)
+
+			convertedFile = InMemoryUploadedFile(resizedImageFile, None, 'temp.jpeg', 'image/jpeg', resizedImageFile.len, None)
+			originalImageObj = Original.objects.create(image=convertedFile, image_width=width, image_height=height)
 
 		if message == '' and urlPreviewContent == '' and not wishimageobj:
 			error_codes.append(settings.POST_DATA_REQUIRED)

@@ -2,4 +2,12 @@
 *.pyo
 *.db
 .DS_Store
+*BASE*
+*REMOTE*
+*LOCAL*
+*.swn
+*.swo
+*.swp
+*.orig
+*BACKUP*
 .coverage
