@@ -57,18 +57,39 @@ var login_required_handler = function()
 var FollowUnfollow = function($elementClicked, new_count) {
     var $element = $elementClicked.parent();
     var classes = $element.attr('class');
+    var follow = false;
     if (classes.indexOf('following') == -1) {
-        classes+= ' following';
+        classes += ' following';
+        follow = true;
     }
     else {
         classes = classes.replace('following', '');
     }
-    $element.attr('class', classes); 
-    var $followerCountElement = $elementClicked.parent().parent().find('.vendorFollowers');
-    if ($followerCountElement) {
-        console.log($followerCountElement.html());
-        var newHTML = "("+new_count+")";
-        $followerCountElement.text(newHTML);
+    $element.attr('class', classes);
+    var $followerCountElement;
+    var $accordionContent = $elementClicked.parents('.accordion-content');
+    if($accordionContent.length > 0) {
+        var $accordionHeader = $accordionContent.prev();
+        if($accordionHeader) {
+            $followerCountElement = $accordionHeader.find('.objectCount');
+            if ($followerCountElement && $followerCountElement.length > 0) {
+                var prevCount = $followerCountElement.html();
+                var newHTML = prevCount;
+                if(follow === true) {
+                    newHTML = parseInt(prevCount) + 1;
+                } else {
+                    if(parseInt(prevCount) > 0)
+                        newHTML = parseInt(prevCount) - 1;
+                }
+                $followerCountElement.text(newHTML);
+            }
+        }
+    } else {
+        $followerCountElement = $elementClicked.parent().parent().find('.vendorFollowers');
+        if ($followerCountElement && $followerCountElement.length > 0) {
+            var newHTML = "("+new_count+")";
+            $followerCountElement.text(newHTML);
+        }
     }
 }
 
@@ -190,7 +211,8 @@ var delete_object_handler = function(event) {
                 if(dataResult.success == true) {
                     /* Class objectToBeDeleted must be applied to the topmost element */
                     var $objectToBeDeleted = $elementClicked.parents('.objectToBeDeleted'); 
-                    if($objectToBeDeleted) {
+                    var $accordionContent = $objectToBeDeleted.parents('.accordion-content');
+                    if($objectToBeDeleted.length > 0) {
                         if (object_type === "activity") {
                             var $seperator = $objectToBeDeleted.next();
                             if( $seperator.hasClass('dottedSeparator') ) {
@@ -199,6 +221,18 @@ var delete_object_handler = function(event) {
                             $objectToBeDeleted.remove();
                         } else {
                             $objectToBeDeleted.remove();
+                        }
+                        var $countElement;
+                        if($accordionContent.length > 0) {
+                            var $accordionHeader = $accordionContent.prev();
+                            if($accordionHeader) {
+                                $countElement = $accordionHeader.find('.objectCount');
+                            }
+                        }
+                        if($countElement && $countElement.length > 0) {
+                            var prevCount = $countElement.html();
+                            var newCount = parseInt(prevCount) - 1;
+                            $countElement.html(newCount);
                         }
                     } else {
                         console.log("Object is deleted silently");
@@ -249,10 +283,12 @@ var install_share_object_handler =  function($parent_element) {
 var doOpenUrlWithIframeFancyBox = function(url) {
     $("<a href='"+url +"'></a>").appendTo("body").addClass('cropImageFancyBox');
     $('a.cropImageFancyBox').fancybox({
-        'frameWidth'        :       500,
-        'frameHeight'       :       500,
+        'frameWidth'        :  500,
+        'frameHeight'       :  500,
+        'scrolling'         : 'no',
         'hideOnContentClick': false, 
         'type'              :'iframe',
+        'iframe'            : {'scrolling': 'no'},
          helpers            : { overlay : { locked : false } },
          onClosed           : function(){
                                     $('a.cropImageFancyBox').remove();

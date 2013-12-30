@@ -19,6 +19,7 @@ from django.template import Template
 from mezzanine.blog.models import BlogPost, BlogCategory, BlogParentCategory
 from mezzanine.generic.models import Review
 from mezzanine.generic.models import ThreadedComment, RequiredReviewRating, OptionalReviewRating
+from mezzanine.utils.views import paginate
 
 from actstream import models
 from actstream.models import Action
@@ -824,8 +825,14 @@ def get_reviews_by_user(request, user_id, template="generic/includes/reviews_pag
     ctype = ContentType.objects.get_for_model(BlogPost)
     reviews = Review.objects.filter(user=user_instance, content_type=ctype)
 
+    page = request.GET.get("page", 1)
+    per_page = settings.REVIEWS_PER_PAGE
+    max_paging_links = settings.MAX_PAGING_LINKS
+
+    paginated = paginate(reviews, page, per_page, max_paging_links)
+
     return render_to_response('generic/includes/reviews_page.html', {
-       'reviews': reviews, 
+       'reviews': paginated, 
     }, context_instance=RequestContext(request))
 
 
@@ -941,10 +948,17 @@ def deleteObject(request, content_type_id, object_id ):
 
         elif isinstance(object, GenericWish):
             try:
+<<<<<<< HEAD
                 deleteFileS3(object.wishimage.image)
             except:
                 pass
             
+=======
+                storage, path = object.wishimage.image.storage, object.wishimage.image.path
+                storage.delete(path)
+            except:
+            	pass
+>>>>>>> abf4a4c8fbb3d8fc1d51c6774c49b5cfe59f3302
             object.wishimage.delete()
 
         """

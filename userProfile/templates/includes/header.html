@@ -1,6 +1,6 @@
 {% load future %}
 {% load i18n static %}
-{% load blog_tags %}
+{% load blog_tags mezzanine_tags %}
 
 <div class="yellowBar navbar navbar-fixed-top">
 </div>
@@ -106,13 +106,17 @@
                 </div>
                 <div class="span8 noGutter">
                     <div class="row">
-                        <div class="span2 colorWhite fontTitillium fontSize15 halfGutterRight">
+                        <div class="span2 colorWhite fontTitillium fontSize15 noGutter">
                             <span class="wantText">{% trans "For all wishes money can buy" %}&nbsp;<span class="colorYellow">{% trans "search here" %}</span>
                             </span>
                         </div>
+                        <div class="span2 halfGutter">
+                            {% search_form "blog.BlogPost" %}
+                        </div>
+                        <span class="colorWhite fontTitillium1 fontSize13 halfGutter searchOr">{% trans "or" %}</span>
                         {% blog_parentcategories_abs as parent_categories %}
                         {% if parent_categories %}
-                            <div class="span2 halfGutterRight">
+                            <div class="span2 halfGutter">
                                 <select name="blog_parentcategories" class="blog_parentcategories">
                                     <option value='empty' selected disabled>{% trans "By Category" %}</option>
                                     <option value="all">{% trans "All" %}</option>
@@ -121,16 +125,14 @@
                                     {% endfor %}
                                 </select>
                             </div>
-                            <div class="span2 halfGutterRight">
+                            <div class="span2 halfGutter">
                                 <select name="blog_subcategories" class="blog_subcategories">
                                     <option value='empty' selected disabled>By Sub-category</option>
                                 </select>
                             </div>
                         {% endif %}
-                        <div class="span1">
-                            <div id="getvendorsdiv" style="display:inline-block;">
-                                <a id="getvendors" href="#"></a>
-                            </div>
+                        <div id="getvendorsdiv" style="display:inline-block;" class="halfGutter">
+                            <a id="getvendors" href="#"></a>
                         </div>
                     </div>
                 </div>

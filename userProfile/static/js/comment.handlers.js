@@ -160,7 +160,12 @@ var review_submit_handler = function(){
                         var element_id = $edit_review.data('element-id');
                         $('#'+element_id).replaceWith(ret_data.html);
                     } else {
-                        subcomments_element.prepend(ret_data.html);                       
+                    	if(subcomments_element.hasClass('noReviews')) {
+                    		subcomments_element.removeClass('noReviews');
+                    		subcomments_element.html(ret_data.html);
+                    	} else {
+                        	subcomments_element.prepend(ret_data.html);    
+                        }                   
                     }
                     install_voting_handlers(subcomments_element);
                     install_toggle_comment_handler();
@@ -269,6 +274,7 @@ var comment_on_object_key_handler = function(event){
 var install_review_handlers = function($parent_element) {
     install_delete_object_handler($parent_element);
     install_comment_on_object_handler($parent_element);
+    install_review_voting_handler($parent_element);
     if($parent_element) {
         $parent_element.find('.editReview').off('click', edit_review_handler ).on('click', edit_review_handler);
         $parent_element.find('.writeReview').off('click', write_review_handler).on('click', write_review_handler);
@@ -285,7 +291,7 @@ var install_comment_on_object_handler = function($parent_element) {
     {
         $parent_element.find('.comment_on_object').off('submit', comment_on_object_handler).on('submit', comment_on_object_handler);
         $parent_element.find('.subcomment_text').off('keydown', comment_on_object_key_handler).on('keydown', comment_on_object_key_handler);
-        $parent_element.find('.subcomment_text').autosize({append: "\n"});
+        $parent_element.find('.subcomment_text').autosize();
         $parent_element.find('.viewPreviousComments').off('click', view_previous_comments_handler).on('click', view_previous_comments_handler);
         $parent_element.find('.comment_radio').off('click', comment_radio_handler).on('click', comment_radio_handler);
         
@@ -294,7 +300,7 @@ var install_comment_on_object_handler = function($parent_element) {
     {
         $('.comment_on_object').off('submit', comment_on_object_handler).on('submit', comment_on_object_handler);
         $('.subcomment_text').off('keydown', comment_on_object_key_handler).on('keydown', comment_on_object_key_handler);
-        $('.subcomment_text').autosize({append: "\n"});
+        $('.subcomment_text').autosize();
         $('.viewPreviousComments').off('click', view_previous_comments_handler).on('click', view_previous_comments_handler);
         $('.comment_radio').off('click', comment_radio_handler).on('click', comment_radio_handler);
     }

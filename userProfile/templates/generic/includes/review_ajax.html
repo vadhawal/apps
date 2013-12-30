@@ -5,9 +5,6 @@
 {% load inbox thumbnail %}
 {% load relationship_tags %}
 
-<div class="fontTitillium1 reviewContainer color5D fontSize12 {% if no_comments %} noReviews {% endif %}">
-    {% for comment in comments_for_thread.object_list %}
-
     {% if request.user.is_authenticated %}
         {% get_relationship_type request.user comment.user as rel_type %}
     {% endif %}
@@ -20,7 +17,8 @@
                         <div class="span6 noGutter">
                             <div class="row">
                                 <div class="span6">
-                                    {% include "actstream/render_actor_name.html" with actor=comment.user %}
+                                    {% include "actstream/render_actor_name.html" with actor=comment.user %}{% trans " wrote a review for "%}
+                                    {% include "actstream/render_actor_name.html" with actor=comment.content_object %}
                                 </div>
                             </div>
                             {% if comment.title %}
@@ -74,7 +72,7 @@
                                                 {% if request.user == comment.user %}
                                                 {% get_delete_object_url comment as delete_review_url %}
                                                 <a class="deleteObject pull-right halfGutter" data-href="{{delete_review_url}}" data-object-type="review" href="javascript:void(0)"><img class="noBoxShadow" width="15px" height="15px" src="{% static 'img/cross_button.png' %}"></a>
-                                                <a class="editReview pull-right" href="javascript:void(0)" data-href="{% url 'edit_review' comment.id %}"><img class="noBoxShadow" width="15px" height="15px" src="{% static 'img/edit.png' %}"></a>
+                                                <a class="editReview pull-right" href="javascript:void(0)" data-href="{% url 'edit_review' comment.id %}?reviewpage=1"><img class="noBoxShadow" width="15px" height="15px" src="{% static 'img/edit.png' %}"></a>
                                                 {% endif %}
                                         {% endif %}
                                     {% endwith %}
@@ -125,11 +123,4 @@
             {% rating_for comment %}
         {% endif %}
         {# comment_thread comment #}
-
     </div>
-    {% endfor %}
-    {% if no_comments %}
-    <div>{% trans "There are currently no reviews" %}</div>
-    {% endif %}
-</div>
-{% pagination_for comments_for_thread %}

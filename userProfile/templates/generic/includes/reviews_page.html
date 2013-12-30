@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% load i18n static mezzanine_tags comment_tags rating_tags %}
+{% load i18n static comment_tags rating_tags %}
 {% load mezzanine_tags i18n future comment_tags %}
 {% load voting_tags %}
 {% load userProfile_tags %}
@@ -10,13 +10,14 @@
 {% block extra_css %}
 <link rel="stylesheet" type="text/css" href="{% static "css/store_page.css" %}"/>
 <link rel="stylesheet" type="text/css" href="{% static "css/searchresults.css" %}"/>
+<link rel="stylesheet" type="text/css" href="{% static "css/jquery.nouislider.css" %}"/>
 {% endblock %}
 
 {% block extra_js %}
+<script src="{% static "js/jquery.nouislider.js" %}"></script>
 <script type="text/javascript">
 $(document).ready(function() {
-    install_review_voting_handler();
-    install_comment_on_object_handler();
+    install_review_handlers($('.reviewContainer'));
 });
 var manageFeedOwner = function() {
     var $this = $(this); 
@@ -44,9 +45,9 @@ var manageFeedOther = function() {
 
 {% block main %}
 
-<div class="row topHalfGutter">
+<div id="comments" class="row topHalfGutter">
 <div class="fontTitillium1 reviewContainer color5D fontSize12">
-    {% for comment in reviews %}
+    {% for comment in reviews.object_list %}
     {% if request.user.is_authenticated %}
         {% get_relationship_type request.user comment.user as rel_type %}
     {% endif %}
@@ -114,7 +115,7 @@ var manageFeedOther = function() {
                                                 {% if request.user == comment.user %}
                                                 {% get_delete_object_url comment as delete_review_url %}
                                                 <a class="deleteObject pull-right halfGutter" data-href="{{delete_review_url}}" data-object-type="review" href="javascript:void(0)"><img class="noBoxShadow" width="15px" height="15px" src="{% static 'img/cross_button.png' %}"></a>
-                                                <a class="editReview pull-right" href="javascript:void(0)" data-href="{% url 'edit_review' comment.id %}"><img class="noBoxShadow" width="15px" height="15px" src="{% static 'img/edit.png' %}"></a>
+                                                <a class="editReview pull-right" href="javascript:void(0)" data-href="{% url 'edit_review' comment.id %}?reviewpage=1"><img class="noBoxShadow" width="15px" height="15px" src="{% static 'img/edit.png' %}"></a>
                                                 {% endif %}
                                         {% endif %}
                                     {% endwith %}
@@ -171,4 +172,5 @@ var manageFeedOther = function() {
     {% endfor %}
 </div>
 </div>
+{% pagination_for reviews %}
 {% endblock %}
