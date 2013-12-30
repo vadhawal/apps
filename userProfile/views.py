@@ -948,17 +948,10 @@ def deleteObject(request, content_type_id, object_id ):
 
         elif isinstance(object, GenericWish):
             try:
-<<<<<<< HEAD
                 deleteFileS3(object.wishimage.image)
             except:
                 pass
             
-=======
-                storage, path = object.wishimage.image.storage, object.wishimage.image.path
-                storage.delete(path)
-            except:
-            	pass
->>>>>>> abf4a4c8fbb3d8fc1d51c6774c49b5cfe59f3302
             object.wishimage.delete()
 
         """
