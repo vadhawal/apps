@@ -845,6 +845,10 @@ def shareObject(request, content_type_id, object_id, ):
 	else:
 		raise Http404();
 
+def deleteFile(file):
+    storage, path = file.storage, file.path
+    storage.delete(path)
+
 def deleteObject(request, content_type_id, object_id ):
     error_codes = []
     #if not request.is_ajax():
@@ -940,8 +944,7 @@ def deleteObject(request, content_type_id, object_id ):
 
         elif isinstance(object, GenericWish):
             try:
-                storage, path = object.wishimage.image.storage, object.wishimage.image.path
-                storage.delete(path)
+                deleteFile(object.wishimage.image)
             except:
             	pass
             object.wishimage.delete()
