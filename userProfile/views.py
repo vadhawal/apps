@@ -38,6 +38,8 @@ import json
 
 from django.core.urlresolvers import reverse
 from storages.backends.s3boto import S3BotoStorage
+import StringIO
+from django.core.files.uploadedfile import InMemoryUploadedFile
 
 def json_error_response(error_codes):
     return HttpResponse(simplejson.dumps(dict(success=False,
@@ -92,7 +94,13 @@ def userwish(request):
 			wishimageobj = request.FILES['wishimage']
 			img = Image.open(wishimageobj)
 			width, height = img.size
-			originalImageObj = Original.objects.create(image=wishimageobj, image_width=width, image_height=height)
+
+			resizedImageFile = StringIO.StringIO()
+			img.save(resizedImageFile, format="JPEG", qualtiy=60)
+			resizedImageFile.seek(0)
+
+			convertedFile = InMemoryUploadedFile(resizedImageFile, None, 'temp.jpeg', 'image/jpeg', resizedImageFile.len, None)
+			originalImageObj = Original.objects.create(image=convertedFile, image_width=width, image_height=height)
 
 		if message == '' and urlPreviewContent == '' and not wishimageobj:
 			error_codes.append(settings.POST_DATA_REQUIRED)
