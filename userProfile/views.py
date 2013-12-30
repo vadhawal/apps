@@ -848,10 +848,17 @@ def shareObject(request, content_type_id, object_id, ):
 		raise Http404();
 
 def deleteFileS3(file):
-	path = file.path
-	storage = S3BotoStorage(location=settings.STORAGE_ROOT)
-	if storage.exists(path):
-		storage.delete(path)
+	"""
+	We cannot use file.path as its not yet implemented in S3BotoStorage backend and threfore throws an exception.
+	file.url returns complete web url. We need to get the path after media/ as bucket/static/media is storage root.
+	"""
+	absolute_url = file.url
+	paths = absolute_url.split('media/')
+	if len(paths) > 0:
+		path = paths[1]
+		storage = S3BotoStorage(location=settings.STORAGE_ROOT)
+		if storage.exists(path):
+			storage.delete(path)
 
 def deleteObject(request, content_type_id, object_id ):
     error_codes = []
