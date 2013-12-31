@@ -31,6 +31,7 @@ from follow.models import Follow
 from actstream.models import Follow as _Follow
 from voting.models import Vote
 from cropper.models import Original
+from imagestore.models import Album, Image as _Image
 from PIL import Image
 import datetime
 import os
@@ -872,9 +873,9 @@ def deleteFile(file):
 
 def deleteObject(request, content_type_id, object_id ):
     error_codes = []
-    if not request.is_ajax():
-       error_codes.append(settings.AJAX_ONLY_SUPPORT)
-       return json_error_response(error_codes)
+    #if not request.is_ajax():
+    #   error_codes.append(settings.AJAX_ONLY_SUPPORT)
+    #   return json_error_response(error_codes)
 
     try:
         ctype = ContentType.objects.get(pk=content_type_id)
@@ -932,8 +933,10 @@ def deleteObject(request, content_type_id, object_id ):
            Delete comments associated with the object.
         """
         comments_queryset = object.comments.all()
-        if comments_queryset:
-            comments_queryset.delete()
+        for comment in comments_queryset:
+        	ctype_id = ContentType.objects.get_for_model(comment).pk
+        	deleteObject(request, ctype_id, comment.pk)
+            #comments_queryset.delete()
 
         """
             Delete related objects for Reviews.
@@ -990,7 +993,7 @@ def get_object_owner_helper(content_type_id, object_id):
 		Currently supports only Review, BroadcastWish, BroadcastDeal, GenericWish models.
 		Enhance for other models as and when required.
 	"""
-	if isinstance(object, Review) or isinstance(object, BlogPost):
+	if isinstance(object, Review) or isinstance(object, BlogPost) or isinstance(object, Album) or isinstance(object, _Image) or isinstance(object, ThreadedComment):
 		owner = object.user
 
 	elif isinstance(object, BroadcastDeal):
