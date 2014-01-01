@@ -4,35 +4,44 @@
 {% load comment_tags %}
 {% load userProfile_tags %}
 {% load blog_tags %}
-{% load static %}
+{% load static compress %}
 
 {% block meta_title %}{% trans "Buy Shoes, Clothes, Books" %}{% endblock %}
 {% block title %}{% trans "Buy Shoes, Clothes, Books" %}{% endblock %}
 
 {% block extra_css %}
+{% compress css %}
     <link rel="stylesheet" href="{% static "css/vallenato.css" %}">
     <link rel="stylesheet" type="text/css" href="{% static "css/imagestore.css" %}"/>
     <link rel="stylesheet" class="cssButtons" type="text/css" href="{% static "css/linkPreview.css" %}"/>
     <link rel="stylesheet" class="cssStatics" href="{% static "css/stylesheet.css" %}"/>
     <link rel="stylesheet" href="{% static "css/index.css" %}"/>
+{% endcompress %}
 {% endblock %}
 
 {% block extra_js %}
+{% compress js %}
 <script src="{% static "js/jquery.mousewheel.js" %}"></script>
 <script src="{% static "js/jquery.form.js" %}"></script>
 <script src="{% static "js/vallenato.js" %}"></script>
+<script src="{% static "js/linkPreview.js" %}"></script>
+{% endcompress %}
 {% if request.user.is_authenticated %}
+{% compress js %}
 <script src="{% static "js/trends_auth.js" %}"></script>
+{% endcompress %}
 {% include 'js/index_auth.js.html' with parent_categories=parent_categories %}
 {% else %}
+{% compress js %}
 <script src="{% static "js/trends.js" %}"></script>
+{% endcompress %}
 {% include 'js/index_noauth.js.html' %}
 {% endif %}
-<script type="text/javascript" src="{% static "js/linkPreview.js" %}"></script>
 
 {% endblock %}
 
 {% block extra_head %}
+{% compress js %}
 <script type="text/javascript">
 var sIndex = 0;
 var lIndex = 20;
@@ -56,7 +65,7 @@ $(document).ready(function() {
     });
 });
 </script>
-
+{% endcompress %}
 {% endblock %}
 
 

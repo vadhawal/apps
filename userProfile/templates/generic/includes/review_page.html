@@ -8,11 +8,14 @@
 {% load relationship_tags %}
 
 {% block extra_css %}
+{% compress css %}
 <link rel="stylesheet" type="text/css" href="{% static "css/store_page.css" %}"/>
 <link rel="stylesheet" type="text/css" href="{% static "css/searchresults.css" %}"/>
+{% endcompress %}
 {% endblock %}
 
 {% block extra_js %}
+{% compress js %}
 <script type="text/javascript">
 $(document).ready(function() {
     install_review_voting_handler();
@@ -40,6 +43,7 @@ var manageFeedOther = function() {
     }
 }
 </script>
+{% endcompress %}
 {% endblock %}
 
 {% block main %}

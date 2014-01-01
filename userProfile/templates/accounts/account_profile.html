@@ -10,16 +10,24 @@
 {% block meta_title %}{{ profile_user.username }}{% endblock %}
 {% block title %}{{ profile_user.username }} | Wishradio{% endblock %}
 {% block body_id %}account{% endblock %}
+
 {% block extra_css %}
+{% compress css %}
 <link rel="stylesheet" type="text/css" href="{% static "css/vallenato.css" %}">
 <link rel="stylesheet" type="text/css" href="{% static "css/account_profile.css" %}">
+{% endcompress %}
 {% endblock %}
+
 {% block extra_head %}
 <script src="http://connect.facebook.net/en_US/all.js"></script>
 {% endblock %}
+
 {% block extra_js %}
 <!-- <script src="{% static "js/jquery.mousewheel.js" %}"></script> -->
+{% compress js %}
 <script src="{% static "js/vallenato.js" %}"></script>
+{% endcompress %}
+
 <script type="text/javascript">
   var sIndex = 0;
   var lIndex = 10;
@@ -37,6 +45,7 @@
         });
         return false;
     });
+
     var getFeed = function(){
         $('#load-feeds').html("");
         {% actor_url_subset profile_user 0 'MIN_DEALS_HOME_PAGE'|settings_value as feed %}
@@ -65,15 +74,6 @@ function getWishList() {
         $contentElement = $('.accordion-content').first();
         setupCustomScrollBar($contentElement);
     });  
-}
-
-function feedUpdater() {
-    var scrollOffset = 400;
-
-    if($(window).scrollTop() + $(window).height() >= $(document).height() - scrollOffset) {
-       updateFeed();
-       //$(window).off('scroll');
-    }  
 }
 
 function updateFeed(){ 
@@ -121,6 +121,16 @@ var manageFeedOther = function() {
         $(this).parent().find('.whiteBox').show().css({'display': 'inline-block', 'position': 'relative', 'left': '10px'});
     }
 }
+
+function feedUpdater() {
+    var scrollOffset = 400;
+
+    if($(window).scrollTop() + $(window).height() >= $(document).height() - scrollOffset) {
+       updateFeed();
+       //$(window).off('scroll');
+    }  
+}
+
 
 </script>
 

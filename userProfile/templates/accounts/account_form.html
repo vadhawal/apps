@@ -6,7 +6,8 @@
 {% block body_id %}account{% endblock %}
 
 {% block extra_js %}
-<script>
+{% compress js %}
+<script type="text/javascript">
     $(document).ready(
     	function () {
         if (window.FileReader) {
@@ -29,6 +30,7 @@
          $('#id_profile_photo').change(handleFileSelect);
     });
 </script>
+{% endcompress %}
 {% endblock %}
 
 {% block breadcrumb_menu %}

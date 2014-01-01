@@ -21,17 +21,23 @@
 {% endblock %}
 
 {% block extra_css %}
+{% compress css %}
 <link rel="stylesheet" type="text/css" href="{% static "css/vallenato.css" %}"/>
 <link rel="stylesheet" type="text/css" href="{% static "css/store_page.css" %}"/>
 <link rel="stylesheet" type="text/css" href="{% static "css/searchresults.css" %}"/>
 <link rel="stylesheet" type="text/css" href="{% static "css/imagestore.css" %}"/>
 <link rel="stylesheet" type="text/css" href="{% static "css/jquery.nouislider.css" %}"/>
+{% endcompress %}
+
 {% endblock %}
 {% block extra_js %}
 {% include 'js/store_page.js.html' with blog_post=blog_post %}
+{% compress js %}
 <script src="{% static "js/vallenato.js" %}"></script>
 <script src="{% static "js/album.handlers.js" %}"></script>
 <script src="{% static "js/jquery.nouislider.js" %}"></script>
+{% endcompress %}
+
 <script type="text/javascript">
     $(document).ready(function() {
         {% get_hit_count_javascript for blog_post %}
@@ -49,6 +55,7 @@
                     $('.shareDeal').on('click', sharewish_handler);
                 });  
         }
+        
         getDealList(); 
 
         $('#viewAlbum').click(function() {
