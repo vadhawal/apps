@@ -10,14 +10,14 @@
 
 /* input box in default state */ 
 .tcalInput {
-	background: url('../img/cal.gif') 100% 50% no-repeat;
+	background: url('/static/img/cal.gif') 100% 50% no-repeat;
 	padding-right: 20px;
 	cursor: pointer;
 }
 
 /* additional properties for input boxe in activated state, above still applies unless in conflict */
 .tcalActive {
-	background-image: url('../img/no_cal.gif');
+	background-image: url('/static/img/no_cal.gif');
 }
 /* container of calendar's pop-up */
 #tcal {
@@ -65,10 +65,10 @@
 	font-weight: bold;
 	white-space: nowrap;
 }
-#tcalPrevYear { background-image: url('../img/prev_year.png'); background-size: 11px 8px;}
-#tcalPrevMonth { background-image: url('../img/prev_month.png'); background-size: 5px 8px;}
-#tcalNextMonth { background-image: url('../img/next_month.png'); background-size: 5px 8px;}
-#tcalNextYear { background-image: url('../img/next_year.png'); background-size: 11px 8px;}
+#tcalPrevYear { background-image: url('/static/img/prev_year.png'); background-size: 11px 8px;}
+#tcalPrevMonth { background-image: url('/static/img/prev_month.png'); background-size: 5px 8px;}
+#tcalNextMonth { background-image: url('/static/img/next_month.png'); background-size: 5px 8px;}
+#tcalNextYear { background-image: url('/static/img/next_year.png'); background-size: 11px 8px;}
 
 /* table containing week days header and calendar grid */
 #tcalGrid {
@@ -94,8 +94,8 @@
 }		
 #tcalGrid td.tcalOtherMonth { opacity: 0.6;}
 #tcalGrid td.tcalWeekend { /*background-color: #ACD6F5;*/ }
-#tcalGrid td.tcalToday {  background-image: url('../img/yellow_calendar_today.png'); background-size: contain; background-repeat: no-repeat; background-position: 3px center;}
-#tcalGrid td.tcalSelected { background-image: url('../img/green_calendar_selection.png'); background-size: contain; background-repeat: no-repeat; background-position: 3px center; color: white;}
+#tcalGrid td.tcalToday {  background-image: url('/static/img/yellow_calendar_today.png'); background-size: contain; background-repeat: no-repeat; background-position: 3px center;}
+#tcalGrid td.tcalSelected { background-image: url('/static/img/green_calendar_selection.png'); background-size: contain; background-repeat: no-repeat; background-position: 3px center; color: white;}
 
 div#tcal td.disabled_days {
 	opacity: 0.3;
