@@ -8,13 +8,21 @@
 {% block title %}{% trans "Search Results" %}{% endblock %}
 
 {% block extra_css %}
-<link rel="stylesheet" href="{% static "css/vallenato.css" %}"/>
+
+{% compress css %}
+<link rel="stylesheet" type="text/css" href="{% static "css/vallenato.css" %}"/>
 <link rel="stylesheet" type="text/css" href="{% static "css/searchresults.css" %}"/>
+{% endcompress %}
+
 {% endblock %}
 
 {% block extra_js %}
+
+{% compress js %}
 <script src="{% static "js/vallenato.js" %}"></script>
 <script type="text/javascript" src="{% static "js/search-result.js" %}"></script>
+{% endcompress %}
+
 {% endblock %}
 
 {% block main %}

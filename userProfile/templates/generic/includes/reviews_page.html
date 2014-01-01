@@ -8,12 +8,15 @@
 {% load relationship_tags %}
 
 {% block extra_css %}
+{% compress css %}
 <link rel="stylesheet" type="text/css" href="{% static "css/store_page.css" %}"/>
 <link rel="stylesheet" type="text/css" href="{% static "css/searchresults.css" %}"/>
 <link rel="stylesheet" type="text/css" href="{% static "css/jquery.nouislider.css" %}"/>
+{% endcompress %}
 {% endblock %}
 
 {% block extra_js %}
+{% compress js %}
 <script src="{% static "js/jquery.nouislider.js" %}"></script>
 <script type="text/javascript">
 $(document).ready(function() {
@@ -41,6 +44,7 @@ var manageFeedOther = function() {
     }
 }
 </script>
+{% endcompress %}
 {% endblock %}
 
 {% block main %}

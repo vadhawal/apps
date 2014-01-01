@@ -40,11 +40,9 @@
 <link rel="stylesheet" href="{% static "css/cartridge.rtl.css" %}">
 {% endif %}
 {% endifinstalled %}
-{% block extra_css %}{% endblock %}
 {% endcompress %}
+{% block extra_css %}{% endblock %}
 
-{% compress js %}
-<script src="{% static "mezzanine/js/"|add:settings.JQUERY_FILENAME %}"></script>
 <script>
 var category_namespace = {
     categories:''
@@ -64,6 +62,9 @@ var categories = {{categories}};
 console.log(categories);
 category_namespace.categories = categories;
 </script>
+
+{% compress js %}
+<script src="{% static "mezzanine/js/"|add:settings.JQUERY_FILENAME %}"></script>
 <script src="{% static "js/bootstrap.js" %}"></script>
 <script src="{% static "js/bootstrap-extras.js" %}"></script>
 <script src="{% static "js/ajax.csrf.js" %}"></script>
@@ -81,8 +82,8 @@ category_namespace.categories = categories;
 <script src="{% static "js/album.handlers.js" %}"></script>
 <script src="{% static "js/base.js" %}"></script>
 
-{% block extra_js %}{% endblock %}
 {% endcompress %}
+{% block extra_js %}{% endblock %}
 <!--[if lt IE 9]>
 <script src="{% static "js/html5shiv.js" %}"></script>
 <![endif]-->
