@@ -160,8 +160,8 @@ $(document).ready(function() {
     $('#refreshActivity').click(function() {
         var add_link = $(this);
         $.get(add_link.attr('href'), {}, function(data) {
-            if(data !== 'None')
-            {
+            var $validAction = $(data).find('.noActions');
+            if(data !== 'None' && $validAction.length == 0) {
                 var $noActions = $('#load-feeds').find('.noActions');
                 if($noActions && $noActions.length > 0) {
                     $noActions.parent().remove();
@@ -192,7 +192,7 @@ $(document).ready(function() {
     viewFeed(); 
     setInterval(function () {
         checkAnyLatestActivity();
-    }, 30000);
+    }, 60000);
 
     $(window).debounce('scroll', feedUpdater, 100);
 }); 
@@ -227,8 +227,8 @@ function updateFeed(){
     $('#status').text('Loading more items...');
     $('#status').show();
     sIndex = lIndex;
-    lIndex = lIndex + 10;
-    {% following_feedsubset_url request.user 0 10 as feed %}
+    lIndex = lIndex + 20;
+    {% following_feedsubset_url request.user 0 20 as feed %}
     var link = "{{feed}}";
     var linksplit = link.split("/");
     linksplit[linksplit.length-2] = lIndex;
@@ -259,6 +259,9 @@ function viewFeed()
         $('#load-feeds').html(data);
         install_action_handlers($('#load-feeds').children().last());
         $('#status').hide();
+        if ($(document).height() <= $(window).height()) { 
+            updateFeed();
+        }
     });
 }
 

@@ -41,10 +41,12 @@
 {% endblock %}
 
 {% block extra_head %}
-{% compress js %}
 <script type="text/javascript">
 var sIndex = 0;
 var lIndex = 20;
+</script>
+{% compress js %}
+<script type="text/javascript">
 $(window).load(function(){
 	/* Calling this on window.load to wait for all the images to load. */    
     setupCustomScrollBar($('#topDealsForStoreCategory'), true); //second boolean parameter forces horizontal scrollbar
