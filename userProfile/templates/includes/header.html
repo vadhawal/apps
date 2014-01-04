@@ -78,8 +78,8 @@
         {% else %}
             <div class="offset8 span3">
                 <span class="pull-right">
-                    <a class="fontSize13 fontTitillium doLogin" href="{% url "login" %}?next={{ request.get_full_path }}">{% trans " Log in" %}</a>
-                     | <a class="fontSize13 fontTitillium doSignUp" href="{% url "signup" %}?next={{ request.get_full_path }}">{% trans "Sign up" %}</a>
+                    <a class="fontSize13 fontTitillium doLogin" href="{% url "login" %}?next={{ request.get_full_path|urlencode }}">{% trans " Log in" %}</a>
+                     | <a class="fontSize13 fontTitillium doSignUp" href="{% url "signup" %}?next={{ request.get_full_path|urlencode }}">{% trans "Sign up" %}</a>
                 </span>
                 <a href="{% url "socialauth_begin" "google-oauth2" %}">
                    <span class="socialLogin googleLogin pull-right" style="margin-top:10px;">
