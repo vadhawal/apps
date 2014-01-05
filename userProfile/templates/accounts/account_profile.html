@@ -30,7 +30,7 @@
 
 <script type="text/javascript">
   var sIndex = 0;
-  var lIndex = 10;
+  var lIndex = 20;
   $(document).ready(function() {
     {% get_hit_count_javascript for profile_user %}
     $('#followerCountBox').add('#followingCountBox').add('#followingVendorCountBox').on("click", display_popup_handler);
@@ -48,12 +48,22 @@
 
     var getFeed = function(){
         $('#load-feeds').html("");
-        {% actor_url_subset profile_user 0 'MIN_DEALS_HOME_PAGE'|settings_value as feed %}
+        {% actor_url_subset profile_user 0 20 as feed %}
         var link = "{{feed}}";
         $.get(link, {}, function(data) {
-            $('#load-feeds').html(data);
-            install_action_handlers();
-            $('#status').hide();
+            if (data.html == "None" && data.more == false) {
+                $(window).off('scroll');
+                $('#status').hide();
+            } else {
+                if(data.html != 'None') {
+                    $('#load-feeds').html(data.html);
+                    install_action_handlers($('#load-feeds').children().last());
+                    $('#status').hide();
+                }
+                if ($(document).height() <= $(window).height() && data.more === true) { 
+                    updateFeed();
+                }
+            }
         });
     }
     $('#status').text('Loading Timeline');
@@ -81,8 +91,8 @@ function updateFeed(){
     $('#status').text('Loading more items...');
     $('#status').show();
     sIndex = lIndex;
-    lIndex = lIndex + 5;
-    {% actor_url_subset profile_user 0 10 as feed %}
+    lIndex = lIndex + 20;
+    {% actor_url_subset profile_user 0 20 as feed %}
     var link = "{{feed}}";
     var linksplit = link.split("/");
     linksplit[linksplit.length-2] = lIndex;
@@ -90,12 +100,18 @@ function updateFeed(){
     link = linksplit.join('/');
 
     $.get(link, {}, function(data) {
-        if (data == "None") {
+        if (data.html == "None" && data.more == false) {
             $(window).off('scroll');
             $('#status').hide();
         } else {
-            $('#load-feeds').append(data);
-            install_action_handlers();
+            if(data.html != 'None') {
+                $('#load-feeds').append(data.html);
+                install_action_handlers($('#load-feeds').children().last());
+                $('#status').hide();
+            }
+            if ($(document).height() <= $(window).height() && data.more === true) { 
+                updateFeed();
+            }            
         }
     }); 
 }

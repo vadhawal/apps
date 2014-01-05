@@ -236,16 +236,20 @@ function updateFeed(){
     link = linksplit.join('/');
 
     $.get(link, {}, function(data) {
-        if(data === "None")
+        if(data.html === "None" && data.more === false)
         {
           $(window).off('scroll');
-          $('#status').hide();
-          return;
         } else {  
-            $('#load-feeds').append(data);
-            install_action_handlers($('#load-feeds').children().last());
-            $(window).debounce('scroll', feedUpdater, 100);
+            if(data.html != 'None') {
+                $('#load-feeds').append(data);
+                install_action_handlers($('#load-feeds').children().last());
+                $(window).debounce('scroll', feedUpdater, 100);
+            }
+            if ($(document).height() <= $(window).height() && data.more === true) { 
+                updateFeed();
+            }
         }
+        $('#status').hide();
     });  
 }  
 
@@ -256,10 +260,10 @@ function viewFeed()
 
     var link="{{feed}}";
     $.get(link, {}, function(data) {
-        $('#load-feeds').html(data);
+        $('#load-feeds').html(data.html);
         install_action_handlers($('#load-feeds').children().last());
         $('#status').hide();
-        if ($(document).height() <= $(window).height()) { 
+        if ($(document).height() <= $(window).height() && data.more === true) { 
             updateFeed();
         }
     });
