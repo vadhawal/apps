@@ -56,7 +56,7 @@ var get_top_stores_handler = function(parent_category, sub_category)
                 $data_container =  $scrollContainer
 
             $data_container.html(data.html);
-
+            $data_container.find('.vendorFollowers').on("click", display_popup_handler);
             $scrollContainer.attr("data-href", $url);
     	} else {
     		$scrollContainer.removeAttr("data-href");

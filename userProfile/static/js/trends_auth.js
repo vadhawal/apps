@@ -56,6 +56,7 @@ var get_top_stores_handler_auth = function(parent_category, sub_category)
             $data_container.html(data.html);
 
             $scrollContainer.attr("data-href", $url);
+            $data_container.find('.vendorFollowers').on("click", display_popup_handler);
     	} else {
     		$scrollContainer.removeAttr("data-href");
     	}
