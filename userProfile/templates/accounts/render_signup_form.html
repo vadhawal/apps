@@ -2,26 +2,6 @@
 {% load widget_tweaks future %}
 
 <div class="row">
-	<div class="offset3 span4 fontTitillium1 fontSize15 radioColor">
-		<div class="socialLoginForm">
-			<a href="{% url "socialauth_begin" "facebook" %}" style="font-size:1px">
-                <span class="socialLogin facebookLogin" style="margin-top:0;">
-                </span>
-            </a>
-            <a href="{% url "socialauth_begin" "google-oauth2" %}" style="font-size:1px">
-               <span class="socialLogin googleLogin" style="margin-top:0;">
-               </span>
-            </a>
-            <a href="{% url "socialauth_begin" "twitter" %}" style="font-size:1px">
-                <span class="socialLogin twitterLogin" style="margin-top:0;">
-                </span>
-            </a>
-            <span class="fullGutter"> {% trans "or" %}</span>
-		</div>
-	</div>
-</div>
-
-<div class="row">
 	<div class="offset3 span4 fontTitillium1 fontSize13 color5D" style="line-height:25px;">
 		<form class="accountForm" method="post" {% if form.is_multipart %} enctype="multipart/form-data"{% endif %}>
 			{% csrf_token %}
@@ -34,7 +14,15 @@
 						{% if field.label == form.gender.label %}
 							{{field.label_tag}}
 						{% elif field.label == form.profile_photo.label %}
-							<output id="previewimg"></output>
+							<output id="previewimg">
+								{% if request.user.is_authenticated %}
+									{% if request.user.get_profile.profile_photo %}
+										<img src="{{MEDIA_URL}}{{request.user.get_profile.profile_photo}}" width="100">
+									{% elif request.user.get_profile.image_url %}
+										<img src="{{request.user.get_profile.image_url}}" width="100">
+									{% endif %}
+								{% endif %}
+							</output>
 						{% endif %}
 						{% if field.label == form.location.label %}
 							<span class="pull-right">
