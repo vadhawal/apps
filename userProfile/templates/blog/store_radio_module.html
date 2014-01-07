@@ -23,7 +23,7 @@
 			<a href="#" class="follow-btn icon-follow" data-href="{% follow_url blog_post %}">{% trans "Follow" %}</a>
 
 			<a class="icon-following radioColor">{% trans "Follow" %}</a><a href="#" class="unfollow-btn icon-unfollow" data-href="{% follow_url blog_post %}"><img class="noBoxShadow" src="{% static 'img/1transparent.png' %}"></a>
-		</span>{% vendor_follower_subset_info_url blog_post 0 request.user|follower_count:blog_post as subset_follower_url %}<a class="vendorFollowers" href="{{subset_follower_url}}">({{  request.user|follower_count:blog_post }})</a></span>
+		</span>{% vendor_follower_subset_info_url blog_post 0 'MIN_FOLLOWERS_CHUNK'|settings_value as subset_follower_url %}<a class="vendorFollowers" href="{{subset_follower_url}}">({{  request.user|follower_count:blog_post }})</a></span>
     {% if noShare == "True" %}
     {% else %}
         <span class="socialShare makeButton fontTitillium halfGutter">+</span>
