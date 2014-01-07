@@ -279,7 +279,7 @@ def get_wishlist(request, content_type_id, object_id, sIndex, lIndex):
 			'success': True
 		}
 	elif s == 0:
-		template = Template('<span>No Wishes Posted.</span>')
+		template = Template('<span class="fontTitillium1 fontSize13">No Wishes Posted.</span>')
 		ret_data = {
 			'html': template.render(context).strip(),
 			'success': True
