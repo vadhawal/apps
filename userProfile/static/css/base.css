@@ -258,6 +258,15 @@ a.colorWhite:hover{
 	color: #595757;
 	color: rgb(89, 87, 87);
 }
+.whiteSpace a.zocial {
+	color: white;
+	margin-right: 6px;
+	font-size: 13px;
+	margin-top: 5px;
+}
+a.zocial:hover{
+	color: white;
+}
 .searchBar{
 	height: 60px;
 	background-color: rgb(2, 151, 149);
@@ -273,7 +282,12 @@ a.colorWhite:hover{
 input.search-query{
 	font-family: titillium1, helvetica;
 	height: 25px;
-	margin-top: 12.5px;
+	margin-top: 17.5px;
+	font-size: 12.85px;
+	padding: 0;
+	border-radius: 0;
+	padding-left: 5px;
+	width: 100%;
 }
 .searchOr{
 	float: left;
@@ -806,6 +820,13 @@ input[type="submit"].loginSubmit{
 	width: 78px;
 	height: 29px;
 	margin-left:38px;
+}
+.socialLoginForm a.zocial{
+	float:left;
+	margin-left:6px;
+}
+.socialLoginForm a.zocial:first-child{
+	margin-left: 0;
 }
 .accountForm input.textField:-webkit-autofill {
     -webkit-box-shadow: 0 0 0 50px white inset;
