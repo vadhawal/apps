@@ -1,14 +1,17 @@
-{% load userProfile_tags blog_tags i18n %}
+{% load userProfile_tags blog_tags i18n static %}
 {% get_owned_blog request.user as blog %}
 <div class="whiteBox">
-    <div class="span7 halfGutter topHalfGutter">
-        <span class="fontTitillium1 fontSize13 colorDarkerGrey">{% if blog %}{% trans "Radio your Deals" %}{% else %}{% trans "Radio your Wishes" %}{% endif %}</span>
+    <div class="row height26auto height26 yellowBar bottomHalfGutter">
+        <div class="span7">
+            <img class="halfGutter noBoxShadow" style="height:17px;margin-top:-6px;" src="{% static 'img/radio_grey.png' %}">
+            <span class="fontTitillium1 fontSize14 colorDarkerGrey">{% if blog %}{% trans "Radio your Deals" %}{% else %}{% trans "Radio your Wishes" %}{% endif %}</span>
+        </div>
     </div>
     <form id="broadcast" action="/userwish/" method="post" role="form" class='album-form' enctype="multipart/form-data">
         {% csrf_token %}
 
         <div id="previewLoading"></div>
-        <div class="span4 statusBox halfGutter topHalfGutter">
+        <div class="span4 statusBox halfGutter">
             <textarea id="text" name="message"></textarea>
             <output id="previewimg"></output>
             <div style="width:100%;margin-bottom:0px;" >
@@ -18,7 +21,7 @@
             <input type="hidden" name="urlPreviewContent" id="urlPreviewContent" value="" />
             <div class="previewPostedList"></div>
         </div>
-        <div class="span2 topHalfGutter">
+        <div class="span2">
             {% if blog %}
                 <div id="deal-input" class="fontTitillium1 colorDarkerGrey checkbox">
                     <label for="post-as-deal" class="fontSize13">
@@ -31,7 +34,7 @@
                 <div id="deal_categories" style="display:none;">
                     {% blog_subcategories_for_blog blog as sub_categories_blog %}
                     {% if sub_categories_blog %}
-                        <select id="sub_categories_blog" name="radio_category" class="blog_subcategories radioSelect">
+                        <select id="sub_categories_blog" name="radio_category" class="blog_subcategories radioSelect" style="margin-bottom:0px;">
                                 <option value='empty' selected disabled>{% trans "Category" %}</option>
                                 {% for blog_category in sub_categories_blog %}
                                 <option value="{{ blog_category }}">{{ blog_category }}</option>
@@ -58,7 +61,7 @@
                                 <option value="{{ category }}">{{ category }}</option>
                                 {% endfor %}
                         </select>
-                        <select class="blog_subcategories radioSelect" name="blog_subcategories">
+                        <select class="blog_subcategories radioSelect" name="blog_subcategories" style="margin-bottom:0px;">
                                 <option value='empty' selected disabled>{% trans "Sub Category" %}</option>
                         </select>
                     </div>
@@ -92,8 +95,8 @@
             <div style="clear: both"></div>
         </div>
     </div>
-    <div class="progress" style="display:None;position:relative;">
-        <div class="bar"></div >
-        <div class="percent">0%</div >
+    <div class="progress hide" style="display:None;position:relative;">
+        <div class="bar hide"></div >
+        <div class="percent hide">0%</div >
     </div>
 </div>

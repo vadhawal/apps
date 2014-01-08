@@ -104,17 +104,19 @@ $(document).ready(function() {
         if(ret_data.error_codes.indexOf(107) != -1)
             $('#expiry_date').addClass('error');
 
-        $('.progress').toggle(); 
+        //$('.progress').toggle(); 
+        $('.progress').hide(); 
         console.log('form submission error!!');
     }
     (function() {
         var bar = $('.bar');
         var percent = $('.percent');
-        var status = $('#status');
+        var status = $('#status span');
            
         $('#broadcast').ajaxForm({
             beforeSend: function() {
-                $('.progress').toggle();
+                //$('.progress').toggle();
+                $('.progress').hide(); 
                 status.empty();
                 var percentVal = '0%';
                 bar.width(percentVal)
@@ -224,7 +226,7 @@ function checkAnyLatestActivity(){
 
 function updateFeed(){ 
     //fetch new items 
-    $('#status').text('Loading more items...');
+    $('#status span').text('Loading more items...');
     $('#status').show();
     sIndex = lIndex;
     lIndex = lIndex + 20;

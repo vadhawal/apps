@@ -227,6 +227,9 @@
 	width:100%;
 	height:70px;
 }
+#submitwithouturl:focus{
+	outline: 0;
+}
 .radioPost{
 	background-image:  url('/static/img/radio_grey.png');
 	background-repeat: no-repeat;
