@@ -66,7 +66,7 @@
             }
         });
     }
-    $('#status').text('Loading Timeline');
+    $('#status span').text('Loading Timeline');
     $('#status').show();
     getFeed();
     getWishList();
@@ -88,7 +88,7 @@ function getWishList() {
 
 function updateFeed(){ 
         //fetch new items 
-    $('#status').text('Loading more items...');
+    $('#status span').text('Loading more items...');
     $('#status').show();
     sIndex = lIndex;
     lIndex = lIndex + 20;

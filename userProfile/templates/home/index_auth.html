@@ -23,7 +23,10 @@
                 <div id="load-feeds" class="section-scroll content">
                 </div>
             </div>
-            <span id="status" class="whiteBox pagination-centered topHalfGutter">{% trans "Loading Activity Feed" %}</span>
+            <span id="status" class="whiteBox pagination-centered topHalfGutter">
+                <span>{% trans "Loading Activity Feed" %}</span>
+                <img class="noBoxShadow halfGutter" style="height:17px;margin-top:-4px;" src="{% static "img/loading.gif" %}">
+            </span>
         </div>
     </div>
 

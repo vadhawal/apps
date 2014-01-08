@@ -21,6 +21,9 @@
 									{% elif request.user.get_profile.image_url %}
 										<img src="{{request.user.get_profile.image_url}}" width="100">
 									{% endif %}
+									<span class="pull-right">
+                            			<a href="javascript:void(0)"><img class="noBoxShadow" width="10px" height="10px" src="	/static/img/cross_button.png"></a>
+			                        </span>
 								{% endif %}
 							</output>
 						{% endif %}
