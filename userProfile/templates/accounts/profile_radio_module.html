@@ -9,26 +9,24 @@
     		{% trans "Views" %}&nbsp;({% get_hit_count for profile_user %})
     	</span>
     	<span style="margin-left:10px;">
-    		{% trans "Reviews" %}&nbsp;</span>{% get_reviews_by_user profile_user as totalReviews %}<a class="commentCount" href="{% url get_reviews_by_user profile_user.id %}" style="margin-left:0px; {% if request.user == profile_user %}
-                                            margin-right:10px;{% else %}margin-right:0px;
-                                        {% endif %}">({{totalReviews.count}})</a>
+    		{% trans "Reviews" %}&nbsp;</span>{% get_reviews_by_user profile_user as totalReviews %}<a class="commentCount" href="{% url get_reviews_by_user profile_user.id %}" style="margin-left:0px;margin-right:10px;">({{totalReviews.count}})</a>
 
-		{% if request.user != profile_user %}
-            <span style="margin-left:5px;" class="vendorFollowContainer {% if_relationship request.user profile_user "following" %} following {% endif_relationship %}" >
-    			<a href="#" class="follow-btn icon-follow" data-href="{{ profile_user|add_relationship_url:"following" }}">{% trans "Follow" %}</a>
-
-    			<a class="icon-following radioColor">{% trans "Follow" %}</a>
-
-    			<a href="#" class="unfollow-btn icon-unfollow" data-href="{{ profile_user|remove_relationship_url:"following" }}"><img class="noBoxShadow" src="{% static 'img/1transparent.png' %}"></a>
-    		</span>
+            <span>{% trans "Followers" %}</span>
 
             {% follower_subset_url profile_user 0 10 as follower_url %}
     		<a style="margin-right:10px;" class="vendorFollowers" href="{{follower_url}}">({{ profile_user.relationships.followers.count }})</a>
-        {% endif %}
     </span>
-    <span class="socialShare makeButton fontTitillium halfGutter">+</span>
     {% if request.user != profile_user %}
-        <a class="makeButton radioColorBackground colorWhite pull-right" href="{% url messages_compose_to profile_user.username %}">{% trans "Send Message" %}</a>
+        <span class="vendorFollowContainer halfGutter makeYellowButton {% if_relationship request.user profile_user "following" %} following {% endif_relationship %}" style="display:inline-block;margin-top:-3px;padding-left:10px;padding-right:10px;">
+            <a href="javascript:void(0)" class="follow-btn icon-follow" data-href="{{ profile_user|add_relationship_url:"following" }}">{% trans "Follow" %}</a>
+            <a class="icon-following radioColor">{% trans "Follow" %}</a>
+            <a href="javascript:void(0)" class="unfollow-btn icon-unfollow" data-href="{{ profile_user|remove_relationship_url:"following" }}"><img class="noBoxShadow" src="{% static 'img/1transparent.png' %}"></a>
+        </span>
+    {% endif %}
+    {% if request.user != profile_user %}
+        {% if enable == "true" %}
+            <a class="makeButton radioColorBackground colorWhite pull-right" href="{% url messages_compose_to profile_user.username %}">{% trans "Send Message" %}</a>
+        {% endif %}
     {% else %}
         {% if request.user.is_authenticated %}
             {% for sa in request.user.social_auth.all %}

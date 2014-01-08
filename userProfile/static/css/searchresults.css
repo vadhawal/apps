@@ -6,16 +6,6 @@
 	height: 30px;
 	line-height: 30px;
 }
-.height26{
-	height: 26px;
-	line-height:26px;
-}
-.height26auto{
-	height: auto;
-	line-height:26px;
-	-webkit-box-shadow: 1.25px 1.25px 1.25px rgba(132,125,125,0.75);
-	box-shadow: 1.25px 1.25px 1.25px rgba(132, 125, 125, 0.75);
-}
 .vendorName {
 	font-size: 2em;
 }
