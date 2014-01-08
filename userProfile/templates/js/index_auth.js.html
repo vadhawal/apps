@@ -241,7 +241,7 @@ function updateFeed(){
           $(window).off('scroll');
         } else {  
             if(data.html != 'None') {
-                $('#load-feeds').append(data);
+                $('#load-feeds').append(data.html);
                 install_action_handlers($('#load-feeds').children().last());
                 $(window).debounce('scroll', feedUpdater, 100);
             }
