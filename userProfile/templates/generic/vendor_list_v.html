@@ -56,8 +56,12 @@
         {% endif %}
         {% empty %}
         <div class="row">
-            <div class="span2">
-                {% trans "No stores to list" %}
+            <div class="span2 fontTitillium1 fontSize13">
+                {% if user_list == "true"%}
+                    {% trans "Not following any stores yet" %}
+                {% else %}
+                    {% trans "No stores to list" %}
+                {% endif %}
             </div>
         </div>
     {% endfor %}

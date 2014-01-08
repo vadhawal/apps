@@ -4,24 +4,22 @@
     <p>{% trans "You're already logged in." %}</p>
 {% else %}
 	<div class="loginPopup">
-		<div class="socialLoginForm">
-
-		</div>
-		<div class="fontTitillium1 fontSize13 color5D">
+		<div class="fontTitillium1 socialLoginForm fontSize13 color5D">
+			<a href="{% url "socialauth_begin" "facebook" %}" class="zocial facebook">
+				{% trans "Log in with Facebook" %}
+<!--                 <span class="socialLogin facebookLogin" style="margin-top:10px;">
+                </span> -->
+            </a>
+            <a href="{% url "socialauth_begin" "google-oauth2" %}" class="zocial googleplus icon" >
+<!--                <span class="socialLogin googleLogin" style="margin-top:10px;">
+               </span> -->
+            </a>
+            <a href="{% url "socialauth_begin" "twitter" %}" class="zocial twitter icon">
+<!--                 <span class="socialLogin twitterLogin" style="margin-top:10px;">
+                </span> -->
+            </a>
+            <p class="fontTitillium radioColor fontSize20" style="margin:10px;clear:both;float:left">or</p>
 			{% include 'accounts/render_form.html' with form=form %}
-			<p class="fontTitillium radioColor fontSize15 halfGutter" style="margin-top:10px;">or</p>
-			<a href="{% url "socialauth_begin" "facebook" %}">
-                <span class="socialLogin facebookLogin" style="margin-top:10px;">
-                </span>
-            </a>
-            <a href="{% url "socialauth_begin" "google-oauth2" %}">
-               <span class="socialLogin googleLogin" style="margin-top:10px;">
-               </span>
-            </a>
-            <a href="{% url "socialauth_begin" "twitter" %}">
-                <span class="socialLogin twitterLogin" style="margin-top:10px;">
-                </span>
-            </a>
 		    {% url "signup" as signup_url %}
 	    	{% blocktrans with request.GET.next as next %}
 	    		<p class="fontTitillium fontSize15 hintText">Don’t have an account yet? It’s never too late to Wishradio.&nbsp;<a class="radioColor" href="{{ signup_url }}?next={{ next }}">Sign up</a>&nbsp;now!

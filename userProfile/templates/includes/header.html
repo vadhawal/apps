@@ -76,22 +76,23 @@
                 </span>
             </div>
         {% else %}
-            <div class="offset8 span3">
+            <div class="offset6 span5">
                 <span class="pull-right">
                     <a class="fontSize13 fontTitillium doLogin" href="{% url "login" %}?next={{ request.get_full_path|urlencode }}">{% trans " Log in" %}</a>
                      | <a class="fontSize13 fontTitillium doSignUp" href="{% url "signup" %}?next={{ request.get_full_path|urlencode }}">{% trans "Sign up" %}</a>
                 </span>
-                <a href="{% url "socialauth_begin" "google-oauth2" %}">
-                   <span class="socialLogin googleLogin pull-right" style="margin-top:10px;">
-                   </span>
+                <a href="{% url "socialauth_begin" "twitter" %}" class="zocial twitter icon pull-right">
+<!--                     <span class="socialLogin twitterLogin pull-right" style="margin-top:10px;">
+                    </span> -->
                 </a>
-                <a href="{% url "socialauth_begin" "twitter" %}">
-                    <span class="socialLogin twitterLogin pull-right" style="margin-top:10px;">
-                    </span>
+                <a href="{% url "socialauth_begin" "google-oauth2" %}" class="zocial googleplus icon pull-right">
+<!--                    <span class="socialLogin googleLogin pull-right" style="margin-top:10px;">
+                   </span> -->
                 </a>
-                <a href="{% url "socialauth_begin" "facebook" %}">
-                    <span class="socialLogin facebookLogin pull-right" style="margin-top:10px;">
-                    </span>
+                <a href="{% url "socialauth_begin" "facebook" %}" class="zocial facebook pull-right">
+                    {% trans "Sign up with Facebook" %}
+<!--                     <span class="socialLogin facebookLogin pull-right" style="margin-top:10px;">
+                    </span> -->
                 </a>
             </div>
          {% endif %}
@@ -106,8 +107,8 @@
                 </div>
                 <div class="span8 noGutter">
                     <div class="row">
-                        <div class="span2 colorWhite fontTitillium fontSize15 noGutter">
-                            <span class="wantText">{% trans "For all wishes money can buy" %}&nbsp;<span class="colorYellow">{% trans "search here" %}</span>
+                        <div class="span2 colorWhite fontTitillium fontSize14 noGutter">
+                            <span class="wantText">{% trans "For all the wishes that money can buy," %}&nbsp;<span class="colorYellow">{% trans "search here" %}</span>
                             </span>
                         </div>
                         <div class="span2 halfGutter">

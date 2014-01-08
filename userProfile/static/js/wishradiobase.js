@@ -290,7 +290,7 @@ var doOpenUrlWithIframeFancyBox = function(url) {
         'type'              :'iframe',
         'iframe'            : {'scrolling': 'no'},
          helpers            : { overlay : { locked : false } },
-         onClosed           : function(){
+         afterClose           : function(){
                                     $('a.cropImageFancyBox').remove();
                                 }
     }).click();
@@ -311,7 +311,7 @@ var doOpenUrlWithAjaxFancyBox = function(url, afterShowCallback) {
                                     if(typeof afterShowCallback !== 'undefined')
                                         afterShowCallback();
         },
-        onClosed            : function() {
+        afterClose          : function() {
                                     $('a.ajaxFancybox').remove();
                                 }
         //,                

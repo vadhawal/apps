@@ -225,7 +225,7 @@ function feedUpdater() {
                 </div>
             </h2>
             <div class="accordion-content"> 
-                {% render_vendor_following_subset profile_user 0 'MIN_FOLLOWERS_CHUNK'|settings_value 'MIN_FOLLOWERS_CHUNK'|settings_value 'vertical' %}
+                {% render_vendor_following_subset profile_user 0 'MIN_FOLLOWERS_CHUNK'|settings_value 'MIN_FOLLOWERS_CHUNK'|settings_value 'vertical' 'true' %}
             </div>
         </div>
     </div>
