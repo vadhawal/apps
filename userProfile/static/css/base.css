@@ -905,7 +905,7 @@ input[type="password"].signUptextField{
 .signupSubmit {
 	margin-top: 21px;
 }
-.accountForm output img {
+.accountForm output > img {
 	position: relative;
 	top: -72px;
 	max-width: 78px;
@@ -995,12 +995,9 @@ div.vendorImage{
 	line-height:26px;
 }
 #previewimg span{
-	display: none;
-}
-#previewimg:hover span{
 	font-size: 10px;
 	display: block;
 	position: relative;
-	top: -25px;
+	top: -170px;
 	right:3px;
 }
