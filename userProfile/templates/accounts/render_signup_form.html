@@ -3,7 +3,7 @@
 
 <div class="row">
 	<div class="offset3 span4 fontTitillium1 fontSize13 color5D" style="line-height:25px;">
-		<form class="accountForm" method="post" {% if form.is_multipart %} enctype="multipart/form-data"{% endif %}>
+		<form class="accountForm" method="post" {% if form.is_multipart %} enctype="multipart/form-data"{% endif %} >
 			{% csrf_token %}
 		   	{% for field in form %}
 		   		{% if field.label != form.description.label %}
@@ -17,16 +17,17 @@
 							<output id="previewimg">
 								{% if request.user.is_authenticated %}
 									{% if request.user.get_profile.profile_photo %}
-										<img src="{{MEDIA_URL}}{{request.user.get_profile.profile_photo}}" width="100">
-										<span class="pull-right">
-                            				<a href="javascript:void(0)"><img class="noBoxShadow" width="10px" height="10px" src="{% static "img/cross_button.png" %} "></a>
-			                        	</span>
+										<img id="profile_image_preview" src="{{MEDIA_URL}}{{request.user.get_profile.profile_photo}}" width="100">
+									
+									{% comment %}
 									{% elif request.user.get_profile.image_url %}
-										<img src="{{request.user.get_profile.image_url}}" width="100">
-										<span class="pull-right">
-                            				<a href="javascript:void(0)"><img class="noBoxShadow" width="10px" height="10px" src="{% static "img/cross_button.png" %} "></a>
-			                        	</span>
+										<img id="profile_image_preview" src="{{request.user.get_profile.image_url}}" width="100">
+									{% endcomment %}
+
 									{% endif %}
+									<span class="pull-right {% if not request.user.get_profile.profile_photo %} hide {% endif %}">
+                            				<a href="javascript:void(0)" onclick="$('#profile_image_preview').hide();$(this).parent().hide();return false;"><img class="noBoxShadow" width="10px" height="10px" src="{% static "img/cross_button.png" %} "></a>
+			                        </span>
 								{% endif %}
 							</output>
 						{% endif %}
@@ -39,7 +40,7 @@
 							{% render_field field placeholder=field.label class="textField signUptextField" %}
 						{% endif %}
 						{% if forloop.last %}
-							<input class="fontTitillium fontSize16 radioColor loginSubmit signupSubmit pull-right makeYellowButton" type="submit" value="GO"/>
+							<input class="fontTitillium fontSize16 radioColor loginSubmit signupSubmit pull-right makeYellowButton updateProfile" type="submit" value="GO"/>
 						{% endif %}
 					{% if field.label != form.gender.label %}
 					</div>
