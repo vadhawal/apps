@@ -122,16 +122,6 @@ $(document).ready(function() {
         }
     });
 
-    $(".settings").click(function(){
-        var $settingsPopup = $('.settingsPopup');
-        if ($settingsPopup.hasClass('hide')) {
-            $settingsPopup.removeClass('hide');
-            $settingsPopup.css({'top': $(this).height(), 'left': -90});
-        } else {
-            $settingsPopup.addClass('hide');
-        }
-    });
-
     $(".blog_parentcategories").val("empty");
     $(".blog_subcategories").val("empty");
 

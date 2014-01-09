@@ -28,12 +28,25 @@
     <div class="row whiteSpace">
         {% if request.user.is_authenticated %}
             <div class="offset7 span4">
+                {% comment %}
                 <span class="pull-right">
                     <a href="{% url "messages_inbox" %}">
                         <span class="messages_homepage"><img src="{% static "img/messages.png" %}"></span>
                         <span class="messages_count circleBase fontSize9 fontTitillium2 pagination-centered">{{ messages_inbox_count }}</span>
                     </a>
                 </span>
+                {% endcomment %}
+                <div class="btn-group profileSettings pull-right">
+                    <button type="button" class="btn settings dropdown-toggle" data-toggle="dropdown">
+                        <img src="{% static 'img/1transparent.png' %}">
+                    </button>
+                    <ul class="dropdown-menu fontTitillium1 color5D settingsPopup" role="menu">
+                        <li><a href="{% url "profile_update" %}" class="color5D">{% trans "Update profile" %}</a></li>
+                        <li class="divider"></li>
+                        <li><a href="{% url "logout" %}?next={{ request.get_full_path|urlencode }}">{% trans "Log out" %}</a></li>
+                    </ul>
+                </div>
+                {% comment %}
                 <span class="settings pull-right" style="margin-right: 5px;">
                     <img src="{% static 'img/1transparent.png' %}">
                     <!-- <img src="{% static "img/green_pointer.png" %}"> -->
@@ -45,8 +58,9 @@
                         <span style="clear:both;">
                             <a href="{% url "logout" %}?next={{ request.get_full_path|urlencode }}">{% trans "Log out" %}</a>
                         </span>
+                    </span>
                 </span>
-                </span>
+                {% endcomment %}
                 <span class="pull-right" style="margin-right: 5px;">
                     {% url "profile" request.user.username as profile_url %}
                     {% if profile_url %}

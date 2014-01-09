@@ -33,10 +33,18 @@
 						{% if field.label == form.location.label %}
 							<span class="pull-right">
 								{{field.label_tag}}
-								{% render_field field class="textField smallTextField" %}
+								{% if field.errors %}
+									{% render_field field class="textField smallTextField error" %}
+								{% else %}
+									{% render_field field class="textField smallTextField" %}
+								{% endif %}
 							</span>
 						{% else %}
-							{% render_field field placeholder=field.label class="textField signUptextField" %}
+							{% if field.errors %}
+								{% render_field field placeholder=field.label class="textField error signUptextField" %}
+							{% else %}
+								{% render_field field placeholder=field.label class="textField signUptextField" %}
+							{% endif %}
 						{% endif %}
 						{% if forloop.last %}
 							<input class="fontTitillium fontSize16 radioColor loginSubmit signupSubmit pull-right makeYellowButton" type="submit" value="GO"/>
