@@ -343,7 +343,7 @@ var login_handler = function(event) {
 var account_form_submit_handler = function(event) {
     var $form = $(this);
     var $action_url = event.data.action_url;
-    $('.fancybox-inner').find('.errors').remove();
+    $('.fancybox-inner').find('.error').remove();
     $.ajax({
         type: $form.attr('method'),
         url: $action_url,
@@ -358,9 +358,8 @@ var account_form_submit_handler = function(event) {
                 var $errors = ret_data.errors.__all__;
                 var $albumFormContainer = $('.fancybox-inner').find('.accountForm');
                 $('<div/>', {
-                    'class':'errors',
-                    'style':'border-style:solid;border-width:thin;border-color:red;',
-                    'html':'<span>'+$errors+'</span>'
+                    'class':'error',
+                    'html':'<span class="fontSize12">'+$errors+'</span>'
                 }).appendTo($albumFormContainer);
                 $.fancybox.update();
             }
