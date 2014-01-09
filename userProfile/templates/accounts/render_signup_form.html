@@ -1,5 +1,5 @@
 {% load i18n mezzanine_tags %}
-{% load widget_tweaks future %}
+{% load widget_tweaks future static %}
 
 <div class="row">
 	<div class="offset3 span4 fontTitillium1 fontSize13 color5D" style="line-height:25px;">
@@ -18,12 +18,15 @@
 								{% if request.user.is_authenticated %}
 									{% if request.user.get_profile.profile_photo %}
 										<img src="{{MEDIA_URL}}{{request.user.get_profile.profile_photo}}" width="100">
+										<span class="pull-right">
+                            				<a href="javascript:void(0)"><img class="noBoxShadow" width="10px" height="10px" src="{% static "img/cross_button.png" %} "></a>
+			                        	</span>
 									{% elif request.user.get_profile.image_url %}
 										<img src="{{request.user.get_profile.image_url}}" width="100">
+										<span class="pull-right">
+                            				<a href="javascript:void(0)"><img class="noBoxShadow" width="10px" height="10px" src="{% static "img/cross_button.png" %} "></a>
+			                        	</span>
 									{% endif %}
-									<span class="pull-right">
-                            			<a href="javascript:void(0)"><img class="noBoxShadow" width="10px" height="10px" src="	/static/img/cross_button.png"></a>
-			                        </span>
 								{% endif %}
 							</output>
 						{% endif %}
