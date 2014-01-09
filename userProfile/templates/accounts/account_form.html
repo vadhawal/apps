@@ -17,8 +17,15 @@
                 var reader = new FileReader();
                 
                   reader.onload = (function(theFile) {
+                    $('#previewimg span').show();
+                    $('#profile_image_preview').show();
+                    $('#profile_photo-clear_id').removeAttr('checked');
                     return function(e) {
-                      $('#previewimg').html(['<img src="', e.target.result,'" title="', theFile.name, '" width="100"/>'].join(''));
+                      if($('#profile_image_preview').length > 0) {
+                          $('#profile_image_preview').attr('src', e.target.result).attr('title', theFile.name);
+                      } else {
+                        $('#previewimg').prepend($(['<img id="profile_image_preview" src="', e.target.result,'" title="', theFile.name, '" width="100"/>'].join('')));
+                      }
                     };
                   })(f);
                   reader.readAsDataURL(f);
@@ -29,6 +36,16 @@
          }
          $('#id_profile_photo').change(handleFileSelect);
     });
+    $(document).ready(function(event){
+        $('.updateProfile').on('click', function(event){
+              if($('#profile_image_preview').is(':hidden')){
+                  $('#profile_photo-clear_id').attr('checked','checked');
+                  var $fileInput = $('#id_profile_photo');
+                  $fileInput.replaceWith( $fileInput = $fileInput.clone( true )); 
+              }
+              $(this).submit();
+        });
+    })
 </script>
 {% endcompress %}
 {% endblock %}

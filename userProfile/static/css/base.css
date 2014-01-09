@@ -399,10 +399,7 @@ div span.wantText{
 	background-image: url("/static/img/settings_hover.png");
 }
 .settingsPopup {
-	height: 50px; 
-	padding: 0px 15px;
-	position: absolute;
-	overflow: visible;
+	top: 85%;
 }
 .settingsPopup:before {
 	content:'';
@@ -415,14 +412,37 @@ div span.wantText{
 	border-right: 5px solid transparent;
 	border-bottom: 8px solid rgba(209, 211, 210, 1);
 }
-.settingsPopup span{
-	line-height:25px;
-	float:left;
+.settingsPopup li a:hover{
+	color: #5D5D5D;
+	background-color: rgba(229,244,244,1.00);;
+	background-image: none;
 }
-.settingsPopup span a:hover{
-	color: #029795;
-	color: rgb(2, 151, 149);
+ul.settingsPopup{
+	border-radius: 0;
+	min-width: 0;
 }
+ul.settingsPopup li.divider {
+	margin: 5px 1px;
+}
+
+.settingsPopup > li > a {
+	display: block;
+	padding: 3px 10px;
+	clear: both;
+	line-height: 13px;
+	color: #5D5D5D;
+	white-space: nowrap;
+	font-size: 13px;
+}
+.profileSettings button{
+	background-color: transparent !important;
+	background-image: none !important;
+	box-shadow: none !important;
+	border: 0 !important;
+	padding: 0 !important;
+	margin: 0 !important;
+}
+
 .subcomments_container input[type="submit"] {
 	display: none !important;
 }
@@ -996,7 +1016,6 @@ div.vendorImage{
 }
 #previewimg span{
 	font-size: 10px;
-	display: block;
 	position: relative;
 	top: -170px;
 	right:3px;
