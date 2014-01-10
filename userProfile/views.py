@@ -40,6 +40,7 @@ import json
 from django.core.urlresolvers import reverse
 import StringIO
 from django.core.files.uploadedfile import InMemoryUploadedFile
+from django.views.decorators.csrf import csrf_exempt
 
 def json_error_response(error_codes):
     return HttpResponse(simplejson.dumps(dict(success=False,
@@ -1084,6 +1085,10 @@ def getShopTalk(request, template_name='shoptalk.html'):
 		return HttpResponseRedirect("/")
 		
 	return render_to_response(template_name, {
-     }, context_instance=RequestContext(request))
+		}, context_instance=RequestContext(request))
+
+@csrf_exempt
+def facebook_view(request):
+    return HttpResponseRedirect('/')
 
 	

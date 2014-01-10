@@ -44,24 +44,37 @@
 {% endcompress %}
 {% block extra_css %}{% endblock %}
 
-<script>
-var category_namespace = {
-    categories:''
-};
-var is_authenticated = false;
-var login_url = {{settings.LOGIN_URL}};
-{% if request.user.is_authenticated %}
-    is_authenticated = true;
-{% else %}
-    is_authenticated = false;
-{% endif %}
-{% blog_categories_json as categories %}
-{% autoescape off %}
-var categories = {{categories}};
-{% endautoescape %}
+<script type="text/javascript">
+    function NotInFacebookFrame() {
+        return top === self;
+    }
+    function ReferrerIsFacebookApp() {
+    if(document.referrer) {
+        return document.referrer.indexOf("apps.facebook.com") != -1;
+    }
+    return false;
+    }
+    if (NotInFacebookFrame() || ReferrerIsFacebookApp()) {
+        top.location.replace("http://www.wishradio-dev.in");
+    }
 
-console.log(categories);
-category_namespace.categories = categories;
+    var category_namespace = {
+        categories:''
+    };
+    var is_authenticated = false;
+    var login_url = {{settings.LOGIN_URL}};
+    {% if request.user.is_authenticated %}
+        is_authenticated = true;
+    {% else %}
+        is_authenticated = false;
+    {% endif %}
+    {% blog_categories_json as categories %}
+    {% autoescape off %}
+        var categories = {{categories}};
+    {% endautoescape %}
+
+    console.log(categories);
+    category_namespace.categories = categories;
 </script>
 
 {% compress js %}
