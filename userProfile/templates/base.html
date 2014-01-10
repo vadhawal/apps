@@ -45,6 +45,7 @@
 {% block extra_css %}{% endblock %}
 
 <script type="text/javascript">
+
     function NotInFacebookFrame() {
         return top === self;
     }
@@ -54,8 +55,8 @@
     }
     return false;
     }
-    if (NotInFacebookFrame() || ReferrerIsFacebookApp()) {
-        top.location.replace("http://www.wishradio-dev.in");
+    if (ReferrerIsFacebookApp()) {
+        top.location.replace("http://www.wishradio.in");
     }
 
     var category_namespace = {
