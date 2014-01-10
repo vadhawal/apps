@@ -418,13 +418,17 @@ div span.wantText{
 	background-image: none;
 }
 ul.settingsPopup{
-	border-radius: 0;
 	min-width: 0;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
 }
 ul.settingsPopup li.divider {
 	margin: 5px 1px;
 }
-
+.navbar div.profileSettings{
+	margin: 0;
+}
 .settingsPopup > li > a {
 	display: block;
 	padding: 3px 10px;
@@ -441,6 +445,7 @@ ul.settingsPopup li.divider {
 	border: 0 !important;
 	padding: 0 !important;
 	margin: 0 !important;
+	margin-top: 6px !important;
 }
 
 .subcomments_container input[type="submit"] {
