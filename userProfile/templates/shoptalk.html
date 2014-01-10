@@ -70,10 +70,16 @@ $(document).ready(function() {
 {% endcompress %}
 {% endblock %}
 
+
+
 {% block main %}
 
 {% blog_parentcategories_abs as parent_categories %}
-{% include 'home/index_noauth.html' with parent_categories=parent_categories %}
+{% if request.user.is_authenticated %}
+    {% include 'home/index_auth.html' with parent_categories=parent_categories %}
+{% else %}
+    {% include 'home/index_noauth.html' with parent_categories=parent_categories %}
+{% endif %}
 
 {% endblock %}
 
