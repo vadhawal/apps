@@ -6,7 +6,14 @@
 </div>
 <div class="container customNavBar navbar navbar-fixed-top">
     <div class="row yellowBar">
-        <div class="offset9 span2">
+        <div class="offset3 span3">
+            <a href="/" class="makeButton colorWhite" {% if request.path == "/" %}style="text-decoration:underline;"{% endif %}>Home</a>
+            {% if request.user.is_authenticated %}
+                {% url 'getShopTalk' as shopTalkUrl %}
+                <a href="{{shopTalkUrl}}" class="makeButton colorWhite" {% if request.path == shopTalkUrl %}style="text-decoration:underline;"{% endif %} >Shop Talk</a>
+            {% endif %}
+        </div>
+        <div class="offset3 span2">
             <a href="http://blog.wishradio.in">
                 <div class="socialLogin tumblr pull-right">
                 </div>
@@ -104,7 +111,7 @@
                    </span> -->
                 </a>
                 <a href="{% url "socialauth_begin" "facebook" %}" class="zocial facebook pull-right">
-                    {% trans "Log in with Facebook" %}
+                    {% trans "Sign in with Facebook" %}
 <!--                     <span class="socialLogin facebookLogin pull-right" style="margin-top:10px;">
                     </span> -->
                 </a>

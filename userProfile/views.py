@@ -1108,4 +1108,11 @@ def edit_blog_image(request, blogpost_id):
 		else:
 			return HttpResponseRedirect(request.get_full_path())
 
+def getShopTalk(request, template_name='shoptalk.html'):
+	if not request.user.is_authenticated():
+		return HttpResponseRedirect("/")
+		
+	return render_to_response(template_name, {
+     }, context_instance=RequestContext(request))
+
 	
