@@ -6,15 +6,15 @@
 </div>
 <div class="container customNavBar navbar navbar-fixed-top">
     <div class="row yellowBar">
-        <div class="offset3 span3">
-            <a href="/" class="makeButton colorWhite" {% if request.path == "/" %}style="text-decoration:underline;"{% endif %}>Home</a>
+        <div class="offset3 span4">
+            <a href="/" class="makeButton colorWhite fontSize14" {% if request.path == "/" %}style="text-decoration:underline;"{% endif %}>{% trans "Home" %}</a>
             {% if request.user.is_authenticated %}
                 {% url 'getShopTalk' as shopTalkUrl %}
-                <a href="{{shopTalkUrl}}" class="makeButton colorWhite" {% if request.path == shopTalkUrl %}style="text-decoration:underline;"{% endif %} >Shop Talk</a>
+                <a href="{{shopTalkUrl}}" class="makeButton colorWhite fontSize14" {% if request.path == shopTalkUrl %}style="text-decoration:underline;"{% endif %} >{% trans "Shop Talk" %}</a>
             {% endif %}
-            <a href="javascript:void(0);" data-href="{% url 'suggest_store' %}" class="makeButton colorWhite suggestStore">Suggest Store</a>            
+            <a href="javascript:void(0);" data-href="{% url 'suggest_store' %}" class="makeButton colorWhite suggestStore fontSize14">{% trans "Missing store?" %}</a>
         </div>
-        <div class="offset3 span2">
+        <div class="offset2 span2">
             <a href="http://blog.wishradio.in">
                 <div class="socialLogin tumblr pull-right">
                 </div>
@@ -130,7 +130,7 @@
                 <div class="span8 noGutter">
                     <div class="row">
                         <div class="span2 colorWhite fontTitillium fontSize14 noGutter">
-                            <span class="wantText">{% trans "For all the wishes that money can buy," %}&nbsp;<span class="colorYellow">{% trans "search here" %}</span>
+                            <span class="wantText fontSize14">{% trans "For all the wishes that money can buy," %}&nbsp;<span class="colorYellow">{% trans "search here" %}</span>
                             </span>
                         </div>
                         <div class="span2 halfGutter">

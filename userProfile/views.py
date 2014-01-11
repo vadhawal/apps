@@ -1130,7 +1130,7 @@ def suggest_store(request, template="blog/suggest_store.html"):
 			form.fields['email_subject'].initial = settings.SUGGEST_STORE_EMAIL_SUBJECT
 			form.fields['email_from'].label = ''
 			form.fields['email_subject'].label = ''
-			form.fields['email_message'].label = ''
+			form.fields['email_message'].label = 'Store Name or Link'
 
 			form.fields['email_from'].widget.attrs['style'] = 'display:none'
 			form.fields['email_subject'].widget.attrs['style'] = 'display:none'

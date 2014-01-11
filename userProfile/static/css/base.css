@@ -100,6 +100,9 @@ a.radioColorBackground:hover{
 .fontSize13{
 	font-size: 13px;
 }
+.fontSize14{
+	font-size: 14px;
+}
 .fontSize15{
 	font-size: 15px;
 }
@@ -111,12 +114,6 @@ a.radioColorBackground:hover{
 }
 
 @media (max-width: 1200px) {
-	.fontSize9{
-		font-size: 9px;
-	}
-	.fontSize10{
-		font-size: 10px;
-	}
 	.fontSize11{
 		font-size: 10px;
 	}
@@ -124,6 +121,9 @@ a.radioColorBackground:hover{
 		font-size: 10px;
 	}
 	.fontSize13{
+		font-size: 12px;
+	}
+	.fontSize14{
 		font-size: 12px;
 	}
 	.fontSize15{
@@ -189,6 +189,7 @@ a.radioColorBackground:hover{
 	filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=1.25, OffY=1.25, Color='#847D7D');
 }
 .makeButton{
+	border: 0;
 	padding: 6px 10px;
 	background : rgb(2, 151, 149);
 	box-shadow : 1px 1px 1px rgba(153, 142, 126, 0.75);
@@ -452,10 +453,6 @@ ul.settingsPopup li.divider {
 .subcomments_container input[type="submit"] {
 	display: none !important;
 }
-textarea.subcomment_text {
-	box-shadow: none;
-	border-color: rgb(204, 204, 204);
-}
 .subcomment_text{
 	font-family: titillium2, helvetica;
 	font-size: 13px;
@@ -469,7 +466,7 @@ textarea.subcomment_text {
 	-moz-transition: height 0.2s;
 	transition: height 0.2s;
 }
-form.comment_on_object{
+form.suggestForm, form.comment_on_object{
 	margin-bottom: 0px;
 }
 .trunc-comment, .exp-comment {
@@ -1052,6 +1049,26 @@ div.vendorImage{
 	transition: opacity 0.5s ease; 
 	opacity: 0.5;
 }
-button:focus{
+button:focus, input[type=submit], input[type=button]{
 	outline: 0;
+}
+.pull-right .dropdown-menu a {
+	text-align: left;
+}
+textarea:focus, input[type=text]:focus{
+	outline: 0;
+	box-shadow: none;
+	border-color: rgb(204, 204, 204);
+}
+.suggestForm input.textField{
+	width: 180px;
+	height: 23px;
+	font-family: fontTitillium2, Georgia;
+    font-size: 13px;
+    padding: 0px 6px;
+    /*font-style: italic;*/
+    border-radius: 0px;
+	box-shadow : -1px -1px 1px rgba(188, 170, 170, 0.75);
+	filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=1, OffY=1, Color='#998E7E');
+	margin:0;
 }
