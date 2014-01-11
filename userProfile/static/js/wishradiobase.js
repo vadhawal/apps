@@ -415,6 +415,52 @@ var update_url = function (query_params, navigate) {
     }
 }
 
+var suggest_store_handler = function(event) {
+    var $elementClicked = $(this);
+    var $url =  $elementClicked.data("href");
+    var afterShowCallback = function() {
+                                var $suggestFormContainer = $('.fancybox-inner').find('.suggestForm');
+                                if($suggestFormContainer.length > 0) {
+                                    $suggestFormContainer.on('submit', {action_url: $url}, suggest_form_submit_handler);
+                                }
+                            };
+
+    doOpenUrlWithAjaxFancyBox($url, afterShowCallback);
+    return false;  
+}
+
+var suggest_form_submit_handler = function(event) {
+    var $form = $(this);
+    var $action_url = event.data.action_url;
+    $('.fancybox-inner').find('.error').remove();
+    $.ajax({
+        type: $form.attr('method'),
+        url: $action_url,
+        data: $form.serialize(),
+        success: function (data) {
+            if(data.success === true) {
+                $form.hide();
+                var $messageBox = $('.fancybox-inner').find('.message');
+                $messageBox.show();
+                $messageBox.html(data.message);
+                setTimeout(function() {
+                    $.fancybox.close();
+                }, 3000);
+            } else {
+                alert("Error");
+            }
+        },
+        error: function(xhr) {
+            var errors = JSON.parse(xhr.responseText);
+            $('.fancybox-inner').find('.error').removeClass('error');
+            $.each( errors, function( key, value ) {
+                $('.fancybox-inner').find('[name="' + key + '"]').addClass('error');
+            });
+        }
+    });
+    return false;
+};
+
 $(document).ready(function() {
     install_follow_handlers();
     $('.vendorFollowers').on("click", display_popup_handler);
@@ -435,5 +481,6 @@ $(document).ready(function() {
         helpers : { overlay : { locked : false } }
     });
     $('.doLogin').on('click', login_handler);
+    $('.suggestStore').on('click', suggest_store_handler);
 });
 

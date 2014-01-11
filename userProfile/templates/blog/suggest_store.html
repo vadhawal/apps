@@ -1,0 +1,15 @@
+{% load mezzanine_tags %}
+<div class="message"></div>
+
+<span>
+    Can't find a store on Wishradio? Paste the store link below and we'll ensure that we add it.
+</span>
+
+<form method="post"{% if form.is_multipart %} enctype="multipart/form-data"{% endif %} action="{{action_url}}" class="suggestForm">
+    {% fields_for form %}
+    <div class="form-actions">
+        <input class="btn btn-primary" type="submit" value="Submit">
+    </div>
+</form>
+
+

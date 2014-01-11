@@ -12,6 +12,7 @@
                 {% url 'getShopTalk' as shopTalkUrl %}
                 <a href="{{shopTalkUrl}}" class="makeButton colorWhite" {% if request.path == shopTalkUrl %}style="text-decoration:underline;"{% endif %} >Shop Talk</a>
             {% endif %}
+            <a href="javascript:void(0);" data-href="{% url 'suggest_store' %}" class="makeButton colorWhite suggestStore">Suggest Store</a>            
         </div>
         <div class="offset3 span2">
             <a href="http://blog.wishradio.in">
