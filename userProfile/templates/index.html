@@ -26,17 +26,10 @@
 <script src="{% static "js/vallenato.js" %}"></script>
 <script src="{% static "js/linkPreview.js" %}"></script>
 {% endcompress %}
-{% if request.user.is_authenticated %}
-{% compress js %}
-<script src="{% static "js/trends_auth.js" %}"></script>
-{% endcompress %}
-{% include 'js/index_auth.js.html' with parent_categories=parent_categories %}
-{% else %}
 {% compress js %}
 <script src="{% static "js/trends.js" %}"></script>
 {% endcompress %}
 {% include 'js/index_noauth.js.html' %}
-{% endif %}
 
 {% endblock %}
 
