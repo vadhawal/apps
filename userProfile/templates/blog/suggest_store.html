@@ -12,10 +12,8 @@
 
 <form method="post"{% if form.is_multipart %} enctype="multipart/form-data"{% endif %} action="{{action_url}}" class="suggestForm">
     {% for field in form %}
-    	{% render_field field placeholder=field.label class="textField" %}
+    	{% render_field field placeholder=field.label class="textField pull-left" %}
     {% endfor %}
-    <input class="makeButton colorWhite halfGutter" type="submit" value="Submit">
-    <img class="halfGutter noBoxShadow hide" style="height:20px;" src="{% static "img/loading.gif" %}"/>
+    <input class="makeButton colorWhite halfGutter pull-right" style="margin-top:-6px;" type="submit" value="Submit">
+    <img class="halfGutter noBoxShadow hide loader pull-right" style="height:20px;margin-right:17px;" src="{% static "img/loading.gif" %}"/>
 </form>
-
-

@@ -11,7 +11,7 @@
 	   		{{ field|add_class:"textField" }}
 	   		{% if forloop.last %}
 	   		   	<input class="fontTitillium fontSize16 radioColor loginSubmit makeYellowButton" type="submit" value="GO">
-	   		   	<img class="halfGutter noBoxShadow hide" style="height:30px;margin-left:62px" src="{% static "img/loading.gif" %}"/>
+	   		   	<img class="halfGutter noBoxShadow hide loader" style="height:30px;margin-left:62px" src="{% static "img/loading.gif" %}"/>
 	   		{% endif %}
 	   	</div>
    	{% endfor %}

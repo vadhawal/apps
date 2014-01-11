@@ -344,7 +344,7 @@ var account_form_submit_handler = function(event) {
     var $form = $(this);
     var $action_url = event.data.action_url;
     $('.fancybox-inner').find('.error').remove();
-    $('.fancybox-inner img').removeClass("hide");
+    $('.fancybox-inner img.loader').removeClass("hide");
     $('.fancybox-inner .loginSubmit').addClass("hide");
     $.ajax({
         type: $form.attr('method'),
@@ -363,7 +363,7 @@ var account_form_submit_handler = function(event) {
                     'class':'error',
                     'html':'<span class="fontSize12">'+$errors+'</span>'
                 }).appendTo($albumFormContainer);
-                $('.fancybox-inner img').addClass("hide");
+                $('.fancybox-inner img.loader').addClass("hide");
                 $('.fancybox-inner .loginSubmit').removeClass("hide");
                 $.fancybox.update();
             }
@@ -374,7 +374,7 @@ var account_form_submit_handler = function(event) {
             $.each( errors, function( key, value ) {
                 $('.fancybox-inner').find('[name="' + key + '"]').addClass('error');
             });
-            $('.fancybox-inner img').addClass("hide");
+            $('.fancybox-inner img.loader').addClass("hide");
             $('.fancybox-inner .loginSubmit').removeClass("hide");
         }
     });
@@ -438,8 +438,9 @@ var suggest_store_handler = function(event) {
 var suggest_form_submit_handler = function(event) {
     var $form = $(this);
     var $action_url = event.data.action_url;
-    $('.fancybox-inner img').removeClass("hide");
-    $('.fancybox-inner').find('.error').remove();
+    $('.fancybox-inner img.loader').removeClass("hide");
+    $('.fancybox-inner input[type=submit]').addClass("hide");
+    $('.fancybox-inner').find('.error').removeClass("error");
     $.ajax({
         type: $form.attr('method'),
         url: $action_url,
@@ -454,7 +455,8 @@ var suggest_form_submit_handler = function(event) {
                     $.fancybox.close();
                 }, 3000);
             }
-            $('.fancybox-inner img').removeClass("hide");
+            $('.fancybox-inner img').addClass("hide");
+            $('.fancybox-inner input[type=submit]').removeClass("hide");
         },
         error: function(xhr) {
             var errors = JSON.parse(xhr.responseText);
@@ -462,7 +464,8 @@ var suggest_form_submit_handler = function(event) {
             $.each( errors, function( key, value ) {
                 $('.fancybox-inner').find('[name="' + key + '"]').addClass('error');
             });
-            $('.fancybox-inner img').removeClass("hide");
+            $('.fancybox-inner img').addClass("hide");
+            $('.fancybox-inner input[type=submit]').removeClass("hide");
         }
     });
     return false;

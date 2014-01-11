@@ -49,6 +49,7 @@
 						{% endif %}
 						{% if forloop.last %}
 							<input class="fontTitillium fontSize16 radioColor loginSubmit signupSubmit pull-right makeYellowButton updateProfile" type="submit" value="GO"/>
+							<img class="halfGutter loader noBoxShadow hide pull-right" style="height:30px;margin-right:24px" src="{% static "img/loading.gif" %}"/>
 						{% endif %}
 					{% if field.label != form.gender.label %}
 					</div>
