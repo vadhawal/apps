@@ -172,3 +172,8 @@
 .dealImageMarginRight{
 	margin-right: 16px;
 }
+input#expiry_date{
+	border-radius:0;
+	margin-top:6px;
+	width: 156px;
+}
