@@ -1,15 +1,16 @@
-{% load mezzanine_tags %}
+{% load mezzanine_tags i18n widget_tweaks %}
 <div class="message"></div>
 
-<span>
-    Can't find a store on Wishradio? Paste the store link below and we'll ensure that we add it.
-</span>
+<div>
+    <p class="radioColor fontTitillium1 fontSize16">Can't find a store on Wishradio?</p>
+    <p class="color5D fontTitillium1 fontSize13">Paste the store link below and we'll ensure that we add it.</p>
+</div>
 
 <form method="post"{% if form.is_multipart %} enctype="multipart/form-data"{% endif %} action="{{action_url}}" class="suggestForm">
-    {% fields_for form %}
-    <div class="form-actions">
-        <input class="btn btn-primary" type="submit" value="Submit">
-    </div>
+    {% for field in form %}
+    	{% render_field field placeholder=field.label class="textField" %}
+    {% endfor %}
+    <input class="makeButton colorWhite fullGutter" type="submit" value="Submit">
 </form>
 
 
