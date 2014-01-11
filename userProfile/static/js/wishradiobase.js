@@ -455,7 +455,7 @@ var suggest_form_submit_handler = function(event) {
                     $.fancybox.close();
                 }, 3000);
             }
-            $('.fancybox-inner img').addClass("hide");
+            $('.fancybox-inner img.loader').addClass("hide");
             $('.fancybox-inner input[type=submit]').removeClass("hide");
         },
         error: function(xhr) {
@@ -464,7 +464,7 @@ var suggest_form_submit_handler = function(event) {
             $.each( errors, function( key, value ) {
                 $('.fancybox-inner').find('[name="' + key + '"]').addClass('error');
             });
-            $('.fancybox-inner img').addClass("hide");
+            $('.fancybox-inner img.loader').addClass("hide");
             $('.fancybox-inner input[type=submit]').removeClass("hide");
         }
     });
