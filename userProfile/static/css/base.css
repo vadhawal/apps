@@ -451,6 +451,10 @@ ul.settingsPopup li.divider {
 .subcomments_container input[type="submit"] {
 	display: none !important;
 }
+textarea.subcomment_text {
+	box-shadow: none;
+	border-color: rgb(204, 204, 204);
+}
 .subcomment_text{
 	font-family: titillium2, helvetica;
 	font-size: 13px;
@@ -905,9 +909,10 @@ input[type="password"].signUptextField{
 }
 .accountForm input[type="file"].signUptextField {
 	display: inline;
-	width: 88px;
+	width: 75px;
 	-webkit-box-shadow:none;
 	box-shadow:none;
+	outline: 0;
 }
 .accountForm ul {
 	list-style: none;
@@ -941,7 +946,7 @@ input[type="password"].signUptextField{
 	display: inline-block;
 	color: white;
 	background-color: rgb(2, 151, 149);
-	padding: 0px 20px;
+	padding: 0px 16px;
 	outline: none;
 	white-space: nowrap;
 	-webkit-user-select: none;
@@ -1024,4 +1029,21 @@ div.vendorImage{
 	position: relative;
 	top: -170px;
 	right:3px;
+}
+[placeholder]:focus::-webkit-input-placeholder {
+	-webkit-transition: opacity 0.5s ease;
+	transition: opacity 0.5s ease;
+	opacity: 0.5;
+}
+[placeholder]:focus:-moz-placeholder { /* Firefox 18- */
+	transition: opacity 0.5s ease;
+	opacity: 0.3; 
+}
+[placeholder]:focus::-moz-placeholder {  /* Firefox 19+ */
+	transition: opacity 0.5s ease;
+	opacity: 0.3;
+}
+[placeholder]:focus:-ms-input-placeholder {  
+	transition: opacity 0.5s ease; 
+	opacity: 0.5;
 }
