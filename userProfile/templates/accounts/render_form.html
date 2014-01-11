@@ -1,5 +1,5 @@
 {% load i18n mezzanine_tags %}
-{% load widget_tweaks %}
+{% load widget_tweaks static %}
 
 <form class="accountForm" style="clear:both;" method="post" {% if form.is_multipart %} enctype="multipart/form-data"{% endif %}>
 	{% csrf_token %}
@@ -11,6 +11,7 @@
 	   		{{ field|add_class:"textField" }}
 	   		{% if forloop.last %}
 	   		   	<input class="fontTitillium fontSize16 radioColor loginSubmit makeYellowButton" type="submit" value="GO">
+	   		   	<img class="halfGutter noBoxShadow hide loader" style="height:30px;margin-left:62px" src="{% static "img/loading.gif" %}"/>
 	   		{% endif %}
 	   	</div>
    	{% endfor %}

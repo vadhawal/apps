@@ -1,0 +1,7 @@
+{% extends "email/base.txt" %}
+
+From: {{from_email}}
+{% block main %}{% if message %}
+{{ message }}
+{% endif %}
+{% endblock %}

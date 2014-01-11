@@ -1,0 +1,6 @@
+{% extends "email/base.html" %}
+
+{% block main %}
+<p>From: {{from_email}}</p>
+{% if message %}<p>message: {{ message }}</p>{% endif %}
+{% endblock %}
