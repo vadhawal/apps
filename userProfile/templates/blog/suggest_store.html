@@ -1,16 +1,21 @@
-{% load mezzanine_tags i18n widget_tweaks %}
-<div class="message"></div>
+{% load mezzanine_tags i18n widget_tweaks static %}
+<div class="message fontSize16 fontTitillium1 hide">
+<p class="radioColor pagination-centered">Thank you so much!</p>
+<p class="color5D fontSize13">Where would we be without all you helpful people suggesting stores that are new or missed. </p>
+<p class="color5D fontSize13">We'll get to work adding this store now.</p>
+</div>
 
-<div>
-    <p class="radioColor fontTitillium1 fontSize16">Can't find a store on Wishradio?</p>
-    <p class="color5D fontTitillium1 fontSize13">Paste the store link below and we'll ensure that we add it.</p>
+<div class="suggestFormPrefix fontTitillium1">
+    <p class="radioColor fontSize16">Can't find a store on Wishradio?</p>
+    <p class="color5D fontSize13">Paste the store link below and we'll ensure that we add it.</p>
 </div>
 
 <form method="post"{% if form.is_multipart %} enctype="multipart/form-data"{% endif %} action="{{action_url}}" class="suggestForm">
     {% for field in form %}
     	{% render_field field placeholder=field.label class="textField" %}
     {% endfor %}
-    <input class="makeButton colorWhite fullGutter" type="submit" value="Submit">
+    <input class="makeButton colorWhite halfGutter" type="submit" value="Submit">
+    <img class="halfGutter noBoxShadow hide" style="height:20px;" src="{% static "img/loading.gif" %}"/>
 </form>
 
 

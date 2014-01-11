@@ -1093,19 +1093,20 @@ def getShopTalk(request, template_name='shoptalk.html'):
 def facebook_view(request):
     return HttpResponseRedirect('/')
 
-@login_required
 def suggest_store(request, template="blog/suggest_store.html"):
 	if request.is_ajax():
 		if request.method == 'POST':
 			form = SuggestStoreForm(request.POST)
 			if form.is_valid():
-				data = json.dumps({'success':True, 'message': 'Thanks for suggesting a store to us!!'})
+				data = json.dumps({'success':True})
 				response_kwargs = {"content_type": 'application/json'}
 				email_from = form.cleaned_data['email_from']
 				email_to = settings.SUGGEST_STORE_EMAIL_TO
 				subject = form.cleaned_data['email_subject']
 				message = form.cleaned_data['email_message']
-				sender_email = request.user.email
+				sender_email = "Anonymous"
+				if request.user.is_authenticated(): 
+					sender_email = request.user.email
 
 				context = {
 					"message": message,

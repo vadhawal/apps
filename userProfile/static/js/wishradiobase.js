@@ -432,6 +432,7 @@ var suggest_store_handler = function(event) {
 var suggest_form_submit_handler = function(event) {
     var $form = $(this);
     var $action_url = event.data.action_url;
+    $('.fancybox-inner img').removeClass("hide");
     $('.fancybox-inner').find('.error').remove();
     $.ajax({
         type: $form.attr('method'),
@@ -441,14 +442,13 @@ var suggest_form_submit_handler = function(event) {
             if(data.success === true) {
                 $form.hide();
                 var $messageBox = $('.fancybox-inner').find('.message');
-                $messageBox.show();
-                $messageBox.html(data.message);
+                $messageBox.removeClass('hide');
+                $('.fancybox-inner').find('.suggestFormPrefix').hide(); 
                 setTimeout(function() {
                     $.fancybox.close();
                 }, 3000);
-            } else {
-                alert("Error");
             }
+            $('.fancybox-inner img').removeClass("hide");
         },
         error: function(xhr) {
             var errors = JSON.parse(xhr.responseText);
@@ -456,6 +456,7 @@ var suggest_form_submit_handler = function(event) {
             $.each( errors, function( key, value ) {
                 $('.fancybox-inner').find('[name="' + key + '"]').addClass('error');
             });
+            $('.fancybox-inner img').removeClass("hide");
         }
     });
     return false;
