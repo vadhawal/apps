@@ -146,6 +146,8 @@ var review_submit_handler = function(){
         if(login_required_handler())
             return false;
         var $form = $(this);
+        $('.fancybox-inner img').removeClass("hide");
+        $('.fancybox-inner .rateStoreNow').addClass("hide");
         $.ajax({
             type: $form.attr('method'),
             url: $form.attr('action'),
@@ -184,10 +186,14 @@ var review_submit_handler = function(){
                             $element.closest('.controls').find(".label_text").addClass('error');
                         }
                     });
+                    $('.fancybox-inner img').addClass("hide");
+                    $('.fancybox-inner .rateStoreNow').removeClass("hide");
                 }
             },
             error: function(data) {
                 console.log(data);
+                $('.fancybox-inner img').addClass("hide");
+                $('.fancybox-inner .rateStoreNow').removeClass("hide");
             }
         });
     return false;

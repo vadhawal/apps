@@ -344,6 +344,8 @@ var account_form_submit_handler = function(event) {
     var $form = $(this);
     var $action_url = event.data.action_url;
     $('.fancybox-inner').find('.error').remove();
+    $('.fancybox-inner img').removeClass("hide");
+    $('.fancybox-inner .loginSubmit').addClass("hide");
     $.ajax({
         type: $form.attr('method'),
         url: $action_url,
@@ -361,6 +363,8 @@ var account_form_submit_handler = function(event) {
                     'class':'error',
                     'html':'<span class="fontSize12">'+$errors+'</span>'
                 }).appendTo($albumFormContainer);
+                $('.fancybox-inner img').addClass("hide");
+                $('.fancybox-inner .loginSubmit').removeClass("hide");
                 $.fancybox.update();
             }
         },
@@ -370,6 +374,8 @@ var account_form_submit_handler = function(event) {
             $.each( errors, function( key, value ) {
                 $('.fancybox-inner').find('[name="' + key + '"]').addClass('error');
             });
+            $('.fancybox-inner img').addClass("hide");
+            $('.fancybox-inner .loginSubmit').removeClass("hide");
         }
     });
     return false;
