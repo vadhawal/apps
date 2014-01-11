@@ -38,12 +38,13 @@
     });
     $(document).ready(function(event){
         $('.updateProfile').on('click', function(event){
+            var $this = $(this);
               if($('#profile_image_preview').is(':hidden')){
                   $('#profile_photo-clear_id').attr('checked','checked');
                   var $fileInput = $('#id_profile_photo');
                   $fileInput.replaceWith( $fileInput = $fileInput.clone( true )); 
               }
-              $(this).submit();
+              $this.submit();
         });
     })
 </script>
