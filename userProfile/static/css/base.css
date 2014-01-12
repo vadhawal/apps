@@ -1,22 +1,46 @@
 @font-face
 {
 	font-family: titillium;
-	src: url('/static/fonts/TitilliumMaps26L.otf');
+	src: url('/static/fonts/TitilliumMaps26L.otf') format('opentype');
+	src: url('/static/fonts/titilliummaps26l.eot');
+    src: url('/static/fonts/titilliummaps26l.eot?#iefix') format('embedded-opentype'),
+         url('/static/fonts/TitilliumMaps26L.otf') format('opentype'),
+         url('/static/fonts/titilliummaps26l.woff') format('woff'),
+         url('/static/fonts/titilliummaps26l.ttf') format('truetype'),
+         url('/static/fonts/titilliummaps26l.svg#titillium') format('svg');
 }
 @font-face
 {
 	font-family: titillium3;
-	src: url('/static/fonts/TitilliumMaps26L003.otf');
+	src: url('/static/fonts/TitilliumMaps26L003.otf') format('opentype');
+	src: url('/static/fonts/titilliummaps26l003.eot');
+    src: url('/static/fonts/titilliummaps26l003.eot?#iefix') format('embedded-opentype'),
+         url('/static/fonts/TitilliumMaps26L003.otf') format('opentype'),
+         url('/static/fonts/titilliummaps26l003.woff') format('woff'),
+         url('/static/fonts/titilliummaps26l003.ttf') format('truetype'),
+         url('/static/fonts/titilliummaps26l003.svg#titillium3') format('svg');
 }
 @font-face
 {
 	font-family: titillium2;
-	src: url('/static/fonts/TitilliumMaps26L002.otf');
+	src: url('/static/fonts/TitilliumMaps26L002.otf') format('opentype');
+	src: url('/static/fonts/titilliummaps26l002.eot');
+    src: url('/static/fonts/titilliummaps26l002.eot?#iefix') format('embedded-opentype'),
+    	 url('/static/fonts/TitilliumMaps26L002.otf') format('opentype'),
+         url('/static/fonts/titilliummaps26l002.woff') format('woff'),
+         url('/static/fonts/titilliummaps26l002.ttf') format('truetype'),
+         url('/static/fonts/titilliummaps26l002.svg#titillium2') format('svg');
 }
 @font-face
 {
 	font-family: titillium1;
-	src: url('/static/fonts/TitilliumMaps26L001.otf');
+	src: url('/static/fonts/TitilliumMaps26L001.otf') format('opentype');
+	src: url('/static/fonts/titilliummaps26l001.eot');
+    src: url('/static/fonts/titilliummaps26l001.eot?#iefix') format('embedded-opentype'),
+    	 url('/static/fonts/TitilliumMaps26L001.otf') format('opentype'),
+         url('/static/fonts/titilliummaps26l001.woff') format('woff'),
+         url('/static/fonts/titilliummaps26l001.ttf') format('truetype'),
+         url('/static/fonts/titilliummaps26l001.svg#titillium1') format('svg');
 }
 button {
 	box-shadow : 1px 1px 1px rgba(136, 126, 129, 0.75);
