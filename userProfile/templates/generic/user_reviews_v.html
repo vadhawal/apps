@@ -1,5 +1,5 @@
 {% load i18n  static %}
-{% load thumbnail %}
+{% load thumbnail userProfile_tags %}
 
 
 {% if not is_incremental %}
@@ -41,8 +41,25 @@
 <div class="dottedSeparator"></div>
 {% empty %}
 <div class="row">
-    <div class="span2 fontTitillium1 fontSize13">
-        {% trans "No Reviews written" %}
+    <div class="span2_5 fontTitillium1 fontSize13">
+        {% if profile_user %}
+            {% if profile_user != request.user %}
+                {% get_full_name profile_user %}{% trans " is yet to write any reviews." %}
+            {% else %}
+                <div class="row">
+                    <div class="span2_5">
+                        {% trans "Shopped Online Recently?" %}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="span2_5">
+                        {% trans "Do review your Experience." %}
+                    </div>
+                </div>
+            {% endif %}
+        {% else %}
+            {% trans "No Reviews written" %}
+        {% endif %}
     </div>
 </div>
 {% endfor %}

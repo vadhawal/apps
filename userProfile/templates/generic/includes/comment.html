@@ -129,7 +129,11 @@
     </div>
     {% endfor %}
     {% if no_comments %}
-    <div>{% trans "There are currently no reviews" %}</div>
+    <div class="row">
+        <div class="span5 fontSize14">
+        {% trans "This store has not received any reviews yet. You could be the first to review it - and who knows, the may even reward you for it" %}
+        </div>
+    </div>
     {% endif %}
 </div>
 {% pagination_for comments_for_thread %}

@@ -31,6 +31,11 @@ register = template.Library()
 def settings_value(name):
     return getattr(settings, name, "")
 
+@register.simple_tag
+def settings_actstream_verb(name):
+    verb_dict = getattr(settings, 'ACTSTREAM_VERB_DICT', dict())
+    return verb_dict[name]
+
 @register.filter
 def settings_value(name):
     return getattr(settings, name, "")
@@ -538,7 +543,8 @@ def render_reviews_for_user(context, user, latest=settings.MIN_REVIEWS_FOR_USER,
     return template.render(RequestContext(context['request'], {
         'reviews' : reviews_list,
         'data_href' : data_href + search_param,
-        'data_chunk': data_chunk
+        'data_chunk': data_chunk,
+        'profile_user': user
     }))
 
 
@@ -741,7 +747,8 @@ def render_deals_for_stores(context, store_id, sub_category, latest=settings.DEA
         return template.render(RequestContext(context['request'], {
             'deal_list': deals_list,
             'data_href' : data_href + search_param,
-            'data_chunk': data_chunk
+            'data_chunk': data_chunk,
+            'blog_post': blog_post
         }))
 
 @register.simple_tag(takes_context=True)
