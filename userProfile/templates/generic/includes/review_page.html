@@ -11,15 +11,16 @@
 {% compress css %}
 <link rel="stylesheet" type="text/css" href="{% static "css/store_page.css" %}"/>
 <link rel="stylesheet" type="text/css" href="{% static "css/searchresults.css" %}"/>
+<link rel="stylesheet" type="text/css" href="{% static "css/jquery.nouislider.css" %}"/>
 {% endcompress %}
 {% endblock %}
 
 {% block extra_js %}
 {% compress js %}
+<script src="{% static "js/jquery.nouislider.js" %}"></script>
 <script type="text/javascript">
 $(document).ready(function() {
-    install_review_voting_handler();
-    install_comment_on_object_handler();
+    install_review_handlers($('.reviewContainer'));
 });
 var manageFeedOwner = function() {
     var $this = $(this); 
@@ -48,7 +49,7 @@ var manageFeedOther = function() {
 
 {% block main %}
 
-<div class="row topHalfGutter">
+<div id="comments"class="row topHalfGutter">
 <div class="fontTitillium1 reviewContainer color5D fontSize12">
     {% if request.user.is_authenticated %}
         {% get_relationship_type request.user comment.user as rel_type %}
@@ -89,8 +90,10 @@ var manageFeedOther = function() {
                             </div>
                             <div class="row topHalfGutter">
                                 <div class="span6 fontSize12">
-                                    {% get_vendors_url comment.bought_category as search_url %}
-                                    {% if comment.bought_category %}<a class="categoryTag" href="{{ search_url }}">{{comment.bought_category}}</a>{% endif %}
+                                    {% for bought_category in comment.bought_category.all %}
+                                        {% get_vendors_url bought_category as search_url %}
+                                        <a class="categoryTag" href="{{ search_url }}">{{bought_category}}</a>
+                                    {% endfor %}
                                 </div>
                             </div>
                             <div class="row topHalfGutter">

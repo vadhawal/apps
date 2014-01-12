@@ -177,13 +177,13 @@ class GenericWishManager(models.Manager):
         return broadcast
 
 class BroadcastWishManager(models.Manager):
-    def create_user_wish_object(self, user, blog_category, blog_parentcategory, message, content_type, object_id, wishimage, urlPreviewContent):
-        broadcast = self.create(user=user, blog_category=blog_category, blog_parentcategory=blog_parentcategory, message=message, content_type=content_type, object_id=object_id, wishimage=wishimage, urlPreviewContent=urlPreviewContent)
+    def create_user_wish_object(self, user, message, content_type, object_id, wishimage, urlPreviewContent):
+        broadcast = self.create(user=user, message=message, content_type=content_type, object_id=object_id, wishimage=wishimage, urlPreviewContent=urlPreviewContent)
         return broadcast
 
 class BroadcastDealManager(models.Manager):
-    def create_vendor_deal_object(self, user, blog_category, blog_parentcategory, message, content_type, object_id, wishimage, urlPreviewContent, expiry_date=None ):
-        broadcast = self.create(user=user, blog_category=blog_category, blog_parentcategory=blog_parentcategory, message=message, content_type=content_type, object_id=object_id, wishimage=wishimage, urlPreviewContent=urlPreviewContent, expiry_date=expiry_date)
+    def create_vendor_deal_object(self, user, message, content_type, object_id, wishimage, urlPreviewContent, expiry_date=None ):
+        broadcast = self.create(user=user, message=message, content_type=content_type, object_id=object_id, wishimage=wishimage, urlPreviewContent=urlPreviewContent, expiry_date=expiry_date)
         return broadcast
 
 def get_wishimage_upload_path(instance, filename):
@@ -212,10 +212,10 @@ class GenericWish(Broadcast):
         db_table = "genericwish"
 
 class BroadcastWish(GenericWish):
-    blog_category = models.ForeignKey(BlogCategory,
+    blog_category = models.ManyToManyField(BlogCategory,
                                         verbose_name=_("Category_wish"),
                                         blank=True, related_name="broadcast_blogcategory_wish", null=True)
-    blog_parentcategory = models.ForeignKey(BlogParentCategory,
+    blog_parentcategory = models.ManyToManyField(BlogParentCategory,
                                         verbose_name=_("ParentCategory"),
                                         blank=True, related_name="broadcast_blogparentcategory_wish", null=True)
     objects = BroadcastWishManager()
@@ -228,10 +228,10 @@ class BroadcastWish(GenericWish):
         db_table = "broadcastwish"
 
 class BroadcastDeal(GenericWish):
-    blog_category = models.ForeignKey(BlogCategory,
+    blog_category = models.ManyToManyField(BlogCategory,
                                         verbose_name=_("Category_deal"),
                                         blank=True, related_name="broadcast_blogcategory_deal", null=True)
-    blog_parentcategory = models.ForeignKey(BlogParentCategory,
+    blog_parentcategory = models.ManyToManyField(BlogParentCategory,
                                         verbose_name=_("ParentCategory"),
                                         blank=True, related_name="broadcast_blogparentcategory_deal", null=True)
 

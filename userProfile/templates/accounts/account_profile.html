@@ -83,6 +83,7 @@ function getWishList() {
         $('.shareWish').on('click', sharewish_handler);
         $contentElement = $('.accordion-content').first();
         setupCustomScrollBar($contentElement);
+        install_delete_object_handler($contentElement);
     });  
 }
 
