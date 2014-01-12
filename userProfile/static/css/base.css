@@ -24,6 +24,7 @@ button {
 }
 body{
 	line-height: normal;
+	font-family: titillium1, helvetica;
 }
 li{
 	line-height: normal;
@@ -201,6 +202,9 @@ a.radioColorBackground:hover{
 	background : rgba(249, 223, 30, 1);
 	box-shadow : 1px 1px 1px rgba(153, 142, 126, 0.75);
 	filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=1, OffY=1, Color='#998E7E');
+}
+input[type=submit].makeYellowButton:active{
+	box-shadow : 1px 1px 1px rgba(153, 142, 126, 0.75) inset;
 }
 .greyBackground{
 	background-color: #5D5D5D;

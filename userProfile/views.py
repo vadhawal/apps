@@ -472,7 +472,7 @@ def getUserReviews(request, user_id, sIndex=0, lIndex=0):
 				'success': True
 			}
 		elif s == 0:
-			template = Template('<span>No Reviews found.</span>')
+			template = Template('<span class="color5D halfGutter">No Reviews found.</span>')
 			ret_data = {
 				'html': template.render(context).strip(),
 				'success': True
@@ -536,7 +536,11 @@ def getTrendingReviews(request, parent_category, sub_category, sIndex=0, lIndex=
 				'success': True
 			}
 		elif s == 0:
-			template = Template('<span>No Reviews found.</span>')
+			template = None
+			if isVertical == '1':
+				template = Template('<span class="color5D halfGutter" style="display:inline-block">No Reviews found.</span>')
+			else:
+				template = Template('<span class="color5D halfGutter topHalfGutter" style="display:inline-block">No Reviews found.</span>')
 			ret_data = {
 				'html': template.render(context).strip(),
 				'success': True
@@ -615,7 +619,7 @@ def getTrendingDeals(request, parent_category, sub_category, sIndex=0, lIndex=0)
 				'more':True
 			}
 		elif s == 0:
-			template = Template('<span>No Deals found.</span>')
+			template = Template('<span class="color5D halfGutter">No Deals found.</span>')
 			ret_data = {
 				'html': template.render(context).strip(),
 				'success': True
@@ -664,7 +668,7 @@ def get_filtered_deallist(request, store_id, sub_category, sIndex, lIndex):
 			'success': True
 		}
 	elif s == 0:
-		template = Template('<span>No Deals found.</span>')
+		template = Template('<span class="color5D halfGutter">No Deals found.</span>')
 		ret_data = {
 			'html': template.render(context).strip(),
 			'success': True
@@ -733,7 +737,11 @@ def getTrendingStores(request, parent_category, sub_category, sIndex=0, lIndex=0
 				'success': True
 			}
 		elif s == 0:
-			template = Template('<span>No Stores listed for this category.</span>')
+			template = None
+			if isVertical == '1':
+				template = Template('<span class="color5D halfGutter" style="display:inline-block;">No Stores listed for this category.</span>')
+			else:
+				template = Template('<span class="color5D halfGutter topHalfGutter" style="display:inline-block;">No Stores listed for this category.</span>')
 			ret_data = {
 				'html': template.render(context).strip(),
 				'success': True
