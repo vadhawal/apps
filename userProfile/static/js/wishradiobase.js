@@ -360,8 +360,8 @@ var account_form_submit_handler = function(event) {
                 var $errors = ret_data.errors.__all__;
                 var $albumFormContainer = $('.fancybox-inner').find('.accountForm');
                 $('<div/>', {
-                    'class':'error',
-                    'html':'<span class="fontSize12">'+$errors+'</span>'
+                    'class':'errorColor',
+                    'html':'<span class="fontSize11" style="margin-left:20px;">'+$errors+'</span>'
                 }).appendTo($albumFormContainer);
                 $('.fancybox-inner img.loader').addClass("hide");
                 $('.fancybox-inner .loginSubmit').removeClass("hide");
@@ -423,6 +423,7 @@ var update_url = function (query_params, navigate) {
 
 var suggest_store_handler = function(event) {
     var $elementClicked = $(this);
+    $elementClicked.addClass('opened');
     var $url =  $elementClicked.data("href");
     var afterShowCallback = function() {
                                 var $suggestFormContainer = $('.fancybox-inner').find('.suggestForm');
@@ -455,6 +456,7 @@ var suggest_form_submit_handler = function(event) {
                     $.fancybox.close();
                 }, 3000);
             }
+            $('.suggestStore').removeClass('opened');
             $('.fancybox-inner img.loader').addClass("hide");
             $('.fancybox-inner input[type=submit]').removeClass("hide");
         },

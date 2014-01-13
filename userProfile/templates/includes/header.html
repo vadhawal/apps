@@ -5,32 +5,45 @@
 <div class="yellowBar navbar navbar-fixed-top">
 </div>
 <div class="container customNavBar navbar navbar-fixed-top">
-    <div class="row yellowBar">
-        <div class="offset3 span4">
-            <a href="/" class="makeButton colorWhite fontSize14" {% if request.path == "/" %}style="text-decoration:underline;"{% endif %}>{% trans "Home" %}</a>
-            {% if request.user.is_authenticated %}
-                {% url 'getShopTalk' as shopTalkUrl %}
-                <a href="{{shopTalkUrl}}" class="makeButton colorWhite fontSize14" {% if request.path == shopTalkUrl %}style="text-decoration:underline;"{% endif %} >{% trans "Shop Talk" %}</a>
-            {% endif %}
-            <a href="javascript:void(0);" data-href="{% url 'suggest_store' %}" class="makeButton colorWhite suggestStore fontSize14">{% trans "Suggest a store?" %}</a>
-        </div>
-        <div class="offset2 span2">
-            <a href="http://blog.wishradio.in">
-                <div class="socialLogin tumblr pull-right">
+    <div class="row yellowBar" style="line-height:30px;">
+        <div class="offset3">
+            <div class="row">
+                <div class="span4 noGutter">
+                    <div class="row">
+                        <a href="/" class="fontTitillium2 {% if request.path == "/" %}radioColor{% else %}color5D{% endif %} fontSize14">
+                            {% if request.path == "/" %}
+                                <img class="noBoxShadow" style="max-width:20px;max-height:18px;" src="{% static "img/home_green.png"%}">
+                            {% else %}
+                                <img class="noBoxShadow" src="{% static "img/home_grey.png"%}">
+                            {% endif %}
+                            {% trans "HOME" %}
+                        </a>
+                        {% if request.user.is_authenticated %}
+                            {% url 'getShopTalk' as shopTalkUrl %}
+                            <a href="{{shopTalkUrl}}" class="halfGutter fontTitillium2 {% if request.path == shopTalkUrl %}radioColor{% else %}color5D{% endif %} fontSize14">
+                                {% if request.path == shopTalkUrl %}
+                                    <img class="noBoxShadow" style="max-width:20px;max-height:18px;" src="{% static "img/store_green.png"%}">
+                                {% else %}
+                                    <img class="noBoxShadow" style="max-width:20px;max-height:18px;" src="{% static "img/store_default.png"%}">
+                                {% endif %}
+                                {% trans "SHOP TALK" %}
+                            </a>
+                        {% endif %}
+                    </div>
                 </div>
-            </a>
-            <a href="http://www.pinterest.com/wishradio">
-                <div class="socialLogin pinterest pull-right">
+                <div class="span5">
+                    <div class="row">
+                        <div class="offset3 span2">
+                            <div class="row">
+                                <a href="javascript:void(0);" data-href="{% url 'suggest_store' %}" class="fontTitillium2 color5D suggestStore fontSize14">
+                                    <img class="noBoxShadow" src="{% static "img/1transparent.png"%}">
+                                    {% trans "SUGGEST A STORE" %}
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </a>
-            <a href="http://www.twitter.com/wishradio">
-                <div class="socialLogin twitterLogin pull-right">
-                </div>
-            </a>
-            <a href="https://www.facebook.com/pages/Wishradio/189231901262112">
-                <div class="socialLogin facebookLogin pull-right">
-                </div>
-            </a>
+            </div>
         </div>
     </div>
     <div class="row whiteSpace">

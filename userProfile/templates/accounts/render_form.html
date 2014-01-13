@@ -8,7 +8,11 @@
 	   		{{field.label}}
 	   	</div>
 	   	<div>
-	   		{{ field|add_class:"textField" }}
+	   		{% if field.label == form.username.label %}
+	   			{% render_field field placeholder="Type your Wish Radio username or email address" class="textField" %}
+	   		{% elif field.label == form.password.label %}
+	   			{% render_field field placeholder="Type your Wish Radio password" class="textField" %}
+	   		{% endif %}
 	   		{% if forloop.last %}
 	   		   	<input class="fontTitillium fontSize16 radioColor loginSubmit makeYellowButton" type="submit" value="GO">
 	   		   	<img class="halfGutter noBoxShadow hide loader" style="height:30px;margin-left:62px" src="{% static "img/loading.gif" %}"/>
