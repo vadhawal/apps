@@ -477,7 +477,7 @@ def getUserReviews(request, user_id, sIndex=0, lIndex=0):
 				'success': True
 			}
 		elif s == 0:
-			template = Template('<span class="color5D halfGutter">No Reviews found.</span>')
+			template = Template("<div class='color5D fontSize14 halfGutter'>No reviews were found for the selected category. Do write a review if you've shopped for this category.</div>")
 			ret_data = {
 				'html': template.render(context).strip(),
 				'success': True
@@ -543,9 +543,9 @@ def getTrendingReviews(request, parent_category, sub_category, sIndex=0, lIndex=
 		elif s == 0:
 			template = None
 			if isVertical == '1':
-				template = Template('<span class="color5D halfGutter" style="display:inline-block">No Reviews found.</span>')
+				template = Template("<div class='color5D fontSize14 halfGutter'>No reviews were found for the selected category. Do write a review if you've shopped for this category.</div>")
 			else:
-				template = Template('<span class="color5D halfGutter topHalfGutter" style="display:inline-block">No Reviews found.</span>')
+				template = Template("<div class='color5D fontSize14 halfGutter topHalfGutter'>No reviews were found for the selected category. Do write a review if you've shopped for this category.</div>")
 			ret_data = {
 				'html': template.render(context).strip(),
 				'success': True
@@ -623,7 +623,7 @@ def getTrendingDeals(request, parent_category, sub_category, sIndex=0, lIndex=0)
 				'more':True
 			}
 		elif s == 0:
-			template = Template('<span class="color5D halfGutter">No Deals found.</span>')
+			template = Template('<div class="color5D fontSize14 halfGutter">This category does not have any Deals currently.</div>')
 			ret_data = {
 				'html': template.render(context).strip(),
 				'success': True
@@ -672,7 +672,7 @@ def get_filtered_deallist(request, store_id, sub_category, sIndex, lIndex):
 			'success': True
 		}
 	elif s == 0:
-		template = Template('<span class="color5D halfGutter">No Deals found.</span>')
+		template = Template('<div class="color5D fontSize14 halfGutter">This category does not have any Deals currently.</div>')
 		ret_data = {
 			'html': template.render(context).strip(),
 			'success': True
@@ -743,9 +743,9 @@ def getTrendingStores(request, parent_category, sub_category, sIndex=0, lIndex=0
 		elif s == 0:
 			template = None
 			if isVertical == '1':
-				template = Template('<span class="color5D halfGutter" style="display:inline-block;">No Stores listed for this category.</span>')
+				template = Template('<div class="color5D fontSize14 halfGutter">No stores were found for the selected category. Do suggest a store, if you know of one.</div>')
 			else:
-				template = Template('<span class="color5D halfGutter topHalfGutter" style="display:inline-block;">No Stores listed for this category.</span>')
+				template = Template('<div class="color5D fontSize14 halfGutter topHalfGutter">No stores were found for the selected category. Do suggest a store, if you know of one.</div>')
 			ret_data = {
 				'html': template.render(context).strip(),
 				'success': True
