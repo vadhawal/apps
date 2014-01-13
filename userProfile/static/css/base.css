@@ -48,6 +48,7 @@ button {
 }
 body{
 	line-height: normal;
+	font-family: titillium1, helvetica;
 }
 li{
 	line-height: normal;
@@ -226,6 +227,9 @@ a.radioColorBackground:hover{
 	box-shadow : 1px 1px 1px rgba(153, 142, 126, 0.75);
 	filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=1, OffY=1, Color='#998E7E');
 }
+input[type=submit].makeYellowButton:active{
+	box-shadow : 1px 1px 1px rgba(153, 142, 126, 0.75) inset;
+}
 .greyBackground{
 	background-color: #5D5D5D;
 	background-color: rgb(93,93,93);
@@ -304,8 +308,18 @@ a.zocial:hover{
 }
 .error{
 	border-width: 1px !important;
-	border-color: red !important;
+	border-color: #B20B0B !important;
 	border-style: solid !important;
+}
+.errorColor{
+	color: #B20B0B;
+	position: relative;
+	top: 5px;
+}
+div.errorColor{
+	background-image: url('/static/img/error.png');
+	background-size: 14px;
+	background-repeat: no-repeat;
 }
 input.search-query{
 	font-family: titillium1, helvetica;
@@ -492,6 +506,23 @@ ul.settingsPopup li.divider {
 }
 form.suggestForm, form.comment_on_object{
 	margin-bottom: 0px;
+}
+a.suggestStore.opened {
+	color: #029795;
+	color: rgb(2, 151, 149);
+}
+a.suggestStore img{
+	background-image: url('/static/img/shopTalk_grey.png');
+	background-size: 18px;
+	background-repeat: no-repeat;
+	margin: 0px;
+	width: 20px;
+	display: inline-block;
+	padding: 20px 0 0 0;
+	height: 0px !important;
+}
+a.suggestStore.opened img{
+	background-image: url('/static/img/shopTalk.png');
 }
 .trunc-comment, .exp-comment {
 	white-space: pre-wrap;
@@ -1056,6 +1087,30 @@ div.vendorImage{
 	top: -170px;
 	right:3px;
 }
+::-webkit-input-placeholder {
+	font-family: Georgia;
+	font-size: 11px;
+	font-style: italic;
+}
+
+:-moz-placeholder { /* Firefox 18- */
+	font-family: Georgia;
+	font-size: 11px;
+	font-style: italic;
+}
+
+::-moz-placeholder {  /* Firefox 19+ */
+	font-family: Georgia;
+	font-size: 11px;
+	font-style: italic;
+}
+
+:-ms-input-placeholder {  
+	font-family: Georgia;
+	font-size: 11px;
+	font-style: italic;
+}
+
 [placeholder]:focus::-webkit-input-placeholder {
 	-webkit-transition: opacity 0.5s ease;
 	transition: opacity 0.5s ease;

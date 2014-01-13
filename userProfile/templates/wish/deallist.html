@@ -45,7 +45,11 @@
 
 {% empty %}
 <span class="fontTitillium1 fontSize13">
-{% trans "No Deals posted" %}
+    {% if blog_post %}
+        <div class="color5D fontSize14 halfGutter">{% trans "There are no deals on " %}{{blog_post|title}}{% trans " yet" %}</div>
+    {% else %}
+        <div class="color5D fontSize14 halfGutter">{% trans "This category does not have any Deals currently." %}</div>
+    {% endif %}
 </span>
 {% endfor %}
 {% if not is_incremental %}

@@ -261,6 +261,8 @@ def get_wishlist(request, content_type_id, object_id, sIndex, lIndex):
 	ctype = get_object_or_404(ContentType, pk=content_type_id)
 	wishset = BroadcastWish.objects.all().filter(content_type=ctype, object_id=object_id)
 
+	profile_user = ctype.model_class().objects.get(pk=object_id)
+
 	is_incremental = "false"
 	s = (int)(""+sIndex)
 	l = (int)(""+lIndex)
@@ -287,7 +289,12 @@ def get_wishlist(request, content_type_id, object_id, sIndex, lIndex):
 			'success': True
 		}
 	elif s == 0:
-		template = Template('<span class="fontTitillium1 fontSize13">No Wishes Posted.</span>')
+		template = None
+		if (profile_user != request.user):
+			username = (profile_user.first_name + " " + profile_user.last_name).title()
+			template = Template('<span class="fontTitillium1 fontSize13">' + username + ' is yet to upload any wishes.</span>')
+		else:
+			template = Template('<span class="fontTitillium1 fontSize13">Do tell your friends and us some of your wishes - that might prove to be the first step to getting it fulfilled</span>')
 		ret_data = {
 			'html': template.render(context).strip(),
 			'success': True
@@ -470,7 +477,7 @@ def getUserReviews(request, user_id, sIndex=0, lIndex=0):
 				'success': True
 			}
 		elif s == 0:
-			template = Template('<span>No Reviews found.</span>')
+			template = Template("<div class='color5D fontSize14 halfGutter'>No reviews were found for the selected category. Do write a review if you've shopped for this category.</div>")
 			ret_data = {
 				'html': template.render(context).strip(),
 				'success': True
@@ -534,7 +541,11 @@ def getTrendingReviews(request, parent_category, sub_category, sIndex=0, lIndex=
 				'success': True
 			}
 		elif s == 0:
-			template = Template('<span>No Reviews found.</span>')
+			template = None
+			if isVertical == '1':
+				template = Template("<div class='color5D fontSize14 halfGutter'>No reviews were found for the selected category. Do write a review if you've shopped for this category.</div>")
+			else:
+				template = Template("<div class='color5D fontSize14 halfGutter topHalfGutter'>No reviews were found for the selected category. Do write a review if you've shopped for this category.</div>")
 			ret_data = {
 				'html': template.render(context).strip(),
 				'success': True
@@ -612,7 +623,7 @@ def getTrendingDeals(request, parent_category, sub_category, sIndex=0, lIndex=0)
 				'more':True
 			}
 		elif s == 0:
-			template = Template('<span>No Deals found.</span>')
+			template = Template('<div class="color5D fontSize14 halfGutter">This category does not have any Deals currently.</div>')
 			ret_data = {
 				'html': template.render(context).strip(),
 				'success': True
@@ -661,7 +672,7 @@ def get_filtered_deallist(request, store_id, sub_category, sIndex, lIndex):
 			'success': True
 		}
 	elif s == 0:
-		template = Template('<span>No Deals found.</span>')
+		template = Template('<div class="color5D fontSize14 halfGutter">This category does not have any Deals currently.</div>')
 		ret_data = {
 			'html': template.render(context).strip(),
 			'success': True
@@ -730,7 +741,11 @@ def getTrendingStores(request, parent_category, sub_category, sIndex=0, lIndex=0
 				'success': True
 			}
 		elif s == 0:
-			template = Template('<span>No Stores listed for this category.</span>')
+			template = None
+			if isVertical == '1':
+				template = Template('<div class="color5D fontSize14 halfGutter">No stores were found for the selected category. Do suggest a store, if you know of one.</div>')
+			else:
+				template = Template('<div class="color5D fontSize14 halfGutter topHalfGutter">No stores were found for the selected category. Do suggest a store, if you know of one.</div>')
 			ret_data = {
 				'html': template.render(context).strip(),
 				'success': True
