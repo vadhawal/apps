@@ -46,8 +46,10 @@
                             </div>
                             <div class="row topHalfGutter">
                                 <div class="span6 fontSize12">
-                                    {% get_vendors_url comment.bought_category as search_url %}
-                                    {% if comment.bought_category %}<a class="categoryTag" href="{{ search_url }}">{{comment.bought_category}}</a>{% endif %}
+                                    {% for bought_category in comment.bought_category.all %}
+                                        {% get_vendors_url bought_category as search_url %}
+                                        <a class="categoryTag" href="{{ search_url }}">{{bought_category}}</a>
+                                    {% endfor %}
                                 </div>
                             </div>
                             <div class="row topHalfGutter">

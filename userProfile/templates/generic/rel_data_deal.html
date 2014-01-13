@@ -7,20 +7,26 @@
 {% get_wish_owner deal as object_owner %}
 <div class="fancybox-data-inner fontTitillium2 color5d fontSize13 halfGutterRight">
     <div class="dottedSeparator fullSeparator"></div>
-    {% if  deal.blog_category %}
-    <div class="row topHalfGutter bottomHalfGutter">
-        <div class="span3">
-            <a href="{{ deal.blog_category.get_absolute_url }}" class="categoryTag radioColor"> {{deal.blog_category}} </a>
+    {% if deal.blog_category.all %}
+        <div class="row topHalfGutter bottomHalfGutter">
+            <div class="span3">
+            {% for blog_category in deal.blog_category.all %}
+                <a href="{{ blog_category.get_absolute_url }}" class="categoryTag radioColor"> {{blog_category}} </a>
+            {% endfor %}
+            </div>
         </div>
-    </div>
-    <div class="dottedSeparator fullSeparator"></div>
+        <div class="dottedSeparator fullSeparator"></div>
     {% endif %}
+    
+    {% if deal.message %}
     <div class="row topHalfGutter bottomHalfGutter fancyBoxSplitHidden">
         <div class="span3">
         {{ deal.message }}
         </div>
     </div>
     <div class="dottedSeparator fullSeparator fancyBoxSplitHidden"></div>
+    {% endif %}
+
     <div class="row topHalfGutter bottomHalfGutter radio_module">
         {% include 'generic/render_dealwishfancybox_radio_module.html' with object=deal %}
     </div>
