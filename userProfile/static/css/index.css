@@ -83,16 +83,6 @@
 	background-color: #fff;
 	line-height: normal;
 }
-.categoryName{
-	font-size : 10px;
-	line-height : 14px;
-	color : #323333;
-	color : rgb(50, 51, 51);
-	position: absolute;
-	bottom: 0px;
-	width: 100%;
-	text-align: center;
-}
 .reviewUserImage {
 	vertical-align:middle;
 	display:inline-block;
@@ -123,13 +113,13 @@
 {
 	cursor: pointer;
 	position: relative;
-	background : -moz-linear-gradient(0% 50% 0deg,rgba(134, 114, 120, 0.21) 0%,rgba(92, 74, 86, 0.21) 50%,rgba(67, 53, 69, 0.21) 100%);
+/*	background : -moz-linear-gradient(0% 50% 0deg,rgba(134, 114, 120, 0.21) 0%,rgba(92, 74, 86, 0.21) 50%,rgba(67, 53, 69, 0.21) 100%);
 	background : -webkit-linear-gradient(0deg, rgba(134, 114, 120, 0.21) 0%, rgba(92, 74, 86, 0.21) 50%, rgba(67, 53, 69, 0.21) 100%);
 	background : -webkit-gradient(linear,0% 50% ,100% 50% ,color-stop(0,rgba(134, 114, 120, 0.21) ),color-stop(0.5,rgba(92, 74, 86, 0.21) ),color-stop(1,rgba(67, 53, 69, 0.21) ));
 	background : -o-linear-gradient(0deg, rgba(134, 114, 120, 0.21) 0%, rgba(92, 74, 86, 0.21) 50%, rgba(67, 53, 69, 0.21) 100%);
 	background : -ms-linear-gradient(0deg, rgba(134, 114, 120, 0.21) 0%, rgba(92, 74, 86, 0.21) 50%, rgba(67, 53, 69, 0.21) 100%);
 	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#867278', endColorstr='#433545' ,GradientType=0)";
-	background : linear-gradient(90deg, rgba(134, 114, 120, 0.21) 0%, rgba(92, 74, 86, 0.21) 50%, rgba(67, 53, 69, 0.21) 100%);
+	background : linear-gradient(90deg, rgba(134, 114, 120, 0.21) 0%, rgba(92, 74, 86, 0.21) 50%, rgba(67, 53, 69, 0.21) 100%);*/
 	box-shadow : 1px 1px 1px rgba(0, 0, 0, 0.75);
 	vertical-align: bottom;
 	filter: alpha(opacity=21) progid:DXImageTransform.Microsoft.Alpha(opacity=21) progid:DXImageTransform.Microsoft.dropshadow(OffX=1.31, OffY=1.31, Color='#000000') progid:DXImageTransform.Microsoft.gradient(startColorstr='#867278',endColorstr='#433545' , GradientType=1);
@@ -141,10 +131,20 @@
 	margin-top: 0px;	
 }
 .imageCategoryBoxSelected{
-	background : #FFFFFF;
-	background : rgba(255, 255, 255, 1);
+/*	background : #FFFFFF;
+	background : rgba(255, 255, 255, 1);*/
 	box-shadow : 1px 1px 1px 1px rgba(0, 0, 0, 0.75) inset;
 	filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=-0.57, OffY=-0.57, Color='#000000') ;
+}
+div.imageCategoryBox span{
+	display: none;
+}
+div.imageCategoryBox:hover span{
+	display: block;
+	position: absolute;
+	bottom: 6px;
+	left: 6px;
+	z-index: 2;
 }
 /* dealBox_v will be applied on the deals listed on logged-in home page. */
 #refreshActivity{

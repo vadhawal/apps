@@ -10,22 +10,14 @@
             <div class="row">
                 <div class="span4 noGutter">
                     <div class="row">
-                        <a href="/" class="fontTitillium2 {% if request.path == "/" %}radioColor{% else %}color5D{% endif %} fontSize14">
-                            {% if request.path == "/" %}
-                                <img class="noBoxShadow" style="max-width:20px;max-height:18px;" src="{% static "img/home_green.png"%}">
-                            {% else %}
-                                <img class="noBoxShadow" src="{% static "img/home_grey.png"%}">
-                            {% endif %}
+                        <a href="/" class="fontTitillium2 home {% if request.path == "/" %}radioColor homeSelected{% else %}color5D{% endif %} fontSize14">
+                            <img class="noBoxShadow" style="max-width:20px;max-height:18px;" src="{% static "img/1transparent.png"%}">
                             {% trans "HOME" %}
                         </a>
                         {% if request.user.is_authenticated %}
                             {% url 'getShopTalk' as shopTalkUrl %}
-                            <a href="{{shopTalkUrl}}" class="halfGutter fontTitillium2 {% if request.path == shopTalkUrl %}radioColor{% else %}color5D{% endif %} fontSize14">
-                                {% if request.path == shopTalkUrl %}
-                                    <img class="noBoxShadow" style="max-width:20px;max-height:18px;" src="{% static "img/store_green.png"%}">
-                                {% else %}
-                                    <img class="noBoxShadow" style="max-width:20px;max-height:18px;" src="{% static "img/store_default.png"%}">
-                                {% endif %}
+                            <a href="{{shopTalkUrl}}" class="halfGutter fontTitillium2 shopTalk {% if request.path == shopTalkUrl %} shopTalkSelected radioColor{% else %}color5D{% endif %} fontSize14">
+                                <img class="noBoxShadow" style="max-width:20px;max-height:18px;" src="{% static "img/1transparent.png"%}">
                                 {% trans "SHOP TALK" %}
                             </a>
                         {% endif %}
@@ -152,7 +144,7 @@
                         <span class="colorWhite fontTitillium1 fontSize13 halfGutter searchOr">{% trans "or" %}</span>
                         {% blog_parentcategories_abs as parent_categories %}
                         {% if parent_categories %}
-                            <div class="span2 halfGutter">
+                            <div class="span2 halfGutter" style="position:relative;">
                                 <select name="blog_parentcategories" class="blog_parentcategories">
                                     <option value='empty' selected disabled>{% trans "By Category" %}</option>
                                     <option value="all">{% trans "All" %}</option>
@@ -160,11 +152,15 @@
                                     <option value="{{ category }}">{{ category }}</option>
                                     {% endfor %}
                                 </select>
+                                <div>
+                                </div>
                             </div>
-                            <div class="span2 halfGutter">
+                            <div class="span2 halfGutter" style="position:relative;">
                                 <select name="blog_subcategories" class="blog_subcategories">
                                     <option value='empty' selected disabled>By Sub-category</option>
                                 </select>
+                                <div>
+                                </div>
                             </div>
                         {% endif %}
                         <div id="getvendorsdiv" style="display:inline-block;" class="halfGutter">
