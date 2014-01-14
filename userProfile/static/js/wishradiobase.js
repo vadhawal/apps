@@ -281,24 +281,25 @@ var install_share_object_handler =  function($parent_element) {
 }
 
 var doOpenUrlWithIframeFancyBox = function(url) {
-    $("<a href='"+url +"'></a>").appendTo("body").addClass('cropImageFancyBox');
-    $('a.cropImageFancyBox').fancybox({
+    $.fancybox({
         'frameWidth'        :  500,
         'frameHeight'       :  500,
         'scrolling'         : 'no',
-        'hideOnContentClick': false, 
+        'hideOnContentClick': false, 	
         'type'              :'iframe',
         'iframe'            : {'scrolling': 'no'},
          helpers            : { overlay : { locked : false } },
          afterClose           : function(){
-                                    $('a.cropImageFancyBox').remove();
-                                }
-    }).click();
+                                  
+                                },
+        href				: url
+    });
+
+    return false;
 }
 
 var doOpenUrlWithAjaxFancyBox = function(url, afterShowCallback) {
-    $("<a href='"+url +"'></a>").appendTo("body").addClass('ajaxFancybox');
-    $('a.ajaxFancybox').fancybox({
+    $.fancybox({
         width               : 500,
         autoSize            : true,
         hideOnContentClick  : false,
@@ -307,13 +308,14 @@ var doOpenUrlWithAjaxFancyBox = function(url, afterShowCallback) {
         type                :'ajax',
         helpers             : { overlay : { locked : false } },
         scrolling           : 'no',
+        href				: url,
         afterShow           : function() {
                                     if(typeof afterShowCallback !== 'undefined')
                                         afterShowCallback();
         },
         afterClose          : function() {
-                                    $('a.ajaxFancybox').remove();
-                                }
+                                    
+                                },
         //,                
         // ajax                :   {
         //                             complete    : function(jqXHR, textStatus) {
@@ -321,7 +323,9 @@ var doOpenUrlWithAjaxFancyBox = function(url, afterShowCallback) {
         //                                 afterShowCallback();
         //                         }
         // },
-    }).click(); 
+    });
+
+    return false; 
 }
 
 var login_handler = function(event) {    
