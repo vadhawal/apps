@@ -1177,3 +1177,97 @@ textarea:focus, input[type=text]:focus{
 	filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=1, OffY=1, Color='#998E7E');
 	margin:0;
 }
+.category-icon{
+	background-repeat: no-repeat;
+	background-image: url(/static/img/category_icons.png);
+}
+.category-all{
+	background-position: -5px -6px;
+}
+.category-accessories {
+	background-position: -170px -86px;
+}
+.category-art-collectibles{
+	background-position: -87px -247px;
+}
+.category-automobile-services{
+	background-position: -253px -409px;
+}
+.category-bath-beauty {
+	background-position: -170px -168px;
+}
+.category-classifieds{
+	background-position: -338px -409px;	
+}
+.category-customized{
+	background-position: -5px -6px;
+}
+.category-deals {
+	background-position: -253px -86px;
+}
+.category-electronics{
+	background-position: -170px -409px;
+}
+.category-entertainment{
+	background-position: -5px -86px;
+}
+.category-event-ticketing{
+	background-position: -5px -6px;
+}
+.category-fitness-health-sport{
+	background-position: -170px -6px;
+}
+.category-flowers-cakes-gifts{
+	background-position: -253px -168px;
+}
+.category-food{
+	background-position: -420px -409px;
+}
+.category-food-services{
+	background-position: -87px -6px;
+}
+.category-hobbies{
+	background-position: -170px -247px;
+}
+.category-home-needs{
+	background-position: -87px -86px;
+}
+.category-jobs-related-services{
+	background-position: -253px -327px;
+}
+.category-kids-baby-care{
+	background-position: -5px -247px;
+}
+.category-matrimonial-portals{
+	background-position: -5px -6px;
+}
+.category-mens-clothing{
+	background-position: -87px -168px;
+}
+.category-mens-footwear{
+	background-position: -170px -327px;
+}
+.category-online-services{
+	background-position: -5px -327px;
+}
+.category-other-services{
+	background-position: -253px -6px;
+}
+.category-pets{
+	background-position: -253px -247px;
+}
+.category-real-estate-services{
+	background-position: -5px -6px;
+}
+.category-reviews{
+	background-position: -5px -6px;
+}
+.category-travel{
+	background-position: -87px -409px;
+}
+.category-womens-clothing{
+	background-position: -5px -168px;
+}
+.category-womens-footwear{
+	background-position: -5px -409px;
+}
