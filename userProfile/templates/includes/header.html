@@ -144,7 +144,7 @@
                         <span class="colorWhite fontTitillium1 fontSize13 halfGutter searchOr">{% trans "or" %}</span>
                         {% blog_parentcategories_abs as parent_categories %}
                         {% if parent_categories %}
-                            <div class="span2 halfGutter">
+                            <div class="span2 halfGutter" style="position:relative;">
                                 <select name="blog_parentcategories" class="blog_parentcategories">
                                     <option value='empty' selected disabled>{% trans "By Category" %}</option>
                                     <option value="all">{% trans "All" %}</option>
@@ -152,11 +152,15 @@
                                     <option value="{{ category }}">{{ category }}</option>
                                     {% endfor %}
                                 </select>
+                                <div>
+                                </div>
                             </div>
-                            <div class="span2 halfGutter">
+                            <div class="span2 halfGutter" style="position:relative;">
                                 <select name="blog_subcategories" class="blog_subcategories">
                                     <option value='empty' selected disabled>By Sub-category</option>
                                 </select>
+                                <div>
+                                </div>
                             </div>
                         {% endif %}
                         <div id="getvendorsdiv" style="display:inline-block;" class="halfGutter">
