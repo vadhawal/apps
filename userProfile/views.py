@@ -989,12 +989,12 @@ def deleteObject(request, content_type_id, object_id ):
                 OptionalReviewRatingObj.delete()
 
         elif isinstance(object, GenericWish):
-        	if object.wishimage:
+            if object.wishimage:
                 try:
-	                deleteFile(object.wishimage.image)
-	            except:
-	                pass
-	            object.wishimage.delete()
+                    deleteFile(object.wishimage.image)
+                except:
+                    pass
+                object.wishimage.delete()
 
         """
             Finally nuke the actual object.
