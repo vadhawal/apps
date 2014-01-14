@@ -15,15 +15,15 @@
                         </div>
                     </div>
                     <div class="innerBox whiteBox">
-                        <div class="span1HalfGutter span1Height imageCategoryBox imageCategoryBoxSelected updateTrends">
-                            <span class="categoryName fontTitillium">
+                        <div class="span1HalfGutter span1Height imageCategoryBox imageCategoryBoxSelected category-icon category-all updateTrends">
+                            <span class="categoryName makeButton colorWhite fontTitillium1 fontSize11">
                                 {% trans "All" %}
                             </span>
                         </div>
                         {% if parent_categories %}
                             {% for category in parent_categories %}
-                                <div class="span1HalfGutter span1Height imageCategoryBox updateTrends {% if forloop.last %}bottomHalfGutter{% endif %} ">
-                                    <span class="categoryName fontTitillium">
+                                <div class="span1HalfGutter span1Height imageCategoryBox category-icon category-{{category|slugify}} updateTrends {% if forloop.last %}bottomHalfGutter{% endif %} ">
+                                    <span class="categoryName makeButton colorWhite fontTitillium1 fontSize11">
                                             {{category}}
                                     </span>
                                 </div>

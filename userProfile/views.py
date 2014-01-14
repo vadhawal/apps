@@ -150,9 +150,6 @@ def userwish(request):
 						error_codes.append(settings.DEAL_SUB_CATEGORY_REQUIRED)
 						pass
 
-				if BlogParentCategory.objects.all().exists() and blog_category:
-					blog_parentcategory = blog_category.parent_category
-
 			if error_codes:
 				return json_error_response(error_codes)
 
@@ -169,7 +166,11 @@ def userwish(request):
 				broadcast_obj = None
 
 				if post_as_deal:
-					broadcast_obj = BroadcastDeal.objects.create_vendor_deal_object(request.user, blog_category, blog_parentcategory, message, ctype, blog_post.pk, originalImageObj, urlPreviewContent, deal_expiry_date)
+					broadcast_obj = BroadcastDeal.objects.create_vendor_deal_object(request.user, message, ctype, blog_post.pk, originalImageObj, urlPreviewContent, deal_expiry_date)
+					broadcast_obj.blog_category.add(blog_category)
+					for parent_category in blog_category.parent_category.all():
+						broadcast_obj.blog_parentcategory.add(parent_category)
+
 					action.send(blog_post, verb=settings.DEAL_POST_VERB, target=broadcast_obj)
 					actions.follow(request.user, broadcast_obj, send_action=False, actor_only=False) 
 					Follow.objects.get_or_create(request.user, broadcast_obj)
@@ -199,7 +200,7 @@ def userwish(request):
 						error_codes.append(settings.WISH_SUB_CATEGORY_REQUIRED)
 						pass
 
-					if blog_category and blog_parentcategory != blog_category.parent_category:
+					if blog_category and blog_parentcategory not in blog_category.parent_category.all():
 						error_codes.append(settings.WISH_PARENT_CATEGORY_MISMATCH)	
 
 			if error_codes:
@@ -210,7 +211,11 @@ def userwish(request):
 				broadcast_obj = None
 				verb_str = ''
 				if post_as_wish:
-					broadcast_obj = BroadcastWish.objects.create_user_wish_object(request.user, blog_category , blog_parentcategory, message, ctype, request.user.pk, originalImageObj, urlPreviewContent )
+					broadcast_obj = BroadcastWish.objects.create_user_wish_object(request.user, message, ctype, request.user.pk, originalImageObj, urlPreviewContent )
+					broadcast_obj.blog_category.add(blog_category)
+					for parent_category in blog_category.parent_category.all():
+						broadcast_obj.blog_parentcategory.add(parent_category)
+
 					verb_str=settings.WISH_POST_VERB
 				else:
 					broadcast_obj = GenericWish.objects.create_generic_wish_object(request.user, message, ctype, request.user.pk, originalImageObj, urlPreviewContent)
@@ -258,6 +263,8 @@ def get_wishlist(request, content_type_id, object_id, sIndex, lIndex):
 	ctype = get_object_or_404(ContentType, pk=content_type_id)
 	wishset = BroadcastWish.objects.all().filter(content_type=ctype, object_id=object_id)
 
+	profile_user = ctype.model_class().objects.get(pk=object_id)
+
 	is_incremental = "false"
 	s = (int)(""+sIndex)
 	l = (int)(""+lIndex)
@@ -284,7 +291,12 @@ def get_wishlist(request, content_type_id, object_id, sIndex, lIndex):
 			'success': True
 		}
 	elif s == 0:
-		template = Template('<span class="fontTitillium1 fontSize13">No Wishes Posted.</span>')
+		template = None
+		if (profile_user != request.user):
+			username = (profile_user.first_name + " " + profile_user.last_name).title()
+			template = Template('<span class="fontTitillium1 fontSize13">' + username + ' is yet to upload any wishes.</span>')
+		else:
+			template = Template('<span class="fontTitillium1 fontSize13">Do tell your friends and us some of your wishes - that might prove to be the first step to getting it fulfilled</span>')
 		ret_data = {
 			'html': template.render(context).strip(),
 			'success': True
@@ -467,7 +479,7 @@ def getUserReviews(request, user_id, sIndex=0, lIndex=0):
 				'success': True
 			}
 		elif s == 0:
-			template = Template('<span>No Reviews found.</span>')
+			template = Template("<div class='color5D fontSize14 halfGutter'>No reviews were found for the selected category. Do write a review if you've shopped for this category.</div>")
 			ret_data = {
 				'html': template.render(context).strip(),
 				'success': True
@@ -484,7 +496,7 @@ def getUserReviews(request, user_id, sIndex=0, lIndex=0):
 def getTrendingReviews(request, parent_category, sub_category, sIndex=0, lIndex=0):
 
 	if request.method == "GET" and request.is_ajax():
-		#latest = settings.REVIEWS_NUM_LATEST
+		latest = settings.REVIEWS_NUM_LATEST
 		blog_parentcategory = None
 		
 		blog_parentcategory_slug = parent_category
@@ -500,8 +512,8 @@ def getTrendingReviews(request, parent_category, sub_category, sIndex=0, lIndex=
 			reviews = Review.objects.all().order_by('-submit_date') #[:latest]
 		elif blog_parentcategory_slug.lower() != "all" and blog_subcategory_slug.lower() == "all":
 			if blog_parentcategory:
-				blog_subcategories = list(BlogCategory.objects.all().filter(parent_category=blog_parentcategory))
-				reviews = Review.objects.all().filter(bought_category__in=blog_subcategories).order_by('-submit_date') #[:latest]
+				blog_subcategories = BlogCategory.objects.all().filter(parent_category=blog_parentcategory).values_list('id', flat=True)
+				reviews = Review.objects.all().filter(bought_category__id__in=blog_subcategories).order_by('-submit_date') #[:latest]
 		else:
 			if blog_subcategory and blog_parentcategory:
 				reviews = Review.objects.all().filter(bought_category=blog_subcategory).order_by('-submit_date') #[:latest]
@@ -531,7 +543,11 @@ def getTrendingReviews(request, parent_category, sub_category, sIndex=0, lIndex=
 				'success': True
 			}
 		elif s == 0:
-			template = Template('<span>No Reviews found.</span>')
+			template = None
+			if isVertical == '1':
+				template = Template("<div class='color5D fontSize14 halfGutter'>No reviews were found for the selected category. Do write a review if you've shopped for this category.</div>")
+			else:
+				template = Template("<div class='color5D fontSize14 halfGutter topHalfGutter'>No reviews were found for the selected category. Do write a review if you've shopped for this category.</div>")
 			ret_data = {
 				'html': template.render(context).strip(),
 				'success': True
@@ -545,7 +561,6 @@ def getTrendingReviews(request, parent_category, sub_category, sIndex=0, lIndex=
 	else:
 		raise Http404()
 
-from django.db.models import Sum, F
 def getTrendingDeals(request, parent_category, sub_category, sIndex=0, lIndex=0):
 	if request.method == "GET": #and request.is_ajax():
 		ctype = ContentType.objects.get_for_model(BlogPost)
@@ -569,8 +584,8 @@ def getTrendingDeals(request, parent_category, sub_category, sIndex=0, lIndex=0)
 			deals_queryset = BroadcastDeal.objects.all().filter(content_type=ctype, expiry_date__gte=today) #[:latest]
 		elif blog_parentcategory_slug.lower() != "all" and blog_subcategory_slug.lower() == "all":
 			if blog_parentcategory:
-				blog_subcategories = list(BlogCategory.objects.all().filter(parent_category=blog_parentcategory))
-				deals_queryset = BroadcastDeal.objects.all().filter(content_type=ctype, blog_category__in=blog_subcategories, expiry_date__gte=today).distinct() #[:latest]
+				blog_subcategories = BlogCategory.objects.all().filter(parent_category=blog_parentcategory).values_list('id', flat=True)
+				deals_queryset = BroadcastDeal.objects.all().filter(content_type=ctype, blog_category__id__in=blog_subcategories, expiry_date__gte=today).distinct() #[:latest]
 		else:
 			if blog_subcategory and blog_parentcategory:
 				deals_queryset = BroadcastDeal.objects.all().filter(blog_category=blog_subcategory, expiry_date__gte=today)#[:latest]
@@ -610,7 +625,7 @@ def getTrendingDeals(request, parent_category, sub_category, sIndex=0, lIndex=0)
 				'more':True
 			}
 		elif s == 0:
-			template = Template('<span>No Deals found.</span>')
+			template = Template('<div class="color5D fontSize14 halfGutter">This category does not have any Deals currently.</div>')
 			ret_data = {
 				'html': template.render(context).strip(),
 				'success': True
@@ -659,7 +674,7 @@ def get_filtered_deallist(request, store_id, sub_category, sIndex, lIndex):
 			'success': True
 		}
 	elif s == 0:
-		template = Template('<span>No Deals found.</span>')
+		template = Template('<div class="color5D fontSize14 halfGutter">This category does not have any Deals currently.</div>')
 		ret_data = {
 			'html': template.render(context).strip(),
 			'success': True
@@ -693,8 +708,8 @@ def getTrendingStores(request, parent_category, sub_category, sIndex=0, lIndex=0
 			result = BlogPost.objects.published().extra(select={'fieldsum':'price_average + variety_average + quality_average + service_average + exchange_average + overall_average'},order_by=('-fieldsum',)).distinct() #[:latest]
 		elif blog_parentcategory_slug.lower() != "all" and blog_subcategory_slug.lower() == "all":
 			if blog_parentcategory:
-				blog_subcategories = list(BlogCategory.objects.all().filter(parent_category=blog_parentcategory))
-				result = BlogPost.objects.published().filter(categories__in=blog_subcategories).extra(select={'fieldsum':'price_average + variety_average + quality_average + service_average + exchange_average + overall_average'},order_by=('-fieldsum',)).distinct() #[:latest]
+				blog_subcategories = BlogCategory.objects.all().filter(parent_category=blog_parentcategory).values_list('id', flat=True)
+				result = BlogPost.objects.published().filter(categories__id__in=blog_subcategories).extra(select={'fieldsum':'price_average + variety_average + quality_average + service_average + exchange_average + overall_average'},order_by=('-fieldsum',)).distinct() #[:latest]
 		else:
 			if blog_subcategory and blog_parentcategory:
 				result = BlogPost.objects.published().filter(categories=blog_subcategory).extra(select={'fieldsum':'price_average + variety_average + quality_average + service_average + exchange_average + overall_average'},order_by=('-fieldsum',)).distinct() #[:latest]
@@ -728,7 +743,11 @@ def getTrendingStores(request, parent_category, sub_category, sIndex=0, lIndex=0
 				'success': True
 			}
 		elif s == 0:
-			template = Template('<span>No Stores listed for this category.</span>')
+			template = None
+			if isVertical == '1':
+				template = Template('<div class="color5D fontSize14 halfGutter">No stores were found for the selected category. Do suggest a store, if you know of one.</div>')
+			else:
+				template = Template('<div class="color5D fontSize14 halfGutter topHalfGutter">No stores were found for the selected category. Do suggest a store, if you know of one.</div>')
 			ret_data = {
 				'html': template.render(context).strip(),
 				'success': True

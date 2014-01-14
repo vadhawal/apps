@@ -5,32 +5,37 @@
 <div class="yellowBar navbar navbar-fixed-top">
 </div>
 <div class="container customNavBar navbar navbar-fixed-top">
-    <div class="row yellowBar">
-        <div class="offset3 span4">
-            <a href="/" class="makeButton colorWhite fontSize14" {% if request.path == "/" %}style="text-decoration:underline;"{% endif %}>{% trans "Home" %}</a>
-            {% if request.user.is_authenticated %}
-                {% url 'getShopTalk' as shopTalkUrl %}
-                <a href="{{shopTalkUrl}}" class="makeButton colorWhite fontSize14" {% if request.path == shopTalkUrl %}style="text-decoration:underline;"{% endif %} >{% trans "Shop Talk" %}</a>
-            {% endif %}
-            <a href="javascript:void(0);" data-href="{% url 'suggest_store' %}" class="makeButton colorWhite suggestStore fontSize14">{% trans "Missing store?" %}</a>
-        </div>
-        <div class="offset2 span2">
-            <a href="http://blog.wishradio.in">
-                <div class="socialLogin tumblr pull-right">
+    <div class="row yellowBar" style="line-height:30px;">
+        <div class="offset3">
+            <div class="row">
+                <div class="span4 noGutter">
+                    <div class="row">
+                        <a href="/" class="fontTitillium2 home {% if request.path == "/" %}radioColor homeSelected{% else %}color5D{% endif %} fontSize14">
+                            <img class="noBoxShadow" style="max-width:20px;max-height:18px;" src="{% static "img/1transparent.png"%}">
+                            {% trans "HOME" %}
+                        </a>
+                        {% if request.user.is_authenticated %}
+                            {% url 'getShopTalk' as shopTalkUrl %}
+                            <a href="{{shopTalkUrl}}" class="halfGutter fontTitillium2 shopTalk {% if request.path == shopTalkUrl %} shopTalkSelected radioColor{% else %}color5D{% endif %} fontSize14">
+                                <img class="noBoxShadow" style="max-width:20px;max-height:18px;" src="{% static "img/1transparent.png"%}">
+                                {% trans "SHOP TALK" %}
+                            </a>
+                        {% endif %}
+                    </div>
                 </div>
-            </a>
-            <a href="http://www.pinterest.com/wishradio">
-                <div class="socialLogin pinterest pull-right">
+                <div class="span5">
+                    <div class="row">
+                        <div class="offset3 span2">
+                            <div class="row">
+                                <a href="javascript:void(0);" data-href="{% url 'suggest_store' %}" class="fontTitillium2 color5D suggestStore fontSize14">
+                                    <img class="noBoxShadow" src="{% static "img/1transparent.png"%}">
+                                    {% trans "SUGGEST A STORE" %}
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </a>
-            <a href="http://www.twitter.com/wishradio">
-                <div class="socialLogin twitterLogin pull-right">
-                </div>
-            </a>
-            <a href="https://www.facebook.com/pages/Wishradio/189231901262112">
-                <div class="socialLogin facebookLogin pull-right">
-                </div>
-            </a>
+            </div>
         </div>
     </div>
     <div class="row whiteSpace">
@@ -139,7 +144,7 @@
                         <span class="colorWhite fontTitillium1 fontSize13 halfGutter searchOr">{% trans "or" %}</span>
                         {% blog_parentcategories_abs as parent_categories %}
                         {% if parent_categories %}
-                            <div class="span2 halfGutter">
+                            <div class="span2 halfGutter" style="position:relative;">
                                 <select name="blog_parentcategories" class="blog_parentcategories">
                                     <option value='empty' selected disabled>{% trans "By Category" %}</option>
                                     <option value="all">{% trans "All" %}</option>
@@ -147,11 +152,15 @@
                                     <option value="{{ category }}">{{ category }}</option>
                                     {% endfor %}
                                 </select>
+                                <div>
+                                </div>
                             </div>
-                            <div class="span2 halfGutter">
+                            <div class="span2 halfGutter" style="position:relative;">
                                 <select name="blog_subcategories" class="blog_subcategories">
                                     <option value='empty' selected disabled>By Sub-category</option>
                                 </select>
+                                <div>
+                                </div>
                             </div>
                         {% endif %}
                         <div id="getvendorsdiv" style="display:inline-block;" class="halfGutter">

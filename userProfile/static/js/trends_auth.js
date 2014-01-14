@@ -9,7 +9,7 @@ var get_trending_deals_handler_auth = function(parent_category, sub_category)
     $.get($url, {}, function(data) {
     		if(data.success === true) {
                 var $data_container = $scrollContainer.find('.mCSB_container');
-                if(!$data_container)
+                if(!$data_container || $data_container.length == 0)
                     $data_container =  $scrollContainer
 
 	        	$data_container.html(data.html);
@@ -50,7 +50,7 @@ var get_top_stores_handler_auth = function(parent_category, sub_category)
     $.get($url, {}, function(data) {
     	if(data.success === true) {
             var $data_container = $scrollContainer.find('.mCSB_container');
-            if(!$data_container)
+            if(!$data_container || $data_container.length == 0)
                 $data_container =  $scrollContainer
 
             $data_container.html(data.html);
@@ -83,7 +83,7 @@ var get_top_reviews_handler_auth = function(parent_category, sub_category)
     $.get($url, {}, function(data) {
     	if(data.success === true) {
             var $data_container = $scrollContainer.find('.mCSB_container');
-            if(!$data_container)
+            if(!$data_container || $data_container.length == 0)
                 $data_container =  $scrollContainer
 
             $data_container.html(data.html);

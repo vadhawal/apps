@@ -281,24 +281,25 @@ var install_share_object_handler =  function($parent_element) {
 }
 
 var doOpenUrlWithIframeFancyBox = function(url) {
-    $("<a href='"+url +"'></a>").appendTo("body").addClass('cropImageFancyBox');
-    $('a.cropImageFancyBox').fancybox({
+    $.fancybox({
         'frameWidth'        :  500,
         'frameHeight'       :  500,
         'scrolling'         : 'no',
-        'hideOnContentClick': false, 
+        'hideOnContentClick': false, 	
         'type'              :'iframe',
         'iframe'            : {'scrolling': 'no'},
          helpers            : { overlay : { locked : false } },
          afterClose           : function(){
-                                    $('a.cropImageFancyBox').remove();
-                                }
-    }).click();
+                                  
+                                },
+        href				: url
+    });
+
+    return false;
 }
 
 var doOpenUrlWithAjaxFancyBox = function(url, afterShowCallback) {
-    $("<a href='"+url +"'></a>").appendTo("body").addClass('ajaxFancybox');
-    $('a.ajaxFancybox').fancybox({
+    $.fancybox({
         width               : 500,
         autoSize            : true,
         hideOnContentClick  : false,
@@ -307,13 +308,14 @@ var doOpenUrlWithAjaxFancyBox = function(url, afterShowCallback) {
         type                :'ajax',
         helpers             : { overlay : { locked : false } },
         scrolling           : 'no',
+        href				: url,
         afterShow           : function() {
                                     if(typeof afterShowCallback !== 'undefined')
                                         afterShowCallback();
         },
         afterClose          : function() {
-                                    $('a.ajaxFancybox').remove();
-                                }
+                                    
+                                },
         //,                
         // ajax                :   {
         //                             complete    : function(jqXHR, textStatus) {
@@ -321,7 +323,9 @@ var doOpenUrlWithAjaxFancyBox = function(url, afterShowCallback) {
         //                                 afterShowCallback();
         //                         }
         // },
-    }).click(); 
+    });
+
+    return false; 
 }
 
 var login_handler = function(event) {    
@@ -360,8 +364,8 @@ var account_form_submit_handler = function(event) {
                 var $errors = ret_data.errors.__all__;
                 var $albumFormContainer = $('.fancybox-inner').find('.accountForm');
                 $('<div/>', {
-                    'class':'error',
-                    'html':'<span class="fontSize12">'+$errors+'</span>'
+                    'class':'errorColor',
+                    'html':'<span class="fontSize11" style="margin-left:20px;">'+$errors+'</span>'
                 }).appendTo($albumFormContainer);
                 $('.fancybox-inner img.loader').addClass("hide");
                 $('.fancybox-inner .loginSubmit').removeClass("hide");
@@ -423,6 +427,7 @@ var update_url = function (query_params, navigate) {
 
 var suggest_store_handler = function(event) {
     var $elementClicked = $(this);
+    $elementClicked.addClass('opened');
     var $url =  $elementClicked.data("href");
     var afterShowCallback = function() {
                                 var $suggestFormContainer = $('.fancybox-inner').find('.suggestForm');
@@ -455,6 +460,7 @@ var suggest_form_submit_handler = function(event) {
                     $.fancybox.close();
                 }, 3000);
             }
+            $('.suggestStore').removeClass('opened');
             $('.fancybox-inner img.loader').addClass("hide");
             $('.fancybox-inner input[type=submit]').removeClass("hide");
         },

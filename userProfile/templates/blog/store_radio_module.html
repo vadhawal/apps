@@ -19,14 +19,19 @@
 		{% broadcasters_for_object blog_post as broadcasters_url %}
 		<a class="store_sharers sharedCount" href="{{broadcasters_url}}" data-href="#">({{share_count}})</a>
 
-		<span class="vendorFollowContainer {% if request.user|is_following:blog_post %}following{% endif %}" >
-			<a href="#" class="follow-btn icon-follow" data-href="{% follow_url blog_post %}">{% trans "Follow" %}</a>
+        <span>{% trans "Followers" %}</span>
+        {% vendor_follower_subset_info_url blog_post 0 'MIN_FOLLOWERS_CHUNK'|settings_value as subset_follower_url %}<a class="vendorFollowers" href="{{subset_follower_url}}">({{  request.user|follower_count:blog_post }})</a>
+    </span>
+	<span class="vendorFollowContainer fontTitllium1 halfGutter fontSize13 makeYellowButton {% if request.user|is_following:blog_post %}following{% endif %}" style="margin-top:-3px;display:inline-block;" >
+		<a href="#" class="follow-btn icon-follow" data-href="{% follow_url blog_post %}">{% trans "Follow" %}</a>
 
-			<a class="icon-following radioColor">{% trans "Follow" %}</a><a href="#" class="unfollow-btn icon-unfollow" data-href="{% follow_url blog_post %}"><img class="noBoxShadow" src="{% static 'img/1transparent.png' %}"></a>
-		</span>{% vendor_follower_subset_info_url blog_post 0 'MIN_FOLLOWERS_CHUNK'|settings_value as subset_follower_url %}<a class="vendorFollowers" href="{{subset_follower_url}}">({{  request.user|follower_count:blog_post }})</a></span>
+		<a class="icon-following radioColor">{% trans "Follow" %}</a><a href="#" class="unfollow-btn icon-unfollow" data-href="{% follow_url blog_post %}"><img class="noBoxShadow" src="{% static 'img/1transparent.png' %}"></a>
+	</span>
     {% if noShare == "True" %}
     {% else %}
+        {% comment %}
         <span class="socialShare makeButton fontTitillium halfGutter">+</span>
-        <a href="javascript:void(0)" class="writeReview rateStoreNow radioColorBackground colorWhite fontTitillium1 fontSize13 pull-right" data-href="{% write_review_for_obj_url blog_post %}">{% trans "Write a Review" %}</a>
+        {% endcomment %}
+        <button class="writeReview rateStoreNow radioColorBackground colorWhite fontTitillium1 fontSize13 pull-right" data-href="{% write_review_for_obj_url blog_post %}" style="margin-top:-4px;" >{% trans "Write a Review" %}</button>
     {% endif %}
 </div>

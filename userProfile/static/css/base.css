@@ -48,6 +48,7 @@ button {
 }
 body{
 	line-height: normal;
+	font-family: titillium1, helvetica;
 }
 li{
 	line-height: normal;
@@ -226,6 +227,9 @@ a.radioColorBackground:hover{
 	box-shadow : 1px 1px 1px rgba(153, 142, 126, 0.75);
 	filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=1, OffY=1, Color='#998E7E');
 }
+input[type=submit].makeYellowButton:active{
+	box-shadow : 1px 1px 1px rgba(153, 142, 126, 0.75) inset;
+}
 .greyBackground{
 	background-color: #5D5D5D;
 	background-color: rgb(93,93,93);
@@ -235,20 +239,21 @@ a.colorWhite:hover{
 	text-decoration: underline;
 }
 .socialLogin{
-	width: 20px;
-	height: 20px;
+	width: 32px;
+	height: 32px;
 	display: inline-block;
 	margin-top: 5px;
-	margin-right: 3px;
+	margin-left: 10px;
 }
 .facebookLogin{
 	background-image: url("/static/img/facebook.png");
-	background-size: 20px 20px;
+	background-size: 32px 32px;
 	background-repeat: no-repeat;
 }
 .pinterest{
+	background-color: white;
 	background-image: url("/static/img/pinterest.png");
-	background-size: 20px 20px;
+	background-size: 32px 32px;
 	background-repeat: no-repeat;
 }
 .googleLogin{
@@ -265,12 +270,12 @@ a.colorWhite:hover{
 }
 .twitterLogin{
 	background-image: url("/static/img/twitter.png");
-	background-size: 20px 20px;
+	background-size: 32px 32px;
 	background-repeat: no-repeat;
 }
 .tumblr{
 	background-image: url("/static/img/tumblr.png");
-	background-size: 20px 20px;
+	background-size: 32px 32px;
 	background-repeat: no-repeat;	
 }
 .whiteSpace{
@@ -304,8 +309,18 @@ a.zocial:hover{
 }
 .error{
 	border-width: 1px !important;
-	border-color: red !important;
+	border-color: #B20B0B !important;
 	border-style: solid !important;
+}
+.errorColor{
+	color: #B20B0B;
+	position: relative;
+	top: 5px;
+}
+div.errorColor{
+	background-image: url('/static/img/error.png');
+	background-size: 14px;
+	background-repeat: no-repeat;
 }
 input.search-query{
 	font-family: titillium1, helvetica;
@@ -322,6 +337,22 @@ input.search-query{
 	display: inline-block;
 	height: 60px;
 	line-height: 60px;
+}
+select.blog_parentcategories + div, select.blog_subcategories + div{
+	display: none;
+}
+select.error + div{
+	display: inline-block;
+}
+select.error + div{
+	background-image: url('/static/img/error.png');
+	background-size: 14px;
+	background-repeat: no-repeat;
+	position: absolute;
+	width: 15px;
+	height: 15px;
+	left: 0px;
+	top: 2px;
 }
 .blog_parentcategories, .blog_subcategories{
 	font-size: 12.85px;
@@ -492,6 +523,49 @@ ul.settingsPopup li.divider {
 }
 form.suggestForm, form.comment_on_object{
 	margin-bottom: 0px;
+}
+a.suggestStore.opened {
+	color: #029795;
+	color: rgb(2, 151, 149);
+}
+a.home img{
+	background-image: url('/static/img/home_grey.png');
+	background-size: 18px;
+	background-repeat: no-repeat;
+	margin: 0px;
+	width: 20px;
+	display: inline-block;
+	padding: 20px 0 0 0;
+	height: 0px !important;
+}
+a.home:hover img, a.home.homeSelected img{
+	background-image: url('/static/img/home_green.png');
+}
+a.shopTalk img{
+	background-image: url('/static/img/store_default.png');
+	background-size: 18px;
+	background-repeat: no-repeat;
+	margin: 0px;
+	width: 20px;
+	display: inline-block;
+	padding: 20px 0 0 0;
+	height: 0px !important;	
+}
+a.shopTalk:hover img, a.shopTalk.shopTalkSelected img{
+	background-image: url('/static/img/store_green.png');
+}
+a.suggestStore img{
+	background-image: url('/static/img/shopTalk_grey.png');
+	background-size: 18px;
+	background-repeat: no-repeat;
+	margin: 0px;
+	width: 20px;
+	display: inline-block;
+	padding: 20px 0 0 0;
+	height: 0px !important;
+}
+a.suggestStore:hover img, a.suggestStore.opened img{
+	background-image: url('/static/img/shopTalk.png');
 }
 .trunc-comment, .exp-comment {
 	white-space: pre-wrap;
@@ -1056,6 +1130,30 @@ div.vendorImage{
 	top: -170px;
 	right:3px;
 }
+::-webkit-input-placeholder {
+	font-family: Georgia;
+	font-size: 11px;
+	font-style: italic;
+}
+
+:-moz-placeholder { /* Firefox 18- */
+	font-family: Georgia;
+	font-size: 11px;
+	font-style: italic;
+}
+
+::-moz-placeholder {  /* Firefox 19+ */
+	font-family: Georgia;
+	font-size: 11px;
+	font-style: italic;
+}
+
+:-ms-input-placeholder {  
+	font-family: Georgia;
+	font-size: 11px;
+	font-style: italic;
+}
+
 [placeholder]:focus::-webkit-input-placeholder {
 	-webkit-transition: opacity 0.5s ease;
 	transition: opacity 0.5s ease;
@@ -1096,3 +1194,123 @@ textarea:focus, input[type=text]:focus{
 	filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=1, OffY=1, Color='#998E7E');
 	margin:0;
 }
+.category-icon{
+	background-repeat: no-repeat;
+	background-image: url(/static/img/category_icons.png);
+}
+.category-all{
+	background-position: -5px -6px;
+}
+.category-accessories {
+	background-position: -170px -86px;
+}
+.category-art-collectibles{
+	background-position: -87px -247px;
+}
+.category-automobile-services{
+	background-position: -253px -409px;
+}
+.category-bath-beauty {
+	background-position: -170px -168px;
+}
+.category-classifieds{
+	background-position: -338px -409px;	
+}
+.category-customized{
+	background-position: -5px -6px;
+}
+.category-deals {
+	background-position: -253px -86px;
+}
+.category-electronics{
+	background-position: -170px -409px;
+}
+.category-entertainment{
+	background-position: -5px -86px;
+}
+.category-event-ticketing{
+	background-position: -5px -6px;
+}
+.category-fitness-health-sport{
+	background-position: -170px -6px;
+}
+.category-flowers-cakes-gifts{
+	background-position: -253px -168px;
+}
+.category-food{
+	background-position: -420px -409px;
+}
+.category-food-services{
+	background-position: -87px -6px;
+}
+.category-hobbies{
+	background-position: -170px -247px;
+}
+.category-home-needs{
+	background-position: -87px -86px;
+}
+.category-jobs-related-services{
+	background-position: -253px -327px;
+}
+.category-kids-baby-care{
+	background-position: -5px -247px;
+}
+.category-matrimonial-portals{
+	background-position: -5px -6px;
+}
+.category-mens-clothing{
+	background-position: -87px -168px;
+}
+.category-mens-footwear{
+	background-position: -170px -327px;
+}
+.category-online-services{
+	background-position: -5px -327px;
+}
+.category-other-services{
+	background-position: -253px -6px;
+}
+.category-pets{
+	background-position: -253px -247px;
+}
+.category-real-estate-services{
+	background-position: -5px -6px;
+}
+.category-reviews{
+	background-position: -5px -6px;
+}
+.category-travel{
+	background-position: -87px -409px;
+}
+.category-womens-clothing{
+	background-position: -5px -168px;
+}
+.category-womens-footwear{
+	background-position: -5px -409px;
+}
+.wishradioFooter{
+	padding:28px;
+	height: 110px;
+	margin-bottom: 40px;
+	margin-top: 30px;
+}
+.footerElementHeight{
+	height: 28px;
+}
+.wishradioFooter button{
+	padding-left: 25px;
+	width: 211px;
+}
+.wishradioFooter li{
+	width: 190px;
+}
+.wishradioFooter li:before{
+	content: '';
+	background-color: #F9DF1E;
+	width: 10px;
+	height: 10px;
+	border-radius: 10px;
+	position: absolute;
+	left: 20px;
+	top: 5px;
+};

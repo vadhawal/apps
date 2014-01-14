@@ -57,7 +57,19 @@
         {% empty %}
         <div class="row">
             <div class="span2">
-                {% trans "No stores to list" %}
+                {% if user_list == "true"%}
+                    {% if profile_user %}
+                        {% if profile_user != request.user %}
+                            {% get_full_name profile_user %}{% trans " is not following anyone yet." %}
+                        {% else %}
+                            {% trans "You could follow some of your favourite people and stores on Wishradio to know the latest wishes and deals they're posting and know what they're up to." %}
+                        {% endif %}
+                    {% else %}
+                        {% trans "Not following any stores yet" %}
+                    {% endif %} 
+                {% else %}
+                    {% trans "No stores to list" %}
+                {% endif %}
             </div>
         </div>
     {% endfor %}

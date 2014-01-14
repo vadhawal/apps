@@ -67,17 +67,23 @@
 									>
 							</a>
 						</div>
-						<div class="span5 fontTitillium2 fontSize13 halfGutter">
-						    <div>
-						        <a class="vendorName fontTitillium" href="{{ result.get_absolute_url }}">{{ result|title }}</a>
-						        <span class="searchResultRating searchResultRatingText searchResultRatingScheme rating-{{result.overall_average|floatformat:"0"}} pull-right">{{result.overall_average|floatformat:"1"}}</span>
-						        <p class="webUrl fontTitillium1"><a href="{{result.web_url}}" class="radioColor">{{result.web_url}}</a></p>
+						<div class="span6 fontTitillium2 fontSize13 halfGutter">
+							<div class="row">
+								<div class="span6">
+							        <a class="vendorName fontTitillium" href="{{ result.get_absolute_url }}">{{ result|title }}</a>
+							        <span class="searchResultRating searchResultRatingText searchResultRatingScheme rating-{{result.overall_average|floatformat:"0"}} pull-right halfGutterRight">{{result.overall_average|floatformat:"1"}}</span>
+							        <p class="webUrl fontTitillium1"><a href="{{result.web_url}}" class="radioColor">{{result.web_url}}</a></p>
+						    	</div>
 						    </div>
-						    <p class="resultDesc">{{ result.description|truncatewords_html:40|safe }}</p>
-						    <a href="{{ result.get_absolute_url }}">{% trans "read more" %}</a>
-					    	<div class="row topHalfGutter bottomHalfGutter">
-								{% include 'blog/store_radio_module.html' with blog_post=result noShare="True" wholeReviewLink="True" %}
-							</div>
+						    <div class="row">
+								<div class="span5">
+								    <p class="resultDesc">{{ result.description|truncatewords_html:40|safe }}</p>
+								    <a class="radioColor" href="{{ result.get_absolute_url }}">{% trans "More..." %}</a>
+							    	<div class="row topHalfGutter bottomHalfGutter">
+										{% include 'blog/store_radio_module.html' with blog_post=result noShare="True" wholeReviewLink="True" %}
+									</div>
+								</div>
+						    </div>
 						</div>
 						<div class="dottedSeparator span7"></div>
 					 </div>

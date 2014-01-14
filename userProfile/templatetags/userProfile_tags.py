@@ -31,6 +31,11 @@ register = template.Library()
 def settings_value(name):
     return getattr(settings, name, "")
 
+@register.simple_tag
+def settings_actstream_verb(name):
+    verb_dict = getattr(settings, 'ACTSTREAM_VERB_DICT', dict())
+    return verb_dict[name]
+
 @register.filter
 def settings_value(name):
     return getattr(settings, name, "")
@@ -101,16 +106,16 @@ def get_review_count(parser, token):
     return ReviewCount(bits[1], bits[3])
 
 class GetVendorsUrl(template.Node):
-    def __init__(self, subcategory_slug, context_var):
-        self.subcategory_slug = template.Variable(subcategory_slug)
+    def __init__(self, subcategory, context_var):
+        self.subcategory = template.Variable(subcategory)
         self.context_var = context_var
 
     def render(self, context):
-        subcategory_slug_instance = self.subcategory_slug.resolve(context)
+        subcategory_instance = self.subcategory.resolve(context)
         try:
-            subcategory_instance = BlogCategory.objects.get(slug=slugify(subcategory_slug_instance))
-            parent_category = subcategory_instance.parent_category
-            url = reverse('get_vendors', kwargs={'parent_category_slug':parent_category.slug,'sub_category_slug':slugify(subcategory_slug_instance)})
+            parent_categories = subcategory_instance.parent_category.all()
+            parent_category = parent_categories[0]
+            url = reverse('get_vendors', kwargs={'parent_category_slug':parent_category.slug,'sub_category_slug':subcategory_instance.slug})
             context[self.context_var] = url 
         except:
             context[self.context_var] = '#'
@@ -538,7 +543,8 @@ def render_reviews_for_user(context, user, latest=settings.MIN_REVIEWS_FOR_USER,
     return template.render(RequestContext(context['request'], {
         'reviews' : reviews_list,
         'data_href' : data_href + search_param,
-        'data_chunk': data_chunk
+        'data_chunk': data_chunk,
+        'profile_user': user
     }))
 
 
@@ -571,8 +577,8 @@ def render_deals_for_categories(context, parent_category, sub_category, latest=s
             deals_queryset = BroadcastDeal.objects.all().filter(content_type=ctype, expiry_date__gte=today)
         elif blog_parentcategory_slug.lower() != "all" and blog_subcategory_slug.lower() == "all":
             if blog_parentcategory:
-                blog_subcategories = list(BlogCategory.objects.all().filter(parent_category=blog_parentcategory))
-                deals_queryset = BroadcastDeal.objects.all().filter(content_type=ctype, blog_category__in=blog_subcategories, expiry_date__gte=today).distinct()
+                blog_subcategories = BlogCategory.objects.all().filter(parent_category=blog_parentcategory).values_list('id', flat=True)
+                deals_queryset = BroadcastDeal.objects.all().filter(content_type=ctype, blog_category__id__in=blog_subcategories, expiry_date__gte=today).distinct()
         else:
             if blog_subcategory and blog_parentcategory:
                 deals_queryset = BroadcastDeal.objects.all().filter(blog_category=blog_subcategory, expiry_date__gte=today)
@@ -625,8 +631,8 @@ def render_stores_for_categories(context, parent_category, sub_category, latest=
             result = BlogPost.objects.published().extra(select={'fieldsum':'price_average + variety_average + quality_average + service_average + exchange_average + overall_average'},order_by=('-fieldsum',))[:latest]
         elif blog_parentcategory_slug.lower() != "all" and blog_subcategory_slug.lower() == "all":
             if blog_parentcategory:
-                blog_subcategories = list(BlogCategory.objects.all().filter(parent_category=blog_parentcategory))
-                result = BlogPost.objects.published().filter(categories__in=blog_subcategories).extra(select={'fieldsum':'price_average + variety_average + quality_average + service_average + exchange_average + overall_average'},order_by=('-fieldsum',)).distinct()[:latest]
+                blog_subcategories = BlogCategory.objects.all().filter(parent_category=blog_parentcategory).values_list('id', flat=True)
+                result = BlogPost.objects.published().filter(categories__id__in=blog_subcategories).extra(select={'fieldsum':'price_average + variety_average + quality_average + service_average + exchange_average + overall_average'},order_by=('-fieldsum',)).distinct()[:latest]
         else:
             if blog_subcategory and blog_parentcategory:
                 result = BlogPost.objects.published().filter(categories=blog_subcategory).extra(select={'fieldsum':'price_average + variety_average + quality_average + service_average + exchange_average + overall_average'},order_by=('-fieldsum',))[:latest]
@@ -668,8 +674,8 @@ def render_reviews_for_categories(context, parent_category, sub_category, latest
             reviews = Review.objects.all().order_by('-submit_date')[:latest]
         elif blog_parentcategory_slug.lower() != "all" and blog_subcategory_slug.lower() == "all":
             if blog_parentcategory:
-                blog_subcategories = list(BlogCategory.objects.all().filter(parent_category=blog_parentcategory))
-                reviews = Review.objects.all().filter(bought_category__in=blog_subcategories).order_by('-submit_date')[:latest]
+                blog_subcategories = BlogCategory.objects.all().filter(parent_category=blog_parentcategory).values_list('id', flat=True)
+                reviews = Review.objects.all().filter(bought_category__id__in=blog_subcategories).order_by('-submit_date')[:latest]
         else:
             if blog_subcategory and blog_parentcategory:
                 reviews = Review.objects.all().filter(bought_category=blog_subcategory).order_by('-submit_date')[:latest]
@@ -741,7 +747,8 @@ def render_deals_for_stores(context, store_id, sub_category, latest=settings.DEA
         return template.render(RequestContext(context['request'], {
             'deal_list': deals_list,
             'data_href' : data_href + search_param,
-            'data_chunk': data_chunk
+            'data_chunk': data_chunk,
+            'blog_post': blog_post
         }))
 
 @register.simple_tag(takes_context=True)
@@ -766,8 +773,8 @@ def render_related_stores(context, store_id, sub_category, latest=settings.STORE
     elif sub_category.lower() == "all" or sub_category.lower() == '':
         try:
             blog_post = BlogPost.objects.get(id=store_id)
-            categories = blog_post.categories.all() 
-            blogPostQueryset = BlogPost.objects.published().filter(categories__in=categories).exclude(id=store_id).extra(select={'fieldsum':'price_average + variety_average + quality_average + service_average + exchange_average + overall_average'},order_by=('-fieldsum',)).distinct()[:latest]
+            categories = blog_post.categories.all().values_list('id', flat=True)
+            blogPostQueryset = BlogPost.objects.published().filter(categories__id__in=categories).exclude(id=store_id).extra(select={'fieldsum':'price_average + variety_average + quality_average + service_average + exchange_average + overall_average'},order_by=('-fieldsum',)).distinct()[:latest]
         except:
             blogPostQueryset = None
             pass
