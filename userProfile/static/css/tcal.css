@@ -31,8 +31,8 @@
 	-moz-box-shadow: 3px 3px 4px silver;
 	-webkit-box-shadow: 3px 3px 4px silver;
 	box-shadow: 3px 3px 4px silver;
-	-ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color='silver')";
-	filter: progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color='silver');
+	/*-ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color='silver')";*/
+	/*filter: progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color='silver');*/
 }
 
 /* table containing navigation and current month */

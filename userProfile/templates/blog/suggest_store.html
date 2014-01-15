@@ -10,9 +10,11 @@
     <p class="color5D fontSize13" style="margin-bottom:0;">Paste the store link <span class="radioColor">below</span> and we'll ensure that we add it.</p>
 </div>
 
-<form method="post"{% if form.is_multipart %} enctype="multipart/form-data"{% endif %} action="{{action_url}}" class="suggestForm topHalfGutter">
+<form style="position:relative;" method="post"{% if form.is_multipart %} enctype="multipart/form-data"{% endif %} action="{{action_url}}" class="suggestForm topHalfGutter">
     {% for field in form %}
     	{% render_field field placeholder=field.label class="textField pull-left" %}
+    	<div>
+    	</div>
     {% endfor %}
     <input class="makeYellowButton fontTitillium radioColor fontSize15 halfGutter pull-right" style="margin-top:-6px;padding-left:20px;padding-right:20px;" type="submit" value="Go">
     <img class="halfGutter noBoxShadow hide loader pull-right" style="height:20px;margin-right:18px;" src="{% static "img/loading.gif" %}"/>

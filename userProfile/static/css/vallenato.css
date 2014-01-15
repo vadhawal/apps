@@ -38,7 +38,7 @@
 	background : #029795;
 	background : rgba(2, 151, 149, 1);
 	box-shadow : 0.77px 0.77px 0.77px rgba(198, 190, 190, 0.75);
-	filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=0.77, OffY=0.77, Color='#C6BEBE') ;
+	/*filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=0.77, OffY=0.77, Color='#C6BEBE') ;*/
 }
 
 .active-header {

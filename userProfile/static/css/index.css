@@ -99,7 +99,7 @@
 	border-color : rgba(196, 196, 191, 1);
 	border-width : 1px;
 	box-shadow : 1px 1px 1px 1px rgba(130, 111, 113, 0.75) inset;
-	filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=-0.4, OffY=-0.4, Color='#826F71') ;
+	/*filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=-0.4, OffY=-0.4, Color='#826F71') ;*/
 	padding: 5px;
 	border-top-width: 0px;
 	border-left-width: 0px;
@@ -122,7 +122,7 @@
 	background : linear-gradient(90deg, rgba(134, 114, 120, 0.21) 0%, rgba(92, 74, 86, 0.21) 50%, rgba(67, 53, 69, 0.21) 100%);*/
 	box-shadow : 1px 1px 1px rgba(0, 0, 0, 0.75);
 	vertical-align: bottom;
-	filter: alpha(opacity=21) progid:DXImageTransform.Microsoft.Alpha(opacity=21) progid:DXImageTransform.Microsoft.dropshadow(OffX=1.31, OffY=1.31, Color='#000000') progid:DXImageTransform.Microsoft.gradient(startColorstr='#867278',endColorstr='#433545' , GradientType=1);
+	/*filter: alpha(opacity=21) progid:DXImageTransform.Microsoft.Alpha(opacity=21) progid:DXImageTransform.Microsoft.dropshadow(OffX=1.31, OffY=1.31, Color='#000000') progid:DXImageTransform.Microsoft.gradient(startColorstr='#867278',endColorstr='#433545' , GradientType=1);*/
 }
 .radioSelect{
 	color:white;
@@ -134,7 +134,7 @@
 /*	background : #FFFFFF;
 	background : rgba(255, 255, 255, 1);*/
 	box-shadow : 1px 1px 1px 1px rgba(0, 0, 0, 0.75) inset;
-	filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=-0.57, OffY=-0.57, Color='#000000') ;
+	/*filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=-0.57, OffY=-0.57, Color='#000000') ;*/
 }
 div.imageCategoryBox span{
 	display: none;
@@ -176,4 +176,44 @@ input#expiry_date{
 	border-radius:0;
 	margin-top:6px;
 	width: 156px;
+}
+textarea#text + div{
+	display: none;
+}
+textarea#text.error {
+	border-width: 0px !important;
+}
+textarea#text.error + div{
+	display: inline-block;
+	background-image: url('/static/img/error.png');
+	background-size: 14px;
+	background-repeat: no-repeat;
+	position: absolute;
+	width: 15px;
+	height: 15px;
+	left: 3px;
+	top: 3px;
+}
+textarea#text.error:focus + div{
+	display: none;
+}
+div#categories select.blog_parentcategories.error + div{
+	background-image: url('/static/img/error.png');
+	background-size: 14px;
+	background-repeat: no-repeat;
+	position: absolute;
+	width: 15px;
+	height: 15px;
+	left: -20px;
+	top: 5px;
+}
+div#categories select.blog_subcategories.error + div{
+	background-image: url('/static/img/error.png');
+	background-size: 14px;
+	background-repeat: no-repeat;
+	position: absolute;
+	width: 15px;
+	height: 15px;
+	left: -20px;
+	top: 40px;
 }
