@@ -125,14 +125,19 @@ $(document).ready(function() {
     $(".blog_parentcategories").val("empty");
     $(".blog_subcategories").val("empty");
 
+
+    $('.blog_subcategories').change(function(){
+        $(this).removeClass("error");
+    });
+
     $('.blog_parentcategories').change(function(){
         var $this = $(this);
         var slug = $this.find("option:selected").text();
         var $subCSelect = $this.parent().parent().find('.blog_subcategories');
-        $subCSelect.removeClass("error");
         $this.removeClass("error");
         if(slug.toLowerCase() == "all") {
             $subCSelect.empty();
+            $subCSelect.removeClass("error");
             var option = '<option value="all">All</option>';
             $subCSelect.append(option);
         } else {

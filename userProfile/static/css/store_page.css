@@ -17,7 +17,7 @@ div a.siteURL{
 	border: 0;
 	padding: 6px 10px;
 	box-shadow : 1px 1px 1px rgba(136, 126, 129, 0.75);
-  	filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=1, OffY=1, Color='#887E81');
+  	/*filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=1, OffY=1, Color='#887E81');*/
 }
 button.rateStoreNow:active{
 	box-shadow: 1px 1px 1px rgba(136, 126, 129, 0.75) inset;
@@ -119,7 +119,7 @@ select.boughtCategory{
 	border-radius: 0px;
 	-webkit-padding-start: 10px;
 	-moz-padding-start: 10px;
-	background-color: #F9DF1E;
+	background-color: rgba(229,244,244,1.00);;
 	background-image: url("/static/img/selectPointer.png");
 	background-position: 94% 8px;
 	background-repeat: no-repeat;
@@ -162,4 +162,35 @@ div.vendorLogoImage img{
 	max-height: 140px;
 	padding: 5px;
 	display: inline-block;
+}
+div.reviewForm.controls, div.reviewForm div.error{
+	position: relative;
+}
+div.label_text.error:before,
+span.label_text.error:before{
+	content: url('/static/img/error.png');
+	position: absolute;
+	width: 15px;
+	height: 15px;
+	top: 0px;
+	left: -20px;
+}
+div.input_id_category span.label_text.error:before{
+	content: url('/static/img/error.png');
+	position: absolute;
+	width: 15px;
+	height: 15px;
+	top: 15px;
+	left: -20px;
+}
+div.input_id_shop_again_0 span.label_text.error:before{
+	content: url('/static/img/error.png');
+	position: absolute;
+	width: 15px;
+	height: 15px;
+	top: 10px;
+	left: -20px;
+}
+div.error, span.error{
+	border-width: 0px !important;
 }

@@ -298,7 +298,11 @@ var doOpenUrlWithIframeFancyBox = function(url) {
     return false;
 }
 
-var doOpenUrlWithAjaxFancyBox = function(url, afterShowCallback) {
+var doOpenUrlWithAjaxFancyBox = function(url, afterShowCallback, scroll) {
+    var doScroll = 'no';
+    if (typeof scroll !== "undefined") {
+        doScroll = scroll;
+    }
     $.fancybox({
         width               : 500,
         autoSize            : true,
@@ -307,7 +311,7 @@ var doOpenUrlWithAjaxFancyBox = function(url, afterShowCallback) {
         closeEffect         : 'fade',
         type                :'ajax',
         helpers             : { overlay : { locked : false } },
-        scrolling           : 'no',
+        scrolling           : doScroll,
         href				: url,
         afterShow           : function() {
                                     if(typeof afterShowCallback !== 'undefined')
