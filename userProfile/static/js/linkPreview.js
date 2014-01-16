@@ -72,7 +72,9 @@
 			images = "";
 		}
 		$('#text').keyup(function(e){
-			if ($('#text').val() != "")
+			var $this = $(this);
+			$this.removeClass("error");
+			if ($this.val() != "")
 			{
 				$('#submitwithouturl').addClass('radioPostActive');
         		$('#submitwithurl').addClass('radioPostActive');

@@ -8,7 +8,7 @@
 		   	{% for field in form %}
 		   		{% if field.label != form.description.label %}
 		   			{% if field.label != form.location.label %}
-					<div class="topHalfGutter" {% if forloop.last %}style="height:72px; line-height:72px;"{% endif %}>
+					<div class="topHalfGutter" style="{% if forloop.last %}height:72px;line-height:72px;{% endif %}position:relative;">
 					{% endif %}
 						{{field.errors}}
 						{% if field.label == form.gender.label %}
@@ -43,6 +43,7 @@
 						{% else %}
 							{% if field.errors %}
 								{% render_field field placeholder=field.label class="textField error signUptextField" %}
+								<div></div>
 							{% else %}
 								{% render_field field placeholder=field.label class="textField signUptextField" %}
 							{% endif %}

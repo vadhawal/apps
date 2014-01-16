@@ -11,12 +11,13 @@
         {% csrf_token %}
 
         <div id="previewLoading"></div>
-        <div class="span4 statusBox halfGutter">
+        <div class="span4 statusBox halfGutter" style="position:relative">
             <textarea id="text" name="message"></textarea>
+            <div></div>
             <output id="previewimg"></output>
-            <div style="width:100%;margin-bottom:0px;" >
+            <div style="width:100%;margin-bottom:0px;position:relative;" >
                 <input style="display:none;" type="file" id="wishimage" name="wishimage" aria-label="Add photos to your post" >
-                <input id="fakeselect" type="button"/> <span class="fontTitillium1 fontSize11 colorDarkerGrey">{% trans "Upload an Image" %}</span>
+                <input id="fakeselect" type="button"/> <span class="fontTitillium1 fontSize11 colorDarkerGrey">{% trans "Upload an Image" %}</span><div></div>
             </div>
             <input type="hidden" name="urlPreviewContent" id="urlPreviewContent" value="" />
             <div class="previewPostedList"></div>
@@ -31,7 +32,7 @@
                         {% trans "Post As Deal" %}
                     </label>
                 </div>
-                <div id="deal_categories" style="display:none;">
+                <div id="deal_categories" style="display:none;position:relative;">
                     {% blog_subcategories_for_blog blog as sub_categories_blog %}
                     {% if sub_categories_blog %}
                         <select id="sub_categories_blog" name="radio_category" class="blog_subcategories radioSelect" style="margin-bottom:0px;">
@@ -40,9 +41,11 @@
                                 <option value="{{ blog_category }}">{{ blog_category }}</option>
                                 {% endfor %}
                         </select>
+                        <div></div>
                     {% endif %}
 
                     <input type="text" id="expiry_date" name="expiry_date" class="tcal fontTitillium1 fontSize13" value="{% trans "Expiry Date" %}" readonly />
+                    <div></div>
                 </div>
                 <!--input style="display:none;" type="date" id="expiry_date" name="expiry_date"-->       
                 <input type="hidden" name="actor" value="vendor">
@@ -54,16 +57,20 @@
                     </label>
                 </div>
                 {% if parent_categories %}
-                    <div id="categories" style="display:none;">
+                    <div id="categories" style="display:none;position:relative;">
                         <select class="blog_parentcategories radioSelect" name="blog_parentcategories">
                                 <option value='empty' selected disabled>{% trans "Category" %}</option>
                                 {% for category in parent_categories %}
                                 <option value="{{ category }}">{{ category }}</option>
                                 {% endfor %}
                         </select>
+                        <div>
+                        </div>
                         <select class="blog_subcategories radioSelect" name="blog_subcategories" style="margin-bottom:0px;">
                                 <option value='empty' selected disabled>{% trans "Sub Category" %}</option>
                         </select>
+                        <div>
+                        </div>
                     </div>
                 {% endif %}
                 <input type="hidden" name="actor" value="user">       
