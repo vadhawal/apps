@@ -1,8 +1,5 @@
 {% load i18n future mezzanine_tags static %}
 
-{% compress css %}
-{% endcompress %}
-
 {% if request.user.is_authenticated %}
     {% trans "Logged in as: " %}
     {% url "profile" request.user.username as profile_url %}
