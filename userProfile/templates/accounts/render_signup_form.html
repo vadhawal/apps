@@ -25,10 +25,10 @@
 									{% endcomment %}
 
 									{% endif %}
+								{% endif %}
 									<span class="pull-right {% if not request.user.get_profile.profile_photo %} hide {% endif %}">
                             				<a href="javascript:void(0)" onclick="$('#profile_image_preview').hide();$(this).parent().hide();return false;"><img class="noBoxShadow" width="10px" height="10px" src="{% static "img/cross_button.png" %} "></a>
 			                        </span>
-								{% endif %}
 							</output>
 						{% endif %}
 						{% if field.label == form.location.label %}
