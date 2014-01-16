@@ -298,10 +298,14 @@ var doOpenUrlWithIframeFancyBox = function(url) {
     return false;
 }
 
-var doOpenUrlWithAjaxFancyBox = function(url, afterShowCallback, scroll) {
+var doOpenUrlWithAjaxFancyBox = function(url, afterShowCallback, scroll, afterCloseCallback) {
     var doScroll = 'no';
+    var afterCloseCallbackImpl = function() { };
     if (typeof scroll !== "undefined") {
         doScroll = scroll;
+    }
+    if (typeof afterCloseCallback !== "undefined" && typeof afterCloseCallback === "function") {
+        afterCloseCallbackImpl = afterCloseCallback;
     }
     $.fancybox({
         width               : 500,
@@ -316,10 +320,8 @@ var doOpenUrlWithAjaxFancyBox = function(url, afterShowCallback, scroll) {
         afterShow           : function() {
                                     if(typeof afterShowCallback !== 'undefined')
                                         afterShowCallback();
-        },
-        afterClose          : function() {
-                                    
-                                },
+                              },
+        afterClose          : afterCloseCallbackImpl
         //,                
         // ajax                :   {
         //                             complete    : function(jqXHR, textStatus) {
@@ -439,8 +441,11 @@ var suggest_store_handler = function(event) {
                                     $suggestFormContainer.on('submit', {action_url: $url}, suggest_form_submit_handler);
                                 }
                             };
+    var afterCloseCallback = function () {
+        $('.suggestStore').removeClass('opened');
+    }
 
-    doOpenUrlWithAjaxFancyBox($url, afterShowCallback);
+    doOpenUrlWithAjaxFancyBox($url, afterShowCallback, 'no', afterCloseCallback);
     return false;  
 }
 
