@@ -14,7 +14,7 @@
                             <hr class="yellowLine"/>
                         </div>
                     </div>
-                    <div class="innerBox whiteBox">
+                    <div class="innerBox whiteBox categoryBox">
                         <div class="span1HalfGutter span1Height imageCategoryBox imageCategoryBoxSelected category-icon category-all updateTrends">
                             <span class="categoryName makeButton colorWhite fontTitillium1 fontSize11">
                                 {% trans "All" %}
@@ -22,7 +22,7 @@
                         </div>
                         {% if parent_categories %}
                             {% for category in parent_categories %}
-                                <div class="span1HalfGutter span1Height imageCategoryBox category-icon category-{{category|slugify}} updateTrends {% if forloop.last %}bottomHalfGutter{% endif %} ">
+                                <div class="span1HalfGutter span1Height imageCategoryBox category-icon category-{{category|slugify}} updateTrends {% if forloop.last %}bottomHalfGutter{% endif %} {% cycle '' 'thirdCategory' '' %}">
                                     <span class="categoryName makeButton colorWhite fontTitillium1 fontSize11">
                                             {{category}}
                                     </span>
