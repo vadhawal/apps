@@ -247,3 +247,7 @@ input#fakeselect.error + span + div{
 	left: 118px;
 	top: 2px;
 }
+div.thirdCategory.imageCategoryBox:hover span{
+	right: 6px;
+	left: auto;
+}

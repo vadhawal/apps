@@ -1208,96 +1208,284 @@ textarea:focus, input[type=text]:focus{
 	background-repeat: no-repeat;
 	background-image: url(/static/img/category_icons.png);
 }
+
 .category-all{
-	background-position: -5px -6px;
+	background-position: -10px -11px;
 }
 .category-accessories {
-	background-position: -170px -86px;
+	background-position: -175px -91px;
 }
 .category-art-collectibles{
-	background-position: -87px -247px;
+	background-position: -92px -252px;
 }
 .category-automobile-services{
-	background-position: -253px -409px;
+	background-position: -258px -414px;
 }
 .category-bath-beauty {
-	background-position: -170px -168px;
+	background-position: -175px -173px;
 }
 .category-classifieds{
-	background-position: -338px -409px;	
+	background-position: -343px -414px;	
 }
 .category-customized{
-	background-position: -253px -6px;
+	background-position: -258px -11px;
 }
 .category-deals {
-	background-position: -253px -86px;
+	background-position: -258px -91px;
 }
 .category-electronics{
-	background-position: -170px -409px;
+	background-position: -175px -414px;
 }
 .category-entertainment{
-	background-position: -5px -86px;
+	background-position: -10px -91px;
 }
 .category-event-ticketing{
-	background-position: -5px -6px;
+	background-position: -10px -11px;
 }
 .category-fitness-health-sport{
-	background-position: -170px -6px;
+	background-position: -175px -11px;
 }
 .category-flowers-cakes-gifts{
-	background-position: -253px -168px;
+	background-position: -258px -173px;
 }
 .category-food{
-	background-position: -420px -409px;
+	background-position: -425px -414px;
 }
 .category-food-services{
-	background-position: -87px -6px;
+	background-position: -92px -11px;
 }
 .category-hobbies{
-	background-position: -170px -247px;
+	background-position: -175px -252px;
 }
 .category-home-needs{
-	background-position: -87px -86px;
+	background-position: -92px -91px;
 }
 .category-jobs-related-services{
-	background-position: -253px -327px;
+	background-position: -258px -332px;
 }
 .category-kids-baby-care{
-	background-position: -5px -247px;
+	background-position: -10px -252px;
 }
 .category-matrimonial-portals{
-	background-position: -5px -6px;
+	background-position: -10px -11px;
 }
 .category-mens-clothing{
-	background-position: -87px -168px;
+	background-position: -92px -173px;
 }
 .category-mens-footwear{
-	background-position: -170px -327px;
+	background-position: -175px -332px;
 }
 .category-online-services{
-	background-position: -5px -327px;
+	background-position: -10px -332px;
 }
 .category-other-services{
-	background-position: -253px -6px;
+	background-position: -258px -11px;
 }
 .category-pets{
-	background-position: -253px -247px;
+	background-position: -258px -252px;
 }
 .category-real-estate-services{
-	background-position: -5px -6px;
+	background-position: -10px -11px;
 }
 .category-reviews{
-	background-position: -5px -6px;
+	background-position: -10px -11px;
 }
 .category-travel{
-	background-position: -87px -409px;
+	background-position: -92px -414px;
 }
 .category-womens-clothing{
-	background-position: -5px -168px;
+	background-position: -10px -173px;
 }
 .category-womens-footwear{
-	background-position: -5px -409px;
+	background-position: -10px -414px;
 }
+
+@media (min-width: 1200px) {
+	.category-all{
+		background-position: -5px -6px;
+	}
+	.category-accessories {
+		background-position: -170px -86px;
+	}
+	.category-art-collectibles{
+		background-position: -87px -247px;
+	}
+	.category-automobile-services{
+		background-position: -253px -409px;
+	}
+	.category-bath-beauty {
+		background-position: -170px -168px;
+	}
+	.category-classifieds{
+		background-position: -338px -409px;	
+	}
+	.category-customized{
+		background-position: -253px -6px;
+	}
+	.category-deals {
+		background-position: -253px -86px;
+	}
+	.category-electronics{
+		background-position: -170px -409px;
+	}
+	.category-entertainment{
+		background-position: -5px -86px;
+	}
+	.category-event-ticketing{
+		background-position: -5px -6px;
+	}
+	.category-fitness-health-sport{
+		background-position: -170px -6px;
+	}
+	.category-flowers-cakes-gifts{
+		background-position: -253px -168px;
+	}
+	.category-food{
+		background-position: -420px -409px;
+	}
+	.category-food-services{
+		background-position: -87px -6px;
+	}
+	.category-hobbies{
+		background-position: -170px -247px;
+	}
+	.category-home-needs{
+		background-position: -87px -86px;
+	}
+	.category-jobs-related-services{
+		background-position: -253px -327px;
+	}
+	.category-kids-baby-care{
+		background-position: -5px -247px;
+	}
+	.category-matrimonial-portals{
+		background-position: -5px -6px;
+	}
+	.category-mens-clothing{
+		background-position: -87px -168px;
+	}
+	.category-mens-footwear{
+		background-position: -170px -327px;
+	}
+	.category-online-services{
+		background-position: -5px -327px;
+	}
+	.category-other-services{
+		background-position: -253px -6px;
+	}
+	.category-pets{
+		background-position: -253px -247px;
+	}
+	.category-real-estate-services{
+		background-position: -5px -6px;
+	}
+	.category-reviews{
+		background-position: -5px -6px;
+	}
+	.category-travel{
+		background-position: -87px -409px;
+	}
+	.category-womens-clothing{
+		background-position: -5px -168px;
+	}
+	.category-womens-footwear{
+		background-position: -5px -409px;
+	}
+}
+
+@media (max-width: 979px) and (min-width: 768px) {
+	.category-all{
+		background-position: -19px -20px;
+	}
+	.category-accessories {
+		background-position: -184px -100px;
+	}
+	.category-art-collectibles{
+		background-position: -101px -261px;
+	}
+	.category-automobile-services{
+		background-position: -267px -423px;
+	}
+	.category-bath-beauty {
+		background-position: -184px -182px;
+	}
+	.category-classifieds{
+		background-position: -352px -423px;	
+	}
+	.category-customized{
+		background-position: -267px -20px;
+	}
+	.category-deals {
+		background-position: -267px -100px;
+	}
+	.category-electronics{
+		background-position: -184px -423px;
+	}
+	.category-entertainment{
+		background-position: -19px -100px;
+	}
+	.category-event-ticketing{
+		background-position: -19px -20px;
+	}
+	.category-fitness-health-sport{
+		background-position: -184px -20px;
+	}
+	.category-flowers-cakes-gifts{
+		background-position: -267px -182px;
+	}
+	.category-food{
+		background-position: -434px -423px;
+	}
+	.category-food-services{
+		background-position: -101px -20px;
+	}
+	.category-hobbies{
+		background-position: -184px -261px;
+	}
+	.category-home-needs{
+		background-position: -101px -100px;
+	}
+	.category-jobs-related-services{
+		background-position: -267px -341px;
+	}
+	.category-kids-baby-care{
+		background-position: -19px -261px;
+	}
+	.category-matrimonial-portals{
+		background-position: -19px -20px;
+	}
+	.category-mens-clothing{
+		background-position: -101px -182px;
+	}
+	.category-mens-footwear{
+		background-position: -184px -341px;
+	}
+	.category-online-services{
+		background-position: -19px -341px;
+	}
+	.category-other-services{
+		background-position: -267px -20px;
+	}
+	.category-pets{
+		background-position: -267px -261px;
+	}
+	.category-real-estate-services{
+		background-position: -19px -20px;
+	}
+	.category-reviews{
+		background-position: -19px -20px;
+	}
+	.category-travel{
+		background-position: -101px -423px;
+	}
+	.category-womens-clothing{
+		background-position: -19px -182px;
+	}
+	.category-womens-footwear{
+		background-position: -19px -423px;
+	}
+}
+
 .wishradioFooter{
 	padding:28px;
 	height: 110px;
