@@ -111,6 +111,20 @@
     {% include "includes/header.html" %}
 {% endnevercache %}
 
+{% nevercache %}
+<div class="container">
+    <div class="row">
+        <div class="offset1 span10">
+            {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}" data-alert="alert">
+                <a class="close" href="#" onclick="$(this).parent().fadeOut('fast'); return false;">x</a>{{ message }}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endnevercache %}
+
 <div class="container">
     <div class="row">
         <div class="offset1 span10">
