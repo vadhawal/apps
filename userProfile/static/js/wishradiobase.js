@@ -449,6 +449,24 @@ var suggest_store_handler = function(event) {
     return false;  
 }
 
+var contact_us_handler = function(event) {
+    var $elementClicked = $(this);
+    $elementClicked.addClass('opened');
+    var $url =  $elementClicked.data("href");
+    var afterShowCallback = function() {
+                                var $suggestFormContainer = $('.fancybox-inner').find('.contactForm');
+                                if($suggestFormContainer.length > 0) {
+                                    $suggestFormContainer.on('submit', {action_url: $url}, suggest_form_submit_handler);
+                                }
+                            };
+    var afterCloseCallback = function () {
+        $('.contactUs').removeClass('opened');
+    }
+
+    doOpenUrlWithAjaxFancyBox($url, afterShowCallback, 'no', afterCloseCallback);
+    return false;  
+}
+
 var suggest_form_submit_handler = function(event) {
     var $form = $(this);
     var $action_url = event.data.action_url;
@@ -469,7 +487,12 @@ var suggest_form_submit_handler = function(event) {
                     $.fancybox.close();
                 }, 3000);
             }
-            $('.suggestStore').removeClass('opened');
+            if($('.suggestStore').hasClass('opened')) {
+                $('.suggestStore').removeClass('opened');
+            }
+            if($('.contactUs').hasClass('opened')) {
+                $('.contactUs').removeClass('opened');
+            }
             $('.fancybox-inner img.loader').addClass("hide");
             $('.fancybox-inner input[type=submit]').removeClass("hide");
         },
@@ -507,5 +530,7 @@ $(document).ready(function() {
     });
     $('.doLogin').on('click', login_handler);
     $('.suggestStore').on('click', suggest_store_handler);
+    $('.contactUs').on('click', contact_us_handler);
+
 });
 

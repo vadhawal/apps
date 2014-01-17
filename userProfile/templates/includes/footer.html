@@ -1,4 +1,4 @@
-{% load i18n static %}
+{% load i18n static future %}
 
 <div class="greyBackground">
     <div class="container wishradioFooter fontTitillium fontSize15">
@@ -22,8 +22,9 @@
                         </div>
                         <div class="row topHalfGutter">
                             <div class="span3_5">
+                                {% url 'contact_us' as shopTalkUrl %}
                                 <button class="footerElementHeight fontTitillium pagination-left makeButton colorWhite">
-                                    {% trans "CONTACT Wish Radio" %}
+                                     <a class="colorWhite contactUs" href="javascript:void(0);" data-href="{{shopTalkUrl}}">{% trans "CONTACT Wish Radio" %}</a>
                                 </button>
                             </div>
                         </div>

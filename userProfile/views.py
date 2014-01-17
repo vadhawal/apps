@@ -42,7 +42,7 @@ from django.core.urlresolvers import reverse
 import StringIO
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.views.decorators.csrf import csrf_exempt
-from userProfile.forms import SuggestStoreForm
+from userProfile.forms import SuggestStoreForm, ContactUsForm
 
 def json_error_response(error_codes):
     return HttpResponse(simplejson.dumps(dict(success=False,
@@ -1144,10 +1144,10 @@ def suggest_store(request, template="blog/suggest_store.html"):
 				return HttpResponse(data, **response_kwargs)
 		else:
 			form = SuggestStoreForm()
-			#if request.user.is_authenticated:
-			#	form.fields['email_from'].initial = request.user.email
-			#else:
-			form.fields['email_from'].initial = settings.DEFAULT_FROM_EMAIL
+			if request.user.is_authenticated:
+				form.fields['email_from'].initial = request.user.email
+			else:
+				form.fields['email_from'].initial = settings.DEFAULT_FROM_EMAIL
 			form.fields['email_subject'].initial = settings.SUGGEST_STORE_EMAIL_SUBJECT
 			form.fields['email_from'].label = ''
 			form.fields['email_subject'].label = ''
@@ -1161,4 +1161,42 @@ def suggest_store(request, template="blog/suggest_store.html"):
 	else:
 		raise Http404()
 
-	
+def contact_us(request, template="generic/contact_us.html"):
+	if request.is_ajax():
+		if request.method == 'POST':
+			form = ContactUsForm(request.POST)
+			if form.is_valid():
+				data = json.dumps({'success':True})
+				response_kwargs = {"content_type": 'application/json'}
+				email_from = form.cleaned_data['email_from']
+				email_to = settings.CONTACT_US_EMAIL_TO
+				subject = form.cleaned_data['email_subject']
+				message = form.cleaned_data['email_message']
+				sender_email = "Anonymous"
+				if request.user.is_authenticated(): 
+					sender_email = request.user.email
+
+				context = {
+					"message": message,
+					"request": request,
+					"from_email": sender_email
+				}
+				if email_to and email_from:
+					send_mail_template(subject, "email/contact_us", email_from,
+						email_to, context, fail_silently=settings.DEBUG)
+
+				return HttpResponse(data, **response_kwargs)
+			elif form.errors:
+				data = json.dumps(form.errors)
+				response_kwargs = {"content_type": 'application/json', "status": 400}
+				return HttpResponse(data, **response_kwargs)
+		else:
+			form = ContactUsForm()
+			if request.user.is_authenticated:
+				form.fields['email_from'].initial = request.user.email
+
+			context = {"form": form, "action_url": reverse("contact_us")}
+			response = render(request, template, context)
+			return response
+	else:
+		raise Http404()
