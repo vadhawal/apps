@@ -1144,7 +1144,7 @@ def suggest_store(request, template="blog/suggest_store.html"):
 				return HttpResponse(data, **response_kwargs)
 		else:
 			form = SuggestStoreForm()
-			if request.user.is_authenticated:
+			if request.user.is_authenticated():
 				form.fields['email_from'].initial = request.user.email
 			else:
 				form.fields['email_from'].initial = settings.DEFAULT_FROM_EMAIL
@@ -1192,7 +1192,7 @@ def contact_us(request, template="generic/contact_us.html"):
 				return HttpResponse(data, **response_kwargs)
 		else:
 			form = ContactUsForm()
-			if request.user.is_authenticated:
+			if request.user.is_authenticated():
 				form.fields['email_from'].initial = request.user.email
 
 			context = {"form": form, "action_url": reverse("contact_us")}
