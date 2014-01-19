@@ -9,8 +9,8 @@
     	{% include 'generic/includes/render_voting.html' with object=comment %}
     	{% get_share_count comment as share_count %}
     	{% get_share_object_url comment as share_comment_url %}
-		<a href="javascript:void(0)" data-href="{{share_comment_url}}" class="shareObject">Share</a>
-		{% broadcasters_for_object comment as broadcasters_url %}
+		<a href="javascript:void(0);" data-href="{{share_comment_url}}" class="shareObject">Share</a>
+		{% broadcasters_chunk_for_object comment 0 'MIN_FOLLOWERS_CHUNK'|settings_value as broadcasters_url %}
 		<a class="store_sharers broadcasters sharedCount" href="{{broadcasters_url}}">({{share_count}})</a>
 		{% include 'actstream/render_comment_text.html' with object=comment %}
     </span>

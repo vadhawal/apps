@@ -9,14 +9,14 @@
     <span class="radioModuleFeedContainer fontTitillium1 fontSize12">
     	<a href="javascript:void(0)">{% trans "Views" %} ({% get_hit_count for blog_post %})</a>
     	<a href='{% if wholeReviewLink == "True" %}{{ blog_post.get_absolute_url }}#comments{% else %}#comments{% endif %}' style="margin-right:0px;">{% trans "Reviews" %}</a>
-        {% get_range_commenters_url blog_post 0 5 as commenters_url %}
+        {% get_range_commenters_url blog_post 0 10 as commenters_url %}
 
         <a class="broadcasters commentCount" href="{{commenters_url}}" style="margin-left:0px;">({{blog_post.comments_count}})</a>
 
 		{% get_share_count blog_post as share_count %}
         {% get_share_object_url blog_post as share_store_url %}
 		<a href="#" data-href="{{share_store_url}}" class="shareObject">{% trans "Share" %}</a>
-		{% broadcasters_for_object blog_post as broadcasters_url %}
+		{% broadcasters_chunk_for_object blog_post 0 'MIN_FOLLOWERS_CHUNK'|settings_value as broadcasters_url %}
 		<a class="store_sharers sharedCount" href="{{broadcasters_url}}" data-href="#">({{share_count}})</a>
 
         <span>{% trans "Followers" %}</span>

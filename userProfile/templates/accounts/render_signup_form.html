@@ -42,6 +42,7 @@
 							</span>
 
 						{% elif field.label == form.birthday.label %}
+							{{field.label_tag}}
 							{% include 'accounts/render_birthday.html' %}
 							<div style="display:none;">
 								{{field}}

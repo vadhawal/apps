@@ -1098,6 +1098,10 @@ select.signUptextField{
 	display: inline;
 	margin-right: 10px;
 }
+.accountForm label[for=id_birthday] {
+	display: inline;
+	margin-right: 8px;	
+}
 .timestamp{
 	line-height: normal;
 	margin-top: 6px;
