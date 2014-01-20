@@ -194,3 +194,31 @@ div.input_id_shop_again_0 span.label_text.error:before{
 div.error, span.error{
 	border-width: 0px !important;
 }
+
+
+.vendorLogoImage {
+	max-width: 140px;
+}
+
+.vendorLogoImage img {
+	max-width: 132px;
+}
+
+@media (min-width: 1200px) {
+	.vendorLogoImage {
+		max-width: 170px;
+	}
+
+	.vendorLogoImage img {
+		max-width: 162px;
+	}
+}
+
+@media (max-width: 979px) and (min-width: 768px) {
+	.vendorLogoImage {
+		max-width: 104px;
+	}
+	.vendorLogoImage img {
+		max-width: 96px;
+	}
+}
