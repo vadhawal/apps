@@ -29,13 +29,7 @@
         {% endif %}
     {% else %}
         {% if request.user.is_authenticated %}
-            {% for sa in request.user.social_auth.all %}
-                {% if sa.provider == "facebook" %}
-                    <a id="sendInvitesFB" class="makeButton colorWhite greyBackground pull-right" href="#" >{% trans "Invite Friends" %}</a>
-                {% elif sa.provider == "twitter" %}
-                    <!-- TBD for twitter/google -->
-                {% endif %}
-            {% endfor %}
+            <a id="sendInvitesFB" class="makeButton colorWhite greyBackground pull-right" href="#" >{% trans "Invite Friends" %}</a>
         {% endif %}
     {% endif %}
 </div>

@@ -128,7 +128,7 @@
                 </select>
             </div>
             <div id="accordion-container">
-            <h2 class="accordion-header accordion-header-color-2"><span class="hotDealsIcon">%&nbsp;</span>{{ blog_post.title|upper }} {% trans "DEALS" %}
+            <h2 class="accordion-header accordion-header-color-2"><span class="hotDealsIcon">%&nbsp;</span>{{ blog_post.title|title }} {% trans "Deals" %}
                 <div class="yellowLineContainer">
                     <hr class="whiteLine"/>
                 </div>
@@ -138,7 +138,7 @@
                     {% render_deals_for_stores blog_post.id 'All' 'MIN_DEALS_HOME_PAGE'|settings_value 'vertical' %}
                 </div>
             </div> 
-            <h2 class="accordion-header accordion-header-color-1"><img src="{% static "img/top_stores_white.png" %}"> {% trans "RELATED STORES" %}
+            <h2 class="accordion-header accordion-header-color-1"><img src="{% static "img/top_stores_white.png" %}"> {% trans "Related Stores" %}
                 <div class="yellowLineContainer">
                     <hr class="whiteLine"/>
                 </div>

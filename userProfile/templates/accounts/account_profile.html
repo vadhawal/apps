@@ -170,7 +170,7 @@ function feedUpdater() {
         <div id="accordion-container">
             {% get_owned_blog profile_user as blog %}
             {% if blog %}
-            <h2 class="accordion-header accordion-header-color-4"><span class="hotDealsIcon">%&nbsp;</span>{{ blog.title|upper }} {% trans "DEALS" %}
+            <h2 class="accordion-header accordion-header-color-4"><span class="hotDealsIcon">%&nbsp;</span>{{ blog.title|title }} {% trans "Deals" %}
                 <div class="yellowLineContainer">
                     <hr class="whiteLine"/>
                 </div>
