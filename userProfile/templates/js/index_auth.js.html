@@ -116,6 +116,8 @@ $(document).ready(function() {
         $('#broadcast').ajaxForm({
             beforeSend: function() {
                 //$('.progress').toggle();
+                $('#submitwithurl').attr("disabled", true);
+                $('#submitwithouturl').attr("disabled", true);
                 $('.progress').hide(); 
                 status.empty();
                 var percentVal = '0%';
@@ -146,6 +148,13 @@ $(document).ready(function() {
                 }
                 else
                     doHandleBroadcastFormError(ret_data);
+
+                $('#submitwithurl').removeAttr("disabled");
+                $('#submitwithouturl').removeAttr("disabled");
+            },
+            error: function(xhr) {
+                $('#submitwithurl').removeAttr("disabled");
+                $('#submitwithouturl').removeAttr("disabled");
             }
         }); 
 

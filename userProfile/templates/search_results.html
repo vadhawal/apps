@@ -30,10 +30,11 @@
 		<div class="row greyBar height26 colorWhite fontTitillium2 fontSize13">
 			<div class="span7 halfGutter">
 				<span class="fontSize16 fontHelvetica">
-					You searched for: {{ query }}
+					{{ query }}
 				</span>
 			</div>
 		</div>
+		{% if results.object_list %}
 		<div class="row yellowBar height26auto color5D fontTitillium2 fontSize13 topHalfGutter">
 			<div class="span7 halfGutter searchFilter"><span class="fontTitillium1">{% trans "Filter By"%}</span>					
 				<label for="price"><input type="checkbox" value="price" name="price"></input>{% trans "Price" %}</label>
@@ -45,6 +46,8 @@
 				<button id="searchResultFilter" class="fontTitillium1 fontSize13">{% trans "Go" %}</button>
 			</div>
 		</div>
+		{% endif %}
+		{% if results.object_list %}
 		<div class="row">
 			<div class="whiteBox topHalfGutter">
 				<div id="search-results"  class="span7">
@@ -91,10 +94,22 @@
 				</div>
 			</div>
 		</div>
+		{% else %}
+		<div class="row yellowBar height26auto color5D fontTitillium1 fontSize13 topHalfGutter" style="line-height:20px;">
+			<div class="span7 halfGutter topHalfGutter bottomHalfGutter searchFilter"><span>
+					Oops, your search did not yield any results. Could we suggest you try again using another keyword, because there is a 90.45% chance that we'll find a store that has what you're looking for.</span>
+			</div>
+			<div class="halfGutter"><ul class="noGutter">Suggestions
+			<li class="halfGutter">Make sure all words are spelled correctly</li>
+			<li class="halfGutter">Try different keywords</li>
+			<li class="halfGutter">Try more general keywords</li></ul></div>
+			<div class="halfGutter topHalfGutter bottomHalfGutter">You could also search using our category dropdown menu.</div>
+		</div>
+		{% endif %}
 	</div>
 	<div class="span3 whiteBox">
     	<div id="accordion-container">
-            <h2 class="accordion-header"><span class="hotDealsIcon">%&nbsp;</span>{% trans "TOP DEALS" %}
+            <h2 class="accordion-header"><span class="hotDealsIcon">%&nbsp;</span>{% trans "Top Deals" %}
                 <div class="yellowLineContainer">
                     <hr class="whiteLine"/>
                 </div>
@@ -108,7 +123,8 @@
 	</div>
 </div>
 
-
+<div class="row">
 {% pagination_for results %}
+</div>
 
 {% endblock %}

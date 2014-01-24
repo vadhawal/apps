@@ -109,9 +109,9 @@ $(document).ready(function() {
 
         if (sub_category_slug != disabled_sub_category_slug && disabled_parent_category_slug != parent_category_slug) {
             if(parent_category_slug && sub_category_slug)
-                var url = "/getvendors/"+parent_category_slug+"/"+sub_category_slug+"/";
+                var url = "/stores/"+parent_category_slug+"/"+sub_category_slug+"/";
             else if(parent_category_slug && !sub_category_slug)
-                var url = "/getvendors/"+parent_category_slug+"/all/";
+                var url = "/stores/"+parent_category_slug+"/all/";
             document.location.href = url;
         } 
         if ( sub_category_slug == disabled_sub_category_slug ) {

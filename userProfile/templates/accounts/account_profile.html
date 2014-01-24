@@ -7,7 +7,7 @@
 {% load follow_tags %}
 {% load thumbnail %}
 
-{% block meta_title %}{{ profile_user.username }}{% endblock %}
+{% block meta_title %}{{ profile_user.first_name|title }} {{ profile_user.last_name|title }}  {% endblock %}
 {% block title %}{{ profile_user.username }} | Wishradio{% endblock %}
 {% block body_id %}account{% endblock %}
 
@@ -161,7 +161,7 @@ function feedUpdater() {
             </div>
         </div>
         <div class="row">
-            <div class="whiteBox">
+            <div class="whiteBox" style="border-top-width:0px;">
                 {% include 'accounts/account_profile_details.html'  with profile_user=profile_user %}
             </div>
         </div>
@@ -170,7 +170,7 @@ function feedUpdater() {
         <div id="accordion-container">
             {% get_owned_blog profile_user as blog %}
             {% if blog %}
-            <h2 class="accordion-header accordion-header-color-4"><span class="hotDealsIcon">%&nbsp;</span>{{ blog.title|upper }} {% trans "DEALS" %}
+            <h2 class="accordion-header accordion-header-color-4"><span class="hotDealsIcon">%&nbsp;</span>{{ blog.title|title }} {% trans "Deals" %}
                 <div class="yellowLineContainer">
                     <hr class="whiteLine"/>
                 </div>

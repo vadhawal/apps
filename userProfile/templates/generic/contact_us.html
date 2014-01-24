@@ -1,0 +1,16 @@
+{% load mezzanine_tags i18n widget_tweaks static %}
+<div class="message fontSize16 fontTitillium1 hide">
+<p class="radioColor pagination-centered">Thank you so much!</p>
+<p class="color5D fontSize13">We'll get to work resolving your query now.</p>
+</div>
+
+
+<form style="position:relative;" method="post"{% if form.is_multipart %} enctype="multipart/form-data"{% endif %} action="{{action_url}}" class="contactForm topHalfGutter">
+    {% for field in form %}
+    	{% render_field field placeholder=field.label class="textField pull-left" %}
+    	<div>
+    	</div>
+    {% endfor %}
+    <input class="makeYellowButton fontTitillium radioColor fontSize15 halfGutter pull-right" style="margin-top:-6px;padding-left:20px;padding-right:20px;" type="submit" value="Go">
+    <img class="halfGutter noBoxShadow hide loader pull-right" style="height:20px;margin-right:18px;" src="{% static "img/loading.gif" %}"/>
+</form>

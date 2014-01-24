@@ -242,7 +242,6 @@ a.colorWhite:hover{
 	width: 32px;
 	height: 32px;
 	display: inline-block;
-	margin-top: 5px;
 	margin-left: 10px;
 }
 .facebookLogin{
@@ -251,23 +250,21 @@ a.colorWhite:hover{
 	background-repeat: no-repeat;
 }
 .pinterest{
-	background-color: white;
 	background-image: url("/static/img/pinterest.png");
 	background-size: 32px 32px;
 	background-repeat: no-repeat;
 }
 .googleLogin{
 	background-image: url("/static/img/google.png");
-	background-size: 30px 30px;
+	background-size: 32px 32px;
 	background-repeat: no-repeat;
-	background-position: -5px -5px;
 }
-.googleLogin:hover{
+/*.googleLogin:hover{
 	background-image: url("/static/img/google_hover.png");
 }
 .googleLogin:active{
 	background-image: url("/static/img/google_pressed.png");
-}
+}*/
 .twitterLogin{
 	background-image: url("/static/img/twitter.png");
 	background-size: 32px 32px;
@@ -979,7 +976,7 @@ input[type="submit"].loginSubmit{
 .accountForm input.textField{
 	width: 363px;
 	height: 23px;
-	font-family: fontTitillium2, Georgia;
+	font-family: titillium2, Georgia;
     font-size: 13px;
     padding: 0px 6px;
     /*font-style: italic;*/
@@ -1019,10 +1016,11 @@ input[type="password"].signUptextField{
 }
 .accountForm input[type="file"].signUptextField {
 	display: inline;
-	width: 75px;
+	width: 77px;
 	-webkit-box-shadow:none;
 	box-shadow:none;
 	outline: 0;
+	line-height: 23px;
 }
 .accountForm ul {
 	list-style: none;
@@ -1030,7 +1028,7 @@ input[type="password"].signUptextField{
 }
 .accountForm output:before {
 	content: 'Profile Photo';
-	font-family: titillum1;
+	font-family: titillium1;
 	color: #B5B4B3;
 }
 .accountForm output{
@@ -1097,6 +1095,10 @@ select.signUptextField{
 .accountForm label[for=id_gender], .accountForm label[for=id_profile_photo] , .accountForm label[for=id_location] {
 	display: inline;
 	margin-right: 10px;
+}
+.accountForm label[for=id_birthday] {
+	display: inline;
+	margin-right: 8px;	
 }
 .timestamp{
 	line-height: normal;
@@ -1195,7 +1197,7 @@ textarea:focus, input[type=text]:focus{
 .suggestForm input.textField{
 	width: 180px;
 	height: 23px;
-	font-family: fontTitillium2, Georgia;
+	font-family: titillium2, Georgia;
     font-size: 13px;
     padding: 0px 6px;
     /*font-style: italic;*/
@@ -1521,4 +1523,7 @@ form input.error.signUptextField + div{
 	height: 15px;
 	left: -20px;
 	top: 2px;	
+}
+input[disabled] {
+	background-color: transparent;
 }

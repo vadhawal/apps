@@ -30,7 +30,7 @@ function updateCheckBoxes () {
 function updateSearchCategory () {
 	var pathstr = window.location.pathname;
 	var patharr = pathstr.split ("/");
-	if (patharr[1].toLowerCase() == "getvendors") {
+	if (patharr[1].toLowerCase() == "stores") {
 		var parentCategory = decodeURIComponent(patharr[2]);
 		var subCategory = decodeURIComponent(patharr[3]);
 		var parentSelect = $(".blog_parentcategories");

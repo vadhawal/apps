@@ -3,7 +3,7 @@
 
 <div class="row">
 	<div class="offset3 span4 fontTitillium1 fontSize13 color5D" style="line-height:25px;">
-		<form class="accountForm" method="post" {% if form.is_multipart %} enctype="multipart/form-data"{% endif %} >
+		<form class="accountForm signUpForm" method="post" {% if form.is_multipart %} enctype="multipart/form-data"{% endif %} >
 			{% csrf_token %}
 		   	{% for field in form %}
 		   		{% if field.label != form.description.label %}
@@ -40,6 +40,13 @@
 									{% render_field field class="textField smallTextField" %}
 								{% endif %}
 							</span>
+
+						{% elif field.label == form.birthday.label %}
+							{{field.label_tag}}
+							{% include 'accounts/render_birthday.html' %}
+							<div style="display:none;">
+								{{field}}
+							</div>
 						{% else %}
 							{% if field.errors %}
 								{% render_field field placeholder=field.label class="textField error signUptextField" %}

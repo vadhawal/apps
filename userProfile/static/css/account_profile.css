@@ -33,3 +33,30 @@ a.owned_store:hover{
 .profileIntro:hover .radioModuleFeedRadio {
 	background-image: url('/static/img/radio_green.png');
 }
+
+.profilePicture {
+	max-width: 140px;
+}
+
+.profilePicture img {
+	max-width: 132px;
+}
+
+@media (min-width: 1200px) {
+	.profilePicture {
+		max-width: 170px;
+	}
+
+	.profilePicture img {
+		max-width: 162px;
+	}
+}
+
+@media (max-width: 979px) and (min-width: 768px) {
+	.profilePicture {
+		max-width: 104px;
+	}
+	.profilePicture img {
+		max-width: 96px;
+	}
+}

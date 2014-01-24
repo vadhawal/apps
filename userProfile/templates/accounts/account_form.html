@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load i18n mezzanine_tags %}
+{% load i18n static mezzanine_tags %}
 
 {% block meta_title %}{{ title }}{% endblock %}
 {% block title %}{{ title }}{% endblock %}
@@ -7,6 +7,7 @@
 
 {% block extra_js %}
 {% compress js %}
+<script src="{% static "js/dateSelectBoxes.js" %}"></script>
 <script type="text/javascript">
     $(document).ready(
     	function () {
@@ -37,16 +38,50 @@
          $('#id_profile_photo').change(handleFileSelect);
     });
     $(document).ready(function(event){
-        $('.updateProfile').on('click', function(event){
+        function pad(n) {
+          return (parseInt(n) < 10) ? ("0" + n) : n;
+        }
+
+        var populate_birthday_handler = function() {
+            var $birthday = $('#id_birthday').val();
+            if($birthday) {
+              var $yyyymmdd = $birthday.split('-');
+              var yyyy = $yyyymmdd[0];
+              var mm = $yyyymmdd[1].replace(/^0+/, '');
+              var dd = $yyyymmdd[2].replace(/^0+/, '');
+              $('#birthYear option[value="' + yyyy +'"]').attr("selected", "selected");
+              $('#birthYear').trigger('change');
+              $('#birthMonth option[value="' + mm +'"]').attr("selected", "selected");
+              $('#birthMonth').trigger('change');
+              $('#birthDay option[value="' + dd +'"]').attr("selected", "selected");
+              $('#birthDay').trigger('change');
+            }
+        };
+
+        $('.signUpForm').on('submit', function(event){
             var $this = $(this);
               if($('#profile_image_preview').is(':hidden')){
                   $('#profile_photo-clear_id').attr('checked','checked');
                   var $fileInput = $('#id_profile_photo');
                   $fileInput.replaceWith( $fileInput = $fileInput.clone( true )); 
               }
+              var yyyymmdd = new Array();
+              var yyyy = $('#birthYear').find(":selected").val();
+              yyyymmdd.push(yyyy);
+              var mm = pad($('#birthMonth').find(":selected").val());
+              yyyymmdd.push(mm);
+              var dd = pad($('#birthDay').find(":selected").val());
+              yyyymmdd.push(dd);
+              var $yyyymmdd = yyyymmdd.join('-');
+              $('#id_birthday').val($yyyymmdd); 
+
+              $this.off('submit');
               $this.submit();
         });
-    })
+
+        $().dateSelectBoxes($('#birthMonth'),$('#birthDay'),$('#birthYear'),true);
+        populate_birthday_handler();
+    });
 </script>
 {% endcompress %}
 {% endblock %}
