@@ -22,6 +22,7 @@ from mezzanine.generic.models import Review
 from mezzanine.generic.models import ThreadedComment, RequiredReviewRating, OptionalReviewRating
 from mezzanine.utils.views import paginate
 from mezzanine.utils.email import send_mail_template
+from mezzanine.generic.models import Keyword
 
 from actstream import models
 from actstream.models import Action
@@ -1198,5 +1199,18 @@ def contact_us(request, template="generic/contact_us.html"):
 			context = {"form": form, "action_url": reverse("contact_us")}
 			response = render(request, template, context)
 			return response
+	else:
+		raise Http404()
+
+def autocomplete(request):
+	if request.is_ajax():
+		query = request.GET.get('query', '')
+		title_regex = r'(' + query +')'
+		keywords = Keyword.objects.filter(title__regex=title_regex).values_list('title', flat=True)
+		context = {
+					'query':	query,
+					'suggestions': list(keywords)
+				}
+		return HttpResponse(json.dumps(context), 'application/json')
 	else:
 		raise Http404()
