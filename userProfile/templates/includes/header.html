@@ -18,7 +18,7 @@
                             {% url 'getShopTalk' as shopTalkUrl %}
                             <a href="{{shopTalkUrl}}" class="halfGutter fontTitillium2 shopTalk {% if request.path == shopTalkUrl %} shopTalkSelected radioColor{% else %}color5D{% endif %} fontSize14">
                                 <img class="noBoxShadow" style="max-width:20px;max-height:18px;" src="{% static "img/1transparent.png"%}">
-                                {% trans "SHOP TALK" %}
+                                {% trans "ACTIVITY" %}
                             </a>
                         {% endif %}
                     </div>
