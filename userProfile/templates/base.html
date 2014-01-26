@@ -106,9 +106,7 @@
                         minChars:2,
                         width: $('.search-query').width(),
                         noCache: false,
-                        onSelect: function(value, data) {
-                                        $('.search-query').focus();
-                                    }};
+                        deferRequestBy:150};
            $('.search-query').autocomplete(options);
         });
     });
