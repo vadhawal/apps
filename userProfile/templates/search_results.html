@@ -76,7 +76,7 @@
 						    <div class="row">
 								<div class="span5">
 								    <p class="resultDesc">{{ result.content|truncatewords:200|safe }}</p>
-								    <a class="radioColor" href="{{ result.get_absolute_url }}">{% trans "More..." %}</a>
+								    <a class="radioColor" href="{{ result.get_absolute_url }}">{% trans "Read more" %}</a>
 							    	<div class="row topHalfGutter bottomHalfGutter">
 										{% include 'blog/store_radio_module.html' with blog_post=result noShare="True" wholeReviewLink="True" %}
 									</div>
