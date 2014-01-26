@@ -49,19 +49,23 @@
                     <hr class="whiteLine"/>
                 </div>
             </h2>
-			<div class="accordion-content">
+			<div class="accordion-content" style="position:relative;">
 			    <div id="topDealsForStoreCategoryAuth">
             		{% render_deals_for_categories 'All' 'All'  'MIN_DEALS_HOME_PAGE'|settings_value 'vertical' %}
         		</div>
+                <div class="">
+                </div>
 			</div>
 			<h2 class="accordion-header accordion-header-color-2"><img src="{% static "img/top_stores_white.png" %}">{% trans " Top Stores" %}
                 <div class="yellowLineContainer">
                     <hr class="whiteLine"/>
                 </div>
             </h2>
-			<div class="accordion-content">
+			<div class="accordion-content" style="position:relative;">
 			    <div id="topStoresForStoreCategoryAuth">
                         {% render_stores_for_categories 'All' 'All' 'MIN_STORES_HOME_PAGE'|settings_value 'vertical' %}
+                </div>
+                <div class="">
                 </div>
 			</div>
 			<h2 class="accordion-header accordion-header-color-1"><img src="{% static "img/store_reviews_white.png" %}">{% trans " Store Reviews" %}
@@ -69,9 +73,11 @@
                     <hr class="whiteLine"/>
                 </div>
             </h2>
-			<div class="accordion-content"> 
+			<div class="accordion-content" style="position:relative;"> 
                 <div id="topReviewsForStoreCategoryAuth">
                     {% render_reviews_for_categories 'All' 'All' 'MIN_REVIEWS_HOME_PAGE'|settings_value 'vertical' %}
+                </div>
+                <div class="">
                 </div>
 			</div>
 		</div>

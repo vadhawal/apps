@@ -6,6 +6,7 @@ var get_trending_deals_handler_auth = function(parent_category, sub_category)
 	if ($scrollContainer && $scrollContainer.hasClass('mCustomScrollbar')) { 
 		$scrollContainer.mCustomScrollbar("scrollTo","top");
 	}
+    $element.next().addClass("overlay");
     $.get($url, {}, function(data) {
     		if(data.success === true) {
                 var $data_container = $scrollContainer.find('.mCSB_container');
@@ -27,6 +28,7 @@ var get_trending_deals_handler_auth = function(parent_category, sub_category)
 	        } else {
 				$scrollContainer.removeAttr("data-href");
 	        }
+            $element.next().removeClass("overlay");
        });
     return false;
 }
@@ -47,6 +49,7 @@ var get_top_stores_handler_auth = function(parent_category, sub_category)
     	$scrollContainer.mCustomScrollbar("scrollTo","top");
     }
     var $url = '/' + parent_category + '/'+ sub_category + '/trendingstores/0/15/?v=1';
+    $element.next().addClass("overlay");
     $.get($url, {}, function(data) {
     	if(data.success === true) {
             var $data_container = $scrollContainer.find('.mCSB_container');
@@ -60,6 +63,7 @@ var get_top_stores_handler_auth = function(parent_category, sub_category)
     	} else {
     		$scrollContainer.removeAttr("data-href");
     	}
+        $element.next().removeClass("overlay");
     });
    	return false;
 }
@@ -80,6 +84,7 @@ var get_top_reviews_handler_auth = function(parent_category, sub_category)
     	$scrollContainer.mCustomScrollbar("scrollTo","top");
     }
     var $url = '/' + parent_category + '/'+ sub_category + '/trendingreviews/0/10/?v=1';
+    $element.next().addClass("overlay");
     $.get($url, {}, function(data) {
     	if(data.success === true) {
             var $data_container = $scrollContainer.find('.mCSB_container');
@@ -93,6 +98,7 @@ var get_top_reviews_handler_auth = function(parent_category, sub_category)
     	} else {
     		$scrollContainer.removeAttr("data-href");
     	}
+        $element.next().removeClass("overlay");
     });
 	return false;
 }
