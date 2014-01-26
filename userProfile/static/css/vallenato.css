@@ -57,22 +57,23 @@
 	display: none;
 	padding: 0px 6px 0px 6px;
 	background: #ffffff;
+	position: relative;
 }
 
 .accordion-header-color-1{
 	background-color:rgba(2, 151, 149, 1);
 }
 .accordion-header-color-2{
-	background-color:rgba(2, 151, 149, 0.93);
+	background-color:rgba(2, 151, 149, 0.95);
 }
 .accordion-header-color-3{
-	background-color:rgba(2, 151, 149, 0.86);
+	background-color:rgba(2, 151, 149, 0.90);
 }
 .accordion-header-color-4{
-	background-color:rgba(2, 151, 149, 0.79);
+	background-color:rgba(2, 151, 149, 0.85);
 }
 .accordion-header-color-5{
-	background-color:rgba(2, 151, 149, 0.73);
+	background-color:rgba(2, 151, 149, 0.80);
 }
 .accordion-content:last-child {
 	padding-bottom: 6px;

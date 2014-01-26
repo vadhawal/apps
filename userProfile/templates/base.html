@@ -79,6 +79,7 @@
 
 {% compress js %}
 <script src="{% static "mezzanine/js/"|add:settings.JQUERY_FILENAME %}"></script>
+<script src="{% static "js/jquery.autocomplete.js" %}"></script
 <script src="{% static "js/bootstrap.js" %}"></script>
 <script src="{% static "js/bootstrap-extras.js" %}"></script>
 <script src="{% static "js/ajax.csrf.js" %}"></script>
@@ -97,6 +98,21 @@
 <script src="{% static "js/base.js" %}"></script>
 
 {% endcompress %}
+<script type="text/javascript">
+        $(document).ready(function(){
+        var options, a;
+        $(function(){
+           options = { serviceUrl:"{% url 'autocomplete' %}",
+                        minChars:2,
+                        width: $('.search-query').width(),
+                        noCache: false,
+                        onSelect: function(value, data) {
+                                        $('.search-query').focus();
+                                    }};
+           $('.search-query').autocomplete(options);
+        });
+    });
+</script>
 {% block extra_js %}{% endblock %}
 <!--[if lt IE 9]>
 <script src="{% static "js/html5shiv.js" %}"></script>

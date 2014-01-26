@@ -49,6 +49,7 @@ button {
 body{
 	line-height: normal;
 	font-family: titillium1, helvetica;
+	color: #5D5D5D;
 }
 li{
 	line-height: normal;
@@ -327,7 +328,7 @@ input.search-query{
 	padding: 0;
 	border-radius: 0;
 	padding-left: 5px;
-	width: 100%;
+	width: 96%;
 }
 .searchOr{
 	float: left;
@@ -1526,4 +1527,44 @@ form input.error.signUptextField + div{
 }
 input[disabled] {
 	background-color: transparent;
+}
+.overlay{
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	background-color: rgba(0,0,0,0);
+	width: 100%;
+	height: 100%;
+	background-image: url('/static/img/fancybox_overlay.png'), url('/static/img/fancybox_loading.gif');
+	background-position: center;
+	background-size:auto;
+	background-repeat: repeat, no-repeat;
+}
+.autocomplete-suggestions {
+	border: 1px solid #999;
+	overflow-y: auto;
+	top:0px; left:0px;
+	margin:6px 0 0 0px; /* IE6 fix: */ _background:none; _margin:1px 0 0 0;
+}
+.autocomplete-suggestion {
+	background:rgba(229,244,244,1.00);
+	cursor:default;
+	text-align:left;
+	max-height:350px;
+	overflow:auto; /* IE6 specific: */ _height:350px;  _margin:0; _overflow-x:hidden; adding: 2px 5px;
+	white-space: nowrap;
+	overflow: hidden;
+	padding: 2px 5px;
+}
+.autocomplete-selected {
+	background:#FFFFFF;
+}
+.autocomplete-suggestion div {
+	padding:2px 5px;
+	white-space:nowrap;
+	overflow:hidden;
+}
+.autocomplete-suggestion strong {
+	font-weight:normal;
+	color:#029795;
 }

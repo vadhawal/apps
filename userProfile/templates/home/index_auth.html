@@ -17,7 +17,7 @@
                         <div class="dottedSeparator" style="margin-top:0px;margin-bottom:10px;margin-left:0px;"></div>
                         <img src="{% static "img/shopTalk.png" %}">
                         <span class="color5D">
-                            {% trans "SHOP TALK" %}
+                            {% trans "ACTIVITY" %}
                         </span>
                         <div class="dottedSeparator" style="margin-top:10px;margin-left:0px;"></div>
                     </h6>
@@ -53,6 +53,8 @@
 			    <div id="topDealsForStoreCategoryAuth">
             		{% render_deals_for_categories 'All' 'All'  'MIN_DEALS_HOME_PAGE'|settings_value 'vertical' %}
         		</div>
+                <div class="">
+                </div>
 			</div>
 			<h2 class="accordion-header accordion-header-color-2"><img src="{% static "img/top_stores_white.png" %}">{% trans " Top Stores" %}
                 <div class="yellowLineContainer">
@@ -63,6 +65,8 @@
 			    <div id="topStoresForStoreCategoryAuth">
                         {% render_stores_for_categories 'All' 'All' 'MIN_STORES_HOME_PAGE'|settings_value 'vertical' %}
                 </div>
+                <div class="">
+                </div>
 			</div>
 			<h2 class="accordion-header accordion-header-color-1"><img src="{% static "img/store_reviews_white.png" %}">{% trans " Store Reviews" %}
                 <div class="yellowLineContainer">
@@ -72,6 +76,8 @@
 			<div class="accordion-content"> 
                 <div id="topReviewsForStoreCategoryAuth">
                     {% render_reviews_for_categories 'All' 'All' 'MIN_REVIEWS_HOME_PAGE'|settings_value 'vertical' %}
+                </div>
+                <div class="">
                 </div>
 			</div>
 		</div>
