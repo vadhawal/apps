@@ -133,9 +133,11 @@
                         <hr class="whiteLine"/>
                     </div>
                 </h2>
-                <div class="accordion-content"> 
+                <div class="accordion-content">
                     <div id="topDealsForStore">
                         {% render_deals_for_stores blog_post.id 'All' 'MIN_DEALS_HOME_PAGE'|settings_value 'vertical' %}
+                    </div>
+                    <div class="">
                     </div>
                 </div> 
                 <h2 class="accordion-header accordion-header-color-1"><img src="{% static "img/top_stores_white.png" %}"> {% trans "Related Stores" %}
@@ -146,6 +148,8 @@
                 <div class="accordion-content"> 
                     <div id="topRelatedStoreForStore">
                         {% render_related_stores blog_post.id 'All' 'MIN_STORES_HOME_PAGE'|settings_value 'vertical' %}
+                    </div>
+                    <div class="">
                     </div>
                 </div> 
             </div>
