@@ -47,9 +47,11 @@
                             <hr class="yellowLine"/>
                         </div>
                     </div>
-                    <div class="whiteBox">
+                    <div class="whiteBox" style="position:relative;">
                         <div id="topStoresForStoreCategory">
                             {% render_stores_for_categories 'All' 'All' 'MIN_STORES_HOME_PAGE'|settings_value %}
+                        </div>
+                        <div class="">
                         </div>
                     </div>
                 </div>
@@ -63,9 +65,11 @@
                             <hr class="yellowLine"/>
                         </div>
                     </div>
-                    <div class="whiteBox">
+                    <div class="whiteBox" style="position:relative;">
                         <div id="topReviewsForStoreCategory">
                         {% render_reviews_for_categories 'All' 'All' 'MIN_REVIEWS_HOME_PAGE'|settings_value %}
+                        </div>
+                        <div class="">
                         </div>
                     </div>
                 </div>
@@ -82,9 +86,11 @@
                     <hr class="yellowLine"/>
                 </div>
         </div>
-        <div class="outerBox dealBox whiteBox">
+        <div class="outerBox dealBox whiteBox" style="position:relative;">
             <div id="topDealsForStoreCategory">
                 {% render_deals_for_categories 'All' 'All'  'MIN_DEALS_HOME_PAGE'|settings_value 'horizontal'%}
+            </div>
+            <div class="">
             </div>
         </div>
         <span id="wish-status" ></span>
