@@ -57,6 +57,7 @@
 	display: none;
 	padding: 0px 6px 0px 6px;
 	background: #ffffff;
+	position: relative;
 }
 
 .accordion-header-color-1{

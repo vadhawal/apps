@@ -6,6 +6,7 @@ var get_trending_deals_handler = function(parent_category, sub_category)
     if ($scrollContainer && $scrollContainer.hasClass('mCustomScrollbar')) { 
       $scrollContainer.mCustomScrollbar("scrollTo","left");
     }
+    $element.next().addClass("overlay");
     $.get($url, {}, function(data) {
           if(data.success === true) {
 			var $data_container = $scrollContainer.find('.mCSB_container');
@@ -28,6 +29,7 @@ var get_trending_deals_handler = function(parent_category, sub_category)
           } else {
               $scrollContainer.removeAttr("data-href");
           }
+          $element.next().removeClass("overlay");
        });
     return false;
 }
@@ -49,6 +51,7 @@ var get_top_stores_handler = function(parent_category, sub_category)
     }
 
     var $url = '/' + parent_category + '/'+ sub_category + '/trendingstores/0/15/';
+    $element.next().addClass("overlay");
     $.get($url, {}, function(data) {
     	if(data.success === true) {
             var $data_container = $scrollContainer.find('.mCSB_container');
@@ -61,6 +64,7 @@ var get_top_stores_handler = function(parent_category, sub_category)
     	} else {
     		$scrollContainer.removeAttr("data-href");
     	}
+        $element.next().removeClass("overlay");
     });
    	return false;
 }
@@ -81,6 +85,7 @@ var get_top_reviews_handler = function(parent_category, sub_category)
     	$scrollContainer.mCustomScrollbar("scrollTo","top");
     }
     var $url = '/' + parent_category + '/'+ sub_category + '/trendingreviews/0/10/';
+    $element.next().addClass("overlay");
     $.get($url, {}, function(data) {
     	if(data.success === true) {
             var $data_container = $scrollContainer.find('.mCSB_container');
@@ -94,6 +99,7 @@ var get_top_reviews_handler = function(parent_category, sub_category)
     	} else {
     		$scrollContainer.removeAttr("data-href");
     	}
+        $element.next().removeClass("overlay");
     });
 	return false;
 }

@@ -19,7 +19,7 @@ var get_filtered_deals_handler = function(sub_category)
     if ($scrollContainer && $scrollContainer.hasClass('mCustomScrollbar')) { 
       $scrollContainer.mCustomScrollbar("scrollTo","top");
     }
-
+    $element.next().addClass("overlay");
     $.get(new_url, {}, function(data) {
             if(data.success === true) {
                 $deal_container = $scrollContainer.find('.mCSB_container');
@@ -39,7 +39,7 @@ var get_filtered_deals_handler = function(sub_category)
             } else {
                 $scrollContainer.removeAttr("data-href");
             }
-
+        $element.next().removeClass("overlay");
        });
     return false;
 }
@@ -55,7 +55,7 @@ var get_related_stores_handler = function(sub_category)
     if ($scrollContainer && $scrollContainer.hasClass('mCustomScrollbar')) { 
       $scrollContainer.mCustomScrollbar("scrollTo","top");
     }
-
+    $element.next().addClass("overlay");
     $.get(new_url, {}, function(data) {
         if(data.success === true) {
             $deal_container = $scrollContainer.find('.mCSB_container');
@@ -64,6 +64,7 @@ var get_related_stores_handler = function(sub_category)
         } else {
             $scrollContainer.removeAttr("data-href");
         }
+        $element.next().removeClass("overlay");
     });
    	return false;
 }
