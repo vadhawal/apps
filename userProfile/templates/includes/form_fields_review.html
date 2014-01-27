@@ -85,6 +85,10 @@
                         </div>
                     </div>
                 </div>
+                <div class="fontSize15 topHalfGutter controls" style="display:table-row;">
+                    <div style="display:table-cell;" class="label_text">{% trans "Overall rating" %}</div>
+                    <div style="display:table-cell;" class="overall_value"></div>
+                </div>
                 <div class="topHalfGutter controls" style="display:table-row;">
                     <div style="display:table-cell;" class="label_text">{% trans "Price" %}</div>
                     <div style="display:table-cell;" class="price_value"></div>
@@ -104,10 +108,6 @@
                 <div class="topHalfGutter controls" style="display:table-row;">
                     <div style="display:table-cell;">{% trans "Exchange (Optional)" %}</div>
                     <div style="display:table-cell;" class="exchange_value"></div>
-                </div>
-                <div class="fontSize15 topHalfGutter controls" style="display:table-row;">
-                    <div style="display:table-cell;" class="label_text"><u>{% trans "Overall rating" %}</u></div>
-                    <div style="display:table-cell;" class="overall_value"></div>
                 </div>
             </div>
         {% elif field.label ==  form_for_fields.shop_again.label %}
