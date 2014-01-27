@@ -228,6 +228,9 @@ a.radioColorBackground:hover{
 	box-shadow : 1px 1px 1px rgba(153, 142, 126, 0.75);
 	/*filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=1, OffY=1, Color='#998E7E');*/
 }
+button.makeButton:active{
+	box-shadow : 1px 1px 1px rgba(153, 142, 126, 0.75) inset;
+}
 input[type=submit].makeYellowButton:active{
 	box-shadow : 1px 1px 1px rgba(153, 142, 126, 0.75) inset;
 }
