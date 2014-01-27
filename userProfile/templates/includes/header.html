@@ -142,29 +142,15 @@
                             {% search_form "blog.BlogPost" %}
                         </div>
                         <span class="colorWhite fontTitillium1 fontSize13 halfGutter searchOr">{% trans "or" %}</span>
-                        {% blog_parentcategories_abs as parent_categories %}
-                        {% if parent_categories %}
-                            <div class="span2 halfGutter" style="position:relative;">
-                                <select name="blog_parentcategories" class="blog_parentcategories">
-                                    <option value='empty' selected disabled>{% trans "By Category" %}</option>
-                                    <option value="all">{% trans "All" %}</option>
-                                    {% for category in parent_categories %}
-                                    <option value="{{ category }}">{{ category }}</option>
-                                    {% endfor %}
-                                </select>
-                                <div>
-                                </div>
-                            </div>
-                            <div class="span2 halfGutter" style="position:relative;">
-                                <select name="blog_subcategories" class="blog_subcategories">
-                                    <option value='empty' selected disabled>By Sub-category</option>
-                                </select>
-                                <div>
-                                </div>
-                            </div>
-                        {% endif %}
-                        <div id="getvendorsdiv" style="display:inline-block;" class="halfGutter">
-                            <a id="getvendors" href="#"></a>
+                        <div class="span4 halfGutter searchCategory" style="position:relative;display:inline-block;text-align:center;">
+                            <a class="dropdown-toggle" href="#" style="
+                                display: block;
+                                color: #333;
+                                padding: 20px 64px 20px 16px;
+                                font-family: 'Open Sans', sans-serif;
+                                font-size: 16px;
+                                font-weight: 400;
+                                text-shadow: 0 1px 0 rgba(255,255,255,0.2);">Categories</a>
                         </div>
                     </div>
                 </div>

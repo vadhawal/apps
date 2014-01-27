@@ -98,6 +98,46 @@ $(window).load(function(){
     setupCustomScrollBar($(".accordion-content").first());
 });
 
+var build_category_menu_handler = function() {
+	var ul = $("<ul/>")
+        .attr("role", "menu")
+        .addClass("dropdown-menu dropdown-menu-parent");
+
+    $.each(category_namespace.categories, function(object) {
+    	var category_li = $("<li/>").addClass("dropdown-submenu");
+	    var category_a = $("<a/>")
+	        	.html(object)
+	            .appendTo(category_li)
+	            .addClass('dropdown-parent-category')
+	    var sub_category_ul = $("<ul/>")
+        					.addClass("dropdown-menu");
+
+        category_li.append(sub_category_ul);
+
+        for(var i=0;i<this.length;i++) {
+	        var li = $("<li/>")
+	            .appendTo(sub_category_ul);
+
+	        var a = $("<a/>")
+	        	.html(this[i])
+	            .appendTo(li)
+	            .on('click', function(event){
+			        var parent_category_slug = $(this).parents('.dropdown-submenu').find('.dropdown-parent-category').text();
+			        var sub_category_slug = $(this).text();
+
+			        if(parent_category_slug && sub_category_slug) {
+			            var url = "/stores/"+parent_category_slug+"/"+sub_category_slug+"/";
+			            document.location.href = url;
+			        }
+			        return false;
+	            });
+        }
+        ul.append(category_li);
+
+    });
+    $('.searchCategory').append(ul);
+}
+
 $(document).ready(function() {
     $('#getvendors').click(function(){
         var $blog_parentcategories = $(this).parent().parent().parent().find('.blog_parentcategories');
@@ -164,4 +204,9 @@ $(document).ready(function() {
             }); */    
         }
     });
+	build_category_menu_handler();
+	$('.dropdown-toggle').on('click', function(){
+		$('.dropdown-menu-parent').toggle();//css({'display':'block'});
+		return false;
+	});
 });
