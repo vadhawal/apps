@@ -1541,10 +1541,9 @@ input[disabled] {
 	background-repeat: repeat, no-repeat;
 }
 .autocomplete-suggestions {
-	border: 1px solid #5D5D5D;
 	overflow-y: auto;
 	top:0px; left:0px;
-	margin:6px 0 0 0px; /* IE6 fix: */ _background:none; _margin:1px 0 0 0;
+	margin:0px 0 0 0px; /* IE6 fix: */ _background:none; _margin:1px 0 0 0;
 }
 .autocomplete-suggestion {
 	background:rgba(229,244,244,1.00);
