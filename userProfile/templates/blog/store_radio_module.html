@@ -22,10 +22,10 @@
         <span>{% trans "Followers" %}</span>
         {% vendor_follower_subset_info_url blog_post 0 'MIN_FOLLOWERS_CHUNK'|settings_value as subset_follower_url %}<a class="vendorFollowers" href="{{subset_follower_url}}">({{  request.user|follower_count:blog_post }})</a>
     </span>
-	<span class="vendorFollowContainer fontTitllium1 pagination-centered halfGutter fontSize13 makeYellowButton {% if request.user|is_following:blog_post %}following{% endif %}" style="margin-top:-3px;display:inline-block;" >
-		<a href="javascript:void(0)" class="follow-btn icon-follow" data-href="{% follow_url blog_post %}">{% trans "Follow" %}</a>
-
-		<a class="icon-following radioColor"><img class="noBoxShadow" src="{% static 'img/1transparent.png' %}">{% trans "Following" %}</a><a href="javascript:void(0)" class="unfollow-btn icon-unfollow radioColor" data-href="{% follow_url blog_post %}"><img class="noBoxShadow" src="{% static 'img/1transparent.png' %}">{% trans "Unfollow" %}</a>
+	<span class="vendorFollowContainer fontTitllium1 pagination-centered halfGutter fontSize13 {% if request.user|is_following:blog_post %}following{% endif %}">
+		<button class="follow-btn makeYellowButton icon-follow" data-href="{% follow_url blog_post %}">{% trans "Follow" %}</button>
+		<button class="icon-following makeYellowButton radioColor"><img class="noBoxShadow" src="{% static 'img/1transparent.png' %}">{% trans "Following" %}</button>
+        <button class="unfollow-btn icon-unfollow makeYellowButton radioColor" data-href="{% follow_url blog_post %}"><img class="noBoxShadow" src="{% static 'img/1transparent.png' %}">{% trans "Unfollow" %}</button>
 	</span>
     {% if noShare == "True" %}
     {% else %}

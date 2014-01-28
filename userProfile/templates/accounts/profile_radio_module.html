@@ -17,10 +17,10 @@
     		<a style="margin-right:10px;" class="vendorFollowers" href="{{follower_url}}">({{ profile_user.relationships.followers.count }})</a>
     </span>
     {% if request.user != profile_user %}
-        <span class="vendorFollowContainer halfGutter pagination-centered makeYellowButton {% if_relationship request.user profile_user "following" %} following {% endif_relationship %}" style="display:inline-block;margin-top:-2px;padding-left:10px;padding-right:10px;">
-            <a href="javascript:void(0)" class="follow-btn icon-follow" data-href="{{ profile_user|add_relationship_url:"following" }}">{% trans "Follow" %}</a>
-            <a class="icon-following radioColor"><img class="noBoxShadow" src="{% static 'img/1transparent.png' %}">{% trans "Following" %}</a>
-            <a href="javascript:void(0)" class="unfollow-btn icon-unfollow radioColor" data-href="{{ profile_user|remove_relationship_url:"following" }}"><img class="noBoxShadow" src="{% static 'img/1transparent.png' %}">{% trans "Unfollow" %}</a>
+        <span class="vendorFollowContainer halfGutter pagination-centered {% if_relationship request.user profile_user "following" %} following {% endif_relationship %}">
+            <button class="follow-btn makeYellowButton icon-follow" data-href="{{ profile_user|add_relationship_url:"following" }}">{% trans "Follow" %}</button>
+            <button class="icon-following makeYellowButton radioColor"><img class="noBoxShadow" src="{% static 'img/1transparent.png' %}">{% trans "Following" %}</button>
+            <button class="unfollow-btn makeYellowButton icon-unfollow radioColor" data-href="{{ profile_user|remove_relationship_url:"following" }}"><img class="noBoxShadow" src="{% static 'img/1transparent.png' %}">{% trans "Unfollow" %}</button>
         </span>
     {% endif %}
     {% if request.user != profile_user %}
