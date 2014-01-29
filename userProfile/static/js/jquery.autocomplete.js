@@ -32,7 +32,7 @@
                 createNode: function (containerClass) {
                     var div = document.createElement('div');
                     div.className = containerClass;
-                    div.style.position = 'absolute';
+                    div.style.position = 'fixed';
                     div.style.display = 'none';
                     return div;
                 }

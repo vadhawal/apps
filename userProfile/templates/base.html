@@ -79,7 +79,6 @@
 
 {% compress js %}
 <script src="{% static "mezzanine/js/"|add:settings.JQUERY_FILENAME %}"></script>
-<script src="{% static "js/jquery.autocomplete.js" %}"></script
 <script src="{% static "js/bootstrap.js" %}"></script>
 <script src="{% static "js/bootstrap-extras.js" %}"></script>
 <script src="{% static "js/ajax.csrf.js" %}"></script>
@@ -96,6 +95,8 @@
 <script src="{% static "js/action.handlers.js" %}"></script>
 <script src="{% static "js/album.handlers.js" %}"></script>
 <script src="{% static "js/base.js" %}"></script>
+<script src="{% static "js/jquery.autocomplete.js" %}"></script>
+
 
 {% endcompress %}
 <script type="text/javascript">
@@ -104,7 +105,7 @@
         $(function(){
            options = { serviceUrl:"{% url 'autocomplete' %}",
                         minChars:2,
-                        width: $('.search-query').width(),
+                        width: 'auto',
                         noCache: false,
                         deferRequestBy:150};
            $('.search-query').autocomplete(options);
