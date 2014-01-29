@@ -50,6 +50,7 @@ var manageFeedOther = function() {
 {% block main %}
 
 <div id="comments" class="row topHalfGutter">
+   <span class="fontSize20 radioColor bottomHalfGutter" style="display:inline-block;">{% trans "Reviews by" %} {{ user.get_full_name|default:user.username }}</span>
 <div class="fontTitillium1 reviewContainer color5D fontSize12">
     {% for comment in reviews.object_list %}
     {% if request.user.is_authenticated %}
