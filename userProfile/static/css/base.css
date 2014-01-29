@@ -1545,6 +1545,9 @@ textarea:focus, input[type=text]:focus{
 	left: 20px;
 	top: 5px;
 }
+form input[type=text]{
+	font-family: titllium1, helvetica;
+}
 form input.error.signUptextField + div{
 	background-image: url('/static/img/error.png');
 	background-size: 14px;
@@ -1598,4 +1601,7 @@ input[disabled] {
 .autocomplete-suggestion strong {
 	font-weight:normal;
 	color:#029795;
+}
+#id_email_message{
+	height: 60px;
 }

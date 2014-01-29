@@ -875,7 +875,8 @@ def get_reviews_by_user(request, user_id, template="generic/includes/reviews_pag
     paginated = paginate(reviews, page, per_page, max_paging_links)
 
     return render_to_response('generic/includes/reviews_page.html', {
-       'reviews': paginated, 
+       'reviews': paginated,
+       'user': user_instance
     }, context_instance=RequestContext(request))
 
 
