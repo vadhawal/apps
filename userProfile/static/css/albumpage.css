@@ -54,17 +54,24 @@ ul#image-thumbnails{
 }
 div.albumFormField {
 	margin-top: 5px;
+	position: relative;
+	float: left;
+	clear:both;
 }
 div.albumFormField label {
 	display: inline;
 }
 div.albumFormField textarea{
 	margin-top: 0px;
-	margin-left: 20px;
-	min-width: 200px;	
+	min-width: 170px;
+	width: 170px;
 }
 div.albumFormField input {
 	margin-top: 0px;
-	margin-left: 20px;
-	min-width: 200px;
+	min-width: 170px;
+	width: 170px;
+}
+div.albumFormField select{
+	min-width: 170px;
+	width: 184px;	
 }
