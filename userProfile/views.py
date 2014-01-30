@@ -1194,6 +1194,7 @@ def contact_us(request, template="generic/contact_us.html"):
 				return HttpResponse(data, **response_kwargs)
 		else:
 			form = ContactUsForm()
+			form.fields['email_message'].widget.attrs['style'] = 'resize:none;'
 			if request.user.is_authenticated():
 				form.fields['email_from'].initial = request.user.email
 
