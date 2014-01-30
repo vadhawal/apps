@@ -1,13 +1,13 @@
 {% load mezzanine_tags i18n widget_tweaks static %}
 <div class="message fontSize16 fontTitillium1 hide">
-<p class="radioColor pagination-centered">Thank you so much!</p>
-<p class="color5D fontSize13">Where would we be without all you helpful people suggesting stores that are new or missed. </p>
-<p class="color5D fontSize13">We'll get to work adding this store now.</p>
+<p class="radioColor pagination-centered">{% trans "Thank you so much!" %}</p>
+<p class="color5D fontSize13">{% trans "Where would we be without all you helpful people suggesting stores that are new or missed." %}</p>
+<p class="color5D fontSize13">{% trans "We'll get to work adding this store now." %}</p>
 </div>
 
 <div class="suggestFormPrefix fontTitillium1">
-    <p class="radioColor fontSize16" style="margin-bottom:0;">Can't find a store on Wishradio?</p>
-    <p class="color5D fontSize13" style="margin-bottom:0;">Paste the store link <span class="radioColor">below</span> and we'll ensure that we add it.</p>
+    <p class="radioColor fontSize16" style="margin-bottom:0;">{% trans "Can't find a store on Wishradio?" %}</p>
+    <p class="color5D fontSize13" style="margin-bottom:0;">{% trans "Paste the store link" %}<span class="radioColor">below</span>{% trans " and we'll ensure that we add it." %}</p>
 </div>
 
 <form style="position:relative;" method="post"{% if form.is_multipart %} enctype="multipart/form-data"{% endif %} action="{{action_url}}" class="suggestForm topHalfGutter">

@@ -225,3 +225,14 @@ div.error, span.error{
 		max-width: 96px;
 	}
 }
+#fakeselect_featured_image{
+	background-color: white;
+	background-image: url('/static/img/edit.png');
+	background-size: 15px;
+	background-repeat: no-repeat;
+	background-position: center;
+	width: 20px;
+	height: 20px;
+	border: 0;
+	padding: 0px;
+}
