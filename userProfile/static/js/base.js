@@ -100,6 +100,10 @@ $(window).load(function(){
 
 $(document).ready(function() {
     $('#getvendors').click(function(){
+        if ($('.search-query').val() != "" ) {
+            $('.searchbox').trigger("submit");
+            return false;
+        }
         var $blog_parentcategories = $(this).parent().parent().parent().find('.blog_parentcategories');
         var $subCategorySelect = $(this).parent().parent().parent().find('.blog_subcategories');
         var parent_category_slug = $blog_parentcategories.find("option:selected").text();
