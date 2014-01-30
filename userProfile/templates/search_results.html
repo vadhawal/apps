@@ -4,7 +4,7 @@
 {% load follow_tags %}
 {% load hitcount_tags %}
 {% load userProfile_tags %}
-{% block meta_title %}{% trans "Search Results" %}{% endblock %}
+{% block meta_title %}{{ query|title }}{% endblock %}
 {% block title %}{% trans "Search Results" %}{% endblock %}
 
 {% block extra_css %}
@@ -28,7 +28,7 @@
 		<div class="row greyBar height26 colorWhite fontTitillium2 fontSize13">
 			<div class="span7 halfGutter">
 				<span class="fontSize16 fontHelvetica">
-					{{ query }}
+					{{ query|title }}
 				</span>
 			</div>
 		</div>
