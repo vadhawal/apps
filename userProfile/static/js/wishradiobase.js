@@ -318,7 +318,7 @@ var doOpenUrlWithAjaxFancyBox = function(url, afterShowCallback, scroll, afterCl
         scrolling           : doScroll,
         href				: url,
         afterShow           : function() {
-                                    if(typeof afterShowCallback !== 'undefined')
+                                    if(typeof afterShowCallback !== 'undefined' && typeof afterShowCallback === "function")
                                         afterShowCallback();
                               },
         afterClose          : afterCloseCallbackImpl
