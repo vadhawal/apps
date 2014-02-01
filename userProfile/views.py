@@ -1224,3 +1224,7 @@ def privacy_policy(request, template_name='generic/privacy_policy.html'):
 def terms_and_conditions(request, template_name='generic/terms_and_conditions.html'):
 	return render_to_response(template_name, {
      }, context_instance=RequestContext(request))
+
+def about_us(request, template_name='generic/about_us.html'):
+	return render_to_response(template_name, {
+     }, context_instance=RequestContext(request))
