@@ -1216,3 +1216,11 @@ def autocomplete(request):
 		return HttpResponse(json.dumps(context), 'application/json')
 	else:
 		raise Http404()
+
+def privacy_policy(request, template_name='generic/privacy_policy.html'):
+	return render_to_response(template_name, {
+     }, context_instance=RequestContext(request))
+
+def terms_and_conditions(request, template_name='generic/terms_and_conditions.html'):
+	return render_to_response(template_name, {
+     }, context_instance=RequestContext(request))

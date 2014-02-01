@@ -242,6 +242,12 @@ input[type=submit].makeYellowButton:active{
 	background-color: #5D5D5D;
 	background-color: rgb(93,93,93);
 }
+
+.darkGreyBackground {
+	background-color: rgb(68,68,68);
+	border-top: 1px solid rgb(55,55,55);
+}
+
 a.colorWhite:hover{
 	color: white;
 	text-decoration: underline;
@@ -1522,8 +1528,12 @@ textarea:focus, input[type=text]:focus{
 .wishradioFooter{
 	padding:28px;
 	height: 110px;
-	margin-bottom: 40px;
+	/*margin-bottom: 40px;*/
 	margin-top: 30px;
+}
+.wishradioFooter2 {
+	height: 40px;
+	margin-bottom: 40px;
 }
 .footerElementHeight{
 	height: 28px;
@@ -1604,4 +1614,15 @@ input[disabled] {
 }
 #id_email_message{
 	height: 60px;
+}
+
+.footer-mid {
+margin: 20px 0 0px;
+background-color: #3D3D39;
+}
+ul#footer-links {
+	margin:10px 0px 10px 0px;
+}
+ul#footer-links li {
+	display:inline;
 }
