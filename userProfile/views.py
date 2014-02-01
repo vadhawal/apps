@@ -877,7 +877,8 @@ def get_reviews_by_user(request, user_id, template="generic/includes/reviews_pag
     paginated = paginate(reviews, page, per_page, max_paging_links)
 
     return render_to_response('generic/includes/reviews_page.html', {
-       'reviews': paginated, 
+       'reviews': paginated,
+       'user': user_instance
     }, context_instance=RequestContext(request))
 
 
@@ -1221,6 +1222,7 @@ def contact_us(request, template="generic/contact_us.html"):
 				return HttpResponse(data, **response_kwargs)
 		else:
 			form = ContactUsForm()
+			form.fields['email_message'].widget.attrs['style'] = 'resize:none;'
 			if request.user.is_authenticated():
 				form.fields['email_from'].initial = request.user.email
 
@@ -1242,3 +1244,11 @@ def autocomplete(request):
 		return HttpResponse(json.dumps(context), 'application/json')
 	else:
 		raise Http404()
+
+def privacy_policy(request, template_name='generic/privacy_policy.html'):
+	return render_to_response(template_name, {
+     }, context_instance=RequestContext(request))
+
+def terms_and_conditions(request, template_name='generic/terms_and_conditions.html'):
+	return render_to_response(template_name, {
+     }, context_instance=RequestContext(request))

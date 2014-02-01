@@ -5,8 +5,8 @@
 {% load hitcount_tags %}
 {% load userProfile_tags %}
 {% load thumbnail %}
+{% block meta_title %}{{ query|title }}{% endblock %}
 
-{% block meta_title %}{% trans "Search Results" %}{% endblock %}
 {% block title %}{% trans "Search Results" %}{% endblock %}
 
 {% block extra_css %}
@@ -30,7 +30,7 @@
 		<div class="row greyBar height26 colorWhite fontTitillium2 fontSize13">
 			<div class="span7 halfGutter">
 				<span class="fontSize16 fontHelvetica">
-					{{ query }}
+					{{ query|title }}
 				</span>
 			</div>
 		</div>
@@ -75,12 +75,12 @@
 								<div class="span6">
 							        <a class="vendorName fontTitillium" href="{{ result.get_absolute_url }}">{{ result|title }}</a>
 							        <span class="searchResultRating searchResultRatingText searchResultRatingScheme rating-{{result.overall_average|floatformat:"0"}} pull-right halfGutterRight">{{result.overall_average|floatformat:"1"}}</span>
-							        <p class="webUrl fontTitillium1"><a href="{{result.web_url}}" class="radioColor">{{result.web_url}}</a></p>
+							        <p class="webUrl fontTitillium1"><a href="{{result.web_url}}" target="_blank" class="radioColor">{{result.web_url}}</a></p>
 						    	</div>
 						    </div>
 						    <div class="row">
 								<div class="span5">
-								    <p class="resultDesc">{{ result.content|truncatewords:200|safe }}</p>
+								    <p class="resultDesc">{{ result.content|truncatechars:200|safe }}</p>
 								    <a class="radioColor" href="{{ result.get_absolute_url }}">{% trans "Read more" %}</a>
 							    	<div class="row topHalfGutter bottomHalfGutter">
 										{% include 'blog/store_radio_module.html' with blog_post=result noShare="True" wholeReviewLink="True" %}

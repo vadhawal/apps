@@ -1185,6 +1185,7 @@
 				$.get(reldata_url, {}, function(data) {
 					$('.fancybox-data').html(data);
 					install_voting_handlers($('.fancybox-data'));
+					$(".fancybox-data").find('.vendorFollowers').on("click", display_popup_handler);
 					install_share_object_handler($('.fancybox-data'));
 					install_comment_on_object_handler($('.fancybox-data'));
 					$(".fancybox-data").mCustomScrollbar({

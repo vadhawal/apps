@@ -7,6 +7,8 @@
 {% load inbox thumbnail %}
 {% load relationship_tags %}
 
+{% block meta_title %}{% trans "Review for " %}{{ blog_post|title }}{% endblock %}
+
 {% block extra_css %}
 {% compress css %}
 <link rel="stylesheet" type="text/css" href="{% static "css/store_page.css" %}"/>

@@ -318,7 +318,7 @@ var doOpenUrlWithAjaxFancyBox = function(url, afterShowCallback, scroll, afterCl
         scrolling           : doScroll,
         href				: url,
         afterShow           : function() {
-                                    if(typeof afterShowCallback !== 'undefined')
+                                    if(typeof afterShowCallback !== 'undefined' && typeof afterShowCallback === "function")
                                         afterShowCallback();
                               },
         afterClose          : afterCloseCallbackImpl
@@ -369,6 +369,7 @@ var account_form_submit_handler = function(event) {
             } else {
                 var $errors = ret_data.errors.__all__;
                 var $albumFormContainer = $('.fancybox-inner').find('.accountForm');
+                $albumFormContainer.find('.errorColor').remove();
                 $('<div/>', {
                     'class':'errorColor',
                     'html':'<span class="fontSize11" style="margin-left:20px;">'+$errors+'</span>'
