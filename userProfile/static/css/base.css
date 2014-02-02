@@ -865,8 +865,8 @@ a.shareObject {
 	width:19px;
 	height:13px;
 	line-height: 13px;
-	padding: 4px 4px 2px 4px;
-	box-sizing: border-box;
+	padding: 4px 0px 1px 5px;
+	display: inline-block;
 }
 .searchResultRatingScheme {
 	background-attachment: scroll;
