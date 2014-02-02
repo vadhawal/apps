@@ -80,8 +80,8 @@ var edit_review_handler = function(event) {
                                 value = parseInt($('[name="price_value"]').val());
                                 makeSlider($('.price_value'), $('[name="price_value"]') ,value);
 
-                                value = parseInt($('[name="variety_value"]').val());
-                                makeSlider($('.variety_value'), $('[name="variety_value"]'), value);
+                                value = parseInt($('[name="website_ex_value"]').val());
+                                makeSlider($('.website_ex_value'), $('[name="website_ex_value"]'), value);
 
                                 value = parseInt($('[name="quality_value"]').val())
                                 makeSlider($('.quality_value'), $('[name="quality_value"]'), value);
@@ -93,7 +93,8 @@ var edit_review_handler = function(event) {
                                 makeSlider($('.exchange_value'), $('[name="exchange_value"]'), value);
                             };
 
-    doOpenUrlWithAjaxFancyBox($url, afterShowCallback, 'visible');
+    var title = $(this).data('title');
+    doOpenUrlWithAjaxFancyBox($url, afterShowCallback, title, 'visible');
     return false;
 };
 
@@ -132,13 +133,14 @@ var write_review_handler = function(event) {
                                 $reviewFormContainer.submit(review_submit_handler);
                                 makeSlider($('.overall_value'), $('[name="overall_value"]'), 0);
                                 makeSlider($('.price_value'), $('[name="price_value"]'), 0);
-                                makeSlider($('.variety_value'), $('[name="variety_value"]'), 0);
+                                makeSlider($('.website_ex_value'), $('[name="website_ex_value"]'), 0);
                                 makeSlider($('.quality_value'), $('[name="quality_value"]'), 0);
                                 makeSlider($('.service_value'), $('[name="service_value"]'), 0);
                                 makeSlider($('.exchange_value'), $('[name="exchange_value"]'), 0);
                             };
 
-    doOpenUrlWithAjaxFancyBox($url, afterShowCallback, 'visible');
+    var title = $(this).data('title');
+    doOpenUrlWithAjaxFancyBox($url, afterShowCallback, title, 'visible');
     return false;
 };
 

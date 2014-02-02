@@ -56,8 +56,7 @@ input[type=submit].rateStoreNow:active {
 .ratingSeparator{
 	margin-left: 6px;
 	margin-right: 3px;
-	position: relative;
-	top: 1px;
+	vertical-align: middle;
 }
 .ratingSeparatorLess{
 	margin-right: 3px;

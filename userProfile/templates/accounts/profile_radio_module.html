@@ -9,12 +9,12 @@
     		{% trans "Views" %}&nbsp;({% get_hit_count for profile_user %})
     	</span>
     	<span style="margin-left:10px;">
-    		{% trans "Reviews" %}&nbsp;</span>{% get_reviews_by_user profile_user as totalReviews %}<a class="commentCount" href="{% url get_reviews_by_user profile_user.id %}" style="margin-left:0px;margin-right:10px;">({{totalReviews.count}})</a>
+    		{% trans "Reviews" %}&nbsp;</span>{% get_reviews_by_user profile_user as totalReviews %}<a class="commentCount" href="{% url get_reviews_by_user profile_user.id %}" style="margin-left:0px;margin-right:10px;" title="Reviews By {{profile_user.first_name|title}}" data-title="Reviews By {{profile_user.first_name|title}}">({{totalReviews.count}})</a>
 
             <span>{% trans "Followers" %}</span>
 
             {% follower_subset_url profile_user 0 10 as follower_url %}
-    		<a style="margin-right:10px;" class="vendorFollowers" href="{{follower_url}}">({{ profile_user.relationships.followers.count }})</a>
+    		<a style="margin-right:10px;" class="vendorFollowers" href="{{follower_url}}" title="People Who Follow {{profile_user.first_name|title}}" data-title="People Who Follow {{profile_user.first_name|title}}">({{ profile_user.relationships.followers.count }})</a>
     </span>
     {% if request.user != profile_user %}
         <span class="vendorFollowContainer halfGutter pagination-centered {% if_relationship request.user profile_user "following" %} following {% endif_relationship %}">

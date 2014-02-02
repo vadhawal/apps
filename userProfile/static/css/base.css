@@ -864,8 +864,9 @@ a.shareObject {
 .searchResultRatingSmall {
 	width:19px;
 	height:13px;
-	padding: 2px 3px;
-	box-sizing: border-box;
+	line-height: 13px;
+	padding: 4px 0px 1px 5px;
+	display: inline-block;
 }
 .searchResultRatingScheme {
 	background-attachment: scroll;
@@ -1612,7 +1613,7 @@ input[disabled] {
 	font-weight:normal;
 	color:#029795;
 }
-#id_email_message{
+#id_email_contact_message{
 	height: 60px;
 }
 

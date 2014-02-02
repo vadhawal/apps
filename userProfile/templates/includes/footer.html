@@ -24,7 +24,7 @@
                             <div class="span3_5">
                                 {% url 'contact_us' as shopTalkUrl %}
                                 <button class="footerElementHeight fontTitillium pagination-left makeButton colorWhite">
-                                     <a class="colorWhite contactUs" href="javascript:void(0);" data-href="{{shopTalkUrl}}">{% trans "CONTACT Wish Radio" %}</a>
+                                     <a class="colorWhite contactUs" href="javascript:void(0);" data-href="{{shopTalkUrl}}" data-title="Contact WishRadio">{% trans "CONTACT Wish Radio" %}</a>
                                 </button>
                             </div>
                         </div>
@@ -70,10 +70,11 @@
 			<div class="row">
 			    <div class="offset1 span10">
 			        <div class="row">
-			            <div class="span3_5 halfGutter">
+			            <div class="halfGutter">
 							<ul id="footer-links" class="clear">
-							    <li><a class="colorWhite" rel="nofollow" href="{% url 'privacy_policy' %}" target="_blank">Privacy Policy</a></li>
-							    <li><a class="colorWhite halfGutter" rel="nofollow" href="{% url 'terms_and_conditions' %}" target="_blank">Terms & Conditions</a></li>
+                                <li><a class="colorWhite" rel="nofollow" href="{% url 'about_us' %}" target="_blank">About Us</a></li>
+							    <li><a class="colorWhite fullGutter" rel="nofollow" href="{% url 'privacy_policy' %}" target="_blank">Privacy Policy</a></li>
+							    <li><a class="colorWhite fullGutter" rel="nofollow" href="{% url 'terms_and_conditions' %}" target="_blank">Terms & Conditions</a></li>
 							</ul>
 						</div>
 					</div>
