@@ -38,8 +38,8 @@ var openLoginForm = function($url) {
                                     $accountFormContainer.on('submit', {action_url: $url}, account_form_submit_handler);
                                 }
                             };
-
-    doOpenUrlWithAjaxFancyBox($url, afterShowCallback);
+    var title = "Login";
+    doOpenUrlWithAjaxFancyBox($url, afterShowCallback, title);
     return false;
 };
 
@@ -298,7 +298,7 @@ var doOpenUrlWithIframeFancyBox = function(url) {
     return false;
 }
 
-var doOpenUrlWithAjaxFancyBox = function(url, afterShowCallback, scroll, afterCloseCallback) {
+var doOpenUrlWithAjaxFancyBox = function(url, afterShowCallback, title, scroll, afterCloseCallback) {
     var doScroll = 'no';
     var afterCloseCallbackImpl = function() { };
     if (typeof scroll !== "undefined") {
@@ -313,15 +313,24 @@ var doOpenUrlWithAjaxFancyBox = function(url, afterShowCallback, scroll, afterCl
         hideOnContentClick  : false,
         openEffect          : 'fade',
         closeEffect         : 'fade',
-        type                :'ajax',
-        helpers             : { overlay : { locked : false } },
+        type                : 'ajax',
+        helpers             :   {  title : {
+                					type: 			'float',
+                					position : 		'bottom'
+            					},
+            					overlay : 	{ 
+            									locked : false
+            								}
+            					},
         scrolling           : doScroll,
         href				: url,
         afterShow           : function() {
                                     if(typeof afterShowCallback !== 'undefined' && typeof afterShowCallback === "function")
                                         afterShowCallback();
                               },
-        afterClose          : afterCloseCallbackImpl
+        afterClose          : afterCloseCallbackImpl,
+        'title'				: title,
+        'titleShow'      	: 'true'
         //,                
         // ajax                :   {
         //                             complete    : function(jqXHR, textStatus) {
@@ -446,7 +455,8 @@ var suggest_store_handler = function(event) {
         $('.suggestStore').removeClass('opened');
     }
 
-    doOpenUrlWithAjaxFancyBox($url, afterShowCallback, 'no', afterCloseCallback);
+    var title = $(this).data('title');
+    doOpenUrlWithAjaxFancyBox($url, afterShowCallback, title, 'no', afterCloseCallback);
     return false;  
 }
 
@@ -464,7 +474,8 @@ var contact_us_handler = function(event) {
         $('.contactUs').removeClass('opened');
     }
 
-    doOpenUrlWithAjaxFancyBox($url, afterShowCallback, 'no', afterCloseCallback);
+    var title = $(this).data('title');
+    doOpenUrlWithAjaxFancyBox($url, afterShowCallback, title, 'no', afterCloseCallback);
     return false;  
 }
 

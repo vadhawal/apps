@@ -33,13 +33,13 @@
                 </div>
 
                 <div>
-                    <a class="infoSpace fontTitillium3 fontSize12 color5D" href="{{ object_owner.get_absolute_url }}#comments">{% spaceless %}
+                    <a class="infoSpace fontTitillium3 fontSize12 color5D" href="{{ object_owner.get_absolute_url }}#comments" title="{{object_owner.title|title}}'s Reviews" data-title="{{object_owner.title|title}}'s Reviews">{% spaceless %}
                         {% blocktrans count object_owner.comments_count as comments_count %}<span class="fontTitillium1">1</span>&nbsp;review{% plural %}<span class="fontTitillium1">{{ comments_count }}</span> reviews{% endblocktrans %}
                         {% endspaceless %}
                     </a>
                         {% vendor_follower_subset_info_url object_owner 0 request.user|follower_count:object_owner as subset_follower_url %}
                     {% with request.user|follower_count:object_owner as follower_count %}
-                        <a class="infoSpace fontTitillium3 vendorFollowers fontSize12 color5D {% if follower_count == 0 %} countZero {% endif %}" href="{{subset_follower_url}}"><span class="fontTitillium1">{{ follower_count }}</span>&nbsp;{% trans "follower" %}{{ follower_count|pluralize }}
+                        <a class="infoSpace fontTitillium3 vendorFollowers fontSize12 color5D {% if follower_count == 0 %} countZero {% endif %}" href="{{subset_follower_url}}" title="People Who Follow {{object_owner.title|title}}" data-title="People Who Follow {{object_owner.title|title}}"><span class="fontTitillium1">{{ follower_count }}</span>&nbsp;{% trans "follower" %}{{ follower_count|pluralize }}
                         </a>
                     {% endwith %}
 <!--                     <span class="infoSpace">

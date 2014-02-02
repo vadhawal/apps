@@ -20,7 +20,8 @@ var display_popup_handler = function(event) {
 								    }
 								});
 							};
-    doOpenUrlWithAjaxFancyBox($url, afterShowCallback);
+	var title = $(this).data('title');
+    doOpenUrlWithAjaxFancyBox($url, afterShowCallback, title);
     return false;
 };
 

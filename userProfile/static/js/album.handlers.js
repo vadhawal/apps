@@ -82,7 +82,8 @@ var create_album_handler = function(event) {
                                 $albumFormContainer.on('submit', album_form_submit_handler);
                             };
 
-    doOpenUrlWithAjaxFancyBox($url, afterShowCallback);
+    var title = $(this).data('title');
+    doOpenUrlWithAjaxFancyBox($url, afterShowCallback, title);
     
     event.stopPropagation();
     event.preventDefault();

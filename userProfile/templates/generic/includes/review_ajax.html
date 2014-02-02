@@ -73,8 +73,8 @@
                                                 {% endif %}
                                                 {% if request.user == comment.user %}
                                                 {% get_delete_object_url comment as delete_review_url %}
-                                                <a class="deleteObject pull-right halfGutter" data-href="{{delete_review_url}}" data-object-type="review" href="javascript:void(0)"><img class="noBoxShadow" width="15px" height="15px" src="{% static 'img/cross_button.png' %}"></a>
-                                                <a class="editReview pull-right" href="javascript:void(0)" data-href="{% url 'edit_review' comment.id %}?reviewpage=1"><img class="noBoxShadow" width="15px" height="15px" src="{% static 'img/edit.png' %}"></a>
+                                                <a class="deleteObject pull-right halfGutter" data-href="{{delete_review_url}}" data-object-type="review" href="javascript:void(0);" title="Delete Review"><img class="noBoxShadow" width="15px" height="15px" src="{% static 'img/cross_button.png' %}"></a>
+                                                <a class="editReview pull-right" href="javascript:void(0);" data-href="{% url 'edit_review' comment.id %}?reviewpage=1" title="Edit Review" data-title="Edit Review"><img class="noBoxShadow" width="15px" height="15px" src="{% static 'img/edit.png' %}"></a>
                                                 {% endif %}
                                         {% endif %}
                                     {% endwith %}

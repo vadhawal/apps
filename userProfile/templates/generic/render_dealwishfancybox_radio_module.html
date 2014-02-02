@@ -9,7 +9,7 @@
     	{% get_share_object_url object as share_comment_url %}
 		<a href="javascript:void(0)" data-href="{{share_comment_url}}" class="shareObject">Share</a>
 		{% broadcasters_for_object object as broadcasters_url %}
-		<a class="broadcasters sharedCount" href="{{broadcasters_url}}">({{share_count}})</a>
+		<a class="broadcasters sharedCount" href="{{broadcasters_url}}" title="People Who Shared This" data-title="People Who Shared This">({{share_count}})</a>
 		{% include 'actstream/render_comment_text.html' with object=object %}
     </span>
 </div>
