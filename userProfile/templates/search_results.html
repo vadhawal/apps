@@ -34,14 +34,21 @@
 		</div>
 		{% if results.object_list %}
 		<div class="row yellowBar height26auto color5D fontTitillium2 fontSize13 topHalfGutter">
-			<div class="span7 halfGutter searchFilter"><span class="fontTitillium1">{% trans "Filter By"%}</span>					
-				<label for="price"><input type="checkbox" value="price" name="price"></input>{% trans "Pricing" %}</label>
-				<label for="website_ex"><input type="checkbox" value="website_ex" name="website_ex"></input>{% trans "Website Experience" %}</label>
-				<label for="quality"><input type="checkbox" value="quality" name="quality"></input>{% trans "Range & Quality" %}</label>
-				<label for="service"><input type="checkbox" value="service" name="service"></input>{% trans "Timely Delivery" %}</label>
-				<label for="exchange"><input type="checkbox" value="exchange" name="exchange"></input>{% trans "Exchange Experience" %}</label>
-				<label for="overall"><input type="checkbox" value="overall" name="overall"></input>{% trans "Overall" %}</label>
-				<button id="searchResultFilter" class="fontTitillium1 fontSize13">{% trans "Go" %}</button>
+			<div class="span7 halfGutter searchFilter">
+				<div class="span1 noGutter" style="line-height:52px;">
+					<span class="fontTitillium1">{% trans "Filter By"%}</span>
+				</div>
+				<div class="span5 noGutter">
+					<label for="price"><input type="checkbox" value="price" name="price"></input>{% trans "Pricing" %}</label>
+					<label for="website_ex"><input type="checkbox" value="website_ex" name="website_ex"></input>{% trans "Website Experience" %}</label>
+					<label for="quality"><input type="checkbox" value="quality" name="quality"></input>{% trans "Range & Quality" %}</label>
+					<label for="service"><input type="checkbox" value="service" name="service"></input>{% trans "Timely Delivery" %}</label>
+					<label for="exchange"><input type="checkbox" value="exchange" name="exchange"></input>{% trans "Exchange Experience" %}</label>
+					<label for="overall"><input type="checkbox" value="overall" name="overall"></input>{% trans "Overall" %}</label>
+				</div>
+				<div>
+					<button id="searchResultFilter" class="pull-left fontTitillium1 fontSize13">{% trans "Go" %}</button>
+				</div>
 			</div>
 		</div>
 		{% endif %}

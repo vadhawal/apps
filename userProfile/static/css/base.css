@@ -864,7 +864,8 @@ a.shareObject {
 .searchResultRatingSmall {
 	width:19px;
 	height:13px;
-	padding: 2px 3px;
+	line-height: 13px;
+	padding: 4px 4px 2px 4px;
 	box-sizing: border-box;
 }
 .searchResultRatingScheme {
