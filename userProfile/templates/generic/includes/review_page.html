@@ -64,7 +64,7 @@ var manageFeedOther = function() {
                         {% include 'generic/includes/render_owner.html' with owner=comment.user timestamp=comment.submit_date %}
                         <div class="span6 noGutter">
                             <div class="row">
-                                <div class="span6">
+                                <div class="span6 fontSize13">
                                     {% include "actstream/render_actor_name.html" with actor=comment.user %}{% trans " wrote a review for "%}
                                     {% include "actstream/render_actor_name.html" with actor=blog_post %}
                                 </div>
