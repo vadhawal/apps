@@ -139,9 +139,9 @@
                         <div class="span2 halfGutter">
                             {% search_form "blog.BlogPost" %}
                         </div>
-                        <span class="colorWhite fontTitillium1 fontSize13 halfGutter searchOr">{% trans "or" %}</span>
                         {% blog_parentcategories_abs as parent_categories %}
                         {% if parent_categories %}
+                        <span class="colorWhite fontTitillium1 fontSize13 halfGutter searchOr">{% trans "or" %}</span>
                             <div class="span2 halfGutter" style="position:relative;">
                                 <select name="blog_parentcategories" class="blog_parentcategories">
                                     <option value='empty' selected disabled>{% trans "By Category" %}</option>
