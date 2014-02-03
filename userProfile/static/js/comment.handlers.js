@@ -93,7 +93,8 @@ var edit_review_handler = function(event) {
                                 makeSlider($('.exchange_value'), $('[name="exchange_value"]'), value);
                             };
 
-    doOpenUrlWithAjaxFancyBox($url, afterShowCallback, 'visible');
+    var title = $(this).data('title');
+    doOpenUrlWithAjaxFancyBox($url, afterShowCallback, title, 'visible');
     return false;
 };
 
@@ -138,7 +139,8 @@ var write_review_handler = function(event) {
                                 makeSlider($('.exchange_value'), $('[name="exchange_value"]'), 0);
                             };
 
-    doOpenUrlWithAjaxFancyBox($url, afterShowCallback, 'visible');
+    var title = $(this).data('title');
+    doOpenUrlWithAjaxFancyBox($url, afterShowCallback, title, 'visible');
     return false;
 };
 
