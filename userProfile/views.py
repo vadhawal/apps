@@ -1201,7 +1201,7 @@ def contact_us(request, template="generic/contact_us.html"):
 				form.fields['email_from'].initial = request.user.email
 			else:
 				form.fields['email_from'].initial = settings.SERVER_EMAIL
-			form.fields['email_from'].widget.attrs['style'] = 'display:none'
+				form.fields['email_from'].widget.attrs['style'] = 'display:none'
 
 			context = {"form": form, "action_url": reverse("contact_us")}
 			response = render(request, template, context)
