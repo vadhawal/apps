@@ -1637,3 +1637,10 @@ ul#footer-links {
 ul#footer-links li {
 	display:inline;
 }
+
+.loader img{
+	height:20px;
+	display:block;
+	margin-left:auto;
+	margin-right:auto;
+}
