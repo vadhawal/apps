@@ -77,6 +77,11 @@
 {% empty %}
     <div class="color5D fontSize14 halfGutter topHalfGutter">{% trans "No reviews were found for the selected category. Do write a review if you've shopped for this category." %}</div>
 {% endfor %}
+    <div class="row topReviews loader" style="display:none;">
+        <div class="span4">
+            <img src="{% static 'img/loading.gif' %}">
+        </div>
+    </div>
 {% if not is_incremental %}
 </div>
 {% endif %}

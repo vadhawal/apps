@@ -9,7 +9,16 @@ var setupCustomScrollBar = function ($element, horizontal_scroll) {
         $scrollContainer = $element.find(".scrollContainer");
     }
     var totalScrollCallback = function(){
+        $scrollContainer.data('skipCallbacks', true);
+        var $loader = $scrollContainer.find('.loader');
+        $loader.show();
+        $scrollContainer.mCustomScrollbar("update");
+        $scrollContainer.mCustomScrollbar("scrollTo", "bottom", {
+            callbacks:false
+        });
+
         var $href = $scrollContainer.attr("data-href");
+
         if($href) {
             var a = $('<a>', { href:$href } )[0];
             var $pathname = a.pathname;
@@ -22,6 +31,7 @@ var setupCustomScrollBar = function ($element, horizontal_scroll) {
             $pathname = pathsplit.join('/');
             var $url = $pathname + a.search; //a,search contains any GET query parameter.
             $.get($url, {}, function(data) {
+                $loader.remove();
                 if(data.success === true) {
                     $scrollContainer.find('.mCSB_container').append(data.html);
                     install_voting_handlers($scrollContainer);
