@@ -1122,7 +1122,7 @@ def suggest_store(request, template="blog/suggest_store.html"):
 			if form.is_valid():
 				data = json.dumps({'success':True})
 				response_kwargs = {"content_type": 'application/json'}
-				email_from = form.cleaned_data['email_from']
+				email_from = settings.DEFAULT_FROM_EMAIL
 				email_to = settings.SUGGEST_STORE_EMAIL_TO
 				subject = form.cleaned_data['email_subject']
 				message = form.cleaned_data['email_message']
@@ -1149,7 +1149,7 @@ def suggest_store(request, template="blog/suggest_store.html"):
 			if request.user.is_authenticated():
 				form.fields['email_from'].initial = request.user.email
 			else:
-				form.fields['email_from'].initial = settings.DEFAULT_FROM_EMAIL
+				form.fields['email_from'].initial = settings.SERVER_EMAIL
 			form.fields['email_subject'].initial = settings.SUGGEST_STORE_EMAIL_SUBJECT
 			form.fields['email_from'].label = ''
 			form.fields['email_subject'].label = ''
@@ -1170,10 +1170,12 @@ def contact_us(request, template="generic/contact_us.html"):
 			if form.is_valid():
 				data = json.dumps({'success':True})
 				response_kwargs = {"content_type": 'application/json'}
-				email_from = form.cleaned_data['email_from']
+				
+				email_from = settings.DEFAULT_FROM_EMAIL
 				email_to = settings.CONTACT_US_EMAIL_TO
+
 				subject = form.cleaned_data['email_subject']
-				message = form.cleaned_data['email_message']
+				message = form.cleaned_data['email_contact_message']
 				sender_email = "Anonymous"
 				if request.user.is_authenticated(): 
 					sender_email = request.user.email
@@ -1197,6 +1199,9 @@ def contact_us(request, template="generic/contact_us.html"):
 			form.fields['email_contact_message'].widget.attrs['style'] = 'resize:none;'
 			if request.user.is_authenticated():
 				form.fields['email_from'].initial = request.user.email
+			else:
+				form.fields['email_from'].initial = settings.SERVER_EMAIL
+			form.fields['email_from'].widget.attrs['style'] = 'display:none'
 
 			context = {"form": form, "action_url": reverse("contact_us")}
 			response = render(request, template, context)
