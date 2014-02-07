@@ -9,7 +9,12 @@ var setupCustomScrollBar = function ($element, horizontal_scroll) {
         $scrollContainer = $element.find(".scrollContainer");
     }
     var totalScrollCallback = function(){
-        $scrollContainer.data('skipCallbacks', true);
+        if($scrollContainer.data('skipCallbacks') === true)
+            return;
+        else {
+            $scrollContainer.data('skipCallbacks', true);
+        }
+
         var $loader = $scrollContainer.find('.loader');
         $loader.show();
         $scrollContainer.mCustomScrollbar("update");
@@ -56,6 +61,7 @@ var setupCustomScrollBar = function ($element, horizontal_scroll) {
                 } else {
                     $scrollContainer.removeAttr("data-href");
                 }
+                $scrollContainer.data('skipCallbacks', false);
             });
         }
     };
