@@ -89,7 +89,8 @@
 					$('#previewButtons').hide();
 					$('#previewLoading').html("<img src='http://leocardz.com/img/littleLoader.gif' ></img>");
 					$('#photoNumber').val(0);
-					$.get('php/textCrawler.php', {text: text}, function(answer) {
+					var $crawlerUrl = window.location.origin + '/php/textCrawler.php';
+					$.get($crawlerUrl, {text: text}, function(answer) {
 						$('#submitwithurl').show();
 			            $('#submitwithouturl').hide();
 						if(answer.url == null) answer.url = "";
@@ -300,7 +301,8 @@
 								description = $('#previewDescription').html();
 
 								if((trim(text) != "" && endOfCrawling == true)){
-									$.get('php/searchUrls.php', {text: text, description: description}, function(urls) {
+									var $searchUrls = window.location.origin + '/php/searchUrls.php';
+									$.get($searchUrls, {text: text, description: description}, function(urls) {
 										if($('#noThumb').attr("checked") == "checked" || images.length == 0){
 											contentWidth = 495;
 											leftSideContent = "";
