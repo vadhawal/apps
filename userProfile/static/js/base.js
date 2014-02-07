@@ -9,18 +9,18 @@ var setupCustomScrollBar = function ($element, horizontal_scroll) {
         $scrollContainer = $element.find(".scrollContainer");
     }
     var totalScrollCallback = function(){
-        if($scrollContainer.data('skipCallbacks') === true)
-            return;
-        else {
-            $scrollContainer.data('skipCallbacks', true);
-        }
-
         var $loader = $scrollContainer.find('.loader');
         $loader.show();
         $scrollContainer.mCustomScrollbar("update");
         $scrollContainer.mCustomScrollbar("scrollTo", "bottom", {
             callbacks:false
         });
+        
+        if($scrollContainer.data('skipCallbacks') === true)
+            return;
+        else {
+            $scrollContainer.data('skipCallbacks', true);
+        }
 
         var $href = $scrollContainer.attr("data-href");
 
