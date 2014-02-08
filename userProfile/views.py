@@ -782,29 +782,33 @@ def get_related_stores(request, store_id, sub_category, sIndex, lIndex):
 		l = (int)(""+lIndex)
 		blogPostQueryset = blogPostQueryset[s:l]
 
-	isVertical = request.GET.get('v', '0')
-	template = 'generic/vendor_list.html'
-	if isVertical == '1':
-		template = 'generic/vendor_list_v.html'
+		isVertical = request.GET.get('v', '0')
+		template = 'generic/vendor_list.html'
+		if isVertical == '1':
+			template = 'generic/vendor_list_v.html'
 
-	context = RequestContext(request)
-	context.update({'vendors': blogPostQueryset,
-					'is_incremental': True})
-	if blogPostQueryset:
-		ret_data = {
-			'html': render_to_string(template, context_instance=context).strip(),
-			'success': True
-		}
-	elif s == 0:
-		template = Template('<span>No related stores found</span>')
-		ret_data = {
-			'html': template.render(context).strip(),
-			'success': True
-		}
+		context = RequestContext(request)
+		context.update({'vendors': blogPostQueryset,
+						'is_incremental': True})
+		if blogPostQueryset:
+			ret_data = {
+				'html': render_to_string(template, context_instance=context).strip(),
+				'success': True
+			}
+		elif s == 0:
+			template = Template('<span>No related stores found</span>')
+			ret_data = {
+				'html': template.render(context).strip(),
+				'success': True
+			}
+		else:
+			ret_data = {
+				'success': False
+			}
 	else:
 		ret_data = {
 			'success': False
-		}		
+		}			
 
 	return HttpResponse(json.dumps(ret_data), mimetype="application/json")
 
