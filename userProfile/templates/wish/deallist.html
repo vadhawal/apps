@@ -2,7 +2,7 @@
 {% load userProfile_tags %}
 {% load comment_tags %}
 {% load voting_tags %}
-{% load thumbnail %}
+{% load thumbnail static %}
  
 {% if not is_incremental %}
 <div class="dealBox_h scrollContainer" data-href="{{data_href}}" data-chunk="{{data_chunk}}">
@@ -52,6 +52,9 @@
     {% endif %}
 </span>
 {% endfor %}
+    <div class="dealBox_h_elem loader dealImageMarginRight" style="margin-left:-10px;height:17px;display:none;">
+        <img src="{% static 'img/loading.gif' %}">
+    </div>
 {% if not is_incremental %}
 </div>
 {% endif %}

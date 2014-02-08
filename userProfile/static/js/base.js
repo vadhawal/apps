@@ -11,10 +11,17 @@ var setupCustomScrollBar = function ($element, horizontal_scroll) {
     var totalScrollCallback = function(){
         var $loader = $scrollContainer.find('.loader');
         $loader.show();
-        $scrollContainer.mCustomScrollbar("update");
-        $scrollContainer.mCustomScrollbar("scrollTo", "bottom", {
-            callbacks:false
-        });
+        if (horizontal_scroll) {
+            $scrollContainer.mCustomScrollbar("update", true);
+            $scrollContainer.mCustomScrollbar("scrollTo", "right", {
+                callbacks:false
+            });
+        } else {
+            $scrollContainer.mCustomScrollbar("update");
+            $scrollContainer.mCustomScrollbar("scrollTo", "bottom", {
+                callbacks:false
+            });
+        }
         
         if($scrollContainer.data('skipCallbacks') === true)
             return;
