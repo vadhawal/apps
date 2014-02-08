@@ -87,7 +87,7 @@
 					block = true;
 					$('#preview').hide();
 					$('#previewButtons').hide();
-					$('#previewLoading').html("<img style='height:17px;' src='"+ STATIC_URL+"/img/loading.gif" +"' ></img>");
+					$('#previewLoading').html("<img style='height:17px;' src='"+ STATIC_URL+"img/loading.gif" +"' ></img>");
 					$('#photoNumber').val(0);
 					var $crawlerUrl = window.location.origin + '/php/textCrawler.php';
 					$.get($crawlerUrl, {text: text}, function(answer) {
