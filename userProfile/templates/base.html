@@ -62,7 +62,8 @@
         categories:''
     };
     var is_authenticated = false;
-    var login_url = {{settings.LOGIN_URL}};
+    var login_url = "{{settings.LOGIN_URL}}";
+    var STATIC_URL = "{{STATIC_URL|escapejs}}";
     {% if request.user.is_authenticated %}
         is_authenticated = true;
     {% else %}
@@ -73,8 +74,8 @@
         var categories = {{categories}};
     {% endautoescape %}
 
-    console.log(categories);
     category_namespace.categories = categories;
+
 </script>
 
 {% compress js %}
