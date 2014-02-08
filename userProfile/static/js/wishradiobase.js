@@ -284,6 +284,7 @@ var doOpenUrlWithIframeFancyBox = function(url) {
     $.fancybox({
         'frameWidth'        :  500,
         'frameHeight'       :  500,
+         width              :  670,
         'scrolling'         : 'no',
         'hideOnContentClick': false, 	
         'type'              :'iframe',
@@ -309,6 +310,7 @@ var doOpenUrlWithAjaxFancyBox = function(url, afterShowCallback, title, scroll, 
     }
     $.fancybox({
         width               : 500,
+        minHeight           : 50,
         autoSize            : true,
         hideOnContentClick  : false,
         openEffect          : 'fade',
