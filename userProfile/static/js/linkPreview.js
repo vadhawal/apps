@@ -87,7 +87,7 @@
 					block = true;
 					$('#preview').hide();
 					$('#previewButtons').hide();
-					$('#previewLoading').html("<img src='http://leocardz.com/img/littleLoader.gif' ></img>");
+					$('#previewLoading').html("<img style='height:17px;' src='/static/img/loading.gif' ></img>");
 					$('#photoNumber').val(0);
 					var $crawlerUrl = window.location.origin + '/php/textCrawler.php';
 					$.get($crawlerUrl, {text: text}, function(answer) {
