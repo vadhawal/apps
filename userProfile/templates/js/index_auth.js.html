@@ -116,6 +116,7 @@ $(document).ready(function() {
         $('#broadcast').ajaxForm({
             beforeSend: function() {
                 //$('.progress').toggle();
+                $('#previewLoading').html("<img style='height:17px;' src='/static/img/loading.gif' ></img>");
                 $('#submitwithurl').attr("disabled", true);
                 $('#submitwithouturl').attr("disabled", true);
                 $('.progress').hide(); 
@@ -151,10 +152,12 @@ $(document).ready(function() {
 
                 $('#submitwithurl').removeAttr("disabled");
                 $('#submitwithouturl').removeAttr("disabled");
+                $('#previewLoading').html("");
             },
             error: function(xhr) {
                 $('#submitwithurl').removeAttr("disabled");
                 $('#submitwithouturl').removeAttr("disabled");
+                $('#previewLoading').html("");
             }
         }); 
 
