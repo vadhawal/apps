@@ -9,29 +9,28 @@ var setupCustomScrollBar = function ($element, horizontal_scroll) {
         $scrollContainer = $element.find(".scrollContainer");
     }
     var totalScrollCallback = function(){
-        var $loader = $scrollContainer.find('.loader');
-        $loader.show();
-        if (horizontal_scroll) {
-            $scrollContainer.mCustomScrollbar("update", true);
-            $scrollContainer.mCustomScrollbar("scrollTo", "right", {
-                callbacks:false
-            });
-        } else {
-            $scrollContainer.mCustomScrollbar("update");
-            $scrollContainer.mCustomScrollbar("scrollTo", "bottom", {
-                callbacks:false
-            });
-        }
-        
-        if($scrollContainer.data('skipCallbacks') === true)
-            return;
-        else {
-            $scrollContainer.data('skipCallbacks', true);
-        }
-
-        var $href = $scrollContainer.attr("data-href");
-
+    	var $href = $scrollContainer.attr("data-href");
         if($href) {
+	        var $loader = $scrollContainer.find('.loader');
+	        $loader.show();
+	        if (horizontal_scroll) {
+	            $scrollContainer.mCustomScrollbar("update", true);
+	            $scrollContainer.mCustomScrollbar("scrollTo", "right", {
+	                callbacks:false
+	            });
+	        } else {
+	            $scrollContainer.mCustomScrollbar("update");
+	            $scrollContainer.mCustomScrollbar("scrollTo", "bottom", {
+	                callbacks:false
+	            });
+	        }
+	        
+	        if($scrollContainer.data('skipCallbacks') === true)
+	            return;
+	        else {
+	            $scrollContainer.data('skipCallbacks', true);
+	        }
+
             var a = $('<a>', { href:$href } )[0];
             var $pathname = a.pathname;
             var pathsplit = $pathname.split("/");
