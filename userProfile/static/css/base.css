@@ -1645,3 +1645,6 @@ ul#footer-links li {
 	margin-right:auto;
 	margin-bottom:6px;
 }
+#city {
+	width: 150px;
+}

@@ -114,7 +114,7 @@ def new_users_handler(sender, user, response, details, **kwargs):
 
                 user_location = social_user.extra_data['location']
                 if user_location and user_location['name']:
-                    profile.location = user_location['name']
+                    profile.location = user_location['name'].split(",")[0]
 
                 gender = social_user.extra_data['gender']
                 if gender:

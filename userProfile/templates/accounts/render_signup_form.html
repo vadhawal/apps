@@ -34,11 +34,14 @@
 						{% if field.label == form.location.label %}
 							<span class="pull-right">
 								{{field.label_tag}}
+								<div style="display:none;">
 								{% if field.errors %}
 									{% render_field field class="textField smallTextField error" %}
 								{% else %}
 									{% render_field field class="textField smallTextField" %}
 								{% endif %}
+								</div>
+								{% include 'accounts/render_location.html' %}
 							</span>
 
 						{% elif field.label == form.birthday.label %}
