@@ -1175,14 +1175,14 @@
 			var reldata_url = current.group[current.index].relDataUrl;
 			if(reldata_url)
 			{
-				$('.fancybox-outer').css({'height':'100%'});
-				$('.fancybox-outer').append("<div class='fancybox-data-loader'><img style='height:17px;position:relative;top:50%;' src='"+ STATIC_URL+"img/loading.gif" +"' ></img></div>");
 				var splitVertical = current.group[current.index].splitVertical;
 				if (splitVertical) {
 					$('.fancybox-outer').addClass("split-vertical");
 					$('.fancybox-inner').css("height", "auto")
 				} else {
-					$('.fancybox-outer').removeClass("split-vertical");
+					F.outer.removeClass("split-vertical");
+					F.outer.css({'height':'100%'});
+					F.outer.append("<div class='fancybox-data-loader'><img style='height:17px;position:relative;top:50%;' src='"+ STATIC_URL+"img/loading.gif" +"' ></img></div>");
 				}
 				$.get(reldata_url, {}, function(data) {
 					$('.fancybox-data-loader').remove();
@@ -1441,6 +1441,7 @@
 			$('.fancybox-data').css({
 				'max-height': skin.height()+'px'
 			});
+
 			$.extend(current, {
 				dim : {
 					width	: getValue( width_ ),
