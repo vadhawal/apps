@@ -50,10 +50,14 @@ var comment_on_object_handler = function(event){
                 $total_comments.text(total_comments);
                 $loaded_comments.text(loaded_comments);
                 $form.find('.subcomment_text').trigger('autosize.resize');
-                if ($formParent.parents('.fancybox-data').length > 0) {
+                $fancyboxData = $formParent.parents('.fancybox-data');
+                if ($fancyboxData.length > 0) {
                     // isInsideFancyBox = true;
                     $formParent.find('.span5').removeClass('span5').addClass('span2');
+                    $fancyboxData.mCustomScrollbar("update");
+                    $fancyboxData.mCustomScrollbar("scrollTo","bottom");
                 }
+                $form.find('.subcomment_text').focus();
             },
             error: function(data) {
                 console.log(data);
@@ -218,7 +222,7 @@ var view_previous_comments_handler = function(event){
         add_link.attr('href', link);
         var total_comments = parseInt(add_link.parent().find('.total_comments').text());
         var loaded_comments = parseInt(add_link.parent().find('.loaded_comments').text());
-        if(loaded_comments + 5 <= total_comments) {
+        if(loaded_comments + 5 < total_comments) {
             add_link.parent().find('.loaded_comments').text(loaded_comments + 5);
         }
         else {
@@ -227,7 +231,7 @@ var view_previous_comments_handler = function(event){
                 var $prevCommentsParent = $prevCommentsTab.parent();
                 if ($prevCommentsParent) {
                     var $parentNextSibling = $prevCommentsTab.parent().next();
-                    if ($parentNextSibling.length > 0 && $parentNextSibling.prop('tagName').toLowerCase() === "hr") {
+                    if ($parentNextSibling.length > 0 && $parentNextSibling.hasClass("dottedSeparator")) {
                         $parentNextSibling.remove();// remove the next HR
                     }
                     $prevCommentsParent.remove(); // remove the entire view previous comment tab
@@ -238,10 +242,10 @@ var view_previous_comments_handler = function(event){
         install_voting_handlers($subcomments.children().first());
         install_comment_on_object_handler($subcomments.children().first());
         install_toggle_comment_handler($subcomments.children().first());
-        var $fancybox = add_link.parents('.fancybox-data');
-        if($fancybox && $fancybox.length > 0)
+        var $fancyboxData = $subcomments_container.parents('.fancybox-data');
+        if($fancyboxData && $fancyboxData.length > 0)
         {
-            $(".fancybox-data").mCustomScrollbar("update");
+            $fancyboxData.mCustomScrollbar("update");
         }
 
     });
