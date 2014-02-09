@@ -1175,6 +1175,8 @@
 			var reldata_url = current.group[current.index].relDataUrl;
 			if(reldata_url)
 			{
+				$('.fancybox-outer').css({'height':'100%'});
+				$('.fancybox-outer').append("<div class='fancybox-data-loader'><img style='height:17px;position:relative;top:50%;' src='"+ STATIC_URL+"img/loading.gif" +"' ></img></div>");
 				var splitVertical = current.group[current.index].splitVertical;
 				if (splitVertical) {
 					$('.fancybox-outer').addClass("split-vertical");
@@ -1183,6 +1185,7 @@
 					$('.fancybox-outer').removeClass("split-vertical");
 				}
 				$.get(reldata_url, {}, function(data) {
+					$('.fancybox-data-loader').remove();
 					$('.fancybox-data').html(data);
 					install_voting_handlers($('.fancybox-data'));
 					$(".fancybox-data").find('.vendorFollowers').on("click", display_popup_handler);

@@ -1648,3 +1648,7 @@ ul#footer-links li {
 #city {
 	width: 150px;
 }
+.fancybox-data-loader {
+	text-align:center;
+	height:100%;
+}
