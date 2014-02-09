@@ -42,6 +42,14 @@
           return (parseInt(n) < 10) ? ("0" + n) : n;
         }
 
+        var populate_location_handler = function() {
+            var city = $('#id_location').val();
+            city = city.split(',')[0].trim();
+            if(city) {
+              $('#city option[value="' + city.toLowerCase() +'"]').attr("selected", "selected");
+            }          
+        };
+
         var populate_birthday_handler = function() {
             var $birthday = $('#id_birthday').val();
             if($birthday) {
@@ -75,12 +83,17 @@
               var $yyyymmdd = yyyymmdd.join('-');
               $('#id_birthday').val($yyyymmdd); 
 
+              var city =  $('#city').find(":selected").val();
+              $('#id_location').val(city); 
+
               $this.off('submit');
               $this.submit();
+              return false;
         });
 
         $().dateSelectBoxes($('#birthMonth'),$('#birthDay'),$('#birthYear'),true);
         populate_birthday_handler();
+        populate_location_handler();
     });
 </script>
 {% endcompress %}
