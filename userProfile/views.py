@@ -704,14 +704,14 @@ def getTrendingStores(request, parent_category, sub_category, sIndex=0, lIndex=0
 		if blog_subcategory_slug.lower() != "all" and BlogCategory.objects.all().exists():
 			blog_subcategory = get_object_or_404(BlogCategory, slug=slugify(blog_subcategory_slug))
 		if blog_parentcategory_slug.lower() == "all" and blog_subcategory_slug.lower() == "all":
-			result = BlogPost.objects.published().extra(select={'fieldsum':'price_average + website_ex_average + quality_average + service_average + exchange_average + overall_average'},order_by=('-fieldsum',)).distinct() #[:latest]
+			result = BlogPost.objects.published().extra(select={'fieldsum':'price_average + website_ex_average + quality_average + service_average + exchange_average + overall_average'},order_by=('-fieldsum', '-overall_average',)).distinct() #[:latest]
 		elif blog_parentcategory_slug.lower() != "all" and blog_subcategory_slug.lower() == "all":
 			if blog_parentcategory:
 				blog_subcategories = BlogCategory.objects.all().filter(parent_category=blog_parentcategory).values_list('id', flat=True)
-				result = BlogPost.objects.published().filter(categories__id__in=blog_subcategories).extra(select={'fieldsum':'price_average + website_ex_average + quality_average + service_average + exchange_average + overall_average'},order_by=('-fieldsum',)).distinct() #[:latest]
+				result = BlogPost.objects.published().filter(categories__id__in=blog_subcategories).extra(select={'fieldsum':'price_average + website_ex_average + quality_average + service_average + exchange_average + overall_average'},order_by=('-fieldsum', '-overall_average',)).distinct() #[:latest]
 		else:
 			if blog_subcategory and blog_parentcategory:
-				result = BlogPost.objects.published().filter(categories=blog_subcategory).extra(select={'fieldsum':'price_average + website_ex_average + quality_average + service_average + exchange_average + overall_average'},order_by=('-fieldsum',)).distinct() #[:latest]
+				result = BlogPost.objects.published().filter(categories=blog_subcategory).extra(select={'fieldsum':'price_average + website_ex_average + quality_average + service_average + exchange_average + overall_average'},order_by=('-fieldsum', '-overall_average',)).distinct() #[:latest]
 			else:
 				"""
 					raise 404 error, in case categories are not present.
@@ -764,7 +764,7 @@ def get_related_stores(request, store_id, sub_category, sIndex, lIndex):
 	if sub_category.lower() != "all" and sub_category.lower() != '':
 		try:
 			blog_subcategory = BlogCategory.objects.get(slug=slugify(sub_category))
-			blogPostQueryset = BlogPost.objects.published().filter(categories=blog_subcategory).exclude(id=store_id).extra(select={'fieldsum':'price_average + website_ex_average + quality_average + service_average + exchange_average + overall_average'},order_by=('-fieldsum',)).distinct()
+			blogPostQueryset = BlogPost.objects.published().filter(categories=blog_subcategory).exclude(id=store_id).extra(select={'fieldsum':'price_average + website_ex_average + quality_average + service_average + exchange_average + overall_average'},order_by=('-fieldsum', '-overall_average',)).distinct()
 		except:
 			blogPostQueryset = None
 			pass	
@@ -772,7 +772,7 @@ def get_related_stores(request, store_id, sub_category, sIndex, lIndex):
 		try:
 			blog_post = BlogPost.objects.get(id=store_id)
 			categories = blog_post.categories.all() 
-			blogPostQueryset = BlogPost.objects.published().filter(categories__in=categories).exclude(id=store_id).extra(select={'fieldsum':'price_average + website_ex_average + quality_average + service_average + exchange_average + overall_average'},order_by=('-fieldsum',)).distinct()
+			blogPostQueryset = BlogPost.objects.published().filter(categories__in=categories).exclude(id=store_id).extra(select={'fieldsum':'price_average + website_ex_average + quality_average + service_average + exchange_average + overall_average'},order_by=('-fieldsum', '-overall_average',)).distinct()
 		except:
 			blogPostQueryset = None
 			pass
