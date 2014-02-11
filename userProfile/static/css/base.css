@@ -563,7 +563,7 @@ a.home:hover img, a.home.homeSelected img{
 	background-image: url('/static/img/home_green.png');
 }
 a.shopTalk img{
-	background-image: url('/static/img/store_default.png');
+	background-image: url('/static/img/shopTalk_grey.png');
 	background-size: 18px;
 	background-repeat: no-repeat;
 	margin: 0px;
@@ -573,10 +573,10 @@ a.shopTalk img{
 	height: 0px !important;	
 }
 a.shopTalk:hover img, a.shopTalk.shopTalkSelected img{
-	background-image: url('/static/img/store_green.png');
+	background-image: url('/static/img/shopTalk.png');
 }
 a.suggestStore img{
-	background-image: url('/static/img/shopTalk_grey.png');
+	background-image: url('/static/img/store_default.png');
 	background-size: 18px;
 	background-repeat: no-repeat;
 	margin: 0px;
@@ -586,7 +586,7 @@ a.suggestStore img{
 	height: 0px !important;
 }
 a.suggestStore:hover img, a.suggestStore.opened img{
-	background-image: url('/static/img/shopTalk.png');
+	background-image: url('/static/img/store_green.png');
 }
 .trunc-comment, .exp-comment {
 	white-space: pre-wrap;
