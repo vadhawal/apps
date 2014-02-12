@@ -261,6 +261,13 @@ $(document).ready(function() {
 	build_category_menu_handler();
 	$('.dropdown-toggle.blog_parentcategories').on('click', function(){
 		$('.dropdown-menu-parent').toggle();//css({'display':'block'});
-		return false;
+        var cancel_dropdown = function (evt) {
+            var $target = $(evt.target);
+            if ($target.parents('.dropdown-menu-parent').length == 0) {
+                $('.dropdown-menu-parent').toggle();
+                document.removeEventListener("click", cancel_dropdown, true);
+            }
+        }
+        document.addEventListener("click", cancel_dropdown, true);
 	});
 });
