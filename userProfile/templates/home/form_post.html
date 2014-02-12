@@ -12,7 +12,7 @@
 
         <div id="previewLoading"></div>
         <div class="span4 statusBox halfGutter" style="position:relative">
-            <textarea id="text" name="message"></textarea>
+            <textarea id="text" name="message" placeholder="{% if blog %}{% trans "Post your deals here..." %}{% else %}{% trans "Post your wishes here..." %}{% endif %}"></textarea>
             <div></div>
             <output id="previewimg"></output>
             <div style="width:100%;margin-bottom:0px;position:relative;" >
