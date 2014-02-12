@@ -34,6 +34,9 @@
 <!-- <link rel="stylesheet" type="text/css" href="{% static "css/imagestore.css"  %}"/> -->
 <!-- <link rel="stylesheet" class="cssButtons" type="text/css" href="{{ STATIC_URL }}css/linkPreview.css" /> -->
 <style>
+.dropdown-menu > li > a {
+    padding: 0px 20px 0px 10px;
+}
 .dropdown-menu > li > a:hover,
 .dropdown-menu > li > a:focus,
 .dropdown-submenu:hover > a,
@@ -49,9 +52,7 @@
 .dropdown-submenu {
     position:relative;
     text-align: left;
-}
-.dropdown-submenu > .dropdown-menu > li > a {
-    color: white;
+    font-size: 12px;
 }
 .dropdown-submenu > .dropdown-menu {
     top:0;
@@ -79,6 +80,9 @@
     border-left-color:#5D5D5D;
     margin-top:5px;
     margin-right:-10px;
+}
+.dropdown-submenu > .dropdown-menu > li > a {
+    color: white;
 }
 .dropdown-submenu:hover>a:after {
     border-left-color:#ffffff;

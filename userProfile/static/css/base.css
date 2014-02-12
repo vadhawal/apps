@@ -1267,8 +1267,8 @@ textarea:focus, input[type=text]:focus{
 .category-accessories {
 	background-position: -175px -91px;
 }
-.category-art-collectibles{
-	background-position: -92px -252px;
+.category-collectibles{
+	background-position: -95px -255px;
 }
 .category-automobile-services{
 	background-position: -258px -414px;
@@ -1359,7 +1359,7 @@ textarea:focus, input[type=text]:focus{
 	.category-accessories {
 		background-position: -170px -86px;
 	}
-	.category-art-collectibles{
+	.category-collectibles{
 		background-position: -87px -247px;
 	}
 	.category-automobile-services{
@@ -1452,8 +1452,8 @@ textarea:focus, input[type=text]:focus{
 	.category-accessories {
 		background-position: -184px -100px;
 	}
-	.category-art-collectibles{
-		background-position: -101px -261px;
+	.category-collectibles{
+		background-position: -104px -264px;
 	}
 	.category-automobile-services{
 		background-position: -267px -423px;
