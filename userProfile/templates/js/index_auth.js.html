@@ -209,6 +209,8 @@ $(document).ready(function() {
     }, 60000);
 
     $(window).debounce('scroll', feedUpdater, 100);
+    $('#text').trigger("click");
+    $('#text').trigger("focus");
 }); 
 
 function expandWishText() {

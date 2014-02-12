@@ -401,11 +401,20 @@ form input[type=text].error + div{
 	padding: 0px;
 	padding-left: 5px;
 }
+a.blog_parentcategories{
+	height: 27px;
+	line-height: 27px;
+	background-position: 95% 10px;
+}
+a.blog_parentcategories:hover{
+	color: #5D5D5D;
+}
 div span.wantText{
 	display: inline-block;
 	margin-top: 15px;
 }
 #getvendorsdiv{
+	float: left;
 	height: 60px;
 	background-image: url("/static/img/go_search.png");
 	background-repeat: no-repeat;
@@ -474,6 +483,9 @@ div span.wantText{
 }
 .settings:hover img:first-child{
 	background-image: url("/static/img/settings_hover.png");
+}
+.settingsPopup.dropdown-menu {
+	background-color: white;
 }
 .settingsPopup {
 	top: 85%;
@@ -1255,8 +1267,8 @@ textarea:focus, input[type=text]:focus{
 .category-accessories {
 	background-position: -175px -91px;
 }
-.category-art-collectibles{
-	background-position: -92px -252px;
+.category-collectibles{
+	background-position: -95px -255px;
 }
 .category-automobile-services{
 	background-position: -258px -414px;
@@ -1347,7 +1359,7 @@ textarea:focus, input[type=text]:focus{
 	.category-accessories {
 		background-position: -170px -86px;
 	}
-	.category-art-collectibles{
+	.category-collectibles{
 		background-position: -87px -247px;
 	}
 	.category-automobile-services{
@@ -1440,8 +1452,8 @@ textarea:focus, input[type=text]:focus{
 	.category-accessories {
 		background-position: -184px -100px;
 	}
-	.category-art-collectibles{
-		background-position: -101px -261px;
+	.category-collectibles{
+		background-position: -104px -264px;
 	}
 	.category-automobile-services{
 		background-position: -267px -423px;
