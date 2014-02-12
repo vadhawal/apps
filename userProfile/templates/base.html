@@ -34,7 +34,10 @@
 <!-- <link rel="stylesheet" type="text/css" href="{% static "css/imagestore.css"  %}"/> -->
 <!-- <link rel="stylesheet" class="cssButtons" type="text/css" href="{{ STATIC_URL }}css/linkPreview.css" /> -->
 <style>
-.dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus {
+.dropdown-menu > li > a:hover,
+.dropdown-menu > li > a:focus,
+.dropdown-submenu:hover > a,
+.dropdown-submenu:focus > a {
     background-image: none;
     cursor: pointer;
 }

@@ -28,6 +28,7 @@ function updateCheckBoxes () {
 }
 
 function updateSearchCategory () {
+	return;
 	var pathstr = window.location.pathname;
 	var patharr = pathstr.split ("/");
 	if (patharr[1].toLowerCase() == "stores") {

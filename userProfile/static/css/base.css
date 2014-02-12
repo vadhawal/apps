@@ -484,6 +484,9 @@ div span.wantText{
 .settings:hover img:first-child{
 	background-image: url("/static/img/settings_hover.png");
 }
+.settingsPopup.dropdown-menu {
+	background-color: white;
+}
 .settingsPopup {
 	top: 85%;
 }
