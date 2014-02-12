@@ -109,17 +109,17 @@ var manageFeedOther = function() {
                                                 {% score_for_object review_rating_obj as score %}
                                                 {% if not vote %}
                                                     <span>{% trans "Was this review helpful?" %}</span>
-                                                    <a class="found-helpful radioColorBackground colorWhite fontSize11" href="javascript:void(0)" data-href="{% url 'rating_on_reviews' review_rating_obj.id 'up' %}"><span>Yes</span>
+                                                    <a class="found-helpful radioColorBackground colorWhite fontSize11" href="javascript:void(0)" data-href="{% url 'rating_on_reviews' review_rating_obj.id 'up' %}" title="You find this review helpful"><span>Yes</span>
                                                         <img class="noBoxShadow" src="{% static 'img/1transparent.png' %}">
                                                     </a>
-                                                    <a class="pScore" href="{{ voters }}">({{score.num_up_votes}})</a>
+                                                    <a class="pScore" href="{{ voters }}" title="People Who Found This Review Helpful">({{score.num_up_votes}})</a>
                                                     {# <a class="not-found-helpful" href="javascript:void(0)" data-href="{% url 'rating_on_reviews' review_rating_obj.id 'down' %}">No</a> #}
                                                 {% else %}
                                                     <span>{% trans "You found this review helpful." %}</span>
                                                     <a class="clear-helpful colorWhite fontSize11" href="javascript:void(0)" data-href="{% url 'rating_on_reviews' review_rating_obj.id 'clear' %}"><span></span>
                                                         <img class="noBoxShadow" src="{% static 'img/1transparent.png' %}">
                                                     </a>
-                                                    <a class="pScore" href="{{ voters }}">({{score.num_up_votes}})</a>
+                                                    <a class="pScore" href="{{ voters }}" title="People Who Found This Review Helpful">({{score.num_up_votes}})</a>
                                                 {% endif %}
                                                 {% if request.user == comment.user %}
                                                 {% get_delete_object_url comment as delete_review_url %}

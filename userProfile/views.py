@@ -16,6 +16,7 @@ from django.utils import simplejson
 from django.core.exceptions import MultipleObjectsReturned
 from django.core.files import File
 from django.template import Template
+from django.db.models import Count
 
 from mezzanine.blog.models import BlogPost, BlogCategory, BlogParentCategory
 from mezzanine.generic.models import Review
@@ -689,7 +690,7 @@ def get_filtered_deallist(request, store_id, sub_category, sIndex, lIndex):
 
 
 def getTrendingStores(request, parent_category, sub_category, sIndex=0, lIndex=0):
-	if request.method == "GET" and request.is_ajax():
+	if request.method == "GET":# and request.is_ajax():
 		latest = settings.STORES_NUM_LATEST
 		blog_parentcategory = None
 		result = None
@@ -703,17 +704,19 @@ def getTrendingStores(request, parent_category, sub_category, sIndex=0, lIndex=0
 
 		blog_subcategory = None
 		blog_subcategory_slug = sub_category
+		table_name = BlogPost._meta.db_table
+
 		if blog_subcategory_slug.lower() != "all" and BlogCategory.objects.all().exists():
 			blog_subcategory = get_object_or_404(BlogCategory, slug=slugify(blog_subcategory_slug))
 		if blog_parentcategory_slug.lower() == "all" and blog_subcategory_slug.lower() == "all":
-			result = BlogPost.objects.published().extra(select={'fieldsum':'price_average + website_ex_average + quality_average + service_average + exchange_average + overall_average'},order_by=('-fieldsum', '-overall_average',)).distinct() #[:latest]
+			result = BlogPost.objects.published()
 		elif blog_parentcategory_slug.lower() != "all" and blog_subcategory_slug.lower() == "all":
 			if blog_parentcategory:
 				blog_subcategories = BlogCategory.objects.all().filter(parent_category=blog_parentcategory).values_list('id', flat=True)
-				result = BlogPost.objects.published().filter(categories__id__in=blog_subcategories).extra(select={'fieldsum':'price_average + website_ex_average + quality_average + service_average + exchange_average + overall_average'},order_by=('-fieldsum', '-overall_average',)).distinct() #[:latest]
+				result = BlogPost.objects.published().filter(categories__id__in=blog_subcategories)
 		else:
 			if blog_subcategory and blog_parentcategory:
-				result = BlogPost.objects.published().filter(categories=blog_subcategory).extra(select={'fieldsum':'price_average + website_ex_average + quality_average + service_average + exchange_average + overall_average'},order_by=('-fieldsum', '-overall_average',)).distinct() #[:latest]
+				result = BlogPost.objects.published().filter(categories=blog_subcategory)
 			else:
 				"""
 					raise 404 error, in case categories are not present.
@@ -722,6 +725,10 @@ def getTrendingStores(request, parent_category, sub_category, sIndex=0, lIndex=0
 					'success': False
 				}
 				return HttpResponse(json.dumps(ret_data), mimetype="application/json")
+
+		result = result.extra(select={'fieldsum':'price_average + website_ex_average + quality_average + service_average',
+									  'followers': 'SELECT COUNT(*) FROM %s WHERE target_blogpost_id=%s.id' % (Follow._meta.db_table, table_name)},
+									  order_by=( '-overall_average', '-fieldsum', '-comments_count', '-followers',)).distinct() #[:latest]
 
 		isVertical = request.GET.get('v', '0')
 		template = 'generic/vendor_list.html'
@@ -766,7 +773,7 @@ def get_related_stores(request, store_id, sub_category, sIndex, lIndex):
 	if sub_category.lower() != "all" and sub_category.lower() != '':
 		try:
 			blog_subcategory = BlogCategory.objects.get(slug=slugify(sub_category))
-			blogPostQueryset = BlogPost.objects.published().filter(categories=blog_subcategory).exclude(id=store_id).extra(select={'fieldsum':'price_average + website_ex_average + quality_average + service_average + exchange_average + overall_average'},order_by=('-fieldsum', '-overall_average',)).distinct()
+			blogPostQueryset = BlogPost.objects.published().filter(categories=blog_subcategory).exclude(id=store_id)
 		except:
 			blogPostQueryset = None
 			pass	
@@ -774,12 +781,15 @@ def get_related_stores(request, store_id, sub_category, sIndex, lIndex):
 		try:
 			blog_post = BlogPost.objects.get(id=store_id)
 			categories = blog_post.categories.all() 
-			blogPostQueryset = BlogPost.objects.published().filter(categories__in=categories).exclude(id=store_id).extra(select={'fieldsum':'price_average + website_ex_average + quality_average + service_average + exchange_average + overall_average'},order_by=('-fieldsum', '-overall_average',)).distinct()
+			blogPostQueryset = BlogPost.objects.published().filter(categories__in=categories).exclude(id=store_id)
 		except:
 			blogPostQueryset = None
 			pass
 
 	if blogPostQueryset:
+		blogPostQueryset = blogPostQueryset.extra(select={'fieldsum':'price_average + website_ex_average + quality_average + service_average',
+														  'followers': 'SELECT COUNT(*) FROM %s WHERE target_blogpost_id=%s.id' % (Follow._meta.db_table, table_name)},
+														  order_by=('-overall_average', '-fieldsum', '-comments_count', '-followers',)).distinct()
 		s = (int)(""+sIndex)
 		l = (int)(""+lIndex)
 		blogPostQueryset = blogPostQueryset[s:l]
