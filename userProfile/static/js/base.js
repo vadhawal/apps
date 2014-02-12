@@ -125,7 +125,15 @@ var build_category_menu_handler = function() {
         .attr("role", "menu")
         .addClass("dropdown-menu dropdown-menu-parent");
 
+    var array_categories = [];
     $.each(category_namespace.categories, function(object) {
+        array_categories.push(object);
+    });
+    array_categories.sort();
+
+    $.each(array_categories, function(category) {
+        var object = array_categories[category];
+        var array_object = category_namespace.categories[array_categories[category]];
     	var category_li = $("<li/>").addClass("dropdown-submenu");
 	    var category_a = $("<a/>")
 	        	.html(object)
@@ -144,14 +152,24 @@ var build_category_menu_handler = function() {
 	    var sub_category_ul = $("<ul/>")
         					.addClass("dropdown-menu");
 
-        category_li.append(sub_category_ul);
+        category_li.append(sub_category_ul);    
 
-        for(var i=0;i<this.length;i++) {
+        if (array_object.length < 4) {
+            sub_category_ul.addClass("x-small-menu");
+        } else if (array_object.length >= 4 && array_object.length <= 8) {
+            sub_category_ul.addClass("small-menu");
+        } else if (array_object.length > 8 && array_object.length < 17) {
+            sub_category_ul.addClass("medium-menu");
+        } else if (array_object.length > 17) {
+            sub_category_ul.addClass("x-large-menu");
+        }
+
+        for(var i=0;i<array_object.length;i++) {
 	        var li = $("<li/>")
 	            .appendTo(sub_category_ul);
 
 	        var a = $("<a/>")
-	        	.html(this[i])
+	        	.html(array_object[i])
 	            .appendTo(li)
 	            .on('click', function(event){
 			        var parent_category_slug = $(this).parents('.dropdown-submenu').find('.dropdown-parent-category').text();
