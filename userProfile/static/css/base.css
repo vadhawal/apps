@@ -401,11 +401,20 @@ form input[type=text].error + div{
 	padding: 0px;
 	padding-left: 5px;
 }
+a.blog_parentcategories{
+	height: 27px;
+	line-height: 27px;
+	background-position: 95% 10px;
+}
+a.blog_parentcategories:hover{
+	color: #5D5D5D;
+}
 div span.wantText{
 	display: inline-block;
 	margin-top: 15px;
 }
 #getvendorsdiv{
+	float: left;
 	height: 60px;
 	background-image: url("/static/img/go_search.png");
 	background-repeat: no-repeat;

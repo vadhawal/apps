@@ -133,36 +133,18 @@
                 <div class="span8 noGutter">
                     <div class="row">
                         <div class="span2 colorWhite fontTitillium fontSize14 noGutter">
-                            <span class="wantText fontSize14">{% trans "For all the wishes that money can buy," %}&nbsp;<span class="colorYellow">{% trans "search here" %}</span>
+                            <span class="wantText fontSize14">{% trans "For all the wishes that money can buy," %}&nbsp;<span class="colorYellow">{% trans " search here" %}</span>
                             </span>
                         </div>
-                        <div class="span2 halfGutter">
+                        <div class="span3_5 halfGutter">
                             {% search_form "blog.BlogPost" %}
                         </div>
-                        {% blog_parentcategories_abs as parent_categories %}
-                        {% if parent_categories %}
-                        <span class="colorWhite fontTitillium1 fontSize13 halfGutter searchOr">{% trans "or" %}</span>
-                            <div class="span2 halfGutter" style="position:relative;">
-                                <select name="blog_parentcategories" class="blog_parentcategories">
-                                    <option value='empty' selected disabled>{% trans "By Category" %}</option>
-                                    <option value="all">{% trans "All" %}</option>
-                                    {% for category in parent_categories %}
-                                    <option value="{{ category }}">{{ category }}</option>
-                                    {% endfor %}
-                                </select>
-                                <div>
-                                </div>
-                            </div>
-                            <div class="span2 halfGutter" style="position:relative;">
-                                <select name="blog_subcategories" class="blog_subcategories">
-                                    <option value='empty' selected disabled>By Sub-category</option>
-                                </select>
-                                <div>
-                                </div>
-                            </div>
-                        {% endif %}
                         <div id="getvendorsdiv" style="display:inline-block;" class="halfGutter">
                             <a id="getvendors" href="#"></a>
+                        </div>
+                        <div class="colorWhite fontTitillium1 fontSize13 halfGutter searchOr">{% trans "or" %}</div>
+                        <div class="span2_5 halfGutter searchCategory" style="position:relative;display:inline-block;text-align:center;">
+                            <a class="dropdown-toggle blog_parentcategories pagination-left" href="javascript:void(0);" style="display: block;">{% trans "By Category" %}</a>
                         </div>
                     </div>
                 </div>

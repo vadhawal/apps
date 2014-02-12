@@ -33,7 +33,65 @@
 <link rel="stylesheet" href="{% static "css/popup_styles.css" %}">
 <!-- <link rel="stylesheet" type="text/css" href="{% static "css/imagestore.css"  %}"/> -->
 <!-- <link rel="stylesheet" class="cssButtons" type="text/css" href="{{ STATIC_URL }}css/linkPreview.css" /> -->
+<style>
+.dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus {
+    background-image: none;
+    cursor: pointer;
+}
+.dropdown-menu > .active > a,
+.dropdown-menu > .active > a:hover,
+.dropdown-menu > .active > a:focus {
+    background-image: none;
+}
+.dropdown-submenu {
+    position:relative;
+    text-align: left;
+}
+.dropdown-submenu > .dropdown-menu > li > a {
+    color: white;
+}
+.dropdown-submenu > .dropdown-menu {
+    top:0;
+    left:100%;
+    margin-top:-6px;
+    margin-left:-1px;
+    -webkit-border-radius:0 6px 6px 6px;
+    -moz-border-radius:0 6px 6px 6px;
+    border-radius:0 6px 6px 6px;
+    background-color: #4DB6B4;
+    color: white;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+    display:block;
+}
+.dropdown-submenu>a:after {
+    display:block;
+    content:" ";
+    float:right;
+    width:0;
+    height:0;
+    border-color:transparent;
+    border-style:solid;
+    border-width:5px 0 5px 5px;
+    border-left-color:#5D5D5D;
+    margin-top:5px;
+    margin-right:-10px;
+}
+.dropdown-submenu:hover>a:after {
+    border-left-color:#ffffff;
+}
+.dropdown-submenu.pull-left {
+    float:none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+    left:-100%;
+    margin-left:10px;
+    -webkit-border-radius:6px 0 6px 6px;
+    -moz-border-radius:6px 0 6px 6px;
+    border-radius:6px 0 6px 6px;
+}
 
+</style>
 {% ifinstalled cartridge.shop %}
 <link rel="stylesheet" href="{% static "css/cartridge.css" %}">
 {% if LANGUAGE_BIDI %}
