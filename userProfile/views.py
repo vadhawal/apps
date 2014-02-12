@@ -1254,8 +1254,7 @@ def contact_us(request, template="generic/contact_us.html"):
 def autocomplete(request):
 	if request.is_ajax():
 		query = request.GET.get('query', '')
-		title_regex = r'(' + query +')'
-		keywords = Keyword.objects.filter(title__regex=title_regex).values_list('title', flat=True)
+		keywords = Keyword.objects.filter(title__icontains=query).values_list('title', flat=True)
 		context = {
 					'query':	query,
 					'suggestions': [w.capitalize() for w in keywords]
