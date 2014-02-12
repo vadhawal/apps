@@ -1258,7 +1258,7 @@ def autocomplete(request):
 		keywords = Keyword.objects.filter(title__regex=title_regex).values_list('title', flat=True)
 		context = {
 					'query':	query,
-					'suggestions': list(keywords)
+					'suggestions': [w.capitalize() for w in keywords]
 				}
 		return HttpResponse(json.dumps(context), 'application/json')
 	else:
