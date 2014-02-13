@@ -784,6 +784,7 @@ def get_related_stores(request, store_id, sub_category, sIndex, lIndex):
 			blogPostQueryset = None
 			pass
 
+	table_name = BlogPost._meta.db_table
 	if blogPostQueryset:
 		blogPostQueryset = blogPostQueryset.extra(select={'fieldsum':'price_average + website_ex_average + quality_average + service_average',
 														  'followers': 'SELECT COUNT(*) FROM %s WHERE target_blogpost_id=%s.id' % (Follow._meta.db_table, table_name)},
