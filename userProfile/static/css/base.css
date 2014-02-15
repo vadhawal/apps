@@ -1664,3 +1664,10 @@ ul#footer-links li {
 	text-align:center;
 	height:100%;
 }
+.next-step, .prev-step{
+	color: #19acf2 !important;
+}
+.next-step:hover, .prev-step:hover{
+	color: #66cc00 !important;
+	text-decoration: none !important;
+}
