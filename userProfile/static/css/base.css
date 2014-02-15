@@ -1665,7 +1665,7 @@ ul#footer-links li {
 	height:100%;
 }
 .next-step, .prev-step{
-	color: #19acf2 !important;
+	color: rgb(2, 151, 149); !important;
 }
 .next-step:hover, .prev-step:hover{
 	color: #66cc00 !important;
