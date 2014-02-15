@@ -30,11 +30,6 @@
 {% compress js %}
 <script src="{% static "js/trends.js" %}"></script>
 {% endcompress %}
-{% include 'js/index_noauth.js.html' %}
-
-{% endblock %}
-
-{% block extra_head %}
 <script type="text/javascript">
 var sIndex = 0;
 var lIndex = 20;
@@ -42,16 +37,16 @@ var lIndex = 20;
 {% compress js %}
 <script type="text/javascript">
 $(window).load(function(){
-	/* Calling this on window.load to wait for all the images to load. */    
+    /* Calling this on window.load to wait for all the images to load. */    
     setupCustomScrollBar($('#topDealsForStoreCategory'), true); //second boolean parameter forces horizontal scrollbar
     setupCustomScrollBar($('#topStoresForStoreCategory'));
     setupCustomScrollBar($('#topReviewsForStoreCategory'));
 
     $(".innerBox").mCustomScrollbar({
         theme:"dark-thick",
-		mouseWheel:true,
-		autoHideScrollbar:true,
-      	contentTouchScroll:true
+        mouseWheel:true,
+        autoHideScrollbar:true,
+        contentTouchScroll:true
     });    
 });
 $(document).ready(function() {
@@ -62,6 +57,8 @@ $(document).ready(function() {
 });
 </script>
 {% endcompress %}
+{% include 'js/index_noauth.js.html' %}
+
 {% endblock %}
 
 {% block main %}

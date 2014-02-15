@@ -158,45 +158,6 @@
 
 </script>
 
-{% compress js %}
-<script src="{% static "mezzanine/js/"|add:settings.JQUERY_FILENAME %}"></script>
-<script src="{% static "js/bootstrap.js" %}"></script>
-<script src="{% static "js/bootstrap-extras.js" %}"></script>
-<script src="{% static "js/ajax.csrf.js" %}"></script>
-<script src="{% static "js/jquery.fancybox.js" %}"></script>
-<script src="{% static "js/jquery.mCustomScrollbar.js" %}"></script>
-<script src="{% static "js/jquery-debounce.js" %}"></script>
-<script src="{% static "js/tcal.js" %}"></script>
-<script src="{% static "js/jquery.autosize.js" %}"></script>
-<script src="{% static "js/jquery.confirm.js" %}"></script>
-
-<script src="{% static "js/wishradiobase.js" %}"></script>
-<script src="{% static "js/voting.handlers.js" %}"></script>
-<script src="{% static "js/comment.handlers.js" %}"></script>
-<script src="{% static "js/action.handlers.js" %}"></script>
-<script src="{% static "js/album.handlers.js" %}"></script>
-<script src="{% static "js/base.js" %}"></script>
-<script src="{% static "js/jquery.autocomplete.js" %}"></script>
-
-{% endcompress %}
-<script type="text/javascript">
-        $(document).ready(function(){
-        var options, a;
-        $(function(){
-           options = { serviceUrl:"{% url 'autocomplete' %}",
-                        minChars:2,
-                        width: 'auto',
-                        noCache: false,
-                        deferRequestBy:150};
-           $('.search-query').autocomplete(options);
-        });
-    });
-</script>
-{% block extra_js %}{% endblock %}
-<!--[if lt IE 9]>
-<script src="{% static "js/html5shiv.js" %}"></script>
-<![endif]-->
-
 {% block extra_head %}{% endblock %}
 
 </head>
@@ -214,7 +175,7 @@
             <div class="row">
                 <div class="halfGutter span10">
                     <div class="alert alert-{{ message.tags }}" data-alert="alert">
-                        <a class="close" href="#" onclick="$(this).parent().fadeOut('fast'); return false;">x</a>{{ message }}
+                        <a id="closeMessage" class="close" href="#">x</a>{{ message }}
                     </div>
                 </div>
             </div>
@@ -256,6 +217,43 @@
 <!-- </footer> -->
 {% endcomment %}
 
+{% compress js %}
+<script src="{% static "mezzanine/js/"|add:settings.JQUERY_FILENAME %}"></script>
+<script src="{% static "js/bootstrap.js" %}"></script>
+<script src="{% static "js/bootstrap-extras.js" %}"></script>
+<script src="{% static "js/ajax.csrf.js" %}"></script>
+<script src="{% static "js/jquery.fancybox.js" %}"></script>
+<script src="{% static "js/jquery.mCustomScrollbar.js" %}"></script>
+<script src="{% static "js/jquery-debounce.js" %}"></script>
+<script src="{% static "js/tcal.js" %}"></script>
+<script src="{% static "js/jquery.autosize.js" %}"></script>
+<script src="{% static "js/jquery.confirm.js" %}"></script>
+
+<script src="{% static "js/wishradiobase.js" %}"></script>
+<script src="{% static "js/voting.handlers.js" %}"></script>
+<script src="{% static "js/comment.handlers.js" %}"></script>
+<script src="{% static "js/action.handlers.js" %}"></script>
+<script src="{% static "js/album.handlers.js" %}"></script>
+<script src="{% static "js/base.js" %}"></script>
+<script src="{% static "js/jquery.autocomplete.js" %}"></script>
+{% endcompress %}
+<script type="text/javascript">
+        $(document).ready(function(){
+        var options, a;
+        $(function(){
+           options = { serviceUrl:"{% url 'autocomplete' %}",
+                        minChars:2,
+                        width: 'auto',
+                        noCache: false,
+                        deferRequestBy:150};
+           $('.search-query').autocomplete(options);
+        });
+    });
+</script>
+<!--[if lt IE 9]>
+<script src="{% static "js/html5shiv.js" %}"></script>
+<![endif]-->
+{% block extra_js %}{% endblock %}
 {% include "includes/footer_scripts.html" %}
 </body>
 </html>

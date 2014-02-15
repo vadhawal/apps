@@ -8,37 +8,35 @@
                     <div class="span3_5 halfGutter">
                         <div class="row">
                             <div class="span3_5">
-                                <button class="footerElementHeight fontTitillium pagination-left makeButton colorWhite">
-                                    <a class="colorWhite" target="_blank" href="{% url 'about_us' %}">
+                                <a class="footerElementHeight fontTitillium pagination-left makeButton colorWhite" target="_blank" href="{% url 'about_us' %}">
                                     {% trans "ABOUT Us" %}
-                                    </a>
-                                </button>
+                                </a>
                             </div>
                         </div>
                         <div class="row topHalfGutter">
                             <div class="span3_5">
-                                <button class="footerElementHeight fontTitillium pagination-left makeButton colorWhite">
-                                    <a class="colorWhite" target="_blank" href="http://blog.wishradio.in">{% trans "Wish Radio BLOG" %}</a>
-                                </button>
+                                <a class="footerElementHeight fontTitillium pagination-left makeButton colorWhite" target="_blank" href="http://blog.wishradio.in">
+                                    {% trans "Wish Radio BLOG" %}
+                                </a>
                             </div>
                         </div>
                         <div class="row topHalfGutter">
                             <div class="span3_5">
                                 {% url 'contact_us' as shopTalkUrl %}
-                                <button class="footerElementHeight fontTitillium pagination-left makeButton colorWhite">
-                                     <a class="colorWhite contactUs" href="javascript:void(0);" data-href="{{shopTalkUrl}}" data-title="Contact WishRadio">{% trans "CONTACT Wish Radio" %}</a>
-                                </button>
+                                <a class="footerElementHeight fontTitillium pagination-left makeButton colorWhite contactUs" href="javascript:void(0);" data-href="{{shopTalkUrl}}" data-title="Contact WishRadio">
+                                    {% trans "CONTACT Wish Radio" %}
+                                </a>
                             </div>
                         </div>
                     </div>
                     <div class="span3_5">
+                        {% comment %}
                         <ul style="position:relative;list-style:none;display:none;">
-                            {% comment %}
                             <li class="colorYellow fontSize15 fontTitillium1" style="margin-left:auto; margin-right:auto;">
                                 {% trans "The Wish Radio " %}<span class="colorWhite">{% trans "hint spot" %}</span>{% trans " will help you use our site better till you know us inside out. Click on the dot to get tips." %}
                             </li>
-                            {% endcomment %}
                         <ul>
+                        {% endcomment %}
                     </div>
                     <div class="span3 colorWhite fontSize13 halfGutterRight pull-right">
                         <div class="row">

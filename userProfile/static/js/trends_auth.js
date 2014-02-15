@@ -95,6 +95,7 @@ var get_top_reviews_handler_auth = function(parent_category, sub_category)
 
 		    $scrollContainer.attr("data-href", $url);
 		    install_toggle_comment_handler();
+        $data_container.find('.vendorFollowers').on("click", display_popup_handler);
     	} else {
     		$scrollContainer.removeAttr("data-href");
     	}
