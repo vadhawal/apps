@@ -1561,6 +1561,12 @@ textarea:focus, input[type=text]:focus{
 .footerElementHeight{
 	height: 28px;
 }
+.wishradioFooter a.makeButton {
+	display: inline-block;
+	padding-left: 25px;
+	width: 176px;
+	height: 16px;
+}
 .wishradioFooter button{
 	padding-left: 25px;
 	width: 211px;
