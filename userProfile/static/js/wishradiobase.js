@@ -137,9 +137,14 @@ var unfollow_handler = function(event) {
     return false;
 };
 
-var install_follow_handlers = function() {
-    $('.follow-btn').off("click", follow_handler).on("click", follow_handler);
-    $('.unfollow-btn').off("click", unfollow_handler).on("click", unfollow_handler);
+var install_follow_handlers = function($parent_element) {
+    if($parent_element) {
+        $parent_element.find('.follow-btn').off("click", follow_handler).on("click", follow_handler);
+        $parent_element.find('.unfollow-btn').off("click", unfollow_handler).on("click", unfollow_handler);
+    } else {
+        $('.follow-btn').off("click", follow_handler).on("click", follow_handler);
+        $('.unfollow-btn').off("click", unfollow_handler).on("click", unfollow_handler);       
+    }
 }
 
 var sharewish_handler = function() {

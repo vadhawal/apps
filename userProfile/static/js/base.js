@@ -189,6 +189,10 @@ var build_category_menu_handler = function() {
 }
 
 $(document).ready(function() {
+    $('#closeMessage').live('click', function(event) {
+        $(this).parent().fadeOut('fast'); return false;
+    })
+    
     $('#getvendors').click(function(){
         if ($('.search-query').val() != "" ) {
             $('.searchbox').trigger("submit");

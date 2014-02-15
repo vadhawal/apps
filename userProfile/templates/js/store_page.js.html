@@ -61,6 +61,7 @@ var get_related_stores_handler = function(sub_category)
             $deal_container = $scrollContainer.find('.mCSB_container');
             $deal_container.html(data.html);
             $scrollContainer.attr("data-href", new_url);
+            $scrollContainer.find('.vendorFollowers').on("click", display_popup_handler);
         } else {
             $scrollContainer.removeAttr("data-href");
         }
