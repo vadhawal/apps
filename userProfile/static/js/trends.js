@@ -139,7 +139,7 @@ $(document).ready(function(event) {
                    }        
                },
                {
-                   wrapper: '#fbLogin',
+                   wrapper: '#loginWidget',
                    margin: '0',
                    popup:
                    {
