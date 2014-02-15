@@ -106,9 +106,15 @@
         <a href="javascript:;" class="next-step" style="float:right;">Next Step</a>
     </div>
     <div id="type-tooltip-social-login" style="display:none;">
-        <p class="tooltipTitle">Social Login</p>
-        <p>By using Facebook, Google or Twitter Signup you can automatically connnect with your friends who are already onboard</p>
+    {% if request.user.is_authenticated %}
+        <p class="tooltipTitle">Login/Signup</p>
+        <p>You are already logged in! Start following friends and stores.</p>
+        <p>If you have logged in with Facebook/Google/Twitter, your friends will automaticaly follow you.</p>
+    {% else %}
+        <p class="tooltipTitle">Login/Signup</p>
+        <p>By using Facebook, Google or Twitter Signup you can automatically connnect with your friends who are already onboard.</p>
         <p>We promise that we will not post anything on your wall!</p>
+    {% endif %}
         <br>
         <a href="javascript:;" class="prev-step" style="float:left;">Prev Step</a>
         <a href="javascript:;" class="next-step" style="float:right;">Next Step</a>

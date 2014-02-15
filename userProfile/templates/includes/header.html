@@ -38,7 +38,7 @@
     </div>
     <div class="row whiteSpace">
         {% if request.user.is_authenticated %}
-            <div class="offset6 span5">
+            <div class="offset6 span5" id="loginWidget">
                 {% comment %}
                 <span class="pull-right">
                     <a href="{% url "messages_inbox" %}">
@@ -114,7 +114,7 @@
 <!--                    <span class="socialLogin googleLogin pull-right" style="margin-top:10px;">
                    </span> -->
                 </a>
-                <a id="fbLogin" href="{% url "socialauth_begin" "facebook" %}" title="{% trans "Connect with Facebook" %}" class="zocial facebook pull-right">
+                <a id="loginWidget" href="{% url "socialauth_begin" "facebook" %}" title="{% trans "Connect with Facebook" %}" class="zocial facebook pull-right">
                     {% trans "Connect with Facebook" %}
 <!--                     <span class="socialLogin facebookLogin pull-right" style="margin-top:10px;">
                     </span> -->
