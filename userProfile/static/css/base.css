@@ -874,11 +874,13 @@ a.shareObject {
 	box-sizing: border-box;
 }
 .searchResultRatingSmall {
-	width:19px;
-	height:13px;
-	line-height: 13px;
-	padding: 4px 0px 1px 5px;
+	font-size: 13px;
+	width: 28px;
+	height: 28px;
+	line-height: 28px;
 	display: inline-block;
+	float: right;
+	text-align: center;
 }
 .searchResultRatingScheme {
 	background-attachment: scroll;
@@ -1663,4 +1665,11 @@ ul#footer-links li {
 .fancybox-data-loader {
 	text-align:center;
 	height:100%;
+}
+.next-step, .prev-step{
+	color: rgb(2, 151, 149); !important;
+}
+.next-step:hover, .prev-step:hover{
+	color: #66cc00 !important;
+	text-decoration: none !important;
 }

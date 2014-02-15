@@ -1,6 +1,7 @@
 {% load activity_tags i18n %}
 {% load userProfile_tags static %}
 
+{% get_owned_blog request.user as blog %}
 <div class="row topHalfGutter">
     <div class="span7">
         <div class="row">
@@ -82,5 +83,75 @@
 			</div>
 		</div>
         {% endif %}
+    </div>
+</div>
+{% if blog %}
+<div id="walkthroughloggedinStore">
+{% else %}
+<div id="walkthroughloggedin">
+{% endif %}
+    <div id="type-modal" style="display:none;">
+        <p class="tooltipTitle">WishRadio Activity Page Walkthrough!</p> 
+        <p>Please follow the steps for a WishRadio journey.</p>
+        <p>We promise we will ask you only once.</p>
+        <br>
+        <a href="javascript:;" class="next-step" style="float:right;">Next Step</a>
+    </div>
+    <div id="type-tooltip-post-wish-widget" style="display:none;">
+    {% if blog %}
+        <p class="tooltipTitle">Radio your posts</p>
+        <p>Share your posts &amp; deals to your followers.</p>
+        <p>Make it more interesting by adding URL preivew and Images.</p>
+        <br>
+        <a href="javascript:;" class="prev-step" style="float:left;">Prev Step</a>
+        <a href="javascript:;" class="next-step" style="float:right;">Next Step</a>
+    {% else %}
+        <p class="tooltipTitle">Radio your posts</p>
+        <p>Share your wishes, posts, deals to your friends.</p>
+        <p>Make it more interesting by adding URL preivew and Images.</p>
+        <br>
+        <a href="javascript:;" class="prev-step" style="float:left;">Prev Step</a>
+        <a href="javascript:;" class="next-step" style="float:right;">Next Step</a>
+    {% endif %}
+    </div>
+    <div id="type-tooltip-add-to-wishlist" style="display:none;">
+        {% if blog %}
+            <p class="tooltipTitle">Post as a Deal</p>
+            <p>Post the deals and we will help you to reach out to your customers on WishRadio.</p>
+            <br>
+            <a href="javascript:;" class="prev-step" style="float:left;">Prev Step</a>
+            <a href="javascript:;" class="next-step" style="float:right;">Next Step</a>
+        {% else %}
+            <p class="tooltipTitle">Add to Wishlist</p>
+            <p>You can add your wishes to personal wishlist which will allow your friends to help you fulfil the same.</p>
+            <br>
+            <a href="javascript:;" class="prev-step" style="float:left;">Prev Step</a>
+            <a href="javascript:;" class="next-step" style="float:right;">Next Step</a>
+        {% endif %}
+    </div>
+    <div id="type-tooltip-load-feeds" style="display:none;">
+    {% if blog %}
+        <p class="tooltipTitle">Activity</p>
+        <p>Follow other stores and users to know what they are upto.</p>
+        <p>Scroll down to load more activities.</p>
+        <br>
+        <a href="javascript:;" class="prev-step" style="float:left;">Prev Step</a>
+        <a href="javascript:;" class="next-step" style="float:right;">Next Step</a>        
+    {% else %}
+        <p class="tooltipTitle">Activity</p>
+        <p>Get Updates on what your friends are upto.</p>
+        <p>Follow stores to get the best deals and promotions. Follow your friends to take buying decisions socially.</p>
+        <p>Scroll down to load more activities.</p>
+        <br>
+        <a href="javascript:;" class="prev-step" style="float:left;">Prev Step</a>
+        <a href="javascript:;" class="next-step" style="float:right;">Next Step</a>
+    {% endif %}
+    </div>
+    <div id="done-walkthrough" style="display:none;">
+        <p class="tooltipTitle">And we're done!</p>
+        <p>Click close button to end the walkthrough.</p>
+        <p>Once again, Welcome Onboard!</p>
+        <br>
+        <a href="javascript:;" class="prev-step" style="float:left;">Prev Step</a>
     </div>
 </div>

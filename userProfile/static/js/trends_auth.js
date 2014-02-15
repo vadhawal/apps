@@ -117,4 +117,116 @@ $(document).ready(function(event){
 		var slug = $(this).find("option:selected").text();
 		update_trends_handler_auth(slug);
 	});
+
+    $('#walkthroughloggedin').add('#walkthroughloggedinStore').pagewalkthrough({
+        steps:
+        [
+               {
+                   wrapper: '',
+                   margin: 0,
+                   popup:
+                   {
+                       content: '#type-modal',
+                       type: 'modal',
+                       offsetHorizontal: 0,
+                       offsetVertical: 0,
+                       width: '400'
+                   }        
+               },
+               {
+                   wrapper: '#postWishWidget',
+                   margin: '0',
+                   popup:
+                   {
+                       content: '#type-tooltip-post-wish-widget',
+                       type: 'tooltip',
+                       position: 'bottom',
+                       offsetHorizontal: 0,
+                       offsetVertical: 0,
+                       width: '500'
+                   } ,
+                   autoScroll: false    
+               },
+               {
+                   wrapper: '#addToWishList',
+                   margin: '0',
+                   popup:
+                   {
+                       content: '#type-tooltip-add-to-wishlist',
+                       type: 'tooltip',
+                       position: 'bottom',
+                       offsetHorizontal: 0,
+                       offsetVertical: 0,
+                       width: '500'
+                   } ,
+                   autoScroll: false    
+               },
+               {
+                   wrapper: '#load-feeds',
+                   margin: '0',
+                   popup:
+                   {
+                       content: '#type-tooltip-load-feeds',
+                       type: 'tooltip',
+                       position: 'top',
+                       offsetHorizontal: 0,
+                       offsetVertical: 0,
+                       width: '500',
+                       contentRotation: 10
+                   } ,
+                   autoScroll: true    
+               },
+               {
+                   wrapper: '',
+                   margin: '0',
+                   popup:
+                   {
+                       content: '#done-walkthrough',
+                       type: 'modal',
+                       position: '',
+                       offsetHorizontal: 0,
+                       offsetVertical: 0,
+                       width: '400',
+                   }             
+               },
+        ],
+        name: 'WalkthroughLoggedin',
+        onLoad: true,
+        onClose: function(){
+            $('.main-menu ul li a#open-walkthrough').removeClass('active');
+            return true;
+        },
+        onCookieLoad: function(){
+            return true;
+        }
+
+    });
+        $('.main-menu ul li a').each(function(){
+          $('.main-menu ul li').find('a.active').removeClass('active');
+          $(this).live('click', function(){
+              $(this).addClass('active');
+              var id = $(this).attr('id').split('-');
+
+              if(id == 'parameters') return;
+
+              $.pagewalkthrough('show', id[1]); 
+          });
+      });
+
+
+      $('.prev-step').live('click', function(e){
+          $.pagewalkthrough('prev',e);
+      });
+
+      $('.next-step').live('click', function(e){
+          $.pagewalkthrough('next',e);
+      });
+
+      $('.restart-step').live('click', function(e){
+          $.pagewalkthrough('restart',e);
+      });
+
+      $('.close-step').live('click', function(e){
+          $.pagewalkthrough('close');
+      });
 });

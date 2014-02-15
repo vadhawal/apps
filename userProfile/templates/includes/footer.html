@@ -9,7 +9,9 @@
                         <div class="row">
                             <div class="span3_5">
                                 <button class="footerElementHeight fontTitillium pagination-left makeButton colorWhite">
-                                    {% trans "ABOUT Wish Radio" %}
+                                    <a class="colorWhite" target="_blank" href="{% url 'about_us' %}">
+                                    {% trans "ABOUT Us" %}
+                                    </a>
                                 </button>
                             </div>
                         </div>
@@ -31,9 +33,11 @@
                     </div>
                     <div class="span3_5">
                         <ul style="position:relative;list-style:none;display:none;">
+                            {% comment %}
                             <li class="colorYellow fontSize15 fontTitillium1" style="margin-left:auto; margin-right:auto;">
                                 {% trans "The Wish Radio " %}<span class="colorWhite">{% trans "hint spot" %}</span>{% trans " will help you use our site better till you know us inside out. Click on the dot to get tips." %}
                             </li>
+                            {% endcomment %}
                         <ul>
                     </div>
                     <div class="span3 colorWhite fontSize13 halfGutterRight pull-right">
@@ -72,8 +76,10 @@
 			        <div class="row">
 			            <div class="halfGutter">
 							<ul id="footer-links" class="clear">
+                                {% comment %}
                                 <li><a class="colorWhite" rel="nofollow" href="{% url 'about_us' %}" target="_blank">About Us</a></li>
-							    <li><a class="colorWhite fullGutter" rel="nofollow" href="{% url 'privacy_policy' %}" target="_blank">Privacy Policy</a></li>
+                                {% endcomment %}
+							    <li><a class="colorWhite" rel="nofollow" href="{% url 'privacy_policy' %}" target="_blank">Privacy Policy</a></li>
 							    <li><a class="colorWhite fullGutter" rel="nofollow" href="{% url 'terms_and_conditions' %}" target="_blank">Terms & Conditions</a></li>
 							</ul>
 						</div>
