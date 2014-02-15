@@ -873,11 +873,20 @@ a.shareObject {
 	padding: 10px 15px;
 	box-sizing: border-box;
 }
-.searchResultRatingSmall {
-	font-size: 13px;
-	width: 28px;
+ .searchResultRatingSmall {
+	width:19px;
+	height:13px;
+	line-height: 13px;
+	padding: 4px 0px 1px 5px;
+  	display: inline-block;
+}
+.height28{
 	height: 28px;
 	line-height: 28px;
+}
+.searchResultRatingMedium {
+	font-size: 13px;
+	width: 28px;
 	display: inline-block;
 	text-align: center;
 }

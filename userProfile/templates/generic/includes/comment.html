@@ -25,10 +25,10 @@
                             </div>
                             {% if comment.title %}
                                 <div class="row">
-                                    <div class="span6 fontSize13">
+                                    <div class="span6 fontSize13 height28">
                                         {{comment.title}}
                                         {% if comment.overall_value %}
-                                            <span class="searchResultRatingSmall pull-right fontSize9 fontHelvetica searchResultRatingScheme rating-{{comment.overall_value|floatformat:"0"}}" style="display:inline-block;">{{comment.overall_value|floatformat:"1"}}
+                                            <span class="searchResultRatingMedium pull-right fontSize9 fontHelvetica searchResultRatingScheme rating-{{comment.overall_value|floatformat:"0"}}">{{comment.overall_value|floatformat:"1"}}
                                             </span>
                                         {% endif %}
                                     </div>
