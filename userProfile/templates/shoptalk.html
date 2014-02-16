@@ -20,6 +20,10 @@
 {% endblock %}
 
 {% block extra_js %}
+    <script type="text/javascript">
+        var sIndex = 0;
+        var lIndex = 20;
+    </script>
     {% compress js %}
         <script src="{% static "js/jquery.mousewheel.js" %}"></script>
         <script src="{% static "js/jquery.form.js" %}"></script>
@@ -41,11 +45,6 @@
         {% endcompress %}
 
         {% include 'js/index_noauth.js.html' %}
-
-        <script type="text/javascript">
-            var sIndex = 0;
-            var lIndex = 20;
-        </script>
 
         {% compress js %}
             <script type="text/javascript">
