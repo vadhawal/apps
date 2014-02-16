@@ -173,7 +173,7 @@ $(document).ready(function(event){
                        offsetHorizontal: 0,
                        offsetVertical: 0,
                        width: '500',
-                       contentRotation: 10
+                       contentRotation: 5
                    } ,
                    autoScroll: true    
                },

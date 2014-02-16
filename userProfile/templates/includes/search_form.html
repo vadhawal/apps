@@ -1,7 +1,7 @@
 {% load mezzanine_tags i18n future %}
 
 <form action="{% url "search" %}" class="searchbox">
-    <input class="search-query" placeholder="{% trans "Search for stores, products and services" %}" type="text" name="q" value="{{ request.REQUEST.q }}">
+    <input class="search-query" placeholder="{% trans "Search for online stores, products and services" %}" type="text" name="q" value="{{ request.REQUEST.q }}">
 
     {% if search_model_choices %}
         {% if search_model_choices|length == 1 %}
