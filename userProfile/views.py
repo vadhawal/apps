@@ -658,7 +658,13 @@ def get_filtered_deallist(request, store_id, sub_category, sIndex, lIndex):
 	l = (int)(""+lIndex)
 
 	if deals_queryset:
-		deals_queryset = deals_queryset.order_by('-timestamp')[s:l]
+		model_type = ContentType.objects.get_for_model(BroadcastDeal)
+		table_name = Broadcast._meta.db_table
+
+		deals_queryset = deals_queryset.extra(select={
+			'score': 'SELECT COALESCE(SUM(vote),0) FROM %s WHERE content_type_id=%d AND object_id=%s.id' % (Vote._meta.db_table, int(model_type.id), table_name),
+			'sharecount': "SELECT COALESCE(COUNT(*),0) FROM %s WHERE verb='%s' AND target_content_type_id=%d AND target_object_id::int=%s.id" % (Action._meta.db_table, settings.SHARE_VERB, int(model_type.id), table_name)
+		}).order_by('-score', '-sharecount', '-timestamp',)
 
 	isVertical = request.GET.get('v', '0')
 	template = 'wish/deallist.html'
@@ -666,8 +672,23 @@ def get_filtered_deallist(request, store_id, sub_category, sIndex, lIndex):
 		template = 'wish/deallist_v.html'
 
 	context = RequestContext(request)
-	context.update({'deal_list': deals_queryset,
-					'is_incremental': True})
+	context.update({'deal_list': deals_queryset})
+
+	if s == 0:
+		data_href = reverse('get_filtered_deallist', kwargs={'store_id':store_id,
+															'sub_category':sub_category,
+															'sIndex':s,
+															'lIndex':l})
+		data_chunk = settings.DEALS_NUM_LATEST
+
+		context.update({'is_incremental': False,
+						'data_href' : data_href,
+						'data_chunk': data_chunk})
+
+	else:
+		context.update({'is_incremental': True})
+
+
 	if deals_queryset:
 		ret_data = {
 			'html': render_to_string(template, context_instance=context).strip(),

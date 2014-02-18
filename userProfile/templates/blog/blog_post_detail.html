@@ -44,19 +44,30 @@
         install_voting_handlers();
         install_review_voting_handler();
         install_review_handlers();
-        var getDealList = function(){
-                $('#load-deals').html("");
-                {% get_deallist_url blog_post 0 10 as wishlisturl %}
-                var link = "{{wishlisturl}}";
-                $.get(link, {}, function(data) {
-                    $('#load-deals').html(data);
-                    install_voting_handlers($('#load-deals'));
-                    install_review_voting_handler($('#load-deals'));
-                    $('.shareDeal').on('click', sharewish_handler);
-                });  
+
+        var get_deallist_stores = function() {
+            var link = "{% url 'get_filtered_deallist' blog_post.id 'All' 0 'DEALS_NUM_LATEST'|settings_value %}";
+            link = link + '?v=1';
+            $.get(link, {}, function(data) {
+                if(data.success === true) {
+                    var $relatedDeals = $('#topDealsForStore');
+                    $relatedDeals.html(data.html);
+                    setupCustomScrollBar($relatedDeals);
+                    install_voting_handlers($relatedDeals);
+                    install_share_object_handler($relatedDeals);
+
+                    $('a.wishimg-deal-homepage').fancybox({
+                        scrolling: 'yes',
+                        minWidth: 500,
+                        minHeight:450,
+                        autoSize: true,
+                        helpers : { overlay : { locked : false } }
+                    });
+                }
+            }); 
         }
-        
-        getDealList(); 
+
+        get_deallist_stores();
 
         var get_related_stores = function() {
             var link = "{% url 'get_related_stores' blog_post.id 'All' 0 'MIN_STORES_HOME_PAGE'|settings_value %}";
@@ -150,7 +161,12 @@
                 </h2>
                 <div class="accordion-content">
                     <div id="topDealsForStore">
-                        {% render_deals_for_stores blog_post.id 'All' 'MIN_DEALS_HOME_PAGE'|settings_value 'vertical' %}
+                        <div class="row vendorResult loader">
+                            <div class="span3">
+                                <img src="{% static 'img/loading.gif' %}">
+                            </div>
+                        </div>
+                        {#% render_deals_for_stores blog_post.id 'All' 'MIN_DEALS_HOME_PAGE'|settings_value 'vertical' %#}
                     </div>
                     <div class="">
                     </div>
@@ -162,6 +178,11 @@
                 </h2>
                 <div class="accordion-content"> 
                     <div id="topRelatedStoreForStore">
+                    <div class="row vendorResult loader">
+                        <div class="span3">
+                            <img src="{% static 'img/loading.gif' %}">
+                        </div>
+                    </div>
                         {#% render_related_stores blog_post.id 'All' 'MIN_STORES_HOME_PAGE'|settings_value 'vertical' %#}
                     </div>
                     <div class="">
