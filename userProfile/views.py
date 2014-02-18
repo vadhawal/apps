@@ -668,6 +668,8 @@ def get_filtered_deallist(request, store_id, sub_category, sIndex, lIndex):
 			'sharecount': "SELECT COALESCE(COUNT(*),0) FROM %s WHERE verb='%s' AND target_content_type_id=%d AND target_object_id::int=%s.id" % (Action._meta.db_table, settings.SHARE_VERB, int(model_type.id), table_name)
 		}).order_by('-score', '-sharecount', '-timestamp',)
 
+		deals_queryset = deals_queryset[s:l]
+
 	isVertical = request.GET.get('v', '0')
 	template = 'wish/deallist.html'
 	if isVertical == '1':
