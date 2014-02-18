@@ -799,8 +799,19 @@ def get_related_stores(request, store_id, sub_category, sIndex, lIndex):
 			template = 'generic/vendor_list_v.html'
 
 		context = RequestContext(request)
-		context.update({'vendors': blogPostQueryset,
-						'is_incremental': True})
+		context.update({'vendors': blogPostQueryset})
+
+		if s == 0:
+			data_href = reverse('get_related_stores', kwargs={'store_id':store_id,
+																'sub_category':sub_category,
+																'sIndex':s,
+																'lIndex':l})
+			data_chunk = settings.STORES_NUM_LATEST
+
+			context.update({'is_incremental': False,
+							'data_href' : data_href,
+							'data_chunk': data_chunk})
+
 		if blogPostQueryset:
 			ret_data = {
 				'html': render_to_string(template, context_instance=context).strip(),
