@@ -15,19 +15,13 @@ var get_filtered_deals_handler = function(sub_category)
 	new_url += "?v=1";
     
     var $element = $('#topDealsForStore');
-    var $scrollContainer = $element.find(".scrollContainer");
-    if ($scrollContainer && $scrollContainer.hasClass('mCustomScrollbar')) { 
-      $scrollContainer.mCustomScrollbar("scrollTo","top");
-    }
+
     $element.next().addClass("overlay");
     $.get(new_url, {}, function(data) {
             if(data.success === true) {
-                $deal_container = $scrollContainer.find('.mCSB_container');
-                $deal_container.html(data.html);
-                install_voting_handlers($deal_container);
-                install_share_object_handler($deal_container);
-
-                $scrollContainer.attr("data-href", new_url);
+                $element.html(data.html);
+                install_voting_handlers($element);
+                install_share_object_handler($element);
 
                 $('a.wishimg-deal-homepage').fancybox({
     				scrolling: 'yes',
@@ -36,10 +30,9 @@ var get_filtered_deals_handler = function(sub_category)
     				autoSize: true,
     				helpers : { overlay : { locked : false } }
                 });
-            } else {
-                $scrollContainer.removeAttr("data-href");
             }
-        $element.next().removeClass("overlay");
+            $element.next().removeClass("overlay");
+            setupCustomScrollBar($element);
        });
     return false;
 }
@@ -50,22 +43,15 @@ var get_related_stores_handler = function(sub_category)
 		new_url += "?v=1";
 
     var $element = $('#topRelatedStoreForStore');
-    var $scrollContainer = $element.find(".scrollContainer");
-    
-    if ($scrollContainer && $scrollContainer.hasClass('mCustomScrollbar')) { 
-      $scrollContainer.mCustomScrollbar("scrollTo","top");
-    }
+
     $element.next().addClass("overlay");
     $.get(new_url, {}, function(data) {
         if(data.success === true) {
-            $deal_container = $scrollContainer.find('.mCSB_container');
-            $deal_container.html(data.html);
-            $scrollContainer.attr("data-href", new_url);
-            $scrollContainer.find('.vendorFollowers').on("click", display_popup_handler);
-        } else {
-            $scrollContainer.removeAttr("data-href");
-        }
+            $element.html(data.html);
+            $element.find('.vendorFollowers').on("click", display_popup_handler);
+        } 
         $element.next().removeClass("overlay");
+        setupCustomScrollBar($element);
     });
    	return false;
 }
