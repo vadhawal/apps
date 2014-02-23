@@ -532,7 +532,7 @@ def render_reviews_for_user(context, user, latest=settings.MIN_REVIEWS_FOR_USER,
 
     template = loader.get_template(template_name)
     ctype = ContentType.objects.get_for_model(BlogPost)
-    reviews_queryset = Review.objects.filter(user=user, content_type=ctype)
+    reviews_queryset = Review.objects.filter(user=user, content_type=ctype).order_by('-submit_date')
     reviews_list = reviews_queryset[:latest]
 
     data_href = reverse('getUserReviews', kwargs={'user_id':user.id,
