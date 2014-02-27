@@ -1687,3 +1687,11 @@ ul#footer-links li {
 	color: #66cc00 !important;
 	text-decoration: none !important;
 }
+.text-justify {
+	text-align: justify;
+}
+.disclaimer {
+	font-size: 12px;
+	font-family: titillium2, helvetica;
+	color: #A1A198;
+}
