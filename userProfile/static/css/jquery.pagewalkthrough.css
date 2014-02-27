@@ -276,13 +276,13 @@
     font-family: 'GochiHand';
     color: #fff;
     text-align: center;
-    font-size: 16px;
+    font-size: 20px;
 }
 
 #jpWalkthrough #jpwTooltip #tooltipInner a{
-    font-size: 16px;
+    font-size: 35px;
 }
 
 #jpWalkthrough #jpwTooltip #tooltipInner .tooltipTitle{
-    font-size: 40px;
+    font-size: 35px;
 }
