@@ -5,7 +5,7 @@
 {% load hitcount_tags %}
 {% load blog_tags %}
 {% load activity_tags %}
-{% block meta_title %}{{ blog_post.meta_title|title }} {{blog_post.overall_average }} {% endblock %}
+{% block meta_title %}{{ blog_post.meta_title|title }} {{blog_post.overall_average|floatformat:"1" }} {% endblock %}
 
 {% block meta_keywords %}{% metablock %}
 {% keywords_for blog_post as tags %}
@@ -121,6 +121,9 @@
                        console.log(ret_data); 
                 }
             });
+        {% endif %}
+        {% if request.session.unauthenticated_write_review %}
+            $('.writeReview').first().click();
         {% endif %}
     });
 </script>

@@ -5,16 +5,16 @@
 {% else %}
 	<div class="loginPopup">
 		<div class="fontTitillium1 socialLoginForm fontSize13 color5D">
-			<a href="{% url "socialauth_begin" "facebook" %}" class="zocial facebook">
+			<a href="{% url "socialauth_begin" "facebook" %}?next={{ next }}" class="zocial facebook">
 				{% trans "Log in with Facebook" %}
 <!--                 <span class="socialLogin facebookLogin" style="margin-top:10px;">
                 </span> -->
             </a>
-            <a href="{% url "socialauth_begin" "google-oauth2" %}" class="zocial googleplus icon" >
+            <a href="{% url "socialauth_begin" "google-oauth2" %}?next={{ next }}" class="zocial googleplus icon" >
 <!--                <span class="socialLogin googleLogin" style="margin-top:10px;">
                </span> -->
             </a>
-            <a href="{% url "socialauth_begin" "twitter" %}" class="zocial twitter icon">
+            <a href="{% url "socialauth_begin" "twitter" %}?next={{ next }}" class="zocial twitter icon">
 <!--                 <span class="socialLogin twitterLogin" style="margin-top:10px;">
                 </span> -->
             </a>
