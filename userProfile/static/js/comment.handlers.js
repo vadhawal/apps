@@ -69,36 +69,37 @@ var comment_on_object_handler = function(event){
     return false;
 };
 
+var afterShowReviewFormCallback = function() {
+                            var $reviewFormContainer = $('.fancybox-inner').find('.review_on_object');
+                            $reviewFormContainer.submit(review_submit_handler);
+
+                            var value = parseInt($('[name="overall_value"]').val());
+                            makeSlider($('.overall_value'), $('[name="overall_value"]'), value);
+
+                            value = parseInt($('[name="price_value"]').val());
+                            makeSlider($('.price_value'), $('[name="price_value"]') ,value);
+
+                            value = parseInt($('[name="website_ex_value"]').val());
+                            makeSlider($('.website_ex_value'), $('[name="website_ex_value"]'), value);
+
+                            value = parseInt($('[name="quality_value"]').val())
+                            makeSlider($('.quality_value'), $('[name="quality_value"]'), value);
+
+                            value = parseInt($('[name="service_value"]').val())
+                            makeSlider($('.service_value'), $('[name="service_value"]'), value);
+
+                            value = parseInt($('[name="exchange_value"]').val())
+                            makeSlider($('.exchange_value'), $('[name="exchange_value"]'), value);
+                        };
+
 var edit_review_handler = function(event) {
 	if(login_required_handler())
         return false;
 
     var $url = $(this).data("href");
-    var afterShowCallback = function() {
-                                var $reviewFormContainer = $('.fancybox-inner').find('.review_on_object');
-                                $reviewFormContainer.submit(review_submit_handler);
-
-                                var value = parseInt($('[name="overall_value"]').val());
-                                makeSlider($('.overall_value'), $('[name="overall_value"]'), value);
-
-                                value = parseInt($('[name="price_value"]').val());
-                                makeSlider($('.price_value'), $('[name="price_value"]') ,value);
-
-                                value = parseInt($('[name="website_ex_value"]').val());
-                                makeSlider($('.website_ex_value'), $('[name="website_ex_value"]'), value);
-
-                                value = parseInt($('[name="quality_value"]').val())
-                                makeSlider($('.quality_value'), $('[name="quality_value"]'), value);
-
-                                value = parseInt($('[name="service_value"]').val())
-                                makeSlider($('.service_value'), $('[name="service_value"]'), value);
-
-                                value = parseInt($('[name="exchange_value"]').val())
-                                makeSlider($('.exchange_value'), $('[name="exchange_value"]'), value);
-                            };
 
     var title = $(this).data('title');
-    doOpenUrlWithAjaxFancyBox($url, afterShowCallback, title, 'visible');
+    doOpenUrlWithAjaxFancyBox($url, afterShowReviewFormCallback, title, 'visible');
     return false;
 };
 
@@ -128,29 +129,16 @@ var makeSlider = function($element, $serialize_to, start_val) {
 }
 
 var write_review_handler = function(event) {
-	if(login_required_handler())
-        return false;
-
     var $url = $(this).data("href");
-    var afterShowCallback = function() {
-                                var $reviewFormContainer = $('.fancybox-inner').find('.review_on_object');
-                                $reviewFormContainer.submit(review_submit_handler);
-                                makeSlider($('.overall_value'), $('[name="overall_value"]'), 0);
-                                makeSlider($('.price_value'), $('[name="price_value"]'), 0);
-                                makeSlider($('.website_ex_value'), $('[name="website_ex_value"]'), 0);
-                                makeSlider($('.quality_value'), $('[name="quality_value"]'), 0);
-                                makeSlider($('.service_value'), $('[name="service_value"]'), 0);
-                                makeSlider($('.exchange_value'), $('[name="exchange_value"]'), 0);
-                            };
 
     var title = $(this).data('title');
-    doOpenUrlWithAjaxFancyBox($url, afterShowCallback, title, 'visible');
+    doOpenUrlWithAjaxFancyBox($url, afterShowReviewFormCallback, title, 'visible');
     return false;
 };
 
 var review_submit_handler = function(){
-        if(login_required_handler())
-            return false;
+        // if(login_required_handler())
+        //     return false;
         var $form = $(this);
         $('.fancybox-inner img.loader').removeClass("hide");
         $('.fancybox-inner .rateStoreNow').addClass("hide");
@@ -182,18 +170,24 @@ var review_submit_handler = function(){
                     $.fancybox.close();
                 }
                 else {
-                    var errors = ret_data.errors;
-                    $('.fancybox-inner').find('.error').removeClass('error');
-                    $.each( errors, function( key, value ) {
-                        var $element = $('.fancybox-inner').find('.' + key);
-                        if ($element.length == 0) {
-                            $('.fancybox-inner').find('[name="' + key + '"]').closest('.controls').find(".label_text").addClass('error');
-                        } else {
-                            $element.closest('.controls').find(".label_text").addClass('error');
-                        }
-                    });
-                    $('.fancybox-inner img.loader').addClass("hide");
-                    $('.fancybox-inner .rateStoreNow').removeClass("hide");
+                    if (ret_data.error_code === 405) {
+                        var $query = '#review_pending';
+                        if(login_required_handler($query))
+                            return false;
+                    } else {
+                        var errors = ret_data.errors;
+                        $('.fancybox-inner').find('.error').removeClass('error');
+                        $.each( errors, function( key, value ) {
+                            var $element = $('.fancybox-inner').find('.' + key);
+                            if ($element.length == 0) {
+                                $('.fancybox-inner').find('[name="' + key + '"]').closest('.controls').find(".label_text").addClass('error');
+                            } else {
+                                $element.closest('.controls').find(".label_text").addClass('error');
+                            }
+                        });
+                        $('.fancybox-inner img.loader').addClass("hide");
+                        $('.fancybox-inner .rateStoreNow').removeClass("hide");
+                    }
                 }
             },
             error: function(data) {
