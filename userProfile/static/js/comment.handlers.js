@@ -70,27 +70,52 @@ var comment_on_object_handler = function(event){
 };
 
 var afterShowReviewFormCallback = function() {
-                            var $reviewFormContainer = $('.fancybox-inner').find('.review_on_object');
-                            $reviewFormContainer.submit(review_submit_handler);
+    var $reviewFormContainer = $('.fancybox-inner').find('.review_on_object');
+    $reviewFormContainer.submit(review_submit_handler);
 
-                            var value = parseInt($('[name="overall_value"]').val());
-                            makeSlider($('.overall_value'), $('[name="overall_value"]'), value);
+    var $overallValue = $('[name="overall_value"]');
+    var value = parseInt($overallValue.val());
+    makeSlider($('.overall_value'), $overallValue, value);
+    if($overallValue.hasClass('error')) {
+        $('.overall_value').parent().find('.label_text').addClass('error');
+    }
 
-                            value = parseInt($('[name="price_value"]').val());
-                            makeSlider($('.price_value'), $('[name="price_value"]') ,value);
+    var $priceValue = $('[name="price_value"]');
+    value = parseInt($priceValue.val());
+    makeSlider($('.price_value'), $priceValue ,value);
+    if($priceValue.hasClass('error')) {
+        $('.price_value').parent().find('.label_text').addClass('error');
+    }
 
-                            value = parseInt($('[name="website_ex_value"]').val());
-                            makeSlider($('.website_ex_value'), $('[name="website_ex_value"]'), value);
+    var $websiteExValue = $('[name="website_ex_value"]');
+    value = parseInt($websiteExValue.val());
+    makeSlider($('.website_ex_value'), $websiteExValue, value);
+    if($websiteExValue.hasClass('error')) {
+        $('.website_ex_value').parent().find('.label_text').addClass('error');
+    }
 
-                            value = parseInt($('[name="quality_value"]').val())
-                            makeSlider($('.quality_value'), $('[name="quality_value"]'), value);
+    var $qualityValue = $('[name="quality_value"]');
+    value = parseInt($qualityValue.val());
+    makeSlider($('.quality_value'), $qualityValue, value);
+    if($qualityValue.hasClass('error')) {
+        $('.quality_value').parent().find('.label_text').addClass('error');
+    }
 
-                            value = parseInt($('[name="service_value"]').val())
-                            makeSlider($('.service_value'), $('[name="service_value"]'), value);
+    var $serviceValue = $('[name="service_value"]');
+    value = parseInt($serviceValue.val());
+    makeSlider($('.service_value'), $serviceValue, value);
+    if($serviceValue.hasClass('error')) {
+        $('.service_value').parent().find('.label_text').addClass('error');
+    }
 
-                            value = parseInt($('[name="exchange_value"]').val())
-                            makeSlider($('.exchange_value'), $('[name="exchange_value"]'), value);
-                        };
+    var $exchangeValue = $('[name="exchange_value"]');
+    value = parseInt($exchangeValue.val());
+    makeSlider($('.exchange_value'), $exchangeValue, value);
+    if($exchangeValue.hasClass('error')) {
+        $('.exchange_value').parent().find('.label_text').addClass('error');
+    }
+
+};
 
 var edit_review_handler = function(event) {
 	if(login_required_handler())
