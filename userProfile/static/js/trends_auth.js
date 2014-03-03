@@ -167,7 +167,7 @@ $(document).ready(function(event){
                    margin: '0',
                    popup:
                    {
-                       content: '#type-tooltip-load-feeds',
+                       content: '#done-walkthrough',
                        type: 'tooltip',
                        position: 'top',
                        offsetHorizontal: 0,
@@ -176,20 +176,7 @@ $(document).ready(function(event){
                        contentRotation: 5
                    } ,
                    autoScroll: true    
-               },
-               {
-                   wrapper: '',
-                   margin: '0',
-                   popup:
-                   {
-                       content: '#done-walkthrough',
-                       type: 'modal',
-                       position: '',
-                       offsetHorizontal: 0,
-                       offsetVertical: 0,
-                       width: '400',
-                   }             
-               },
+               }
         ],
         name: 'WalkthroughLoggedin',
         onLoad: true,

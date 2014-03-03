@@ -154,25 +154,11 @@ $(document).ready(function(event) {
                    autoScroll: true    
                },
                {
-                   wrapper: '#searchByTag',
+                   wrapper: '#searchStoreBar',
                    margin: '0',
                    popup:
                    {
-                       content: '#type-tooltip-search-tag',
-                       type: 'tooltip',
-                       position: 'bottom',
-                       offsetHorizontal: 0,
-                       offsetVertical: 0,
-                       width: '500',
-                   } ,
-                   autoScroll: true    
-               },
-               {
-                   wrapper: '#searchByCategory',
-                   margin: '0',
-                   popup:
-                   {
-                       content: '#type-tooltip-search-category',
+                       content: '#type-tooltip-search-store',
                        type: 'tooltip',
                        position: 'bottom',
                        offsetHorizontal: 0,
@@ -195,48 +181,6 @@ $(document).ready(function(event) {
                    } ,
                    autoScroll: true    
                },
-               {
-                   wrapper: '#topStoresForStoreCategory',
-                   margin: '0',
-                   popup:
-                   {
-                       content: '#type-tooltip-top-stores',
-                       type: 'tooltip',
-                       position: 'right',
-                       offsetHorizontal: 0,
-                       offsetVertical: 0,
-                       width: '400',
-                   } ,
-                   autoScroll: true    
-               },
-               {
-                   wrapper: '#topReviewsForStoreCategory',
-                   margin: '0',
-                   popup:
-                   {
-                       content: '#type-tooltip-top-reviews',
-                       type: 'tooltip',
-                       position: 'left',
-                       offsetHorizontal: 0,
-                       offsetVertical: 0,
-                       width: '500',
-                   } ,
-                   autoScroll: true    
-               },
-               {
-                   wrapper: '#topDealsForStoreCategory',
-                   margin: '0',
-                   popup:
-                   {
-                       content: '#type-tooltip-top-deals',
-                       type: 'tooltip',
-                       position: 'top',
-                       offsetHorizontal: 0,
-                       offsetVertical: 0,
-                       width: '500',
-                   } ,
-                   autoScroll: true    
-               }, 
                {
                    wrapper: '',
                    margin: '0',

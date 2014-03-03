@@ -109,7 +109,7 @@
     {% if request.user.is_authenticated %}
         <p class="tooltipTitle">Login/Signup</p>
         <p>You are already logged in! Start following friends and stores.</p>
-        <p>If you have logged in with Facebook/Google/Twitter, your friends will automaticaly follow you.</p>
+        <p>If you have logged in with Facebook, Google or Twitter, your friends will automaticaly follow you.</p>
     {% else %}
         <p class="tooltipTitle">Login/Signup</p>
         <p>Signing up using Facebook, Google or Twitter would instantly connect you with your friends on Wish Radio. And that would be the end of any sense of loneliness that might have hit you otherwise. </p>
@@ -119,16 +119,11 @@
         <a href="javascript:;" class="prev-step" style="float:left;">Prev Step</a>
         <a href="javascript:;" class="next-step" style="float:right;">Next Step</a>
     </div>
-    <div id="type-tooltip-search-tag" style="display:none;">
-        <p class="tooltipTitle">Search Bar</p>
-        <p>When you use this search to find online stores, products or services, we will achieve a lot of what we set out to do. It's programmed to list the most appropriate online stores to find what you're looking for.</p>
-        <br>
-        <a href="javascript:;" class="prev-step" style="float:left;">Prev Step</a>
-        <a href="javascript:;" class="next-step" style="float:right;">Next Step</a>
-    </div>
-    <div id="type-tooltip-search-category" style="display:none;">
-        <p class="tooltipTitle">Category Search</p>
-        <p>On days when you can't think of what to search for, use this ready list of categories and sub-categories to find the most appropriate online stores for the selected category.</p>
+    <div id="type-tooltip-search-store" style="display:none;">
+        <p class="tooltipTitle">Search Bar / Category Search</p>
+        <p>Search for the products or services you wish for, to get a list of the most appropriate online stores that sell those. 
+        <br><br>   You can also use this ready list of categories and sub-categories to find the most appropriate online stores for the selected category. 
+        </p>
         <br>
         <a href="javascript:;" class="prev-step" style="float:left;">Prev Step</a>
         <a href="javascript:;" class="next-step" style="float:right;">Next Step</a>
@@ -141,30 +136,10 @@
         <a href="javascript:;" class="prev-step" style="float:left;">Prev Step</a>
         <a href="javascript:;" class="next-step" style="float:right;">Next Step</a>
     </div>
-    <div id="type-tooltip-top-stores" style="display:none;">
-        <p class="tooltipTitle">Trending Stores</p>
-        <p>These stores must have done something right to be here. They're our " Trending Stores" or the ones that users like you have reviewed as the best for the selected category.</p>
-        <br>
-        <a href="javascript:;" class="prev-step" style="float:left;">Prev Step</a>
-        <a href="javascript:;" class="next-step" style="float:right;">Next Step</a>
-    </div>
-    <div id="type-tooltip-top-reviews" style="display:none;">
-        <p class="tooltipTitle">Trending Reviews</p>
-        <p>That's the latest user reviews for stores listed under the selected category.</p>
-        <br>
-        <a href="javascript:;" class="prev-step" style="float:left;">Prev Step</a>
-        <a href="javascript:;" class="next-step" style="float:right;">Next Step</a>
-    </div>
-    <div id="type-tooltip-top-deals" style="display:none;">
-        <p class="tooltipTitle">Category Deals</p>
-        <p>And this is all the deals running on this category across stores. If one of these appeals to you - you know which store to head to. </p>
-        <br>
-        <a href="javascript:;" class="prev-step" style="float:left;">Prev Step</a>
-        <a href="javascript:;" class="next-step" style="float:right;">Next Step</a>
-    </div>
     <div id="done-walkthrough" style="display:none;">
         <p class="tooltipTitle">That's it!</p>
-        <p>With that we're at the end of this walking tour. We hope Wish Radio helps you decide which online stores to head to, for specific products and services. We'd love to hear from you - use the Contact Us tab to tell us what you think. Feedback, suggestions, comments eagerly awaited! </p>
+        <p>With that we're at the end of this walking tour. We hope Wish Radio helps you decide which online stores to head to, for specific products and services. 
+        <br><br>We'd love to hear from you - use the Contact Us tab to tell us what you think. Feedback, suggestions, comments eagerly awaited! </p>
         <br>
         <a href="javascript:;" class="prev-step" style="float:left;">Prev Step</a>
     </div>
