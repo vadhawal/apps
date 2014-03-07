@@ -25,7 +25,7 @@ var get_trending_deals_handler = function(parent_category, sub_category)
                 autoSize: true,
                 helpers : { overlay : { locked : false } }
               });
-
+              $scrollContainer.mCustomScrollbar("update", true);
           } else {
               $scrollContainer.removeAttr("data-href");
           }
