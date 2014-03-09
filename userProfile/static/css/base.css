@@ -1695,3 +1695,6 @@ ul#footer-links li {
 	font-family: titillium2, helvetica;
 	color: #A1A198;
 }
+.input_id_honeypot {
+	display:none !important;
+}

@@ -37,6 +37,7 @@
         </div>
     </div>
     <div class="row whiteSpace">
+
         {% if request.user.is_authenticated %}
             <div class="offset6 span5" id="loginWidget">
                 {% comment %}
@@ -47,6 +48,7 @@
                     </a>
                 </span>
                 {% endcomment %}
+                <button class="shoppedRecently rateStoreNow radioColorBackground colorWhite fontTitillium1 fontSize13" data-href="{% url 'shopped_recently' %}"   title="Write A Review" data-title="Write A Review">{% trans "Shopped recently?" %}</button>
                 <div class="btn-group profileSettings pull-right">
                     <button type="button" class="btn settings dropdown-toggle" data-toggle="dropdown">
                         <img src="{% static 'img/1transparent.png' %}">
@@ -101,7 +103,9 @@
                 </span>
             </div>
         {% else %}
+
             <div class="offset5 span6">
+                <button class="shoppedRecently rateStoreNow radioColorBackground colorWhite fontTitillium1 fontSize13" data-href="{% url 'shopped_recently' %}"   title="Write A Review" data-title="Write A Review">{% trans "Shopped recently?" %}</button>
                 <span class="pull-right">
                     <a class="fontSize13 fontTitillium doLogin" href="{% url "login" %}?next={{ request.get_full_path|urlencode }}">{% trans " Log in" %}</a>
                      | <a class="fontSize13 fontTitillium doSignUp" href="{% url "signup" %}?next={{ request.get_full_path|urlencode }}">{% trans "Sign up" %}</a>
