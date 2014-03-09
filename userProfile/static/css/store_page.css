@@ -217,13 +217,13 @@ div.error, span.error{
 }
 
 @media (max-width: 979px) and (min-width: 768px) {
-	.vendorLogoImage {
+/*	.vendorLogoImage {
 		max-width: 104px;
 	}
 	.vendorLogoImage img {
 		max-width: 96px;
 	}
-}
+*/}
 #fakeselect_featured_image{
 	background-color: white;
 	background-image: url('/static/img/edit.png');
