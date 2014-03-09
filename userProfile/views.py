@@ -1298,6 +1298,15 @@ def autocomplete(request):
 	else:
 		raise Http404()
 
+def autocomplete_stores(request):
+	query = request.GET.get('query', '')
+	stores = BlogPost.objects.filter(title__icontains=query).values_list('title', flat=True)
+	context = {
+				'query':	query,
+				'suggestions': [w.capitalize() for w in stores]
+			}
+	return HttpResponse(json.dumps(context), 'application/json')
+
 def privacy_policy(request, template_name='generic/privacy_policy.html'):
 	return render_to_response(template_name, {
      }, context_instance=RequestContext(request))

@@ -181,11 +181,14 @@ var review_submit_handler = function(){
                         var element_id = $edit_review.data('element-id');
                         $('#'+element_id).replaceWith(ret_data.html);
                     } else {
-                    	if(subcomments_element.hasClass('noReviews')) {
-                    		subcomments_element.removeClass('noReviews');
-                    		subcomments_element.html(ret_data.html);
-                    	} else {
-                        	subcomments_element.prepend(ret_data.html);    
+                        var store_page = $('body').data('store');
+                        if(typeof store_page !== 'undefined' && ret_data.store.toLowerCase() === store_page) {
+                        	if(subcomments_element.hasClass('noReviews')) {
+                        		subcomments_element.removeClass('noReviews');
+                        		subcomments_element.html(ret_data.html);
+                        	} else {
+                            	subcomments_element.prepend(ret_data.html);    
+                            }
                         }                   
                     }
                     install_voting_handlers(subcomments_element);
@@ -196,8 +199,7 @@ var review_submit_handler = function(){
                 }
                 else {
                     if (ret_data.error_code === 405) {
-                        var $query = '#review_pending';
-                        if(login_required_handler($query))
+                        if(login_required_handler())
                             return false;
                     } else {
                         var errors = ret_data.errors;

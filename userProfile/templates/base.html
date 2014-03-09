@@ -26,7 +26,8 @@
 <link rel="stylesheet" href="{% static "css/base.css" %}"/>
 <link rel="stylesheet" href="{% static "css/jquery.fancybox.css" %}"/>
 <link rel="stylesheet" href="{% static "css/tcal.css" %}"/>
-
+<link rel="stylesheet" type="text/css" href="{% static "css/jquery.nouislider.css" %}"/>
+<link rel="stylesheet" type="text/css" href="{% static "css/store_page.css" %}"/>
 {% if LANGUAGE_BIDI %}
 <link rel="stylesheet" href="{% static "css/rtl.css" %}">
 {% endif %}
@@ -237,6 +238,7 @@
 <script src="{% static "js/album.handlers.js" %}"></script>
 <script src="{% static "js/base.js" %}"></script>
 <script src="{% static "js/jquery.autocomplete.js" %}"></script>
+<script src="{% static "js/jquery.nouislider.js" %}"></script>
 {% endcompress %}
 <script type="text/javascript">
         $(document).ready(function(){
@@ -249,7 +251,56 @@
                         deferRequestBy:150};
            $('.search-query').autocomplete(options);
         });
+        $('.shoppedRecently').off('click', shopped_recently_handler).on('click', shopped_recently_handler);
+        
+        {% if request.session.unauthenticated_write_review and request.session.unauthenticated_store_write_review %}
+            $('.shoppedRecently').click();
+        {% endif %}
     });
+
+    var afterShowStoreAutocompleteCallback = function(event) {
+        var options, a;
+        var prev_store_title = ''
+        $(function(){
+           options = { serviceUrl:"{% url 'autocomplete_stores' %}",
+                        width: 'auto',
+                        noCache: false,
+                        deferRequestBy:150,
+                        onSelect: function(data){ 
+                                                    var store_title = data.value;
+                                                    var $reviewContainer = $('.fancybox-inner').find('.reviewContainer');
+                                                    if(prev_store_title !== store_title || $reviewContainer.find('.review_on_object').length === 0) {prev_store_title = store_title;
+                                                        var $review_form_url = "{% url 'write_review' 0 0 %}?store=" + store_title; 
+                                                        $.ajax({
+                                                            type : "GET",
+                                                            url : $review_form_url,
+                                                            success: function(template){
+                                                               $('.fancybox-inner').find('.reviewContainer').html(template);
+                                                               $.fancybox.update();
+                                                               afterShowReviewFormCallback();
+                                                            }
+                                                        });  
+                                                    }       
+                                                }
+                     };
+
+           $('.search-store-query').autocomplete(options);
+
+           {% if request.session.unauthenticated_write_review and request.session.unauthenticated_store_write_review %}
+                $('.search-store-query').val('{{request.session.unauthenticated_store_write_review|title}}');
+                $('.search-store-query').focus();
+           {% endif %}
+
+        });
+    };
+
+    var shopped_recently_handler = function(event) {
+        var $url = $(this).data("href");
+
+        var title = $(this).data('title');
+        doOpenUrlWithAjaxFancyBox($url, afterShowStoreAutocompleteCallback, title, 'visible');
+        return false;
+    };
 </script>
 <!--[if lt IE 9]>
 <script src="{% static "js/html5shiv.js" %}"></script>

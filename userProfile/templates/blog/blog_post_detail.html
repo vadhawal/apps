@@ -23,10 +23,8 @@
 {% block extra_css %}
 {% compress css %}
 <link rel="stylesheet" type="text/css" href="{% static "css/vallenato.css" %}"/>
-<link rel="stylesheet" type="text/css" href="{% static "css/store_page.css" %}"/>
 <link rel="stylesheet" type="text/css" href="{% static "css/searchresults.css" %}"/>
 <link rel="stylesheet" type="text/css" href="{% static "css/imagestore.css" %}"/>
-<link rel="stylesheet" type="text/css" href="{% static "css/jquery.nouislider.css" %}"/>
 {% endcompress %}
 
 {% endblock %}
@@ -35,11 +33,12 @@
 {% compress js %}
 <script src="{% static "js/vallenato.js" %}"></script>
 <script src="{% static "js/album.handlers.js" %}"></script>
-<script src="{% static "js/jquery.nouislider.js" %}"></script>
 {% endcompress %}
 
 <script type="text/javascript">
     $(document).ready(function() {
+        var store_page = '{{blog_post.title|lower}}'; 
+        $('body').data('store', store_page);
         {% get_hit_count_javascript for blog_post %}
         install_voting_handlers();
         install_review_voting_handler();
@@ -122,7 +121,7 @@
                 }
             });
         {% endif %}
-        {% if request.session.unauthenticated_write_review %}
+        {% if request.session.unauthenticated_write_review and not request.session.unauthenticated_store_write_review %}
             $('.writeReview').first().click();
         {% endif %}
     });
