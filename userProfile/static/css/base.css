@@ -163,9 +163,9 @@ a.radioColorBackground:hover{
 	}
 }
 @media (max-width: 979px){ 
-	.navbar-fixed-top, .navbar-fixed-bottom {
+/*	.navbar-fixed-top, .navbar-fixed-bottom {
 		position: fixed;
-	}
+	}*/
 }
 .noGutter {
 	margin-left: 0px;
@@ -1455,7 +1455,7 @@ textarea:focus, input[type=text]:focus{
 	}
 }
 
-@media (max-width: 979px) and (min-width: 768px) {
+@media (max-width: 979px) and (min-width: 768px) {/*
 	.category-all{
 		background-position: -19px -20px;
 	}
@@ -1546,7 +1546,7 @@ textarea:focus, input[type=text]:focus{
 	.category-womens-footwear{
 		background-position: -19px -423px;
 	}
-}
+*/}
 
 .wishradioFooter{
 	padding:28px;
