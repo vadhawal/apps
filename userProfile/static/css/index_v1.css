@@ -1,9 +1,9 @@
 .outerBox {
-	height: 320px;
+	height: 350px;
 	width: 100%;
 }
 .innerBox {
-	height: 260px;
+	height: 290px;
 	overflow: auto;
 }
 
@@ -250,32 +250,4 @@ input#fakeselect.error + span + div{
 div.thirdCategory.imageCategoryBox:hover span{
 	right: 6px;
 	left: auto;
-}
-.showcaseItem{
-	position: relative;
-	display: inline-block;
-	max-height: 212px;
-	height: 236px;
-	width: 506px;
-}
-@media (min-width: 1200px) {
-	.showcaseItem{
-		width: 620px;	
-	}
-}
-.showcaseItem img {
-	height: 100%;
-}
-.showcaseTitle {
-	position: absolute;
-	bottom: 12px;
-	height: 32px;
-	width: 100%;
-	box-sizing: border-box;
-}
-.showcaseTitle span {
-	height: 30px;
-	max-height: 30px;
-	padding: 12px;
-	line-height: 30px;
 }
