@@ -1300,7 +1300,7 @@ def autocomplete(request):
 
 def autocomplete_stores(request):
 	query = request.GET.get('query', '')
-	stores = BlogPost.objects.filter(title__icontains=query).values_list('title', flat=True)
+	stores = BlogPost.objects.published().filter(title__icontains=query).values_list('title', flat=True)
 	context = {
 				'query':	query,
 				'suggestions': [w.capitalize() for w in stores]
