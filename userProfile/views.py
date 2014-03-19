@@ -16,6 +16,7 @@ from django.utils import simplejson
 from django.core.exceptions import MultipleObjectsReturned
 from django.core.files import File
 from django.template import Template
+from django.db.models import Count
 
 from mezzanine.blog.models import BlogPost, BlogCategory, BlogParentCategory
 from mezzanine.generic.models import Review
@@ -454,7 +455,7 @@ def getUserReviews(request, user_id, sIndex=0, lIndex=0):
 			return []
 
 		ctype = ContentType.objects.get_for_model(BlogPost)
-		reviews = Review.objects.filter(user=user_instance, content_type=ctype)
+		reviews = Review.objects.filter(user=user_instance, content_type=ctype).order_by('-submit_date')
 
 		isVertical = request.GET.get('v', '0')
 		template = 'generic/user_reviews.html'
@@ -657,7 +658,15 @@ def get_filtered_deallist(request, store_id, sub_category, sIndex, lIndex):
 	l = (int)(""+lIndex)
 
 	if deals_queryset:
-		deals_queryset = deals_queryset.order_by('-timestamp')[s:l]
+		model_type = ContentType.objects.get_for_model(BroadcastDeal)
+		table_name = Broadcast._meta.db_table
+
+		deals_queryset = deals_queryset.extra(select={
+			'score': 'SELECT COALESCE(SUM(vote),0) FROM %s WHERE content_type_id=%d AND object_id=%s.id' % (Vote._meta.db_table, int(model_type.id), table_name),
+			'sharecount': "SELECT COALESCE(COUNT(*),0) FROM %s WHERE verb='%s' AND target_content_type_id=%d AND target_object_id::int=%s.id" % (Action._meta.db_table, settings.SHARE_VERB, int(model_type.id), table_name)
+		}).order_by('-score', '-sharecount', '-timestamp',)
+
+		deals_queryset = deals_queryset[s:l]
 
 	isVertical = request.GET.get('v', '0')
 	template = 'wish/deallist.html'
@@ -665,8 +674,23 @@ def get_filtered_deallist(request, store_id, sub_category, sIndex, lIndex):
 		template = 'wish/deallist_v.html'
 
 	context = RequestContext(request)
-	context.update({'deal_list': deals_queryset,
-					'is_incremental': True})
+	context.update({'deal_list': deals_queryset})
+
+	if s == 0:
+		data_href = reverse('get_filtered_deallist', kwargs={'store_id':store_id,
+															'sub_category':sub_category,
+															'sIndex':s,
+															'lIndex':l})
+		data_chunk = settings.DEALS_NUM_LATEST
+
+		context.update({'is_incremental': False,
+						'data_href' : data_href,
+						'data_chunk': data_chunk})
+
+	else:
+		context.update({'is_incremental': True})
+
+
 	if deals_queryset:
 		ret_data = {
 			'html': render_to_string(template, context_instance=context).strip(),
@@ -687,7 +711,7 @@ def get_filtered_deallist(request, store_id, sub_category, sIndex, lIndex):
 
 
 def getTrendingStores(request, parent_category, sub_category, sIndex=0, lIndex=0):
-	if request.method == "GET" and request.is_ajax():
+	if request.method == "GET":# and request.is_ajax():
 		latest = settings.STORES_NUM_LATEST
 		blog_parentcategory = None
 		result = None
@@ -701,17 +725,19 @@ def getTrendingStores(request, parent_category, sub_category, sIndex=0, lIndex=0
 
 		blog_subcategory = None
 		blog_subcategory_slug = sub_category
+		table_name = BlogPost._meta.db_table
+
 		if blog_subcategory_slug.lower() != "all" and BlogCategory.objects.all().exists():
 			blog_subcategory = get_object_or_404(BlogCategory, slug=slugify(blog_subcategory_slug))
 		if blog_parentcategory_slug.lower() == "all" and blog_subcategory_slug.lower() == "all":
-			result = BlogPost.objects.published().extra(select={'fieldsum':'price_average + variety_average + quality_average + service_average + exchange_average + overall_average'},order_by=('-fieldsum',)).distinct() #[:latest]
+			result = BlogPost.objects.published()
 		elif blog_parentcategory_slug.lower() != "all" and blog_subcategory_slug.lower() == "all":
 			if blog_parentcategory:
 				blog_subcategories = BlogCategory.objects.all().filter(parent_category=blog_parentcategory).values_list('id', flat=True)
-				result = BlogPost.objects.published().filter(categories__id__in=blog_subcategories).extra(select={'fieldsum':'price_average + variety_average + quality_average + service_average + exchange_average + overall_average'},order_by=('-fieldsum',)).distinct() #[:latest]
+				result = BlogPost.objects.published().filter(categories__id__in=blog_subcategories)
 		else:
 			if blog_subcategory and blog_parentcategory:
-				result = BlogPost.objects.published().filter(categories=blog_subcategory).extra(select={'fieldsum':'price_average + variety_average + quality_average + service_average + exchange_average + overall_average'},order_by=('-fieldsum',)).distinct() #[:latest]
+				result = BlogPost.objects.published().filter(categories=blog_subcategory)
 			else:
 				"""
 					raise 404 error, in case categories are not present.
@@ -720,6 +746,10 @@ def getTrendingStores(request, parent_category, sub_category, sIndex=0, lIndex=0
 					'success': False
 				}
 				return HttpResponse(json.dumps(ret_data), mimetype="application/json")
+
+		result = result.extra(select={'fieldsum':'price_average + website_ex_average + quality_average + service_average',
+									  'followers': 'SELECT COUNT(*) FROM %s WHERE target_blogpost_id=%s.id' % (Follow._meta.db_table, table_name)},
+									  order_by=( '-overall_average', '-fieldsum', '-comments_count', '-followers',)).distinct() #[:latest]
 
 		isVertical = request.GET.get('v', '0')
 		template = 'generic/vendor_list.html'
@@ -764,7 +794,7 @@ def get_related_stores(request, store_id, sub_category, sIndex, lIndex):
 	if sub_category.lower() != "all" and sub_category.lower() != '':
 		try:
 			blog_subcategory = BlogCategory.objects.get(slug=slugify(sub_category))
-			blogPostQueryset = BlogPost.objects.published().filter(categories=blog_subcategory).exclude(id=store_id).extra(select={'fieldsum':'price_average + variety_average + quality_average + service_average + exchange_average + overall_average'},order_by=('-fieldsum',)).distinct()
+			blogPostQueryset = BlogPost.objects.published().filter(categories=blog_subcategory).exclude(id=store_id)
 		except:
 			blogPostQueryset = None
 			pass	
@@ -772,39 +802,58 @@ def get_related_stores(request, store_id, sub_category, sIndex, lIndex):
 		try:
 			blog_post = BlogPost.objects.get(id=store_id)
 			categories = blog_post.categories.all() 
-			blogPostQueryset = BlogPost.objects.published().filter(categories__in=categories).exclude(id=store_id).extra(select={'fieldsum':'price_average + variety_average + quality_average + service_average + exchange_average + overall_average'},order_by=('-fieldsum',)).distinct()
+			blogPostQueryset = BlogPost.objects.published().filter(categories__in=categories).exclude(id=store_id)
 		except:
 			blogPostQueryset = None
 			pass
 
+	table_name = BlogPost._meta.db_table
 	if blogPostQueryset:
+		blogPostQueryset = blogPostQueryset.extra(select={'fieldsum':'price_average + website_ex_average + quality_average + service_average',
+														  'followers': 'SELECT COUNT(*) FROM %s WHERE target_blogpost_id=%s.id' % (Follow._meta.db_table, table_name)},
+														  order_by=('-overall_average', '-fieldsum', '-comments_count', '-followers',)).distinct()
 		s = (int)(""+sIndex)
 		l = (int)(""+lIndex)
 		blogPostQueryset = blogPostQueryset[s:l]
 
-	isVertical = request.GET.get('v', '0')
-	template = 'generic/vendor_list.html'
-	if isVertical == '1':
-		template = 'generic/vendor_list_v.html'
+		isVertical = request.GET.get('v', '0')
+		template = 'generic/vendor_list.html'
+		if isVertical == '1':
+			template = 'generic/vendor_list_v.html'
 
-	context = RequestContext(request)
-	context.update({'vendors': blogPostQueryset,
-					'is_incremental': True})
-	if blogPostQueryset:
-		ret_data = {
-			'html': render_to_string(template, context_instance=context).strip(),
-			'success': True
-		}
-	elif s == 0:
-		template = Template('<span>No related stores found</span>')
-		ret_data = {
-			'html': template.render(context).strip(),
-			'success': True
-		}
+		context = RequestContext(request)
+		context.update({'vendors': blogPostQueryset})
+
+		if s == 0:
+			data_href = reverse('get_related_stores', kwargs={'store_id':store_id,
+																'sub_category':sub_category,
+																'sIndex':s,
+																'lIndex':l})
+			data_chunk = settings.STORES_NUM_LATEST
+
+			context.update({'is_incremental': False,
+							'data_href' : data_href,
+							'data_chunk': data_chunk})
+
+		if blogPostQueryset:
+			ret_data = {
+				'html': render_to_string(template, context_instance=context).strip(),
+				'success': True
+			}
+		elif s == 0:
+			template = Template('<span>No related stores found</span>')
+			ret_data = {
+				'html': template.render(context).strip(),
+				'success': True
+			}
+		else:
+			ret_data = {
+				'success': False
+			}
 	else:
 		ret_data = {
 			'success': False
-		}		
+		}			
 
 	return HttpResponse(json.dumps(ret_data), mimetype="application/json")
 
@@ -866,7 +915,7 @@ def get_reviews_by_user(request, user_id, template="generic/includes/reviews_pag
     """
     user_instance = User.objects.get(id=user_id)
     ctype = ContentType.objects.get_for_model(BlogPost)
-    reviews = Review.objects.filter(user=user_instance, content_type=ctype)
+    reviews = Review.objects.filter(user=user_instance, content_type=ctype).order_by('-submit_date')
 
     page = request.GET.get("page", 1)
     per_page = settings.REVIEWS_PER_PAGE
@@ -875,7 +924,8 @@ def get_reviews_by_user(request, user_id, template="generic/includes/reviews_pag
     paginated = paginate(reviews, page, per_page, max_paging_links)
 
     return render_to_response('generic/includes/reviews_page.html', {
-       'reviews': paginated, 
+       'reviews': paginated,
+       'user': user_instance
     }, context_instance=RequestContext(request))
 
 
@@ -1121,7 +1171,7 @@ def suggest_store(request, template="blog/suggest_store.html"):
 			if form.is_valid():
 				data = json.dumps({'success':True})
 				response_kwargs = {"content_type": 'application/json'}
-				email_from = form.cleaned_data['email_from']
+				email_from = settings.DEFAULT_FROM_EMAIL
 				email_to = settings.SUGGEST_STORE_EMAIL_TO
 				subject = form.cleaned_data['email_subject']
 				message = form.cleaned_data['email_message']
@@ -1148,7 +1198,7 @@ def suggest_store(request, template="blog/suggest_store.html"):
 			if request.user.is_authenticated():
 				form.fields['email_from'].initial = request.user.email
 			else:
-				form.fields['email_from'].initial = settings.DEFAULT_FROM_EMAIL
+				form.fields['email_from'].initial = settings.SERVER_EMAIL
 			form.fields['email_subject'].initial = settings.SUGGEST_STORE_EMAIL_SUBJECT
 			form.fields['email_from'].label = ''
 			form.fields['email_subject'].label = ''
@@ -1169,10 +1219,12 @@ def contact_us(request, template="generic/contact_us.html"):
 			if form.is_valid():
 				data = json.dumps({'success':True})
 				response_kwargs = {"content_type": 'application/json'}
-				email_from = form.cleaned_data['email_from']
+				
+				email_from = settings.DEFAULT_FROM_EMAIL
 				email_to = settings.CONTACT_US_EMAIL_TO
+
 				subject = form.cleaned_data['email_subject']
-				message = form.cleaned_data['email_message']
+				message = form.cleaned_data['email_contact_message']
 				sender_email = "Anonymous"
 				if request.user.is_authenticated(): 
 					sender_email = request.user.email
@@ -1193,8 +1245,12 @@ def contact_us(request, template="generic/contact_us.html"):
 				return HttpResponse(data, **response_kwargs)
 		else:
 			form = ContactUsForm()
+			form.fields['email_contact_message'].widget.attrs['style'] = 'resize:none;'
 			if request.user.is_authenticated():
 				form.fields['email_from'].initial = request.user.email
+			else:
+				form.fields['email_from'].initial = settings.SERVER_EMAIL
+				form.fields['email_from'].widget.attrs['style'] = 'display:none'
 
 			context = {"form": form, "action_url": reverse("contact_us")}
 			response = render(request, template, context)
@@ -1205,12 +1261,32 @@ def contact_us(request, template="generic/contact_us.html"):
 def autocomplete(request):
 	if request.is_ajax():
 		query = request.GET.get('query', '')
-		title_regex = r'(' + query +')'
-		keywords = Keyword.objects.filter(title__regex=title_regex).values_list('title', flat=True)
+		keywords = Keyword.objects.filter(title__icontains=query).values_list('title', flat=True)
 		context = {
 					'query':	query,
-					'suggestions': list(keywords)
+					'suggestions': [w.capitalize() for w in keywords]
 				}
 		return HttpResponse(json.dumps(context), 'application/json')
 	else:
 		raise Http404()
+
+def autocomplete_stores(request):
+	query = request.GET.get('query', '')
+	stores = BlogPost.objects.filter(title__icontains=query).values_list('title', flat=True)
+	context = {
+				'query':	query,
+				'suggestions': [w.capitalize() for w in stores]
+			}
+	return HttpResponse(json.dumps(context), 'application/json')
+
+def privacy_policy(request, template_name='generic/privacy_policy.html'):
+	return render_to_response(template_name, {
+     }, context_instance=RequestContext(request))
+
+def terms_and_conditions(request, template_name='generic/terms_and_conditions.html'):
+	return render_to_response(template_name, {
+     }, context_instance=RequestContext(request))
+
+def about_us(request, template_name='generic/about_us.html'):
+	return render_to_response(template_name, {
+     }, context_instance=RequestContext(request))

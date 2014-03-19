@@ -1,6 +1,14 @@
-var setupCustomScrollBar = function ($element, horizontal_scroll) {
+var setupCustomScrollBar = function ($element, horizontal_scroll, enable_button, shouldAutoHideScrollbar) {
     if (!$element || $element.length == 0 ) {
         return;
+    }
+    var hasScrollButtons = {enable: false};
+    if (typeof enable_button !== "undefined" && enable_button) {
+        hasScrollButtons = enable_button;
+    }
+    var autoHideScrollbar = true;
+    if (typeof shouldAutoHideScrollbar !== "undefined" && !shouldAutoHideScrollbar) {
+        autoHideScrollbar = shouldAutoHideScrollbar;
     }
     var $scrollContainer = null;
     if ($element.hasClass("scrollContainer")) {
@@ -9,8 +17,28 @@ var setupCustomScrollBar = function ($element, horizontal_scroll) {
         $scrollContainer = $element.find(".scrollContainer");
     }
     var totalScrollCallback = function(){
-        var $href = $scrollContainer.attr("data-href");
+    	var $href = $scrollContainer.attr("data-href");
         if($href) {
+	        var $loader = $scrollContainer.find('.loader');
+	        $loader.show();
+	        if (horizontal_scroll) {
+	            $scrollContainer.mCustomScrollbar("update", true);
+	            $scrollContainer.mCustomScrollbar("scrollTo", "right", {
+	                callbacks:false
+	            });
+	        } else {
+	            $scrollContainer.mCustomScrollbar("update");
+	            $scrollContainer.mCustomScrollbar("scrollTo", "bottom", {
+	                callbacks:false
+	            });
+	        }
+	        
+	        if($scrollContainer.data('skipCallbacks') === true)
+	            return;
+	        else {
+	            $scrollContainer.data('skipCallbacks', true);
+	        }
+
             var a = $('<a>', { href:$href } )[0];
             var $pathname = a.pathname;
             var pathsplit = $pathname.split("/");
@@ -22,6 +50,7 @@ var setupCustomScrollBar = function ($element, horizontal_scroll) {
             $pathname = pathsplit.join('/');
             var $url = $pathname + a.search; //a,search contains any GET query parameter.
             $.get($url, {}, function(data) {
+                $loader.remove();
                 if(data.success === true) {
                     $scrollContainer.find('.mCSB_container').append(data.html);
                     install_voting_handlers($scrollContainer);
@@ -46,6 +75,7 @@ var setupCustomScrollBar = function ($element, horizontal_scroll) {
                 } else {
                     $scrollContainer.removeAttr("data-href");
                 }
+                $scrollContainer.data('skipCallbacks', false);
             });
         }
     };
@@ -58,9 +88,10 @@ var setupCustomScrollBar = function ($element, horizontal_scroll) {
                         horizontalScroll:true,
                         theme:"dark-thick",
                         mouseWheel:true,
-                        autoHideScrollbar:true,
+                        autoHideScrollbar:autoHideScrollbar,
                         contentTouchScroll:true,
                         autoDraggerLength: true,
+                        scrollButtons: hasScrollButtons,
                         callbacks: {
                             onTotalScroll: totalScrollCallback//, // Will be called once scroll reaches bottom.
                             //onTotalScrollOffset:100 //onTotalScroll callback will be fired 100 pixels before bottom.
@@ -75,8 +106,9 @@ var setupCustomScrollBar = function ($element, horizontal_scroll) {
                         verticalScroll:true,
                         theme:"dark-thick",
                         mouseWheel:true,
-                        autoHideScrollbar:true,
+                        autoHideScrollbar:autoHideScrollbar,
                         contentTouchScroll:true,
+                        scrollButtons: hasScrollButtons,
                         callbacks: {
                             onTotalScroll: totalScrollCallback,
                             onTotalScrollOffset:100
@@ -103,23 +135,51 @@ var build_category_menu_handler = function() {
         .attr("role", "menu")
         .addClass("dropdown-menu dropdown-menu-parent");
 
+    var array_categories = [];
     $.each(category_namespace.categories, function(object) {
+        array_categories.push(object);
+    });
+    array_categories.sort();
+
+    $.each(array_categories, function(category) {
+        var object = array_categories[category];
+        var array_object = category_namespace.categories[array_categories[category]];
     	var category_li = $("<li/>").addClass("dropdown-submenu");
 	    var category_a = $("<a/>")
 	        	.html(object)
 	            .appendTo(category_li)
 	            .addClass('dropdown-parent-category')
+                .on('click', function(event){
+                    var parent_category_slug = $(this).text();
+                    var sub_category_slug = "All";
+
+                    if(parent_category_slug && sub_category_slug) {
+                        var url = "/stores/"+parent_category_slug+"/"+sub_category_slug+"/";
+                        document.location.href = url;
+                    }
+                    return false;
+                });
 	    var sub_category_ul = $("<ul/>")
         					.addClass("dropdown-menu");
 
-        category_li.append(sub_category_ul);
+        category_li.append(sub_category_ul);    
 
-        for(var i=0;i<this.length;i++) {
+        if (array_object.length < 4) {
+            sub_category_ul.addClass("x-small-menu");
+        } else if (array_object.length >= 4 && array_object.length <= 8) {
+            sub_category_ul.addClass("small-menu");
+        } else if (array_object.length > 8 && array_object.length < 17) {
+            sub_category_ul.addClass("medium-menu");
+        } else if (array_object.length > 17) {
+            sub_category_ul.addClass("x-large-menu");
+        }
+
+        for(var i=0;i<array_object.length;i++) {
 	        var li = $("<li/>")
 	            .appendTo(sub_category_ul);
 
 	        var a = $("<a/>")
-	        	.html(this[i])
+	        	.html(array_object[i])
 	            .appendTo(li)
 	            .on('click', function(event){
 			        var parent_category_slug = $(this).parents('.dropdown-submenu').find('.dropdown-parent-category').text();
@@ -139,7 +199,15 @@ var build_category_menu_handler = function() {
 }
 
 $(document).ready(function() {
+    $('#closeMessage').live('click', function(event) {
+        $(this).parent().fadeOut('fast'); return false;
+    })
+    
     $('#getvendors').click(function(){
+        if ($('.search-query').val() != "" ) {
+            $('.searchbox').trigger("submit");
+            return false;
+        }
         var $blog_parentcategories = $(this).parent().parent().parent().find('.blog_parentcategories');
         var $subCategorySelect = $(this).parent().parent().parent().find('.blog_subcategories');
         var parent_category_slug = $blog_parentcategories.find("option:selected").text();
@@ -205,8 +273,15 @@ $(document).ready(function() {
         }
     });
 	build_category_menu_handler();
-	$('.dropdown-toggle').on('click', function(){
+	$('.dropdown-toggle.blog_parentcategories').on('click', function(){
 		$('.dropdown-menu-parent').toggle();//css({'display':'block'});
-		return false;
+        var cancel_dropdown = function (evt) {
+            var $target = $(evt.target);
+            if ($target.parents('.dropdown-menu-parent').length == 0) {
+                $('.dropdown-menu-parent').toggle();
+                document.removeEventListener("click", cancel_dropdown, true);
+            }
+        }
+        document.addEventListener("click", cancel_dropdown, true);
 	});
 });

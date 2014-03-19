@@ -1,26 +1,39 @@
 {% load i18n static %}
-{% if comment.price_value %}
-      <span>Price<span class="searchResultRatingSmall ratingSeparator searchResultRatingScheme rating-{{comment.price_value|floatformat:"0"}}" style="display:inline-block;"></span>{{comment.price_value}}</span>
-      <span>|</span>
-{% endif %}
-{% if comment.variety_value %}
-      <span>Variety<span class="searchResultRatingSmall ratingSeparator searchResultRatingScheme rating-{{comment.variety_value|floatformat:"0"}}" style="display:inline-block;"></span>{{comment.variety_value}}</span>
-      <span>|</span>
-{% endif %}
-{% if comment.quality_value %}
-      <span>Quality<span class="searchResultRatingSmall ratingSeparator searchResultRatingScheme rating-{{comment.quality_value|floatformat:"0"}}" style="display:inline-block;"></span>{{comment.quality_value}}</span>
-      <span>|</span>
-{% endif %}
-{% if comment.service_value %}
-      <span>Service<span class="searchResultRatingSmall ratingSeparator searchResultRatingScheme rating-{{comment.service_value|floatformat:"0"}}" style="display:inline-block;"></span> {{comment.service_value}}</span>
-{% endif %}
+<div class="row">
+	<div class="span6">
+		{% if comment.quality_value %}
+		      <span>{% trans "Range & Quality" %}<span class="searchResultRatingSmall ratingSeparator searchResultRatingScheme rating-{{comment.quality_value|floatformat:"0"}}"></span> {{comment.quality_value}}</span>
+		      <span>|</span>
+		{% endif %}
+		{% if comment.price_value %}
+		      <span>{% trans "Pricing" %}<span class="searchResultRatingSmall ratingSeparator searchResultRatingScheme rating-{{comment.price_value|floatformat:"0"}}"></span> {{comment.price_value}}</span>
+		      <span>|</span>
+		{% endif %}
+		{% if comment.service_value %}
+		      <span>{% trans "Timely Delivery" %}<span class="searchResultRatingSmall ratingSeparator searchResultRatingScheme rating-{{comment.service_value|floatformat:"0"}}"></span> {{comment.service_value}}</span>
+		      <span>|</span>
+		{% endif %}
+		{% if comment.website_ex_value %}
+		      <span>{% trans "Website Experience" %}<span class="searchResultRatingSmall ratingSeparator searchResultRatingScheme rating-{{comment.website_ex_value|floatformat:"0"}}"></span> {{comment.website_ex_value}}</span>
+		{% endif %}
+	</div>
+</div>
+
 {% if comment.exchange_value %}
-      <span>|</span>
-      <span>Exchange<span class="searchResultRatingSmall ratingSeparator searchResultRatingScheme rating-{{comment.exchange_value|floatformat:"0"}}" style="display:inline-block;"></span>{{comment.exchange_value}}</span>
+<div class="row topHalfGutter">
+	<div class="span5">
+		<span>{% trans "Exchange Experience" %}<span class="searchResultRatingSmall ratingSeparator searchResultRatingScheme rating-{{comment.exchange_value|floatformat:"0"}}"></span> {{comment.exchange_value}}</span>
+	</div>
+</div>
 {% endif %}
-{% ifequal comment.shop_again|slugify '0' %}
-<img class="pull-right noBoxShadow halfGutter" src="{% static 'img/shop_again_no.png' %}">
-{% else %}
-<img class="pull-right noBoxShadow halfGutter" src="{% static 'img/shop_again_yes.png' %}">
-{% endifequal %}
-<span class="pull-right">{% trans "Shop Again" %}</span>
+
+<div class="row topHalfGutter">
+	<div class="span5">
+		{% ifequal comment.shop_again|slugify '0' %}
+			<img class="noBoxShadow" src="{% static 'img/shop_again_no.png' %}">
+		{% else %}
+			<img class="noBoxShadow" src="{% static 'img/shop_again_yes.png' %}">
+		{% endifequal %}
+			<span>{% trans "Shop Again" %}</span>
+	</div>
+</div>

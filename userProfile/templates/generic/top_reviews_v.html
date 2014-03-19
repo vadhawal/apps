@@ -32,10 +32,10 @@
             <span>
                 {% get_reviews_by_user review.user as totalReviews %}
                 {% with totalReviews.count as totalReviewCount %}
-                    <a href="{% url get_reviews_by_user review.user.id %}" class="fontTitillium3 fontSize13 color5D"><span class="fontTitillium1">{{totalReviewCount}}</span>&nbsp;{% trans "review" %}{{ totalReviewCount|pluralize }}</a>
+                    <a href="{% url get_reviews_by_user review.user.id %}" class="fontTitillium3 fontSize13 color5D {% if totalReviewCount == 0 %} countZero {% endif %}" title="Reviews By {{review.user.first_name|title}}" data-title="Reviews By {{review.user.first_name|title}}"><span class="fontTitillium1">{{totalReviewCount}}</span>&nbsp;{% trans "review" %}{{ totalReviewCount|pluralize }}</a>
                 {% endwith %}
-                {% follower_subset_url review.user 0 review.user.relationships.followers.count as follower_url %}
-                <a href="{{follower_url}}" class="followerCountBox fontTitillium3 fontSize13 color5D">
+                {% follower_subset_url review.user 0 'MIN_FOLLOWERS_CHUNK'|settings_value as follower_url %}
+                <a href="{{follower_url}}" class="vendorFollowers followerCountBox fontTitillium3 fontSize13 color5D {% if review.user.relationships.followers.count == 0 %}countZero{% endif %}" title="People Who Follow {{review.user.first_name|title}}" data-title="People Who Follow {{review.user.first_name|title}}">
                     <span class="fontTitillium1">&nbsp;{{ review.user.relationships.followers.count }}</span>&nbsp;{% trans "follower" %}{{ review.user.relationships.followers.count|pluralize }}
                 </a>
             </span>
@@ -77,6 +77,11 @@
 {% empty %}
     <div class="color5D fontSize14 halfGutter">{% trans "No reviews were found for the selected category. Do write a review if you've shopped for this category." %}</div>
 {% endfor %}
+    <div class="row topReviews loader" style="display:none;">
+        <div class="span3">
+            <img src="{% static 'img/loading.gif' %}">
+        </div>
+    </div>
 {% if not is_incremental %}
 </div>
 {% endif %}

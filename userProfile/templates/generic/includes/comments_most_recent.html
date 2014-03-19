@@ -5,12 +5,12 @@
 {% include "generic/includes/disqus_comments.html" %}
 {% else %}
 <script>
-$(function() {
-    $('.reply').click(function() {
-        $('.reply-form').hide();
-        $(this).next('.reply-form').toggle();
-    });
-});
+// $(function() {
+//     $('.reply').click(function() {
+//         $('.reply-form').hide();
+//         $(this).next('.reply-form').toggle();
+//     });
+// });
 </script>
 <style>.input_id_honeypot {display:none !important;}
 .comment_on_review{
@@ -29,6 +29,6 @@ $(function() {
 </div>
 <div>
 {% if object_for_comments|get_class_name == "BlogPost" %}
-    <button class="writeReview rateStoreNow radioColorBackground colorWhite fontTitillium1 fontSize13 pull-right bottomHalfGutter topHalfGutter" data-href="{% write_review_for_obj_url object_for_comments %}">Write a Review</button>
+    <button class="writeReview rateStoreNow radioColorBackground colorWhite fontTitillium1 fontSize13 pull-right bottomHalfGutter topHalfGutter" data-href="{% write_review_for_obj_url object_for_comments %}" title="Write A Review" data-title="Write A Review">Write a Review</button>
 {% endif %}
 </div>

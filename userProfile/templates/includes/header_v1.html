@@ -1,0 +1,158 @@
+{% load future %}
+{% load i18n static %}
+{% load blog_tags mezzanine_tags %}
+
+<div class="yellowBar navbar navbar-fixed-top">
+</div>
+<div class="container customNavBar navbar navbar-fixed-top">
+    <div class="row yellowBar" style="line-height:30px;">
+        <div class="offset3">
+            <div class="row">
+                <div class="span4 noGutter">
+                    <div class="row">
+                        <a href="/" class="fontTitillium2 home {% if request.path == "/" %}radioColor homeSelected{% else %}color5D{% endif %} fontSize14">
+                            <img class="noBoxShadow" style="max-width:20px;max-height:18px;" src="{% static "img/1transparent.png"%}">
+                            {% trans "HOME" %}
+                        </a>
+                        {% if request.user.is_authenticated %}
+                            {% url 'getShopTalk' as shopTalkUrl %}
+                            <a href="{{shopTalkUrl}}" class="halfGutter fontTitillium2 shopTalk {% if request.path == shopTalkUrl %} shopTalkSelected radioColor{% else %}color5D{% endif %} fontSize14">
+                                <img class="noBoxShadow" style="max-width:20px;max-height:18px;" src="{% static "img/1transparent.png"%}">
+                                {% trans "ACTIVITY" %}
+                            </a>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="span5 noGutter">
+                    <div class="row">
+                        <div class="span5 noGutter">
+                            <a href="javascript:void(0);" data-href="{% url 'suggest_store' %}" class="pull-right halfGutterRight fontTitillium2 color5D suggestStore fontSize14" data-title="Suggest A Store">
+                                <img class="noBoxShadow" src="{% static 'img/1transparent.png'%}">
+                                {% trans "SUGGEST A STORE" %}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row whiteSpace">
+
+        {% if request.user.is_authenticated %}
+            <div class="offset6 span5" id="loginWidget">
+                {% comment %}
+                <span class="pull-right">
+                    <a href="{% url "messages_inbox" %}">
+                        <span class="messages_homepage"><img src="{% static "img/messages.png" %}"></span>
+                        <span class="messages_count circleBase fontSize9 fontTitillium2 pagination-centered">{{ messages_inbox_count }}</span>
+                    </a>
+                </span>
+                {% endcomment %}
+<!--                 <button class="shoppedRecently rateStoreNow radioColorBackground colorWhite fontTitillium1 fontSize13" data-href="{% url 'shopped_recently' %}"   title="Write A Review" data-title="Write A Review">{% trans "Shopped recently?" %}</button> -->
+                <div class="btn-group profileSettings pull-right">
+                    <button type="button" class="btn settings dropdown-toggle" data-toggle="dropdown">
+                        <img src="{% static 'img/1transparent.png' %}">
+                    </button>
+                    <ul class="dropdown-menu fontTitillium1 color5D settingsPopup" role="menu">
+                        <li><a href="{% url "profile_update" %}" class="color5D">{% trans "Update profile" %}</a></li>
+                        <li class="divider"></li>
+                        <li><a href="{% url "logout" %}?next={{ request.get_full_path|urlencode }}">{% trans "Log out" %}</a></li>
+                    </ul>
+                </div>
+                {% comment %}
+                <span class="settings pull-right" style="margin-right: 5px;">
+                    <img src="{% static 'img/1transparent.png' %}">
+                    <!-- <img src="{% static "img/green_pointer.png" %}"> -->
+                    <span class="whiteBox fontSize13 fontTitillium1 settingsPopup hide">
+                        <span>
+                            <a href="{% url "profile_update" %}">{% trans "Update profile" %}</a>
+                        </span>
+                        <div class="dottedSeparator"></div>
+                        <span style="clear:both;">
+                            <a href="{% url "logout" %}?next={{ request.get_full_path|urlencode }}">{% trans "Log out" %}</a>
+                        </span>
+                    </span>
+                </span>
+                {% endcomment %}
+                <span class="pull-right" style="margin-right: 5px;">
+                    {% url "profile" request.user.username as profile_url %}
+                    {% if profile_url %}
+                        {% if request.user.is_authenticated %}
+                            <a href="{{profile_url}}">
+                            {% if request.user.get_profile.profile_photo%}
+                                <img style="margin-right:5px;max-height:30px;padding:1px;" src="{{ request.user.get_profile.profile_photo.url }}">
+                            {% elif request.user.get_profile.image_url %}
+                                <img style="margin-right:5px;max-height:30px;padding:1px;" src="{{ request.user.get_profile.image_url }}">
+                            {% else %}
+                                {% if request.user.get_profile.gender %}
+                                    {% if request.user.get_profile.gender == "male" %}
+                                        <img style="margin-right:5px;max-height:30px;padding:1px;" src="{% static "img/man_icon.png" %}">
+                                    {% else %}
+                                        <img style="margin-right:5px;max-height:30px;padding:1px;" src="{% static "img/woman_icon.png" %}">
+                                    {% endif %}
+                                {% else %}
+                                    <img style="margin-right:5px;max-height:30px;padding:1px;" src="{% static "img/man_icon.png" %}">
+                                {% endif %}
+                            {% endif %}
+                            </a>
+                        {% else %}
+                            <img style="margin-right:5px;max-height:30px;padding:1px;" src="{% static "img/man_icon.png" %}">
+                        {% endif %}
+                    {% endif %}
+                    {% include 'actstream/render_actor_name.html' with actor=request.user %}
+                </span>
+            </div>
+        {% else %}
+
+            <div class="offset5 span6">
+                <!-- <button class="shoppedRecently rateStoreNow radioColorBackground colorWhite fontTitillium1 fontSize13" data-href="{% url 'shopped_recently' %}"   title="Write A Review" data-title="Write A Review">{% trans "Shopped recently?" %}</button> -->
+                <span class="pull-right">
+                    <a class="fontSize13 fontTitillium doLogin" href="{% url "login" %}?next={{ request.get_full_path|urlencode }}">{% trans " Log in" %}</a>
+                     | <a class="fontSize13 fontTitillium doSignUp" href="{% url "signup" %}?next={{ request.get_full_path|urlencode }}">{% trans "Sign up" %}</a>
+                </span>
+                <a href="{% url "socialauth_begin" "twitter" %}" class="zocial twitter icon pull-right">
+<!--                     <span class="socialLogin twitterLogin pull-right" style="margin-top:10px;">
+                    </span> -->
+                </a>
+                <a href="{% url "socialauth_begin" "google-oauth2" %}" class="zocial googleplus icon pull-right">
+<!--                    <span class="socialLogin googleLogin pull-right" style="margin-top:10px;">
+                   </span> -->
+                </a>
+                <a id="loginWidget" href="{% url "socialauth_begin" "facebook" %}" title="{% trans "Connect with Facebook" %}" class="zocial facebook pull-right">
+                    {% trans "Connect with Facebook" %}
+<!--                     <span class="socialLogin facebookLogin pull-right" style="margin-top:10px;">
+                    </span> -->
+                </a>
+            </div>
+         {% endif %}
+    </div>
+    <div class="row">
+        <div class="offset1 span10">
+            <div class="row searchBar" style="margin-top:auto;margin-bottom:auto;">
+                <div class="span2 logo">
+                    <div class="whiteBox whiteBoxGlassy" style="width:110px;position:relative;z-index-1;">
+                        <a href="/"><img src="{% static 'img/wishRadioLogo.png' %}"/></a>
+                    </div>
+                </div>
+                <div class="span8 noGutter">
+                    <div class="row" id="searchStoreBar">
+                        <div class="span2 colorWhite fontTitillium fontSize14 noGutter">
+                            <span class="wantText fontSize14">{% trans "For all the wishes that money can buy," %}<span class="colorYellow">{% trans " search here" %}</span>
+                            </span>
+                        </div>
+                        <div class="span3_5 halfGutter">
+                            {% search_form "blog.BlogPost" %}
+                        </div>
+                        <div id="getvendorsdiv" style="display:inline-block;" class="halfGutter">
+                            <a id="getvendors" href="#"></a>
+                        </div>
+                        <div class="colorWhite fontTitillium1 fontSize13 halfGutter searchOr">{% trans "or" %}</div>
+                        <div class="span2_5 halfGutter searchCategory" style="position:relative;display:inline-block;text-align:center;">
+                            <a class="dropdown-toggle blog_parentcategories pagination-left" href="javascript:void(0);" style="display: block;">{% trans "By Category" %}</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

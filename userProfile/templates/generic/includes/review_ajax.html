@@ -59,22 +59,22 @@
                                                 {% score_for_object review_rating_obj as score %}
                                                 {% if not vote %}
                                                     <span>{% trans "Was this review helpful?" %}</span>
-                                                    <a class="found-helpful radioColorBackground colorWhite fontSize11" href="javascript:void(0)" data-href="{% url 'rating_on_reviews' review_rating_obj.id 'up' %}"><span>Yes</span>
+                                                    <a class="found-helpful radioColorBackground colorWhite fontSize11" href="javascript:void(0)" data-href="{% url 'rating_on_reviews' review_rating_obj.id 'up' %}" title="You find this review helpful"><span>Yes</span>
                                                         <img class="noBoxShadow" src="{% static 'img/1transparent.png' %}">
                                                     </a>
-                                                    <a class="pScore" href="{{ voters }}">({{score.num_up_votes}})</a>
+                                                    <a class="pScore" href="{{ voters }}" title="People Who Found This Review Helpful">({{score.num_up_votes}})</a>
                                                     {# <a class="not-found-helpful" href="javascript:void(0)" data-href="{% url 'rating_on_reviews' review_rating_obj.id 'down' %}">No</a> #}
                                                 {% else %}
                                                     <span>{% trans "You found this review helpful." %}</span>
                                                     <a class="clear-helpful colorWhite fontSize11" href="javascript:void(0)" data-href="{% url 'rating_on_reviews' review_rating_obj.id 'clear' %}"><span></span>
                                                         <img class="noBoxShadow" src="{% static 'img/1transparent.png' %}">
                                                     </a>
-                                                    <a class="pScore" href="{{ voters }}">({{score.num_up_votes}})</a>
+                                                    <a class="pScore" href="{{ voters }}" title="People Who Found This Review Helpful">({{score.num_up_votes}})</a>
                                                 {% endif %}
                                                 {% if request.user == comment.user %}
                                                 {% get_delete_object_url comment as delete_review_url %}
-                                                <a class="deleteObject pull-right halfGutter" data-href="{{delete_review_url}}" data-object-type="review" href="javascript:void(0)"><img class="noBoxShadow" width="15px" height="15px" src="{% static 'img/cross_button.png' %}"></a>
-                                                <a class="editReview pull-right" href="javascript:void(0)" data-href="{% url 'edit_review' comment.id %}?reviewpage=1"><img class="noBoxShadow" width="15px" height="15px" src="{% static 'img/edit.png' %}"></a>
+                                                <a class="deleteObject pull-right halfGutter" data-href="{{delete_review_url}}" data-object-type="review" href="javascript:void(0);" title="Delete Review"><img class="noBoxShadow" width="15px" height="15px" src="{% static 'img/cross_button.png' %}"></a>
+                                                <a class="editReview pull-right" href="javascript:void(0);" data-href="{% url 'edit_review' comment.id %}?reviewpage=1" title="Edit Review" data-title="Edit Review"><img class="noBoxShadow" width="15px" height="15px" src="{% static 'img/edit.png' %}"></a>
                                                 {% endif %}
                                         {% endif %}
                                     {% endwith %}

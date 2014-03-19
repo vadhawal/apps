@@ -23,15 +23,13 @@
                         {% endif %}
                     </div>
                 </div>
-                <div class="span5">
+                <div class="span5 noGutter">
                     <div class="row">
-                        <div class="offset3 span2">
-                            <div class="row">
-                                <a href="javascript:void(0);" data-href="{% url 'suggest_store' %}" class="fontTitillium2 color5D suggestStore fontSize14">
-                                    <img class="noBoxShadow" src="{% static "img/1transparent.png"%}">
-                                    {% trans "SUGGEST A STORE" %}
-                                </a>
-                            </div>
+                        <div class="span5 noGutter">
+                            <a href="javascript:void(0);" data-href="{% url 'suggest_store' %}" class="pull-right halfGutterRight fontTitillium2 color5D suggestStore fontSize14" data-title="Suggest A Store">
+                                <img class="noBoxShadow" src="{% static 'img/1transparent.png'%}">
+                                {% trans "SUGGEST A STORE" %}
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -39,8 +37,9 @@
         </div>
     </div>
     <div class="row whiteSpace">
+
         {% if request.user.is_authenticated %}
-            <div class="offset7 span4">
+            <div class="offset6 span5" id="loginWidget">
                 {% comment %}
                 <span class="pull-right">
                     <a href="{% url "messages_inbox" %}">
@@ -49,6 +48,7 @@
                     </a>
                 </span>
                 {% endcomment %}
+<!--                 <button class="shoppedRecently rateStoreNow radioColorBackground colorWhite fontTitillium1 fontSize13" data-href="{% url 'shopped_recently' %}"   title="Write A Review" data-title="Write A Review">{% trans "Shopped recently?" %}</button> -->
                 <div class="btn-group profileSettings pull-right">
                     <button type="button" class="btn settings dropdown-toggle" data-toggle="dropdown">
                         <img src="{% static 'img/1transparent.png' %}">
@@ -103,7 +103,9 @@
                 </span>
             </div>
         {% else %}
-            <div class="offset6 span5">
+
+            <div class="offset5 span6">
+                <!-- <button class="shoppedRecently rateStoreNow radioColorBackground colorWhite fontTitillium1 fontSize13" data-href="{% url 'shopped_recently' %}"   title="Write A Review" data-title="Write A Review">{% trans "Shopped recently?" %}</button> -->
                 <span class="pull-right">
                     <a class="fontSize13 fontTitillium doLogin" href="{% url "login" %}?next={{ request.get_full_path|urlencode }}">{% trans " Log in" %}</a>
                      | <a class="fontSize13 fontTitillium doSignUp" href="{% url "signup" %}?next={{ request.get_full_path|urlencode }}">{% trans "Sign up" %}</a>
@@ -116,8 +118,8 @@
 <!--                    <span class="socialLogin googleLogin pull-right" style="margin-top:10px;">
                    </span> -->
                 </a>
-                <a href="{% url "socialauth_begin" "facebook" %}" class="zocial facebook pull-right">
-                    {% trans "Sign in with Facebook" %}
+                <a id="loginWidget" href="{% url "socialauth_begin" "facebook" %}" title="{% trans "Connect with Facebook" %}" class="zocial facebook pull-right">
+                    {% trans "Connect with Facebook" %}
 <!--                     <span class="socialLogin facebookLogin pull-right" style="margin-top:10px;">
                     </span> -->
                 </a>
@@ -126,31 +128,34 @@
     </div>
     <div class="row">
         <div class="offset1 span10">
-            <div class="row searchBar" style="margin-top:auto;margin-bottom:auto;">
-                <div class="span2 logo">
+            <div class="row greyBar" style="height: 60px; line-height:60px;">
+                <div class="span2 logo" style="width:auto;">
                     <div class="whiteBox whiteBoxGlassy" style="width:110px;position:relative;z-index-1;">
                         <a href="/"><img src="{% static 'img/wishRadioLogo.png' %}"/></a>
                     </div>
                 </div>
-                <div class="span8 noGutter">
-                    <div class="row">
-                        <div class="span2 colorWhite fontTitillium fontSize14 noGutter">
-                            <span class="wantText fontSize14">{% trans "For all the wishes that money can buy," %}&nbsp;<span class="colorYellow">{% trans "search here" %}</span>
-                            </span>
-                        </div>
-                        <div class="span2 halfGutter">
+                <div class="noGutter span8 pagination-centered">
+                    <span class="colorWhite" style="font-size:32px;">
+                    {% trans "Find " %}<span class="colorYellow">{%trans "Online " %}</span>{%trans "Stores for every wish" %}
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="offset1 span10">
+            <div class="row searchBar" style="margin-top:auto;margin-bottom:auto;">
+                <div class="span10">
+                    <div class="row" id="searchStoreBar">
+                        <div class="span6">
                             {% search_form "blog.BlogPost" %}
                         </div>
-                        <span class="colorWhite fontTitillium1 fontSize13 halfGutter searchOr">{% trans "or" %}</span>
-                        <div class="span4 halfGutter searchCategory" style="position:relative;display:inline-block;text-align:center;">
-                            <a class="dropdown-toggle" href="#" style="
-                                display: block;
-                                color: #333;
-                                padding: 20px 64px 20px 16px;
-                                font-family: 'Open Sans', sans-serif;
-                                font-size: 16px;
-                                font-weight: 400;
-                                text-shadow: 0 1px 0 rgba(255,255,255,0.2);">Categories</a>
+                        <div id="getvendorsdiv" style="display:inline-block;" class="halfGutter">
+                            <a id="getvendors" href="#"></a>
+                        </div>
+                        <div class="colorWhite fontTitillium1 fontSize13 halfGutter searchOr">{% trans "or" %}</div>
+                        <div class="span3 halfGutter searchCategory" style="position:relative;display:inline-block;text-align:center;">
+                            <a class="dropdown-toggle blog_parentcategories pagination-left" href="javascript:void(0);" style="display: block;">{% trans "By Category" %}</a>
                         </div>
                     </div>
                 </div>

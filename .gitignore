@@ -2,7 +2,7 @@
 *.pyo
 *.db
 .DS_Store
-*BASE*
+*.BASE.*
 *REMOTE*
 *LOCAL*
 *.swn

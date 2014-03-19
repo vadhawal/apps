@@ -1,0 +1,310 @@
+<!doctype html>
+<html lang="{{ LANGUAGE_CODE }}"{% if LANGUAGE_BIDI %} dir="rtl"{% endif %}>
+{% load pages_tags mezzanine_tags i18n future staticfiles %}
+{% load blog_tags %}
+<head>
+
+<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width">
+<meta name="keywords" content="{% block meta_keywords %}{% endblock %}">
+<meta name="description" content="{% block meta_description %}{% endblock %}">
+<title>{% block meta_title %}{% endblock %}{% if settings.SITE_TITLE %} | {{ settings.SITE_TITLE }}{% endif %}</title>
+<link rel="shortcut icon" href="{% static "img/wishRadioLogo.png" %}">
+
+{% ifinstalled mezzanine.blog %}
+<link rel="alternate" type="application/rss+xml" title="RSS" href="{% url "blog_post_feed" "rss" %}">
+<link rel="alternate" type="application/atom+xml" title="Atom" href="{% url "blog_post_feed" "atom" %}">
+{% endifinstalled %}
+
+{% compress css %}
+<link rel="stylesheet" href="{% static "css/bootstrap.css" %}">
+<link rel="stylesheet" href="{% static "css/mezzanine.css" %}">
+<link rel="stylesheet" href="{% static "css/bootstrap-responsive.css" %}">
+<link rel="stylesheet" href="{% static "css/zocial.css" %}">
+<link rel="stylesheet" href="{% static "css/action.template.css" %}">
+<link rel="stylesheet" href="{% static "css/jquery.mCustomScrollbar.css" %}"/>
+<link rel="stylesheet" href="{% static "css/base.css" %}"/>
+<link rel="stylesheet" href="{% static "css/jquery.fancybox.css" %}"/>
+<link rel="stylesheet" href="{% static "css/tcal.css" %}"/>
+<link rel="stylesheet" type="text/css" href="{% static "css/jquery.nouislider.css" %}"/>
+<link rel="stylesheet" type="text/css" href="{% static "css/store_page.css" %}"/>
+{% if LANGUAGE_BIDI %}
+<link rel="stylesheet" href="{% static "css/rtl.css" %}">
+{% endif %}
+<!-- <link rel="stylesheet" href="{% static "css/customnavbar.css" %}"> -->
+<link rel="stylesheet" href="{% static "css/popup_styles.css" %}">
+<!-- <link rel="stylesheet" type="text/css" href="{% static "css/imagestore.css"  %}"/> -->
+<!-- <link rel="stylesheet" class="cssButtons" type="text/css" href="{{ STATIC_URL }}css/linkPreview.css" /> -->
+<style>
+.dropdown-menu > li > a {
+    padding: 0px 20px 0px 10px;
+}
+.dropdown-menu > li > a:hover,
+.dropdown-menu > li > a:focus,
+.dropdown-submenu:hover > a,
+.dropdown-submenu:focus > a {
+    background-image: none;
+    cursor: pointer;
+}
+.dropdown-menu > .active > a,
+.dropdown-menu > .active > a:hover,
+.dropdown-menu > .active > a:focus {
+    background-image: none;
+}
+.dropdown-submenu {
+    position:relative;
+    text-align: left;
+    font-size: 12px;
+    line-height: 18px;
+    height: 18px;
+}
+.dropdown-submenu > .dropdown-menu {
+    top:0;
+    left:100%;
+    margin-top:-46px;
+    margin-left:-1px;
+    -webkit-border-radius:0 6px 6px 6px;
+    -moz-border-radius:0 6px 6px 6px;
+    border-radius:0 6px 6px 6px;
+    background-color: #4DB6B4;
+    color: white;
+}
+.dropdown-submenu > .dropdown-menu.x-small-menu{
+    margin-top: -6px;
+}
+.dropdown-submenu > .dropdown-menu.small-menu{
+    margin-top: -36px;
+}
+.dropdown-submenu > .dropdown-menu.medium-menu{
+    margin-top: -146px;
+}
+.dropdown-submenu > .dropdown-menu.x-large-menu{
+    margin-top: -246px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+    display:block;
+}
+.dropdown-submenu>a:after {
+    display:block;
+    content:" ";
+    float:right;
+    width:0;
+    height:0;
+    border-color:transparent;
+    border-style:solid;
+    border-width:5px 0 5px 5px;
+    border-left-color:#5D5D5D;
+    margin-top:5px;
+    margin-right:-10px;
+}
+.dropdown-submenu > .dropdown-menu > li > a {
+    color: white;
+}
+.dropdown-submenu:hover>a:after {
+    border-left-color:#ffffff;
+}
+.dropdown-submenu.pull-left {
+    float:none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+    left:-100%;
+    margin-left:10px;
+    -webkit-border-radius:6px 0 6px 6px;
+    -moz-border-radius:6px 0 6px 6px;
+    border-radius:6px 0 6px 6px;
+}
+
+</style>
+{% ifinstalled cartridge.shop %}
+<link rel="stylesheet" href="{% static "css/cartridge.css" %}">
+{% if LANGUAGE_BIDI %}
+<link rel="stylesheet" href="{% static "css/cartridge.rtl.css" %}">
+{% endif %}
+{% endifinstalled %}
+{% endcompress %}
+{% block extra_css %}{% endblock %}
+
+<script type="text/javascript">
+
+    function NotInFacebookFrame() {
+        return top === self;
+    }
+    function ReferrerIsFacebookApp() {
+    if(document.referrer) {
+        return document.referrer.indexOf("apps.facebook.com") != -1;
+    }
+    return false;
+    }
+    if (ReferrerIsFacebookApp()) {
+        top.location.replace("http://www.wishradio.in");
+    }
+
+    var category_namespace = {
+        categories:''
+    };
+    var is_authenticated = false;
+    var login_url = "{{settings.LOGIN_URL}}";
+    var STATIC_URL = "{{STATIC_URL|escapejs}}";
+    {% if request.user.is_authenticated %}
+        is_authenticated = true;
+    {% else %}
+        is_authenticated = false;
+    {% endif %}
+    {% blog_categories_json as categories %}
+    {% autoescape off %}
+        var categories = {{categories}};
+    {% endautoescape %}
+
+    category_namespace.categories = categories;
+
+</script>
+
+{% block extra_head %}{% endblock %}
+
+</head>
+<body class="bodyCustom" style="padding-top:150px;" id="{% block body_id %}body{% endblock %}">
+
+{% nevercache %}
+    {% include "includes/header.html" %}
+{% endnevercache %}
+
+{% nevercache %}
+<div class="container">
+    <div class="row">
+        <div class="offset1 span10">
+            {% for message in messages %}
+            <div class="row">
+                <div class="halfGutter span10">
+                    <div class="alert alert-{{ message.tags }}" data-alert="alert">
+                        <a id="closeMessage" class="close" href="#">x</a>{{ message }}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endnevercache %}
+
+<div class="container">
+    <div class="row">
+        <div class="offset1 span10">
+            {% block main %}{% endblock %}
+        </div>
+    </div>
+</div>
+
+{% nevercache %}
+    {% include "includes/footer.html" %}
+{% endnevercache %}
+{% comment %}
+<!-- <footer> -->
+<!--     <div class="container">
+        {# page_menu "pages/menus/footer.html" #}
+        <p>
+            {# trans "Powered by" #}
+            <a href="http://mezzanine.jupo.org">Mezzanine</a>{% ifinstalled cartridge.shop %},
+            <a href="http://cartridge.jupo.org">Cartridge</a>{% endifinstalled %}
+            {# trans "and" #}
+            <a href="http://www.djangoproject.com">Django</a>
+            <span class="separator">|</span>
+            {# trans "Theme by" #} <a href="http://twitter.github.com/bootstrap/">Bootstrap</a>
+            {# ifinstalled mezzanine.mobile #}
+            <span class="separator">|</span>
+            <a href="{% url "set_device" "mobile" %}?next={{ request.path }}">{# trans "View Mobile Site" #}</a>
+            {# endifinstalled #}
+        </p>
+    </div> -->
+<!-- </footer> -->
+{% endcomment %}
+
+{% compress js %}
+<script src="{% static "mezzanine/js/"|add:settings.JQUERY_FILENAME %}"></script>
+<script src="{% static "js/bootstrap.js" %}"></script>
+<script src="{% static "js/bootstrap-extras.js" %}"></script>
+<script src="{% static "js/ajax.csrf.js" %}"></script>
+<script src="{% static "js/jquery.fancybox.js" %}"></script>
+<script src="{% static "js/jquery.mCustomScrollbar.js" %}"></script>
+<script src="{% static "js/jquery-debounce.js" %}"></script>
+<script src="{% static "js/tcal.js" %}"></script>
+<script src="{% static "js/jquery.autosize.js" %}"></script>
+<script src="{% static "js/jquery.confirm.js" %}"></script>
+
+<script src="{% static "js/wishradiobase.js" %}"></script>
+<script src="{% static "js/voting.handlers.js" %}"></script>
+<script src="{% static "js/comment.handlers.js" %}"></script>
+<script src="{% static "js/action.handlers.js" %}"></script>
+<script src="{% static "js/album.handlers.js" %}"></script>
+<script src="{% static "js/base.js" %}"></script>
+<script src="{% static "js/jquery.autocomplete.js" %}"></script>
+<script src="{% static "js/jquery.nouislider.js" %}"></script>
+{% endcompress %}
+<script type="text/javascript">
+        $(document).ready(function(){
+        var options, a;
+        $(function(){
+           options = { serviceUrl:"{% url 'autocomplete' %}",
+                        minChars:2,
+                        width: 'auto',
+                        noCache: false,
+                        deferRequestBy:150};
+           $('.search-query').autocomplete(options);
+        });
+        $('.shoppedRecently').off('click', shopped_recently_handler).on('click', shopped_recently_handler);
+        
+        {% if request.session.unauthenticated_write_review and request.session.unauthenticated_store_write_review %}
+            $('.shoppedRecently').click();
+        {% endif %}
+    });
+
+    var afterShowStoreAutocompleteCallback = function(event) {
+        var options, a;
+        var prev_store_title = ''
+        $(function(){
+           options = { serviceUrl:"{% url 'autocomplete_stores' %}",
+                        width: 'auto',
+                        noCache: false,
+                        deferRequestBy:150,
+                        onSelect: function(data){ 
+                                                    var store_title = data.value;
+                                                    var $reviewContainer = $('.fancybox-inner').find('.reviewContainer');
+                                                    if(prev_store_title !== store_title || $reviewContainer.find('.review_on_object').length === 0) {prev_store_title = store_title;
+                                                        var $review_form_url = "{% url 'write_review' 0 0 %}?store=" + store_title; 
+                                                        $.ajax({
+                                                            type : "GET",
+                                                            url : $review_form_url,
+                                                            success: function(template){
+                                                               $('.fancybox-inner').find('.reviewContainer').html(template);
+                                                               $.fancybox.update();
+                                                               afterShowReviewFormCallback();
+                                                            }
+                                                        });  
+                                                    }       
+                                                }
+                     };
+
+           $('.search-store-query').autocomplete(options);
+
+           {% if request.session.unauthenticated_write_review and request.session.unauthenticated_store_write_review %}
+                $('.search-store-query').val('{{request.session.unauthenticated_store_write_review|title}}');
+                $('.search-store-query').focus();
+           {% endif %}
+
+        });
+    };
+
+    var shopped_recently_handler = function(event) {
+        var $url = $(this).data("href");
+
+        var title = $(this).data('title');
+        doOpenUrlWithAjaxFancyBox($url, afterShowStoreAutocompleteCallback, title, 'visible');
+        return false;
+    };
+</script>
+<!--[if lt IE 9]>
+<script src="{% static "js/html5shiv.js" %}"></script>
+<![endif]-->
+{% block extra_js %}{% endblock %}
+{% include "includes/footer_scripts.html" %}
+</body>
+</html>

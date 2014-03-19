@@ -1,6 +1,6 @@
 {% load i18n userProfile_tags static %}
 
-<div class="row">
+<div class="row topHalfGutter">
     <div class="span3 halfGutter"> 
         <div class="outerBox">
             <div class="row">
@@ -24,11 +24,16 @@
                             {% for category in parent_categories %}
                                 <div class="span1HalfGutter span1Height imageCategoryBox category-icon category-{{category|slugify}} updateTrends {% if forloop.last %}bottomHalfGutter{% endif %} {% cycle '' 'thirdCategory' '' %}">
                                     <span class="categoryName makeButton colorWhite fontTitillium1 fontSize11">
-                                            {{category}}
+                                        {{category}}
                                     </span>
                                 </div>
                             {% endfor %}
                         {% endif %}
+                    </div>
+                    <div class="whiteBox infoBox colorWhite fontSize20 halfGutterInset halfGutterInsetRight">
+                        <div>
+                        {% trans "Now Share your wishlists with your friends" %}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -37,11 +42,9 @@
     <div class="span7">
         <div class="outerBox">
             <div class="row">
-                <div class="span3">
+                <div class="span7">
                     <div class="boxTitle">
-                        <h6 class="fontTitillium fontSize16">
-                            <img src="{% static "img/topStores.png" %}" style="margin-top:-2px;">
-                            {% trans "TOP STORES" %}
+                        <h6 class="fontTitillium fontSize16"><span class="radioColor fontSize18">&starf;&nbsp;</span>{% trans "SHOWCASE" %}
                         </h6>
                         <div class="yellowLineContainer">
                             <hr class="yellowLine"/>
@@ -49,25 +52,7 @@
                     </div>
                     <div class="whiteBox" style="position:relative;">
                         <div id="topStoresForStoreCategory">
-                            {% render_stores_for_categories 'All' 'All' 'MIN_STORES_HOME_PAGE'|settings_value %}
-                        </div>
-                        <div class="">
-                        </div>
-                    </div>
-                </div>
-                <div class="span4">
-                    <div class="boxTitle">
-                        <h6 class="fontTitillium fontSize16">
-                            <img src="{% static "img/shopTalk.png" %}" style="margin-top:-2px;">
-                            {% trans "STORE REVIEWS" %}
-                        </h6>
-                        <div class="yellowLineContainer">
-                            <hr class="yellowLine"/>
-                        </div>
-                    </div>
-                    <div class="whiteBox" style="position:relative;">
-                        <div id="topReviewsForStoreCategory">
-                        {% render_reviews_for_categories 'All' 'All' 'MIN_REVIEWS_HOME_PAGE'|settings_value %}
+                            {% include "generic/new_vendor_list.html" %}
                         </div>
                         <div class="">
                         </div>
@@ -96,3 +81,5 @@
         <span id="wish-status" ></span>
     </div>
 </div>
+
+<a id="new-walk-through" href="/static/img/walkthrough.png"></a>

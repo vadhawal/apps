@@ -53,10 +53,10 @@ a.owned_store:hover{
 }
 
 @media (max-width: 979px) and (min-width: 768px) {
-	.profilePicture {
+/*	.profilePicture {
 		max-width: 104px;
 	}
 	.profilePicture img {
 		max-width: 96px;
-	}
+	}*/
 }

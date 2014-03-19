@@ -4,7 +4,7 @@
 {% load follow_tags %}
 {% load hitcount_tags %}
 {% load userProfile_tags %}
-{% block meta_title %}{% trans "Search Results" %}{% endblock %}
+{% block meta_title %}{{sub_category_title}}{% endblock %}
 {% block title %}{% trans "Search Results" %}{% endblock %}
 
 {% block extra_css %}
@@ -60,14 +60,21 @@
 		</div>
 		{% if results.object_list %}
 		<div class="row yellowBar height26auto color5D fontTitillium2 fontSize13 topHalfGutter">
-			<div class="span7 halfGutter searchFilter"><span class="fontTitillium1">{% trans "Filter By"%}</span>					
-				<label for="price"><input type="checkbox" value="price" name="price"></input>{% trans "Price" %}</label>
-				<label for="variety"><input type="checkbox" value="variety" name="variety"></input>{% trans "Variety" %}</label>
-				<label for="quality"><input type="checkbox" value="quality" name="quality"></input>{% trans "Quality" %}</label>
-				<label for="service"><input type="checkbox" value="service" name="service"></input>{% trans "Customer Service" %}</label>
-				<label for="exchange"><input type="checkbox" value="exchange" name="exchange"></input>{% trans "Exchange Experience" %}</label>
-				<label for="overall"><input type="checkbox" value="overall" name="overall"></input>{% trans "Overall" %}</label>
-				<button id="searchResultFilter" class="fontTitillium1 fontSize13">{% trans "Go" %}</button>
+			<div class="span7 halfGutter searchFilter">
+				<div class="span1 noGutter">
+					<span class="fontTitillium1">{% trans "Filter By"%}</span>
+				</div>
+				<div class="span5 noGutter">
+					<label for="price"><input type="checkbox" value="price" name="price"></input>{% trans "Pricing" %}</label>
+					<label for="website_ex"><input type="checkbox" value="website_ex" name="website_ex"></input>{% trans "Website Experience" %}</label>
+					<label for="quality"><input type="checkbox" value="quality" name="quality"></input>{% trans "Range & Quality" %}</label>
+					<label for="service"><input type="checkbox" value="service" name="service"></input>{% trans "Timely Delivery" %}</label>
+					<label for="exchange"><input type="checkbox" value="exchange" name="exchange"></input>{% trans "Exchange Experience" %}</label>
+					<label for="overall"><input type="checkbox" value="overall" name="overall"></input>{% trans "Overall" %}</label>
+				</div>
+				<div>
+					<button id="searchResultFilter" class="pull-left fontTitillium1 fontSize13">{% trans "Go" %}</button>
+				</div>
 			</div>
 		</div>
 		{% endif %}
@@ -96,7 +103,7 @@
 								<div class="span6">
 							        <a class="vendorName fontTitillium" href="{{ result.get_absolute_url }}">{{ result|title }}</a>
 							        <span class="searchResultRating searchResultRatingText searchResultRatingScheme rating-{{result.overall_average|floatformat:"0"}} pull-right halfGutterRight">{{result.overall_average|floatformat:"1"}}</span>
-							        <p class="webUrl fontTitillium1"><a href="{{result.web_url}}" class="radioColor">{{result.web_url}}</a></p>
+							        <p class="webUrl fontTitillium1"><a href="{{result.web_url}}" target="_blank" class="radioColor">{{result.web_url}}</a></p>
 						    	</div>
 						    </div>
 						    <div class="row">

@@ -5,9 +5,9 @@
 var baseURLDealsTemplate = "{% url "get_filtered_deallist" blog_post.id "category" 0 'MIN_DEALS_HOME_PAGE'|settings_value %}";
 var baseURLStoresTemplate = "{% url "get_related_stores" blog_post.id "category" 0 'MIN_STORES_HOME_PAGE'|settings_value %}";
 
-var helpfulReviewsURL = "{% url "comment_thread_most_liked_view" blog_post.id 0 'MIN_REVIEWS_STORE_PAGE'|settings_value %}";
-var socialReviewsURL = "{% url "comment_thread_social_view_level2" blog_post.id 0 'MIN_REVIEWS_STORE_PAGE'|settings_value %}";
-var recentReviewsURL = "{% url "comment_thread_most_recent_view" blog_post.id 0 'MIN_REVIEWS_STORE_PAGE'|settings_value %}";
+var helpfulReviewsURL = "{% url "comment_thread_most_liked_view" blog_post.id  %}";
+var socialReviewsURL = "{% url "comment_thread_social_view_level2" blog_post.id  %}";
+var recentReviewsURL = "{% url "comment_thread_most_recent_view" blog_post.id  %}";
 
 var get_filtered_deals_handler = function(sub_category)
 {
@@ -15,19 +15,13 @@ var get_filtered_deals_handler = function(sub_category)
 	new_url += "?v=1";
     
     var $element = $('#topDealsForStore');
-    var $scrollContainer = $element.find(".scrollContainer");
-    if ($scrollContainer && $scrollContainer.hasClass('mCustomScrollbar')) { 
-      $scrollContainer.mCustomScrollbar("scrollTo","top");
-    }
+
     $element.next().addClass("overlay");
     $.get(new_url, {}, function(data) {
             if(data.success === true) {
-                $deal_container = $scrollContainer.find('.mCSB_container');
-                $deal_container.html(data.html);
-                install_voting_handlers($deal_container);
-                install_share_object_handler($deal_container);
-
-                $scrollContainer.attr("data-href", new_url);
+                $element.html(data.html);
+                install_voting_handlers($element);
+                install_share_object_handler($element);
 
                 $('a.wishimg-deal-homepage').fancybox({
     				scrolling: 'yes',
@@ -36,10 +30,9 @@ var get_filtered_deals_handler = function(sub_category)
     				autoSize: true,
     				helpers : { overlay : { locked : false } }
                 });
-            } else {
-                $scrollContainer.removeAttr("data-href");
             }
-        $element.next().removeClass("overlay");
+            $element.next().removeClass("overlay");
+            setupCustomScrollBar($element);
        });
     return false;
 }
@@ -50,21 +43,15 @@ var get_related_stores_handler = function(sub_category)
 		new_url += "?v=1";
 
     var $element = $('#topRelatedStoreForStore');
-    var $scrollContainer = $element.find(".scrollContainer");
-    
-    if ($scrollContainer && $scrollContainer.hasClass('mCustomScrollbar')) { 
-      $scrollContainer.mCustomScrollbar("scrollTo","top");
-    }
+
     $element.next().addClass("overlay");
     $.get(new_url, {}, function(data) {
         if(data.success === true) {
-            $deal_container = $scrollContainer.find('.mCSB_container');
-            $deal_container.html(data.html);
-            $scrollContainer.attr("data-href", new_url);
-        } else {
-            $scrollContainer.removeAttr("data-href");
-        }
+            $element.html(data.html);
+            $element.find('.vendorFollowers').on("click", display_popup_handler);
+        } 
         $element.next().removeClass("overlay");
+        setupCustomScrollBar($element);
     });
    	return false;
 }

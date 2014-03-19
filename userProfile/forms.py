@@ -10,4 +10,4 @@ class SuggestStoreForm(forms.Form):
 class ContactUsForm(forms.Form):
     email_from = forms.EmailField(label=_("From"))
     email_subject = forms.CharField(label=_("Subject"), max_length=200)
-    email_message = forms.CharField(label=_("Message"))
+    email_contact_message = forms.CharField(label=_("Message"), widget=forms.Textarea(attrs={'size':'40'}))

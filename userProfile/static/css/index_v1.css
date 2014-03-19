@@ -1,0 +1,253 @@
+.outerBox {
+	height: 350px;
+	width: 100%;
+}
+.innerBox {
+	height: 290px;
+	overflow: auto;
+}
+
+.topStores {
+	height: 290px;
+	overflow: auto;
+}
+
+.topReviewsContainer {
+	height: 290px;
+	overflow: auto;
+}
+
+#topDealsForStoreCategory{
+	height: 250px;
+	margin: auto 0;
+}
+#topStoresForStoreCategory .vendorResult{
+	margin-top: 6px;
+}
+#topStoresForStoreCategory img.smallIcon{
+	max-height: 41px;
+	width: 41px;
+	padding: 2px;
+	vertical-align:middle;
+	display:inline-block;
+}
+#topStoresForStoreCategoryAuth img.smallIcon, 
+#topReviewsForStoreCategoryAuth img.smallIcon {
+	padding: 2px;
+	max-height: 41px;
+	width: 41px;
+	vertical-align:middle;
+	display:inline-block;
+}
+.dealBox {
+	height: 250px;
+	line-height: 250px;
+}
+
+/* dealBox_h will be applied on the deals listed on home page. */
+.dealBox_h {
+	width: auto;
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+}
+.dealBox_h_elem {
+	display:inline-block;
+	height:216px;
+	margin:auto;
+	margin-left: 16px;
+	margin-right: 0px;
+	vertical-align: middle;
+}
+.dealBox_h img {
+	height:100%;
+	vertical-align: initial;
+}
+.boxTitle{
+	height: 25px;
+	width: 100%;
+	display: table;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	white-space: nowrap;
+}
+.boxTitle h6 {
+	display: table-cell;
+}
+.boxTitle h6 img{
+	box-shadow: none;
+	display: inline-block;
+	max-width: none;
+}
+.topReviews{
+	background-color: #fff;
+	line-height: normal;
+}
+.reviewUserImage {
+	vertical-align:middle;
+	display:inline-block;
+	margin-left: 6px;
+}
+.topReviews_v .topReviews .span0_5Height .reviewUserImage {
+	margin-left: 0px;
+}
+.statusBox {
+	background : #FFFFFF;
+	background : rgba(255, 255, 255, 1);
+	border-style : Solid;
+	border-color : #C4C4BF;
+	border-color : rgba(196, 196, 191, 1);
+	border-width : 1px;
+	box-shadow : 1px 1px 1px 1px rgba(130, 111, 113, 0.75) inset;
+	/*filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=-0.4, OffY=-0.4, Color='#826F71') ;*/
+	padding: 5px;
+	border-top-width: 0px;
+	border-left-width: 0px;
+}
+.statusBox textarea, .statusBox textarea:focus {
+	border:0;
+	-webkit-box-shadow:none;
+	box-shadow: none;
+}
+.imageCategoryBox
+{
+	cursor: pointer;
+	position: relative;
+/*	background : -moz-linear-gradient(0% 50% 0deg,rgba(134, 114, 120, 0.21) 0%,rgba(92, 74, 86, 0.21) 50%,rgba(67, 53, 69, 0.21) 100%);
+	background : -webkit-linear-gradient(0deg, rgba(134, 114, 120, 0.21) 0%, rgba(92, 74, 86, 0.21) 50%, rgba(67, 53, 69, 0.21) 100%);
+	background : -webkit-gradient(linear,0% 50% ,100% 50% ,color-stop(0,rgba(134, 114, 120, 0.21) ),color-stop(0.5,rgba(92, 74, 86, 0.21) ),color-stop(1,rgba(67, 53, 69, 0.21) ));
+	background : -o-linear-gradient(0deg, rgba(134, 114, 120, 0.21) 0%, rgba(92, 74, 86, 0.21) 50%, rgba(67, 53, 69, 0.21) 100%);
+	background : -ms-linear-gradient(0deg, rgba(134, 114, 120, 0.21) 0%, rgba(92, 74, 86, 0.21) 50%, rgba(67, 53, 69, 0.21) 100%);
+	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#867278', endColorstr='#433545' ,GradientType=0)";
+	background : linear-gradient(90deg, rgba(134, 114, 120, 0.21) 0%, rgba(92, 74, 86, 0.21) 50%, rgba(67, 53, 69, 0.21) 100%);*/
+	box-shadow : 1px 1px 1px rgba(0, 0, 0, 0.75);
+	vertical-align: bottom;
+	/*filter: alpha(opacity=21) progid:DXImageTransform.Microsoft.Alpha(opacity=21) progid:DXImageTransform.Microsoft.dropshadow(OffX=1.31, OffY=1.31, Color='#000000') progid:DXImageTransform.Microsoft.gradient(startColorstr='#867278',endColorstr='#433545' , GradientType=1);*/
+}
+.radioSelect{
+	color:white;
+	background-color: rgb(2, 151, 149);
+	background-image: url('/static/img/selectPointerWhite.png');
+	margin-top: 0px;	
+}
+.imageCategoryBoxSelected{
+/*	background : #FFFFFF;
+	background : rgba(255, 255, 255, 1);*/
+	box-shadow : 1px 1px 1px 1px rgba(0, 0, 0, 0.75) inset;
+	/*filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=-0.57, OffY=-0.57, Color='#000000') ;*/
+}
+div.imageCategoryBox span{
+	display: none;
+}
+div.imageCategoryBox:hover span{
+	display: block;
+	position: absolute;
+	bottom: 6px;
+	left: 6px;
+	z-index: 2;
+}
+/* dealBox_v will be applied on the deals listed on logged-in home page. */
+#refreshActivity{
+	display: block;
+	background : #F9DF1E;
+	background : rgba(249, 223, 30, 1);
+	padding: 5px;
+}
+#status{
+	display: block;
+	background : #F9DF1E;
+	background : rgba(249, 223, 30, 1);
+	padding: 5px;
+}
+#load-feeds ul{
+	margin-top: 0px;
+}
+.content {
+	margin: 0px auto;
+	height: auto;
+	overflow: auto;
+	width: 100%;
+	display: inline-block;
+}
+.dealImageMarginRight{
+	margin-right: 16px;
+}
+input#expiry_date{
+	border-radius:0;
+	margin-top:6px;
+	width: 156px;
+}
+textarea#text + div{
+	display: none;
+}
+textarea#text.error {
+	border-width: 0px !important;
+}
+textarea#text.error + div{
+	display: inline-block;
+	background-image: url('/static/img/error.png');
+	background-size: 14px;
+	background-repeat: no-repeat;
+	position: absolute;
+	width: 15px;
+	height: 15px;
+	left: 3px;
+	top: 3px;
+}
+textarea#text.error:focus + div{
+	display: none;
+}
+div#categories select.blog_parentcategories.error + div{
+	background-image: url('/static/img/error.png');
+	background-size: 14px;
+	background-repeat: no-repeat;
+	position: absolute;
+	width: 15px;
+	height: 15px;
+	left: -20px;
+	top: 5px;
+}
+div#categories select.blog_subcategories.error + div{
+	background-image: url('/static/img/error.png');
+	background-size: 14px;
+	background-repeat: no-repeat;
+	position: absolute;
+	width: 15px;
+	height: 15px;
+	left: -20px;
+	top: 40px;
+}
+div#deal_categories select#sub_categories_blog.error + div{
+	background-image: url('/static/img/error.png');
+	background-size: 14px;
+	background-repeat: no-repeat;
+	position: absolute;
+	width: 15px;
+	height: 15px;
+	left: -20px;
+	top: 5px;	
+}
+input#expiry_date.error + div{
+	background-image: url('/static/img/error.png');
+	background-size: 14px;
+	background-repeat: no-repeat;
+	position: absolute;
+	width: 15px;
+	height: 15px;
+	left: -20px;
+	top: 40px;
+}
+input#fakeselect.error + span + div{
+	background-image: url('/static/img/error.png');
+	background-size: 14px;
+	background-repeat: no-repeat;
+	position: absolute;
+	width: 15px;
+	height: 15px;
+	left: 118px;
+	top: 2px;
+}
+div.thirdCategory.imageCategoryBox:hover span{
+	right: 6px;
+	left: auto;
+}

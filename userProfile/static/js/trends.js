@@ -25,7 +25,7 @@ var get_trending_deals_handler = function(parent_category, sub_category)
                 autoSize: true,
                 helpers : { overlay : { locked : false } }
               });
-
+              $scrollContainer.mCustomScrollbar("update", true);
           } else {
               $scrollContainer.removeAttr("data-href");
           }
@@ -96,6 +96,7 @@ var get_top_reviews_handler = function(parent_category, sub_category)
 
 		    $scrollContainer.attr("data-href", $url);
 		    install_toggle_comment_handler();
+        $data_container.find('.vendorFollowers').on("click", display_popup_handler);
     	} else {
     		$scrollContainer.removeAttr("data-href");
     	}
@@ -122,3 +123,7 @@ var update_trends_handler = function(event, elementClicked)
 	return false;
 }
 
+$(document).ready (function (){
+    $('a#new-walk-through').fancybox();
+    $('a#new-walk-through').click();
+});

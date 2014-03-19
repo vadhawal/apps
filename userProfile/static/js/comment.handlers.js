@@ -50,10 +50,14 @@ var comment_on_object_handler = function(event){
                 $total_comments.text(total_comments);
                 $loaded_comments.text(loaded_comments);
                 $form.find('.subcomment_text').trigger('autosize.resize');
-                if ($formParent.parents('.fancybox-data').length > 0) {
+                $fancyboxData = $formParent.parents('.fancybox-data');
+                if ($fancyboxData.length > 0) {
                     // isInsideFancyBox = true;
                     $formParent.find('.span5').removeClass('span5').addClass('span2');
+                    $fancyboxData.mCustomScrollbar("update");
+                    $fancyboxData.mCustomScrollbar("scrollTo","bottom");
                 }
+                $form.find('.subcomment_text').focus();
             },
             error: function(data) {
                 console.log(data);
@@ -65,35 +69,62 @@ var comment_on_object_handler = function(event){
     return false;
 };
 
+var afterShowReviewFormCallback = function() {
+    var $reviewFormContainer = $('.fancybox-inner').find('.review_on_object');
+    $reviewFormContainer.submit(review_submit_handler);
+
+    var $overallValue = $('[name="overall_value"]');
+    var value = parseInt($overallValue.val());
+    makeSlider($('.overall_value'), $overallValue, value);
+    if($overallValue.hasClass('error')) {
+        $('.overall_value').parent().find('.label_text').addClass('error');
+    }
+
+    var $priceValue = $('[name="price_value"]');
+    value = parseInt($priceValue.val());
+    makeSlider($('.price_value'), $priceValue ,value);
+    if($priceValue.hasClass('error')) {
+        $('.price_value').parent().find('.label_text').addClass('error');
+    }
+
+    var $websiteExValue = $('[name="website_ex_value"]');
+    value = parseInt($websiteExValue.val());
+    makeSlider($('.website_ex_value'), $websiteExValue, value);
+    if($websiteExValue.hasClass('error')) {
+        $('.website_ex_value').parent().find('.label_text').addClass('error');
+    }
+
+    var $qualityValue = $('[name="quality_value"]');
+    value = parseInt($qualityValue.val());
+    makeSlider($('.quality_value'), $qualityValue, value);
+    if($qualityValue.hasClass('error')) {
+        $('.quality_value').parent().find('.label_text').addClass('error');
+    }
+
+    var $serviceValue = $('[name="service_value"]');
+    value = parseInt($serviceValue.val());
+    makeSlider($('.service_value'), $serviceValue, value);
+    if($serviceValue.hasClass('error')) {
+        $('.service_value').parent().find('.label_text').addClass('error');
+    }
+
+    var $exchangeValue = $('[name="exchange_value"]');
+    value = parseInt($exchangeValue.val());
+    makeSlider($('.exchange_value'), $exchangeValue, value);
+    if($exchangeValue.hasClass('error')) {
+        $('.exchange_value').parent().find('.label_text').addClass('error');
+    }
+
+};
+
 var edit_review_handler = function(event) {
 	if(login_required_handler())
         return false;
 
     var $url = $(this).data("href");
-    var afterShowCallback = function() {
-                                var $reviewFormContainer = $('.fancybox-inner').find('.review_on_object');
-                                $reviewFormContainer.submit(review_submit_handler);
 
-                                var value = parseInt($('[name="overall_value"]').val());
-                                makeSlider($('.overall_value'), $('[name="overall_value"]'), value);
-
-                                value = parseInt($('[name="price_value"]').val());
-                                makeSlider($('.price_value'), $('[name="price_value"]') ,value);
-
-                                value = parseInt($('[name="variety_value"]').val());
-                                makeSlider($('.variety_value'), $('[name="variety_value"]'), value);
-
-                                value = parseInt($('[name="quality_value"]').val())
-                                makeSlider($('.quality_value'), $('[name="quality_value"]'), value);
-
-                                value = parseInt($('[name="service_value"]').val())
-                                makeSlider($('.service_value'), $('[name="service_value"]'), value);
-
-                                value = parseInt($('[name="exchange_value"]').val())
-                                makeSlider($('.exchange_value'), $('[name="exchange_value"]'), value);
-                            };
-
-    doOpenUrlWithAjaxFancyBox($url, afterShowCallback, 'visible');
+    var title = $(this).data('title');
+    doOpenUrlWithAjaxFancyBox($url, afterShowReviewFormCallback, title, 'visible');
     return false;
 };
 
@@ -123,28 +154,16 @@ var makeSlider = function($element, $serialize_to, start_val) {
 }
 
 var write_review_handler = function(event) {
-	if(login_required_handler())
-        return false;
-
     var $url = $(this).data("href");
-    var afterShowCallback = function() {
-                                var $reviewFormContainer = $('.fancybox-inner').find('.review_on_object');
-                                $reviewFormContainer.submit(review_submit_handler);
-                                makeSlider($('.overall_value'), $('[name="overall_value"]'), 0);
-                                makeSlider($('.price_value'), $('[name="price_value"]'), 0);
-                                makeSlider($('.variety_value'), $('[name="variety_value"]'), 0);
-                                makeSlider($('.quality_value'), $('[name="quality_value"]'), 0);
-                                makeSlider($('.service_value'), $('[name="service_value"]'), 0);
-                                makeSlider($('.exchange_value'), $('[name="exchange_value"]'), 0);
-                            };
 
-    doOpenUrlWithAjaxFancyBox($url, afterShowCallback, 'visible');
+    var title = $(this).data('title');
+    doOpenUrlWithAjaxFancyBox($url, afterShowReviewFormCallback, title, 'visible');
     return false;
 };
 
 var review_submit_handler = function(){
-        if(login_required_handler())
-            return false;
+        // if(login_required_handler())
+        //     return false;
         var $form = $(this);
         $('.fancybox-inner img.loader').removeClass("hide");
         $('.fancybox-inner .rateStoreNow').addClass("hide");
@@ -162,11 +181,14 @@ var review_submit_handler = function(){
                         var element_id = $edit_review.data('element-id');
                         $('#'+element_id).replaceWith(ret_data.html);
                     } else {
-                    	if(subcomments_element.hasClass('noReviews')) {
-                    		subcomments_element.removeClass('noReviews');
-                    		subcomments_element.html(ret_data.html);
-                    	} else {
-                        	subcomments_element.prepend(ret_data.html);    
+                        var store_page = $('body').data('store');
+                        if(typeof store_page !== 'undefined' && ret_data.store.toLowerCase() === store_page) {
+                        	if(subcomments_element.hasClass('noReviews')) {
+                        		subcomments_element.removeClass('noReviews');
+                        		subcomments_element.html(ret_data.html);
+                        	} else {
+                            	subcomments_element.prepend(ret_data.html);    
+                            }
                         }                   
                     }
                     install_voting_handlers(subcomments_element);
@@ -176,18 +198,23 @@ var review_submit_handler = function(){
                     $.fancybox.close();
                 }
                 else {
-                    var errors = ret_data.errors;
-                    $('.fancybox-inner').find('.error').removeClass('error');
-                    $.each( errors, function( key, value ) {
-                        var $element = $('.fancybox-inner').find('.' + key);
-                        if ($element.length == 0) {
-                            $('.fancybox-inner').find('[name="' + key + '"]').closest('.controls').find(".label_text").addClass('error');
-                        } else {
-                            $element.closest('.controls').find(".label_text").addClass('error');
-                        }
-                    });
-                    $('.fancybox-inner img.loader').addClass("hide");
-                    $('.fancybox-inner .rateStoreNow').removeClass("hide");
+                    if (ret_data.error_code === 405) {
+                        if(login_required_handler())
+                            return false;
+                    } else {
+                        var errors = ret_data.errors;
+                        $('.fancybox-inner').find('.error').removeClass('error');
+                        $.each( errors, function( key, value ) {
+                            var $element = $('.fancybox-inner').find('.' + key);
+                            if ($element.length == 0) {
+                                $('.fancybox-inner').find('[name="' + key + '"]').closest('.controls').find(".label_text").addClass('error');
+                            } else {
+                                $element.closest('.controls').find(".label_text").addClass('error');
+                            }
+                        });
+                        $('.fancybox-inner img.loader').addClass("hide");
+                        $('.fancybox-inner .rateStoreNow').removeClass("hide");
+                    }
                 }
             },
             error: function(data) {
@@ -216,7 +243,7 @@ var view_previous_comments_handler = function(event){
         add_link.attr('href', link);
         var total_comments = parseInt(add_link.parent().find('.total_comments').text());
         var loaded_comments = parseInt(add_link.parent().find('.loaded_comments').text());
-        if(loaded_comments + 5 <= total_comments) {
+        if(loaded_comments + 5 < total_comments) {
             add_link.parent().find('.loaded_comments').text(loaded_comments + 5);
         }
         else {
@@ -225,7 +252,7 @@ var view_previous_comments_handler = function(event){
                 var $prevCommentsParent = $prevCommentsTab.parent();
                 if ($prevCommentsParent) {
                     var $parentNextSibling = $prevCommentsTab.parent().next();
-                    if ($parentNextSibling.length > 0 && $parentNextSibling.prop('tagName').toLowerCase() === "hr") {
+                    if ($parentNextSibling.length > 0 && $parentNextSibling.hasClass("dottedSeparator")) {
                         $parentNextSibling.remove();// remove the next HR
                     }
                     $prevCommentsParent.remove(); // remove the entire view previous comment tab
@@ -236,10 +263,10 @@ var view_previous_comments_handler = function(event){
         install_voting_handlers($subcomments.children().first());
         install_comment_on_object_handler($subcomments.children().first());
         install_toggle_comment_handler($subcomments.children().first());
-        var $fancybox = add_link.parents('.fancybox-data');
-        if($fancybox && $fancybox.length > 0)
+        var $fancyboxData = $subcomments_container.parents('.fancybox-data');
+        if($fancyboxData && $fancyboxData.length > 0)
         {
-            $(".fancybox-data").mCustomScrollbar("update");
+            $fancyboxData.mCustomScrollbar("update");
         }
 
     });

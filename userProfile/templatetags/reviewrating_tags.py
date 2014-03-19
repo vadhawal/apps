@@ -19,7 +19,7 @@ def reviewrating_for(context, obj):
     for f in ("average", "count", "sum"):
         context["price_" + f] = getattr(obj, "%s_%s" % ("price", f))
     for f in ("average", "count", "sum"):
-        context["variety_" + f] = getattr(obj, "%s_%s" % ("variety", f))
+        context["website_ex_" + f] = getattr(obj, "%s_%s" % ("website_ex", f))
     for f in ("average", "count", "sum"):
         context["quality_" + f] = getattr(obj, "%s_%s" % ("quality", f))
     for f in ("average", "count", "sum"):

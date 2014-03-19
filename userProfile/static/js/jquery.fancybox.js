@@ -1180,11 +1180,15 @@
 					$('.fancybox-outer').addClass("split-vertical");
 					$('.fancybox-inner').css("height", "auto")
 				} else {
-					$('.fancybox-outer').removeClass("split-vertical");
+					F.outer.removeClass("split-vertical");
+					F.outer.css({'height':'100%'});
+					F.outer.append("<div class='fancybox-data-loader'><img style='height:17px;position:relative;top:50%;' src='"+ STATIC_URL+"img/loading.gif" +"' ></img></div>");
 				}
 				$.get(reldata_url, {}, function(data) {
+					$('.fancybox-data-loader').remove();
 					$('.fancybox-data').html(data);
 					install_voting_handlers($('.fancybox-data'));
+					$(".fancybox-data").find('.vendorFollowers').on("click", display_popup_handler);
 					install_share_object_handler($('.fancybox-data'));
 					install_comment_on_object_handler($('.fancybox-data'));
 					$(".fancybox-data").mCustomScrollbar({
@@ -1437,6 +1441,7 @@
 			$('.fancybox-data').css({
 				'max-height': skin.height()+'px'
 			});
+
 			$.extend(current, {
 				dim : {
 					width	: getValue( width_ ),

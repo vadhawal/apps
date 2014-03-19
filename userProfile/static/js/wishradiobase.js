@@ -38,8 +38,8 @@ var openLoginForm = function($url) {
                                     $accountFormContainer.on('submit', {action_url: $url}, account_form_submit_handler);
                                 }
                             };
-
-    doOpenUrlWithAjaxFancyBox($url, afterShowCallback);
+    var title = "Login";
+    doOpenUrlWithAjaxFancyBox($url, afterShowCallback, title);
     return false;
 };
 
@@ -137,9 +137,14 @@ var unfollow_handler = function(event) {
     return false;
 };
 
-var install_follow_handlers = function() {
-    $('.follow-btn').off("click", follow_handler).on("click", follow_handler);
-    $('.unfollow-btn').off("click", unfollow_handler).on("click", unfollow_handler);
+var install_follow_handlers = function($parent_element) {
+    if($parent_element) {
+        $parent_element.find('.follow-btn').off("click", follow_handler).on("click", follow_handler);
+        $parent_element.find('.unfollow-btn').off("click", unfollow_handler).on("click", unfollow_handler);
+    } else {
+        $('.follow-btn').off("click", follow_handler).on("click", follow_handler);
+        $('.unfollow-btn').off("click", unfollow_handler).on("click", unfollow_handler);       
+    }
 }
 
 var sharewish_handler = function() {
@@ -284,6 +289,7 @@ var doOpenUrlWithIframeFancyBox = function(url) {
     $.fancybox({
         'frameWidth'        :  500,
         'frameHeight'       :  500,
+         width              :  670,
         'scrolling'         : 'no',
         'hideOnContentClick': false, 	
         'type'              :'iframe',
@@ -298,7 +304,7 @@ var doOpenUrlWithIframeFancyBox = function(url) {
     return false;
 }
 
-var doOpenUrlWithAjaxFancyBox = function(url, afterShowCallback, scroll, afterCloseCallback) {
+var doOpenUrlWithAjaxFancyBox = function(url, afterShowCallback, title, scroll, afterCloseCallback) {
     var doScroll = 'no';
     var afterCloseCallbackImpl = function() { };
     if (typeof scroll !== "undefined") {
@@ -309,19 +315,29 @@ var doOpenUrlWithAjaxFancyBox = function(url, afterShowCallback, scroll, afterCl
     }
     $.fancybox({
         width               : 500,
+        minHeight           : 50,
         autoSize            : true,
         hideOnContentClick  : false,
         openEffect          : 'fade',
         closeEffect         : 'fade',
-        type                :'ajax',
-        helpers             : { overlay : { locked : false } },
+        type                : 'ajax',
+        helpers             :   {  title : {
+                					type: 			'float',
+                					position : 		'bottom'
+            					},
+            					overlay : 	{ 
+            									locked : false
+            								}
+            					},
         scrolling           : doScroll,
         href				: url,
         afterShow           : function() {
-                                    if(typeof afterShowCallback !== 'undefined')
+                                    if(typeof afterShowCallback !== 'undefined' && typeof afterShowCallback === "function")
                                         afterShowCallback();
                               },
-        afterClose          : afterCloseCallbackImpl
+        afterClose          : afterCloseCallbackImpl,
+        'title'				: title,
+        'titleShow'      	: 'true'
         //,                
         // ajax                :   {
         //                             complete    : function(jqXHR, textStatus) {
@@ -369,6 +385,7 @@ var account_form_submit_handler = function(event) {
             } else {
                 var $errors = ret_data.errors.__all__;
                 var $albumFormContainer = $('.fancybox-inner').find('.accountForm');
+                $albumFormContainer.find('.errorColor').remove();
                 $('<div/>', {
                     'class':'errorColor',
                     'html':'<span class="fontSize11" style="margin-left:20px;">'+$errors+'</span>'
@@ -445,7 +462,8 @@ var suggest_store_handler = function(event) {
         $('.suggestStore').removeClass('opened');
     }
 
-    doOpenUrlWithAjaxFancyBox($url, afterShowCallback, 'no', afterCloseCallback);
+    var title = $(this).data('title');
+    doOpenUrlWithAjaxFancyBox($url, afterShowCallback, title, 'no', afterCloseCallback);
     return false;  
 }
 
@@ -463,7 +481,8 @@ var contact_us_handler = function(event) {
         $('.contactUs').removeClass('opened');
     }
 
-    doOpenUrlWithAjaxFancyBox($url, afterShowCallback, 'no', afterCloseCallback);
+    var title = $(this).data('title');
+    doOpenUrlWithAjaxFancyBox($url, afterShowCallback, title, 'no', afterCloseCallback);
     return false;  
 }
 

@@ -1,11 +1,58 @@
 {% load i18n %}
-{% load thumbnail %}
-{% load comment_tags  %}
+{% load thumbnail static %}
+{% load comment_tags follow_tags %}
 {% load userProfile_tags %}
 
 {% if object %}
 <div class="fancybox-data-inner fontTitillium2 color5d fontSize13 halfGutterRight">
 	<div class="dottedSeparator fullSeparator"></div>
+	{% if object.album and object.album.user %}
+	{% get_owned_blog object.album.user as object_owner %}
+	{% if object_owner and object_owner|get_class_name == "BlogPost" %}
+    <div class="row topHalfGutter bottomHalfGutter">
+        <div class="span3">
+            <div class="span0_5 vendorImage span0_5Height text-center noGutter">
+                {% if object_owner.featured_image %}
+                    {% thumbnail object_owner.featured_image "100x100" as img %} 
+                        <a href='{{object_owner.get_absolute_url}}'>
+                            <img class="smallIcon noBoxShadow" src="{{ MEDIA_URL }}{{img}}">
+                        </a>
+                    {% endthumbnail %}
+                {% else %}
+                    <a style="vertical-align:middle;" href='{{object_owner.get_absolute_url}}'>
+                        <img class="smallIcon noBoxShadow" src="{% static "img/store_default.png" %}">
+                    </a>
+                {% endif %}
+            </div>
+            <div class="span2 noGutter">
+                <div class="storeTopMargin radioColor fontHelvetica fontSize13">
+                    <a class="radioColor" href='{{object_owner.get_absolute_url}}'>
+                        {{ object_owner.title|title }}
+                    </a>
+                     <span class="searchResultRatingSmall searchResultRatingScheme fontSize9 fontHelvetica weightBold rating-{{object_owner.overall_average|floatformat:"0"}}">{{object_owner.overall_average|floatformat:"1"}}
+                     </span>
+                </div>
+
+                <div>
+                    <a class="infoSpace fontTitillium3 fontSize12 color5D" href="{{ object_owner.get_absolute_url }}#comments" title="{{object_owner.title|title}}'s Reviews" data-title="{{object_owner.title|title}}'s Reviews">{% spaceless %}
+                        {% blocktrans count object_owner.comments_count as comments_count %}<span class="fontTitillium1">1</span>&nbsp;review{% plural %}<span class="fontTitillium1">{{ comments_count }}</span> reviews{% endblocktrans %}
+                        {% endspaceless %}
+                    </a>
+                        {% vendor_follower_subset_info_url object_owner 0 request.user|follower_count:object_owner as subset_follower_url %}
+                    {% with request.user|follower_count:object_owner as follower_count %}
+                        <a class="infoSpace fontTitillium3 vendorFollowers fontSize12 color5D {% if follower_count == 0 %} countZero {% endif %}" href="{{subset_follower_url}}" title="People Who Follow {{object_owner.title|title}}" data-title="People Who Follow {{object_owner.title|title}}"><span class="fontTitillium1">{{ follower_count }}</span>&nbsp;{% trans "follower" %}{{ follower_count|pluralize }}
+                        </a>
+                    {% endwith %}
+<!--                     <span class="infoSpace">
+                        <span class="fontTitillium1">{# get_hit_count for object_owner #}</span> views
+                    </span> -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="dottedSeparator fullSeparator"></div>
+    {% endif %}
+    {% endif %}
 	{% if  object.message %}
 		<div class="row topHalfGutter fontSize15 fontTitillium1 bottomHalfGutter fancyBoxSplitHidden">
 			<div class="span3">
@@ -21,9 +68,7 @@
 	       		<a href="{{ blog_category.get_absolute_url }}" class="categoryTag radioColor"> {{blog_category}} </a>
 	       	{% endfor %}
 	       	</div>
-	       	
 		</div>
-		
 		<div class="dottedSeparator fullSeparator"></div>
 	{% endif %}
 	{% if object.title and object.title|lower != "untitled" %}

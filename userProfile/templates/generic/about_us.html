@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% load i18n static future %}
+{% block meta_title %} {% trans "About Us" %}{% endblock %}
+
+{% block main %}
+<style>
+.about-text {
+	width: 30%;
+	display: block;
+	float: left;
+	padding: 0% 1.66%;
+}
+div.about-us p{
+	line-height: normal;
+	margin: 5px 0px;
+}
+.founder {
+	width: 100%;
+	height: 240px;
+	display:block;
+	border-radius: 50%;
+	background-size: contain;
+	background-repeat: no-repeat;
+}
+@media (max-width: 979px) and (min-width: 768px){
+/*	.founder {
+		height: 186px;
+	}	*/
+}
+@media (min-width: 1200px) {
+	.founder {
+		height: 300px;
+	}
+}
+.founder1{
+	background-image: url('{% static "img/founder1.jpg" %}');
+}
+.founder2{
+	background-image: url('{% static "img/founder2.jpg" %}');
+}
+.founder3{
+	background-image: url('{% static "img/founder3.jpg" %}');
+}
+</style>
+<div class="row topHalfGutter">
+	<div class="dottedSeparator fullSeparator">
+	</div>
+	<div class="fontSize16 pagination-centered about-us">		
+		<p>{% trans "So we’re a team of three." %}</p>
+		<p>{% trans "Two software engineers, one marketing professional." %}</p>
+		<p>{% trans "One nuts about coding, one passionate about living" %}</p>
+		<p>{% trans "and one crazy about travel." %}</p>
+		<p>{% trans "All with a long list of wishes from life," %}</p>
+		<p>{% trans "one of which includes" %}</p>
+		<p>{% trans "getting" %}<a class="radioColor" href="/" target="_blank">{% trans " Wishradio " %}</a>{% trans "off the mark asap." %}</p>
+		<p>
+			{% trans "Starting from the youngest to oldest, this is how we stack up." %}
+		</p>
+	</div>
+	<div class="dottedSeparator fullSeparator">
+	</div>
+	<div class="span10 topHalfGutter">
+		<div class="row">
+			<div class="about-text pagination-centered">
+				<div class="founder founder1 bottomHalfGutter">
+				</div>
+				<p>{% trans "Simple, hard-working techie who would love to find himself in a world of code. That’s" %}<span class="radioColor">{% trans " Saurabh " %}</span>{% trans "for you. Self-assured, soft-spoken, relaxed, no task is too tough or complicated for him. A problem solver, Saurabh specializes in breaking down every problem and then looking for logical solutions to it. By his own admission, he believes in facing the most irritating of situations with a smile. So when the non-techie among the three (read Maheima), has juvenile questions about something to do with tech, guess who attempts answering." %}</p>
+				<p>{% trans "When he’s not coding, Saurabh likes to listen to music and can be spotted watching documentaries, reading fantasy novels and following tennis." %}</p>
+			</div>
+			<div class="about-text pagination-centered">
+				<div class="founder founder2 bottomHalfGutter">
+				</div>
+				<p>{% trans "As if one geeky-sounding techie was not enough – here is another one." %}<span class="radioColor">{% trans " Vickram " %}</span>{% trans "engineers software passionately and will find answers & a working solution to any task he comes up against. Supremely organized, Vickram can patiently work through a long list of tasks till he has ticked off each of them." %}</p>
+				<p>{% trans "If he had his way though, he would spend his days outdoors soaking up the sun & reading fast paced fiction. A subtle foodie – the sorts who will not say much but size up a dish as soon as a morsel goes in – Vickram digs spicy curries and could live off them." %}</p>
+			</div>
+			<div class="about-text pagination-centered">
+				<div class="founder founder3 bottomHalfGutter">
+				</div>
+				<p>{% trans "At some point in time" %}<span class="radioColor">{% trans " Maheima " %}</span>{% trans "was wishing she could make a living by teaching Bollywood dancing in different countries (sigh!) … but for now she’s super excited about Wishradio! A keen understanding of people and cultures has translated into a career which allows her to spend time figuring out why people do what they do. She has worked on different categories over the last few years and enjoyed decoding consumers across." %}</p>
+				<p>{% trans "Maheima loves being outdoors in the middle of nature and pretty much lives from one travel trip to another. Dancing, music and sometimes cooking, keep her happy when she’s at home." %}</p>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

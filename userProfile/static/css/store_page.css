@@ -22,6 +22,9 @@ div a.siteURL{
 button.rateStoreNow:active{
 	box-shadow: 1px 1px 1px rgba(136, 126, 129, 0.75) inset;
 }
+input[type=submit].rateStoreNow:active {
+	box-shadow: 1px 1px 1px rgba(136, 126, 129, 0.75) inset;
+}
 .categories img{
 	box-shadow: none;
 }
@@ -53,8 +56,7 @@ button.rateStoreNow:active{
 .ratingSeparator{
 	margin-left: 6px;
 	margin-right: 3px;
-	position: relative;
-	top: 1px;
+	vertical-align: middle;
 }
 .ratingSeparatorLess{
 	margin-right: 3px;
@@ -215,10 +217,21 @@ div.error, span.error{
 }
 
 @media (max-width: 979px) and (min-width: 768px) {
-	.vendorLogoImage {
+/*	.vendorLogoImage {
 		max-width: 104px;
 	}
 	.vendorLogoImage img {
 		max-width: 96px;
 	}
+*/}
+#fakeselect_featured_image{
+	background-color: white;
+	background-image: url('/static/img/edit.png');
+	background-size: 15px;
+	background-repeat: no-repeat;
+	background-position: center;
+	width: 20px;
+	height: 20px;
+	border: 0;
+	padding: 0px;
 }

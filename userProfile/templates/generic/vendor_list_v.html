@@ -25,24 +25,24 @@
                     </a>
                 {% endif %}
             </div>
-            <div class="span2 noGutter">
+            <div class="span2_5 noGutter">
                 <div class="storeTopMargin radioColor fontHelvetica fontSize13">
                     {# forloop.counter #}
                     <a class="radioColor" href='{{vendor.get_absolute_url}}'>
                         {{ vendor.title|title }}
                     </a>
-                     <span class="searchResultRatingSmall searchResultRatingScheme fontSize9 fontHelvetica weightBold rating-{{vendor.overall_average|floatformat:"0"}}">{{vendor.overall_average|floatformat:"1"}}
+                     <span class="pull-right searchResultRatingMedium height28 searchResultRatingScheme fontSize9 fontHelvetica weightBold rating-{{vendor.overall_average|floatformat:"0"}}">{{vendor.overall_average|floatformat:"1"}}
                      </span>
                 </div>
 
                 <div>
-                    <a class="infoSpace fontTitillium3 fontSize12 color5D" href="{{ vendor.get_absolute_url }}#comments">{% spaceless %}
+                    <a class="infoSpace fontTitillium3 fontSize12 color5D" href="{{ vendor.get_absolute_url }}#comments" title="{{vendor.title|title}}'s Reviews" data-title="{{vendor.title|title}}'s Reviews">{% spaceless %}
                         {% blocktrans count vendor.comments_count as comments_count %}<span class="fontTitillium1">1</span>&nbsp;review{% plural %}<span class="fontTitillium1">{{ comments_count }}</span> reviews{% endblocktrans %}
                         {% endspaceless %}
                     </a>
-                        {% vendor_follower_subset_info_url vendor 0 request.user|follower_count:vendor as subset_follower_url %}
+                        {% vendor_follower_subset_info_url vendor 0 'MIN_FOLLOWERS_CHUNK'|settings_value as subset_follower_url %}
                     {% with request.user|follower_count:vendor as follower_count %}
-                        <a class="infoSpace fontTitillium3 vendorFollowers fontSize12 color5D {% if follower_count == 0 %} countZero {% endif %}" href="{{subset_follower_url}}"><span class="fontTitillium1">{{ follower_count }}</span>&nbsp;{% trans "follower" %}{{ follower_count|pluralize }}
+                        <a class="infoSpace fontTitillium3 vendorFollowers fontSize12 color5D {% if follower_count == 0 %} countZero {% endif %}" href="{{subset_follower_url}}" title="People Who Follow {{vendor.title|title}}" data-title="People Who Follow {{vendor.title|title}}"><span class="fontTitillium1">{{ follower_count }}</span>&nbsp;{% trans "follower" %}{{ follower_count|pluralize }}
                         </a>
                     {% endwith %}
 <!--                     <span class="infoSpace">
@@ -73,6 +73,11 @@
             </div>
         </div>
     {% endfor %}
+    <div class="row vendorResult loader" style="display:none;">
+        <div class="span3">
+            <img src="{% static 'img/loading.gif' %}">
+        </div>
+    </div>
 {% if not is_incremental %}
 </div>
 {% endif %}

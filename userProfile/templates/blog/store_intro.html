@@ -14,10 +14,10 @@
 					{% endif %}
 				{% endif %}">
 			{% if blog_post.user == request.user %}
-				 <form id="blogpost_edit_image" action="{% url edit_blog_image blog_post.id %}" method="post" role="form" class='album-form' enctype="multipart/form-data">
+				 <form id="blogpost_edit_image" action="{% url edit_blog_image blog_post.id %}" method="post" role="form" class='pagination-left album-form' enctype="multipart/form-data" style="line-height:20px;margin-top:-145px;margin-left:5px;">
 				 {% csrf_token %}
-				    <input style="display:none;" type="file" id="featured_image" name="featured_image" aria-label="Add photos to your post" >
-	                <input id="fakeselect_featured_image" type="button" value="Edit">
+				    <input style="display:none;" type="file" id="featured_image" name="featured_image" aria-label="Add photos to your post"/>
+	                <input id="fakeselect_featured_image" type="button" value="" title="{% trans "Edit Picture" %}" />
 	            </form>
 	        {% endif %}
 		{% endblock %}

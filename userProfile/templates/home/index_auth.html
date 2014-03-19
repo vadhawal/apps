@@ -1,6 +1,7 @@
 {% load activity_tags i18n %}
 {% load userProfile_tags static %}
 
+{% get_owned_blog request.user as blog %}
 <div class="row topHalfGutter">
     <div class="span7">
         <div class="row">
@@ -82,5 +83,47 @@
 			</div>
 		</div>
         {% endif %}
+    </div>
+</div>
+{% if blog %}
+<div id="walkthroughloggedinStore">
+{% else %}
+<div id="walkthroughloggedin">
+{% endif %}
+    <div id="type-modal" style="display:none;">
+        <p class="tooltipTitle">WishRadio Activity Page Walkthrough!</p> 
+        <p>A short and sweet tour of your Activity page to help you use it to the max!  </p>
+        <br>
+        <a href="javascript:;" class="next-step" style="float:right;">Next Step</a>
+    </div>
+    <div id="type-tooltip-post-wish-widget" style="display:none;">
+        <p class="tooltipTitle">Radio your Wishes</p>
+        <p>This is what Wish Radio was designed for. So that you could share your wishes and posts easily with your friends. And if you're a store - you could use this widget to post your latest deals. </p>
+        <p>Make the most of it - Make your wishes come alive with URL previews and images." </p>
+        <br>
+        <a href="javascript:;" class="prev-step" style="float:left;">Prev Step</a>
+        <a href="javascript:;" class="next-step" style="float:right;">Next Step</a>
+    </div>
+    <div id="type-tooltip-add-to-wishlist" style="display:none;">
+        {% if blog %}
+            <p class="tooltipTitle">Post as a Deal</p>
+            <p>If this is a deal, check this tiny box to Post it as a Deal, and we'll help you by spreading the word to your consumers on Wish Radio. We suggest adding an image or URL to ensure it gets seen. </p>
+            <br>
+            <a href="javascript:;" class="prev-step" style="float:left;">Prev Step</a>
+            <a href="javascript:;" class="next-step" style="float:right;">Next Step</a>
+        {% else %}
+            <p class="tooltipTitle">Add to Wishlist</p>
+            <p>Just check this tiny box to add your wish to your personal wishlist. Who knows, a friend might decide to surprise you. </p>
+            <br>
+            <a href="javascript:;" class="prev-step" style="float:left;">Prev Step</a>
+            <a href="javascript:;" class="next-step" style="float:right;">Next Step</a>
+        {% endif %}
+    </div>
+    <div id="done-walkthrough" style="display:none;">   
+        <p class="tooltipTitle">Activity</p>
+        <p>See what your friends are upto - which stores they're following &amp; reviewing, what they're wishing for and lots more.
+        <br>You could also Follow stores to know the latest activity and deals. </p>
+        <br>
+        <a href="javascript:;" class="prev-step" style="float:left;">Prev Step</a>
     </div>
 </div>

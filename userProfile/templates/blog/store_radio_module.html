@@ -11,27 +11,27 @@
     	<a href='{% if wholeReviewLink == "True" %}{{ blog_post.get_absolute_url }}#comments{% else %}#comments{% endif %}' style="margin-right:0px;">{% trans "Reviews" %}</a>
         {% get_range_commenters_url blog_post 0 10 as commenters_url %}
 
-        <a class="broadcasters commentCount" href="{{commenters_url}}" style="margin-left:0px;">({{blog_post.comments_count}})</a>
+        <a class="broadcasters commentCount" href="{{commenters_url}}" style="margin-left:0px;" title="People Who Reviewed {{blog_post.title|title}}" data-title="People Who Reviewed {{blog_post.title|title}}">({{blog_post.comments_count}})</a>
 
 		{% get_share_count blog_post as share_count %}
         {% get_share_object_url blog_post as share_store_url %}
 		<a href="#" data-href="{{share_store_url}}" class="shareObject">{% trans "Share" %}</a>
 		{% broadcasters_chunk_for_object blog_post 0 'MIN_FOLLOWERS_CHUNK'|settings_value as broadcasters_url %}
-		<a class="store_sharers sharedCount" href="{{broadcasters_url}}" data-href="#">({{share_count}})</a>
+		<a class="store_sharers sharedCount" href="{{broadcasters_url}}" data-href="#" title="People Who Shared This" data-title="People Who Shared This">({{share_count}})</a>
 
         <span>{% trans "Followers" %}</span>
-        {% vendor_follower_subset_info_url blog_post 0 'MIN_FOLLOWERS_CHUNK'|settings_value as subset_follower_url %}<a class="vendorFollowers" href="{{subset_follower_url}}">({{  request.user|follower_count:blog_post }})</a>
+        {% vendor_follower_subset_info_url blog_post 0 'MIN_FOLLOWERS_CHUNK'|settings_value as subset_follower_url %}<a class="vendorFollowers" href="{{subset_follower_url}}" title="People Who Follow {{blog_post.title|title}}" data-title="People Who Follow {{blog_post.title|title}}">({{  request.user|follower_count:blog_post }})</a>
     </span>
-	<span class="vendorFollowContainer fontTitllium1 halfGutter fontSize13 makeYellowButton {% if request.user|is_following:blog_post %}following{% endif %}" style="margin-top:-3px;display:inline-block;" >
-		<a href="#" class="follow-btn icon-follow" data-href="{% follow_url blog_post %}">{% trans "Follow" %}</a>
-
-		<a class="icon-following radioColor">{% trans "Follow" %}</a><a href="#" class="unfollow-btn icon-unfollow" data-href="{% follow_url blog_post %}"><img class="noBoxShadow" src="{% static 'img/1transparent.png' %}"></a>
+	<span class="vendorFollowContainer fontTitllium1 pagination-centered halfGutter fontSize13 {% if request.user|is_following:blog_post %}following{% endif %}">
+		<button class="follow-btn makeYellowButton icon-follow" data-href="{% follow_url blog_post %}">{% trans "Follow" %}</button>
+		<button class="icon-following makeYellowButton radioColor"><img class="noBoxShadow" src="{% static 'img/1transparent.png' %}">{% trans "Following" %}</button>
+        <button class="unfollow-btn icon-unfollow makeYellowButton radioColor" data-href="{% follow_url blog_post %}"><img class="noBoxShadow" src="{% static 'img/1transparent.png' %}">{% trans "Unfollow" %}</button>
 	</span>
     {% if noShare == "True" %}
     {% else %}
         {% comment %}
         <span class="socialShare makeButton fontTitillium halfGutter">+</span>
         {% endcomment %}
-        <button class="writeReview rateStoreNow radioColorBackground colorWhite fontTitillium1 fontSize13 pull-right" data-href="{% write_review_for_obj_url blog_post %}" style="margin-top:-4px;" >{% trans "Write a Review" %}</button>
+        <button class="writeReview rateStoreNow radioColorBackground colorWhite fontTitillium1 fontSize13 pull-right" data-href="{% write_review_for_obj_url blog_post %}" style="margin-top:-4px;"  title="Write A Review" data-title="Write A Review">{% trans "Write a Review" %}</button>
     {% endif %}
 </div>

@@ -2,7 +2,7 @@
 {% load userProfile_tags %}
 {% load comment_tags %}
 {% load voting_tags %}
-{% load thumbnail %}
+{% load thumbnail static %}
  
 {% if not is_incremental %}
 <div class="dealBox_h scrollContainer" data-href="{{data_href}}" data-chunk="{{data_chunk}}">
@@ -35,7 +35,8 @@
                 <span style="float:left;">
                     <a href="#" class="comment_radio_d" style="margin-right:0px;" onclick="$(this).parents('.dealBox_h_elem').find('.wishimg-deal-homepage').click();return false;">Comment</a>
                         {% comment_count_on_object deal as total_comments %}
-                    <a class="broadcasters commentCount" href="{% get_commenters_url deal %}" style="margin-left:0px;">({{total_comments}})</a>
+                        {% get_range_commenters_url deal 0 10 as commenters_url %}
+                    <a class="broadcasters commentCount" href="{{ commenters_url }}" style="margin-left:0px;" title="People Who Commented On This" data-title="People Who Commented On This">({{total_comments}})</a>
                 </span>
             </span>
         </div>
@@ -52,6 +53,9 @@
     {% endif %}
 </span>
 {% endfor %}
+    <div class="dealBox_h_elem loader dealImageMarginRight" style="margin-left:-10px;height:17px;display:none;">
+        <img src="{% static 'img/loading.gif' %}">
+    </div>
 {% if not is_incremental %}
 </div>
 {% endif %}

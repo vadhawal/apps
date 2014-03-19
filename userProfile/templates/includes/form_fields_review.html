@@ -16,13 +16,19 @@
 
 {% for field in form_for_fields %}
 {% if field.is_hidden %}
-{{ field }}
+{% if field.errors %}
+	{{ field|add_class:"error" }}
+{% else %}
+	{{ field }}
+{% endif %}
+
 {% else %}
 <div class="reviewForm input_{{ field.id_for_label }} {{ field.field.type }}
     {% if field.errors %} error {% endif %} controls">
         {% if field.label ==  form_for_fields.title.label %}
-            <span class="label_text">{{ field.label }}</span>
+            <span class="label_text {% if field.errors %} error {% endif %}">{{ field.label }}</span>
             {{ field|add_class:"textField" }}
+            {% comment %}
             {% if field.errors %}
             <span class="help-inline">
                 {% for e in field.errors %}
@@ -31,9 +37,11 @@
             </span>
             {% else %}
             {% endif %}
+            {% endcomment %}
         {% elif field.label ==  form_for_fields.comment.label %}
-            <span class="topHalfGutter label_text">{{ field.label }}</span>
+            <span class="topHalfGutter label_text {% if field.errors %} error {% endif %}">{{ field.label }}</span>
             {{ field|add_class:"textField" }}
+            {% comment %}
             {% if field.errors %}
             <span class="help-inline">
                 {% for e in field.errors %}
@@ -42,9 +50,11 @@
             </span>
             {% else %}
             {% endif %}
+            {% encomment %}
         {% elif field.label ==  form_for_fields.overall_value.label %}
-            <span class="label_text">{% trans "Overall Rating"%}</span>
+            <span class="label_text {% if field.errors %} error {% endif %}">{% trans "Overall Rating"%}</span>
             {{ field|add_class:"" }}
+            {% comment %}
             {% if field.errors %}
             <span class="help-inline">
                 {% for e in field.errors %}
@@ -53,19 +63,22 @@
             </span>
             {% else %}
             {% endif %}
+            {% endcomment %}
         {% elif field.label ==  form_for_fields.category.label %}
             <div style="display:table;border-spacing:0px 15px;">
                 <div class="topHalfGutter controls" style="display:table-row;">
                     <div style="display:table-cell;">
-                        <span class="label_text">{{ field.label }}            
+                        <span class="label_text {% if field.errors %} error {% endif %}">{{ field.label }} 
+                        {% comment %}           
                             {% if field.errors %}
-                                <span class="help-inline">
+                                <!-- <span class="help-inline"> -->
                                 {% for e in field.errors %}
                                     {% if not forloop.first %} / {% endif %}{{ e }}
                                 {% endfor %}
-                                </span>
+                                <!-- </span> -->
                             {% else %}
                             {% endif %}
+                        {% endcomment %}
                         </span>
                     </div>
                     <div style="display:table-cell;" class="category">{{ field|add_class:"boughtCategory" }}</div>
@@ -85,53 +98,57 @@
                         </div>
                     </div>
                 </div>
-                <div class="topHalfGutter controls" style="display:table-row;">
-                    <div style="display:table-cell;" class="label_text">{% trans "Price" %}</div>
-                    <div style="display:table-cell;" class="price_value"></div>
+                <div class="fontSize15 topHalfGutter controls" style="display:table-row;">
+                    <div style="display:table-cell;" class="label_text">{% trans "Overall rating" %}</div>
+                    <div style="display:table-cell;" class="overall_value"></div>
                 </div>
                 <div class="topHalfGutter controls" style="display:table-row;">
-                    <div style="display:table-cell;" class="label_text">{% trans "Variety" %}</div>
-                    <div style="display:table-cell;" class="variety_value"></div>
-                </div>
-                <div class="topHalfGutter controls" style="display:table-row;">
-                    <div style="display:table-cell;" class="label_text">{% trans "Quality" %}</div>
+                    <div style="display:table-cell;" class="label_text">{% trans "Range & Quality" %}</div>
                     <div style="display:table-cell;" class="quality_value"></div>
                 </div>
                 <div class="topHalfGutter controls" style="display:table-row;">
-                    <div style="display:table-cell;" class="label_text">{% trans "Customer Service" %}</div>
+                    <div style="display:table-cell;" class="label_text">{% trans "Pricing" %}</div>
+                    <div style="display:table-cell;" class="price_value"></div>
+                </div>
+                <div class="topHalfGutter controls" style="display:table-row;">
+                    <div style="display:table-cell;" class="label_text">{% trans "Timely Delivery" %}</div>
                     <div style="display:table-cell;" class="service_value"></div>
                 </div>
                 <div class="topHalfGutter controls" style="display:table-row;">
-                    <div style="display:table-cell;">{% trans "Exchange (Optional)" %}</div>
-                    <div style="display:table-cell;" class="exchange_value"></div>
+                    <div style="display:table-cell;" class="label_text">{% trans "Website Experience" %}</div>
+                    <div style="display:table-cell;" class="website_ex_value"></div>
                 </div>
-                <div class="fontSize15 topHalfGutter controls" style="display:table-row;">
-                    <div style="display:table-cell;" class="label_text"><u>{% trans "Overall rating" %}</u></div>
-                    <div style="display:table-cell;" class="overall_value"></div>
+                <div class="topHalfGutter controls" style="display:table-row;">
+                    <div style="display:table-cell;">{% trans "Exchange Experience (optional)" %}</div>
+                    <div style="display:table-cell;" class="exchange_value"></div>
                 </div>
             </div>
         {% elif field.label ==  form_for_fields.shop_again.label %}
-            <span class="label_text">{% trans "Would you buy from this store again?"%}</span>
+            <span class="label_text {% if field.errors %} error {% endif %}">{% trans "Would you buy from this store again?"%}</span>
             {{ field|add_class:"" }}
+            {% comment %}
             {% if field.errors %}
-            <span class="help-inline">
+            <!-- <span class="help-inline"> -->
                 {% for e in field.errors %}
                 {% if not forloop.first %} / {% endif %}{{ e }}
                 {% endfor %}
-            </span>
+            <!-- </span> -->
             {% else %}
             {% endif %}
+            {% endcomment %}
         {% else %}
-            <span class="label_text">{{ field.label }}</span>
+            <span class="label_text {% if field.errors %} error {% endif %}">{{ field.label }}</span>
             {{ field }}
+            {% comment %}
             {% if field.errors %}
-            <span class="help-inline">
+            <!-- <span class="help-inline"> -->
                 {% for e in field.errors %}
                 {% if not forloop.first %} / {% endif %}{{ e }}
                 {% endfor %}
-            </span>
+            <!-- </span> -->
             {% else %}
             {% endif %}
+            {% endcomment %}
         {% endif %}
 </div>
 {% endif %}

@@ -11,18 +11,18 @@
         {% csrf_token %}
 
         <div id="previewLoading"></div>
-        <div class="span4 statusBox halfGutter" style="position:relative">
-            <textarea id="text" name="message"></textarea>
+        <div id="postWishWidget" class="span4 statusBox halfGutter" style="position:relative">
+            <textarea id="text" name="message" placeholder="{% if blog %}{% trans "Post your deals here..." %}{% else %}{% trans "Post your wishes here..." %}{% endif %}"></textarea>
             <div></div>
             <output id="previewimg"></output>
             <div style="width:100%;margin-bottom:0px;position:relative;" >
                 <input style="display:none;" type="file" id="wishimage" name="wishimage" aria-label="Add photos to your post" >
-                <input id="fakeselect" type="button"/> <span class="fontTitillium1 fontSize11 colorDarkerGrey">{% trans "Upload an Image" %}</span><div></div>
+                <input id="fakeselect" type="button"/> <span class="fontTitillium1 fontSize11 colorDarkerGrey">{% trans "Add an Image" %}</span><div></div>
             </div>
             <input type="hidden" name="urlPreviewContent" id="urlPreviewContent" value="" />
             <div class="previewPostedList"></div>
         </div>
-        <div class="span2">
+        <div class="span2" id="addToWishList">
             {% if blog %}
                 <div id="deal-input" class="fontTitillium1 colorDarkerGrey checkbox">
                     <label for="post-as-deal" class="fontSize13">
