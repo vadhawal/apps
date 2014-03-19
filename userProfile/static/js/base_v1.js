@@ -1,14 +1,6 @@
-var setupCustomScrollBar = function ($element, horizontal_scroll, enable_button, shouldAutoHideScrollbar) {
+var setupCustomScrollBar = function ($element, horizontal_scroll) {
     if (!$element || $element.length == 0 ) {
         return;
-    }
-    var hasScrollButtons = {enable: false};
-    if (typeof enable_button !== "undefined" && enable_button) {
-        hasScrollButtons = enable_button;
-    }
-    var autoHideScrollbar = true;
-    if (typeof shouldAutoHideScrollbar !== "undefined" && !shouldAutoHideScrollbar) {
-        autoHideScrollbar = shouldAutoHideScrollbar;
     }
     var $scrollContainer = null;
     if ($element.hasClass("scrollContainer")) {
@@ -88,10 +80,9 @@ var setupCustomScrollBar = function ($element, horizontal_scroll, enable_button,
                         horizontalScroll:true,
                         theme:"dark-thick",
                         mouseWheel:true,
-                        autoHideScrollbar:autoHideScrollbar,
+                        autoHideScrollbar:true,
                         contentTouchScroll:true,
                         autoDraggerLength: true,
-                        scrollButtons: hasScrollButtons,
                         callbacks: {
                             onTotalScroll: totalScrollCallback//, // Will be called once scroll reaches bottom.
                             //onTotalScrollOffset:100 //onTotalScroll callback will be fired 100 pixels before bottom.
@@ -106,9 +97,8 @@ var setupCustomScrollBar = function ($element, horizontal_scroll, enable_button,
                         verticalScroll:true,
                         theme:"dark-thick",
                         mouseWheel:true,
-                        autoHideScrollbar:autoHideScrollbar,
+                        autoHideScrollbar:true,
                         contentTouchScroll:true,
-                        scrollButtons: hasScrollButtons,
                         callbacks: {
                             onTotalScroll: totalScrollCallback,
                             onTotalScrollOffset:100

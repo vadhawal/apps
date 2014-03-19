@@ -1,0 +1,146 @@
+{% load i18n userProfile_tags static %}
+
+<div class="row">
+    <div class="span3 halfGutter"> 
+        <div class="outerBox">
+            <div class="row">
+                <div class="span3">
+                    <div class="boxTitle">
+                        <h6 class="fontTitillium fontSize16 categories">
+                            <img src="{% static "img/categories.png" %}" style="margin-top:-2px;">
+                            {% trans "CATEGORIES" %}
+                        </h6>
+                        <div class="yellowLineContainer">
+                            <hr class="yellowLine"/>
+                        </div>
+                    </div>
+                    <div class="innerBox whiteBox categoryBox">
+                        <div class="span1HalfGutter span1Height imageCategoryBox imageCategoryBoxSelected category-icon category-all updateTrends">
+                            <span class="categoryName makeButton colorWhite fontTitillium1 fontSize11">
+                                {% trans "All" %}
+                            </span>
+                        </div>
+                        {% if parent_categories %}
+                            {% for category in parent_categories %}
+                                <div class="span1HalfGutter span1Height imageCategoryBox category-icon category-{{category|slugify}} updateTrends {% if forloop.last %}bottomHalfGutter{% endif %} {% cycle '' 'thirdCategory' '' %}">
+                                    <span class="categoryName makeButton colorWhite fontTitillium1 fontSize11">
+                                            {{category}}
+                                    </span>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="span7">
+        <div class="outerBox">
+            <div class="row">
+                <div class="span3">
+                    <div class="boxTitle">
+                        <h6 class="fontTitillium fontSize16">
+                            <img src="{% static "img/topStores.png" %}" style="margin-top:-2px;">
+                            {% trans "TOP STORES" %}
+                        </h6>
+                        <div class="yellowLineContainer">
+                            <hr class="yellowLine"/>
+                        </div>
+                    </div>
+                    <div class="whiteBox" style="position:relative;">
+                        <div id="topStoresForStoreCategory">
+                            {% render_stores_for_categories 'All' 'All' 'MIN_STORES_HOME_PAGE'|settings_value %}
+                        </div>
+                        <div class="">
+                        </div>
+                    </div>
+                </div>
+                <div class="span4">
+                    <div class="boxTitle">
+                        <h6 class="fontTitillium fontSize16">
+                            <img src="{% static "img/shopTalk.png" %}" style="margin-top:-2px;">
+                            {% trans "STORE REVIEWS" %}
+                        </h6>
+                        <div class="yellowLineContainer">
+                            <hr class="yellowLine"/>
+                        </div>
+                    </div>
+                    <div class="whiteBox" style="position:relative;">
+                        <div id="topReviewsForStoreCategory">
+                        {% render_reviews_for_categories 'All' 'All' 'MIN_REVIEWS_HOME_PAGE'|settings_value %}
+                        </div>
+                        <div class="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="span10 halfGutter">
+        <div class="boxTitle">
+                <h6 class="fontTitillium fontSize16"><span class="hotDealsIcon radioColor">%&nbsp;</span>HOT DEALS</h6>
+                <div class="yellowLineContainer">
+                    <hr class="yellowLine"/>
+                </div>
+        </div>
+        <div class="outerBox dealBox whiteBox" style="position:relative;">
+            <div id="topDealsForStoreCategory">
+                {% render_deals_for_categories 'All' 'All'  'MIN_DEALS_HOME_PAGE'|settings_value 'horizontal'%}
+            </div>
+            <div class="">
+            </div>
+        </div>
+        <span id="wish-status" ></span>
+    </div>
+</div>
+
+<div id="walkthrough">
+    <div id="type-modal" style="display:none;">
+        <p class="tooltipTitle">The Wish Radio Walkthrough!</p>
+        <p>It's just what it sounds like - a walking tour of our home page.</p>
+        <p>Just so that we can point out all the cool stuff you can do here. Did we say we're modest? :P </p>
+        <br>
+        <a href="javascript:;" class="next-step" style="float:right;">Next Step</a>
+    </div>
+    <div id="type-tooltip-social-login" style="display:none;">
+    {% if request.user.is_authenticated %}
+        <p class="tooltipTitle">Login/Signup</p>
+        <p>You are already logged in! Start following friends and stores.</p>
+        <p>If you have logged in with Facebook, Google or Twitter, your friends will automaticaly follow you.</p>
+    {% else %}
+        <p class="tooltipTitle">Login/Signup</p>
+        <p>Signing up using Facebook, Google or Twitter would instantly connect you with your friends on Wish Radio. And that would be the end of any sense of loneliness that might have hit you otherwise. </p>
+        <p>And no, you'll never catch us posting anything on your wall.</p>
+    {% endif %}
+        <br>
+        <a href="javascript:;" class="prev-step" style="float:left;">Prev Step</a>
+        <a href="javascript:;" class="next-step" style="float:right;">Next Step</a>
+    </div>
+    <div id="type-tooltip-search-store" style="display:none;">
+        <p class="tooltipTitle">Search Bar / Category Search</p>
+        <p>Search for the products or services you wish for, to get a list of the most appropriate online stores that sell those. 
+        <br><br>   You can also use this ready list of categories and sub-categories to find the most appropriate online stores for the selected category. 
+        </p>
+        <br>
+        <a href="javascript:;" class="prev-step" style="float:left;">Prev Step</a>
+        <a href="javascript:;" class="next-step" style="float:right;">Next Step</a>
+    </div>
+    <div id="type-tooltip-trend-category" style="display:none;">
+        <p class="tooltipTitle">Category icons for single click updates</p>
+        <p>Toggle between the category icons to find the top stores, latest reviews and hot deals on the category you select.</p> 
+        <p>Warning: Addictive activity. (Ask us.) </p>
+        <br>
+        <a href="javascript:;" class="prev-step" style="float:left;">Prev Step</a>
+        <a href="javascript:;" class="next-step" style="float:right;">Next Step</a>
+    </div>
+    <div id="done-walkthrough" style="display:none;">
+        <p class="tooltipTitle">That's it!</p>
+        <p>With that we're at the end of this walking tour. We hope Wish Radio helps you decide which online stores to head to, for specific products and services. 
+        <br><br>We'd love to hear from you - use the Contact Us tab to tell us what you think. Feedback, suggestions, comments eagerly awaited! </p>
+        <br>
+        <a href="javascript:;" class="prev-step" style="float:left;">Prev Step</a>
+    </div>
+</div>

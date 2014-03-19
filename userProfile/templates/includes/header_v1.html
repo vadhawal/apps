@@ -128,33 +128,26 @@
     </div>
     <div class="row">
         <div class="offset1 span10">
-            <div class="row greyBar" style="height: 60px; line-height:60px;">
-                <div class="span2 logo" style="width:auto;">
+            <div class="row searchBar" style="margin-top:auto;margin-bottom:auto;">
+                <div class="span2 logo">
                     <div class="whiteBox whiteBoxGlassy" style="width:110px;position:relative;z-index-1;">
                         <a href="/"><img src="{% static 'img/wishRadioLogo.png' %}"/></a>
                     </div>
                 </div>
-                <div class="noGutter span8 pagination-centered">
-                    <span class="colorWhite" style="font-size:32px;">
-                    {% trans "Find " %}<span class="colorYellow">{%trans "Online " %}</span>{%trans "Stores for every wish" %}
-                    </span>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="offset1 span10">
-            <div class="row searchBar" style="margin-top:auto;margin-bottom:auto;">
-                <div class="span10">
+                <div class="span8 noGutter">
                     <div class="row" id="searchStoreBar">
-                        <div class="span6">
+                        <div class="span2 colorWhite fontTitillium fontSize14 noGutter">
+                            <span class="wantText fontSize14">{% trans "For all the wishes that money can buy," %}<span class="colorYellow">{% trans " search here" %}</span>
+                            </span>
+                        </div>
+                        <div class="span3_5 halfGutter">
                             {% search_form "blog.BlogPost" %}
                         </div>
                         <div id="getvendorsdiv" style="display:inline-block;" class="halfGutter">
                             <a id="getvendors" href="#"></a>
                         </div>
                         <div class="colorWhite fontTitillium1 fontSize13 halfGutter searchOr">{% trans "or" %}</div>
-                        <div class="span3 halfGutter searchCategory" style="position:relative;display:inline-block;text-align:center;">
+                        <div class="span2_5 halfGutter searchCategory" style="position:relative;display:inline-block;text-align:center;">
                             <a class="dropdown-toggle blog_parentcategories pagination-left" href="javascript:void(0);" style="display: block;">{% trans "By Category" %}</a>
                         </div>
                     </div>
