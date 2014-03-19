@@ -122,3 +122,8 @@ var update_trends_handler = function(event, elementClicked)
   }
 	return false;
 }
+
+$(document).ready (function (){
+    $('a#new-walk-through').fancybox();
+    $('a#new-walk-through').click();
+});

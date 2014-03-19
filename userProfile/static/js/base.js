@@ -1,10 +1,14 @@
-var setupCustomScrollBar = function ($element, horizontal_scroll, enable_button) {
+var setupCustomScrollBar = function ($element, horizontal_scroll, enable_button, shouldAutoHideScrollbar) {
     if (!$element || $element.length == 0 ) {
         return;
     }
     var hasScrollButtons = {enable: false};
     if (typeof enable_button !== "undefined" && enable_button) {
         hasScrollButtons = enable_button;
+    }
+    var autoHideScrollbar = true;
+    if (typeof shouldAutoHideScrollbar !== "undefined" && !shouldAutoHideScrollbar) {
+        autoHideScrollbar = shouldAutoHideScrollbar;
     }
     var $scrollContainer = null;
     if ($element.hasClass("scrollContainer")) {
@@ -84,7 +88,7 @@ var setupCustomScrollBar = function ($element, horizontal_scroll, enable_button)
                         horizontalScroll:true,
                         theme:"dark-thick",
                         mouseWheel:true,
-                        autoHideScrollbar:true,
+                        autoHideScrollbar:autoHideScrollbar,
                         contentTouchScroll:true,
                         autoDraggerLength: true,
                         scrollButtons: hasScrollButtons,
@@ -102,7 +106,7 @@ var setupCustomScrollBar = function ($element, horizontal_scroll, enable_button)
                         verticalScroll:true,
                         theme:"dark-thick",
                         mouseWheel:true,
-                        autoHideScrollbar:true,
+                        autoHideScrollbar:autoHideScrollbar,
                         contentTouchScroll:true,
                         scrollButtons: hasScrollButtons,
                         callbacks: {

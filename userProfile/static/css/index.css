@@ -3,8 +3,14 @@
 	width: 100%;
 }
 .innerBox {
-	height: 260px;
+	height: 150px;
 	overflow: auto;
+}
+
+@media (min-width: 1200px) {
+	.innerBox{
+		height: 176px;	
+	}
 }
 
 .topStores {
@@ -278,4 +284,24 @@ div.thirdCategory.imageCategoryBox:hover span{
 	max-height: 30px;
 	padding: 12px;
 	line-height: 30px;
+}
+.infoBox {
+	background-image: url('/static/img/infoBox.png');
+	background-repeat: no-repeat;
+	background-size: cover;
+	height: 121px;
+	position: relative;
+}
+.infoBox div{
+	position: absolute;
+	top: 50%;
+	margin-top: -10%;
+}
+@media (min-width: 1200px) {
+	.infoBox{
+		height: 121px;
+	}
+}
+div.container.fancybox-margin{
+	margin-right: auto;
 }

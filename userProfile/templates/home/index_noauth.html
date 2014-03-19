@@ -24,11 +24,16 @@
                             {% for category in parent_categories %}
                                 <div class="span1HalfGutter span1Height imageCategoryBox category-icon category-{{category|slugify}} updateTrends {% if forloop.last %}bottomHalfGutter{% endif %} {% cycle '' 'thirdCategory' '' %}">
                                     <span class="categoryName makeButton colorWhite fontTitillium1 fontSize11">
-                                            {{category}}
+                                        {{category}}
                                     </span>
                                 </div>
                             {% endfor %}
                         {% endif %}
+                    </div>
+                    <div class="whiteBox infoBox colorWhite fontSize20 halfGutterInset halfGutterInsetRight">
+                        <div>
+                        {% trans "Now Share your wishlists with your friends" %}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -76,3 +81,5 @@
         <span id="wish-status" ></span>
     </div>
 </div>
+
+<a id="new-walk-through" href="/static/img/walkthrough.png"></a>

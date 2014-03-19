@@ -38,9 +38,9 @@ var lIndex = 20;
 <script type="text/javascript">
 $(window).load(function(){
     /* Calling this on window.load to wait for all the images to load. */    
-    setupCustomScrollBar($('#topDealsForStoreCategory'), true); //second boolean parameter forces horizontal scrollbar
+    setupCustomScrollBar($('#topDealsForStoreCategory'), true, {enable: true, scrollType: "continuous"}, false); //second boolean parameter forces horizontal scrollbar
     var width = $('.showcaseContainer .showcaseItem:first-child').outerWidth(true);
-    setupCustomScrollBar($('#topStoresForStoreCategory'), true, {enable: true, scrollType: "pixels", scrollAmount: width});
+    setupCustomScrollBar($('#topStoresForStoreCategory'), true, {enable: true, scrollType: "pixels", scrollAmount: width}, false);
     // setupCustomScrollBar($('#topReviewsForStoreCategory'));
 
     $(".innerBox").mCustomScrollbar({
