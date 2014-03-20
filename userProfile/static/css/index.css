@@ -295,7 +295,7 @@ div.thirdCategory.imageCategoryBox:hover span{
 .infoBox div{
 	position: absolute;
 	top: 50%;
-	margin-top: -10%;
+	margin-top: -15%;
 }
 @media (min-width: 1200px) {
 	.infoBox{
