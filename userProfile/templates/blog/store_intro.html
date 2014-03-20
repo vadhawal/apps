@@ -1,5 +1,5 @@
 {% load mezzanine_tags reviewrating_tags static %}
-{% load i18n thumbnail %}
+{% load i18n %}
 <div class="span7 halfGutter color5D">
 	<div class="row topHalfGutter bottomHalfGutter">
 		<div class="span2 vendorLogoImage pagination-centered" style="width:auto">
@@ -8,9 +8,7 @@
 				<img class="noBoxShadow featuredImg" src="
 				{% if settings.BLOG_USE_FEATURED_IMAGE %}
 					{% if blog_post.featured_image %}
-						{% thumbnail blog_post.featured_image "100x100" as img %}
-							{{ img.url }}
-						{% endthumbnail %}
+						{{ MEDIA_URL }}{% thumbnail blog_post.featured_image 100 0 %}
 					{% else %}
 						{% static "img/store_default.png" %}
 					{% endif %}

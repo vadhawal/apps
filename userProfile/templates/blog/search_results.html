@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% load i18n future mezzanine_tags static thumbnail %}
+{% load i18n future mezzanine_tags static %}
 {% load follow_tags %}
 {% load hitcount_tags %}
 {% load userProfile_tags %}
@@ -88,9 +88,8 @@
 				    		<a href="{{ result.get_absolute_url }}">
 							<img src="
 									{% if settings.BLOG_USE_FEATURED_IMAGE %}
-										{% if result.featured_image %}											                                                                 {% thumbnail result.featured_image "100x100" as img %}
-                                                                                                {{ img.url }}
-                                                                                        {% endthumbnail %}
+										{% if result.featured_image %}
+											{{ MEDIA_URL }}{% thumbnail result.featured_image 100 0 %}
 										{% else %}
 											{% static "img/store_default.png" %}
 										{% endif %}

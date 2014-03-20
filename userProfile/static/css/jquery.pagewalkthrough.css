@@ -267,6 +267,7 @@
     src: url('/static/fonts/GochiHand-Regular.otf') format('opentype');
     src: url('/static/fonts/GochiHand-Regular.eot');
     src: url('/static/fonts/GochiHand-Regular.eot?#iefix') format('embedded-opentype'),
+         url('/static/fonts/GochiHand-Regular.otf') format('opentype'),
          url('/static/fonts/GochiHand-Regular.woff') format('woff'),
          url('/static/fonts/GochiHand-Regular.ttf') format('truetype'),
          url('/static/fonts/GochiHand-Regular.svg#titillium1') format('svg');
