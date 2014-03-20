@@ -4,7 +4,9 @@
 {% load follow_tags %}
 {% load hitcount_tags %}
 {% load userProfile_tags %}
+{% load thumbnail %}
 {% block meta_title %}{{ query|title }}{% endblock %}
+
 {% block title %}{% trans "Search Results" %}{% endblock %}
 
 {% block extra_css %}
@@ -63,8 +65,11 @@
 							<img src="
 									{% if settings.BLOG_USE_FEATURED_IMAGE %}
 										{% if result.featured_image %}
-											{{ MEDIA_URL }}{% thumbnail result.featured_image 100 0 %}
-										{% else %}
+										     {% thumbnail result.featured_image "100x100" as img %}
+         {{ img.url }}
+     {% endthumbnail %}								
+
+{% else %}
 											{% static "img/store_default.png" %}
 										{% endif %}
 									{% endif %}"
