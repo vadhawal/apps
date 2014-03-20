@@ -289,13 +289,13 @@ div.thirdCategory.imageCategoryBox:hover span{
 	background-image: url('/static/img/infoBox.png');
 	background-repeat: no-repeat;
 	background-size: cover;
-	height: 121px;
+	height: 137px;
 	position: relative;
 }
 .infoBox div{
 	position: absolute;
 	top: 50%;
-	margin-top: -10%;
+	margin-top: -15%;
 }
 @media (min-width: 1200px) {
 	.infoBox{
@@ -304,4 +304,19 @@ div.thirdCategory.imageCategoryBox:hover span{
 }
 div.container.fancybox-margin{
 	margin-right: auto;
+}
+.showcaseContainer .mCSB_horizontal.mCustomScrollBox>.mCSB_scrollTools {
+	overflow: visible !important;
+}
+.showcaseContainer .mCSB_buttonLeft{
+	height: 40px !important;
+	position: absolute !important;
+	top: -110px;
+	left:0px;
+}
+.showcaseContainer .mCSB_buttonRight{
+	height: 40px !important;
+	position: absolute !important;
+	top: -110px;
+	right: 0px !important;
 }

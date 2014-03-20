@@ -1,4 +1,25 @@
 {% load i18n static %}
 
-<input class="search-store-query" placeholder="{% trans "Search for online stores, products and services" %}" type="text" name="q" value="{{ request.REQUEST.q }}" style="margin:15px;">
+<div class="row" style="padding:0px 15	px;">
+	<div class="span1">
+		<img src="{% static "img/store_yellow.svg" %}" class="noBoxShadow" style="width	:100%;">
+	</div>
+	<div class="span2" style="line-height:30px;">
+		<div class="row">
+			<div class="span3 radioColor fontSize20	">
+				{% trans "SHOPPED Recently?" %}
+			</div>
+		</div>
+		<div class="row">
+			<div class="span3 radioColor fontSize16">
+				{% trans "Review the store." %}
+			</div>
+		</div>
+	</div>
+</div>
+<div class="row" style="padding:0px 15px;">
+	<div class="span3 topHalfGutter">
+		<input class="search-store-query" placeholder="{% trans "Online Store you purchased from" %}" type="text" name="q" value="{{ request.REQUEST.q }}" style="width:100%;">
+	</div>
+</div>
 <div class="reviewContainer"></div>
