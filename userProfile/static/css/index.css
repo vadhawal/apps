@@ -305,3 +305,17 @@ div.thirdCategory.imageCategoryBox:hover span{
 div.container.fancybox-margin{
 	margin-right: auto;
 }
+.showcaseContainer .mCSB_horizontal.mCustomScrollBox>.mCSB_scrollTools {
+	overflow: visible !important;
+}
+.showcaseContainer .mCSB_buttonLeft{
+	height: 25px !important;
+	position: absolute !important;
+	top: -10px;
+}
+.showcaseContainer .mCSB_buttonRight{
+	height: 25px !important;
+	position: absolute !important;
+	top: -10px;
+	right: 10px !important;
+}
