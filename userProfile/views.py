@@ -711,7 +711,7 @@ def get_filtered_deallist(request, store_id, sub_category, sIndex, lIndex):
 
 
 def getTrendingStores(request, parent_category, sub_category, sIndex=0, lIndex=0):
-	if request.method == "GET":# and request.is_ajax():
+	if request.method == "GET" and request.is_ajax():
 		latest = settings.STORES_NUM_LATEST
 		blog_parentcategory = None
 		result = None
@@ -779,6 +779,92 @@ def getTrendingStores(request, parent_category, sub_category, sIndex=0, lIndex=0
 				template = Template('<div class="color5D fontSize14 halfGutter topHalfGutter">No stores were found for the selected category. Do suggest a store, if you know of one.</div>')
 			ret_data = {
 				'html': template.render(context).strip(),
+				'success': True
+			}
+		else:
+			ret_data = {
+				'success': False
+			}			
+		return HttpResponse(json.dumps(ret_data), mimetype="application/json")
+
+	else:
+		raise Http404()
+
+def getTrendingStores_v2(request, parent_category, sub_category, sIndex=0, lIndex=0):
+	if request.method == "GET" and request.is_ajax():
+		latest = settings.STORES_NUM_LATEST
+		blog_parentcategory = None
+		result = None
+		"""
+		/xyz/abc/ will return a list ["","xyz",abc",""] after parsing.
+		2nd and 3rd element from last will be sub_category and parent_category respectively.
+		"""
+		blog_parentcategory_slug = parent_category
+		if blog_parentcategory_slug.lower() != "all" and BlogParentCategory.objects.all().exists():
+			blog_parentcategory = get_object_or_404(BlogParentCategory, slug=slugify(blog_parentcategory_slug))
+
+		blog_subcategory = None
+		blog_subcategory_slug = sub_category
+		table_name = BlogPost._meta.db_table
+
+		if blog_subcategory_slug.lower() != "all" and BlogCategory.objects.all().exists():
+			blog_subcategory = get_object_or_404(BlogCategory, slug=slugify(blog_subcategory_slug))
+		if blog_parentcategory_slug.lower() == "all" and blog_subcategory_slug.lower() == "all":
+			result = BlogPost.objects.published()
+		elif blog_parentcategory_slug.lower() != "all" and blog_subcategory_slug.lower() == "all":
+			if blog_parentcategory:
+				blog_subcategories = BlogCategory.objects.all().filter(parent_category=blog_parentcategory).values_list('id', flat=True)
+				result = BlogPost.objects.published().filter(categories__id__in=blog_subcategories)
+		else:
+			if blog_subcategory and blog_parentcategory:
+				result = BlogPost.objects.published().filter(categories=blog_subcategory)
+			else:
+				"""
+					raise 404 error, in case categories are not present.
+				"""
+				ret_data = {
+					'success': False
+				}
+				return HttpResponse(json.dumps(ret_data), mimetype="application/json")
+
+		result = result.extra(select={'fieldsum':'price_average + website_ex_average + quality_average + service_average',
+									  'followers': 'SELECT COUNT(*) FROM %s WHERE target_blogpost_id=%s.id' % (Follow._meta.db_table, table_name)},
+									  order_by=( '-overall_average', '-fieldsum', '-comments_count', '-followers',)).distinct() #[:latest]
+
+		isVertical = request.GET.get('v', '0')
+		template = 'generic/new_vendor_list.html'
+
+		s = (int)(""+sIndex)
+		l = (int)(""+lIndex)
+
+		if l == 0:
+			sub_result = result
+		else:
+			sub_result = result[s:l]
+
+		context = RequestContext(request)
+		context.update({'vendors': sub_result,
+						'is_incremental': True})
+
+		parent_category_search_url = reverse('get_vendors', kwargs={'parent_category_slug':parent_category,
+																'sub_category_slug':'all'})
+		if sub_result:
+			ret_data = {
+				'html': render_to_string(template, context_instance=context).strip(),
+				'category' : parent_category,
+				'search_url': parent_category_search_url,
+				'success': True
+			}
+		elif s == 0:
+			template = None
+			if isVertical == '1':
+				template = Template('<div class="color5D fontSize14 halfGutter">No stores were found for the selected category. Do suggest a store, if you know of one.</div>')
+			else:
+				template = Template('<div class="color5D fontSize14 halfGutter topHalfGutter">No stores were found for the selected category. Do suggest a store, if you know of one.</div>')
+			ret_data = {
+				'html': template.render(context).strip(),
+				'category' : parent_category,
+				'search_url': parent_category_search_url,
 				'success': True
 			}
 		else:

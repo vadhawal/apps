@@ -50,7 +50,7 @@ var get_top_stores_handler = function(parent_category, sub_category)
     	$scrollContainer.mCustomScrollbar("scrollTo","top");
     }
 
-    var $url = '/' + parent_category + '/'+ sub_category + '/trendingstores/0/15/';
+    var $url = '/' + parent_category + '/'+ sub_category + '/trendingstores/v2/0/15/';
     $element.next().addClass("overlay");
     $.get($url, {}, function(data) {
     	if(data.success === true) {
@@ -61,6 +61,11 @@ var get_top_stores_handler = function(parent_category, sub_category)
             $data_container.html(data.html);
             $data_container.find('.vendorFollowers').on("click", display_popup_handler);
             $scrollContainer.attr("data-href", $url);
+            $scrollContainer.mCustomScrollbar("update", true);
+
+            $('#trendingCategory').html(data.category);
+            $('#trendingCategory').attr('href', data.search_url);
+
     	} else {
     		$scrollContainer.removeAttr("data-href");
     	}
@@ -124,6 +129,13 @@ var update_trends_handler = function(event, elementClicked)
 }
 
 $(document).ready (function (){
-    $('a#new-walk-through').fancybox();
-    $('a#new-walk-through').click();
+    var _isCookieLoad = getCookie('_new_walkthrough');
+    if (_isCookieLoad == undefined) {
+        $('a#new-walk-through').fancybox({
+                                            helpers : { overlay : { locked : false } }
+                                        });
+
+        $('a#new-walk-through').click();
+        setCookie('_new_walkthrough', 0, 365);
+    }
 });

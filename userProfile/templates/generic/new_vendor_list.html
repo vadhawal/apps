@@ -1,63 +1,32 @@
 {% load static i18n %}
+{% load userProfile_tags %}
 
+{% if not is_incremental %}
 <div class="halfGutter halfGutterRight topHalfGutter bottomHalfGutter">
 	<div class="halfGutterInset whiteBox halfGutterinsetRight" style="height:236px;">
-		<div class="showcaseContainer scrollContainer topHalfGutter">
-			<div class="showcaseItem noGutter halfGutterRight">
-				<img style="width:100%;max-height:100%;" class="noBoxShadow" src="{% static "img/sample-pic.png"%}"/>
-				<div class="showcaseTitle halfGutterInset halfGutterInsetRight">
-					{% comment %}
-						title for that store
-						and put in the blog url here
-					{% endcomment %}
-					<span class="yellowBar">{% trans "For more quirky gifts like these" %}</span><span class="greyBar fontSize16"><a class="colorYellow" href="">www.itshandsmade.in</a></span>
-				</div>
-			</div>
-			<div class="showcaseItem noGutter halfGutterRight">
-				<img style="width:100%;max-height:100%;" class="noBoxShadow" src="{% static "img/sample-pic.png"%}"/>
-				<div class="showcaseTitle halfGutterInset halfGutterInsetRight">
-					{% comment %}
-						title for that store
-						and put in the blog url here
-					{% endcomment %}
-					<span class="yellowBar">{% trans "For more quirky gifts like these" %}</span><span class="greyBar colorYellow fontSize16"><a class="colorYellow" href="">www.itshandsmade.in</a></span>
-				</div>
-			</div>
-			<div class="showcaseItem noGutter halfGutterRight">
-				<img style="width:100%;max-height:100%;" class="noBoxShadow" src="{% static "img/sample-pic.png"%}"/>
-				<div class="showcaseTitle halfGutterInset halfGutterInsetRight">
-					{% comment %}
-						title for that store
-						and put in the blog url here
-					{% endcomment %}
-					<span class="yellowBar">{% trans "For more quirky gifts like these" %}</span><span class="greyBar colorYellow fontSize16"><a  class="colorYellow" href="">www.itshandsmade.in</a></span>
-				</div>
-			</div>
-			<div class="showcaseItem noGutter halfGutterRight">
-				<img style="width:100%;max-height:100%;" class="noBoxShadow" src="{% static "img/sample-pic.png"%}"/>
-				<div class="showcaseTitle halfGutterInset halfGutterInsetRight">
-					{% comment %}
-						title for that store
-						and put in the blog url here
-					{% endcomment %}
-					<span class="yellowBar">{% trans "For more quirky gifts like these" %}</span><span class="greyBar colorYellow fontSize16"><a  class="colorYellow" href="">www.itshandsmade.in</a></span>
-				</div>
-			</div>
-			<div class="showcaseItem noGutter halfGutterRight">
-				<img style="width:100%;max-height:100%;" class="noBoxShadow" src="{% static "img/sample-pic.png"%}"/>
-				<div class="showcaseTitle halfGutterInset halfGutterInsetRight">
-					{% comment %}
-						title for that store
-						and put in the blog url here
-					{% endcomment %}
-					<span class="yellowBar">{% trans "For more quirky gifts like these" %}</span><span class="greyBar colorYellow fontSize16"><a  class="colorYellow" href="">www.itshandsmade.in</a></span>
-				</div>
-			</div>
+		<div class="showcaseContainer scrollContainer topHalfGutter" data-href="{{data_href}}" data-chunk="{{data_chunk}}">
+{% endif %}
+
+			{% for vendor in vendors %}
+				{% get_trends_image vendor as image %}
+				{% if image %}
+					<div class="showcaseItem noGutter halfGutterRight">
+						<img style="width:100%;max-height:100%;" class="noBoxShadow" src="{{MEDIA_URL}}{{ image.image }}"/>
+						<div class="showcaseTitle halfGutterInset halfGutterInsetRight">
+							{% comment %}
+								title for that store
+								and put in the blog url here
+							{% endcomment %}
+							<span class="yellowBar">{% trans "For more quirky gifts like these" %}</span><span class="greyBar fontSize16"><a class="colorYellow" href="{{vendor.web_url}}" target="_blank">{{vendor.web_url}}</a></span>
+						</div>
+					</div>
+				{% endif %}
+			{% endfor %}
+
+{% if not is_incremental %}
 		</div>
 	</div>
-	{% comment %}
-		Search URL of the category. Replace Category with the category name.
-	{% endcomment %}
 	<span class="fontSize20 fontTitillium2 topHalfGutter" style="display:inline-block;">
-	{% trans "Find more stores for "%}<a class="radioColor" href="">Category</a></span>
+	{% trans "Find more stores for "%}<a class="radioColor" id="trendingCategory" href="{% url get_vendors 'all' 'all' %}">All</a></span>
 </div>
+{% endif %}

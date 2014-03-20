@@ -19,6 +19,7 @@ from mezzanine.generic.models import Review
 from voting.models import Vote
 from actstream.models import Action
 import datetime
+from imagestore.models import Album
 
 def json_error_response(error_message):
     return HttpResponse(simplejson.dumps(dict(success=False,
@@ -656,6 +657,53 @@ def render_stores_for_categories(context, parent_category, sub_category, latest=
         }))
 
 @register.simple_tag(takes_context=True)
+def render_stores_for_categories_v2(context, parent_category, sub_category, latest=settings.STORES_NUM_LATEST):
+        template_name = 'generic/new_vendor_list.html'
+        search_param = ''
+
+        template = loader.get_template(template_name)
+
+        blog_parentcategory = None
+        result = None
+        table_name = BlogPost._meta.db_table
+
+        blog_parentcategory_slug = parent_category
+        if blog_parentcategory_slug.lower() != "all" and BlogParentCategory.objects.all().exists():
+            blog_parentcategory = get_object_or_404(BlogParentCategory, slug=slugify(blog_parentcategory_slug))
+
+        blog_subcategory = None
+        blog_subcategory_slug = sub_category
+        if blog_subcategory_slug.lower() != "all" and BlogCategory.objects.all().exists():
+            blog_subcategory = get_object_or_404(BlogCategory, slug=slugify(blog_subcategory_slug))
+
+        if blog_parentcategory_slug.lower() == "all" and blog_subcategory_slug.lower() == "all":
+            result = BlogPost.objects.published()
+
+        elif blog_parentcategory_slug.lower() != "all" and blog_subcategory_slug.lower() == "all":
+            if blog_parentcategory:
+                blog_subcategories = BlogCategory.objects.all().filter(parent_category=blog_parentcategory).values_list('id', flat=True)
+                result = BlogPost.objects.published().filter(categories__id__in=blog_subcategories)
+        else:
+            if blog_subcategory and blog_parentcategory:
+                result = BlogPost.objects.published().filter(categories=blog_subcategory)
+        
+        result = result.extra(select={'fieldsum':'price_average + website_ex_average + quality_average + service_average',
+                                      'followers': 'SELECT COUNT(*) FROM %s WHERE target_blogpost_id=%s.id' % (Follow._meta.db_table, table_name)}, 
+                                      order_by=('-overall_average', '-fieldsum', '-comments_count', '-followers',)).distinct()[:latest]
+
+        data_href = reverse('getTrendingStores_v2', kwargs={'parent_category':slugify(parent_category),
+                                                        'sub_category':slugify(sub_category),
+                                                        'sIndex':0,
+                                                        'lIndex':latest})
+        data_chunk = 5
+
+        return template.render(RequestContext(context['request'], {
+            'vendors' : result,
+            'data_href' : data_href + search_param,
+            'data_chunk': data_chunk
+        }))
+
+@register.simple_tag(takes_context=True)
 def render_reviews_for_categories(context, parent_category, sub_category, latest=_settings.REVIEWS_NUM_LATEST, orientation='horizontal'):
         template_name = 'generic/top_reviews.html'
         search_param = ''
@@ -797,7 +845,29 @@ def render_related_stores(context, store_id, sub_category, latest=settings.STORE
         'data_chunk': data_chunk
     }))
 
+class StoreTrendsAlbum(template.Node):
+    def __init__(self, vendor, context_var):
+        self.vendor = template.Variable(vendor)
+        self.context_var = context_var
 
+    def render(self, context):
+        vendor_instance = self.vendor.resolve(context)
+        try:
+            album = Album.objects.get(user=vendor_instance.user, name='Trends')
+            context[self.context_var] = album.images.all().filter(order=0)[0]
+        except:
+            context[self.context_var] = ''
+            pass
+        return  ''
+
+@register.tag
+def get_trends_image(parser, token):
+    bits = token.contents.split()
+    if len(bits) != 4:
+        raise template.TemplateSyntaxError("'%s' tag takes exactly three arguments" % bits[0])
+    if bits[2] != 'as':
+        raise template.TemplateSyntaxError("second argument to '%s' tag must be 'as'" % bits[0])
+    return StoreTrendsAlbum(bits[1], bits[3])
  
 
 
