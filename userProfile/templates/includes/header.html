@@ -3,6 +3,7 @@
 {% load blog_tags mezzanine_tags %}
 
 <div class="yellowBar navbar navbar-fixed-top">
+    <button class="shoppedRecently rateStoreNow colorYellow greyBackground fontTitillium1 fontSize13" data-href="{% url 'shopped_recently' %}"   title="Write A Review" data-title="Write A Review">{% trans "WRITE"%}<br>{% trans "a review" %}</button>
 </div>
 <div class="container customNavBar navbar navbar-fixed-top">
     <div class="row yellowBar" style="line-height:30px;">
@@ -48,7 +49,6 @@
                     </a>
                 </span>
                 {% endcomment %}
-                <button class="shoppedRecently rateStoreNow colorYellow greyBackground fontTitillium1 fontSize13" data-href="{% url 'shopped_recently' %}"   title="Write A Review" data-title="Write A Review">{% trans "WRITE"%}<br>{% trans "a review" %}</button>
                 <div class="btn-group profileSettings pull-right">
                     <button type="button" class="btn settings dropdown-toggle" data-toggle="dropdown">
                         <img src="{% static 'img/1transparent.png' %}">
