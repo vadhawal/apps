@@ -15,20 +15,36 @@
                         </div>
                     </div>
                     <div class="innerBox whiteBox categoryBox">
-                        <div class="span1HalfGutter span1Height imageCategoryBox imageCategoryBoxSelected category-icon category-all updateTrends">
+                        <div class="span1HalfGutter span1Height imageCategoryBox imageCategoryBoxSelected category-icon category-flowers-cakes-gifts updateTrends">
                             <span class="categoryName makeButton colorWhite fontTitillium1 fontSize11">
-                                {% trans "All" %}
+                                {% trans "Gifts" %}
                             </span>
                         </div>
-                        {% if parent_categories %}
-                            {% for category in parent_categories %}
-                                <div class="span1HalfGutter span1Height imageCategoryBox category-icon category-{{category|slugify}} updateTrends {% if forloop.last %}bottomHalfGutter{% endif %} {% cycle '' 'thirdCategory' '' %}">
-                                    <span class="categoryName makeButton colorWhite fontTitillium1 fontSize11">
-                                        {{category}}
-                                    </span>
-                                </div>
-                            {% endfor %}
-                        {% endif %}
+                        <div class="span1HalfGutter span1Height imageCategoryBox category-icon category-home-needs updateTrends">
+                            <span class="categoryName makeButton colorWhite fontTitillium1 fontSize11">
+                                {% trans "Furniture" %}
+                            </span>
+                        </div>
+                        <div class="span1HalfGutter span1Height imageCategoryBox category-icon category-customized updateTrends thirdCategory">
+                            <span class="categoryName makeButton colorWhite fontTitillium1 fontSize11">
+                                {% trans "Customized" %}
+                            </span>
+                        </div>
+                        <div class="span1HalfGutter span1Height imageCategoryBox category-icon category-accessories updateTrends">
+                            <span class="categoryName makeButton colorWhite fontTitillium1 fontSize11">
+                                {% trans "Jewellery" %}
+                            </span>
+                        </div>
+                        <div class="span1HalfGutter span1Height imageCategoryBox category-icon category-collectibles updateTrends">
+                            <span class="categoryName makeButton colorWhite fontTitillium1 fontSize11">
+                                {% trans "Wall Graphics" %}
+                            </span>
+                        </div>
+                        <div class="span1HalfGutter span1Height imageCategoryBox category-icon category-electronics updateTrends thirdCategory bottomHalfGutter">
+                            <span class="categoryName makeButton colorWhite fontTitillium1 fontSize11">
+                                {% trans "Mobile Accessories" %}
+                            </span>
+                        </div>
                     </div>
                     <div class="whiteBox infoBox colorWhite fontSize20 halfGutterInset">
                         <div class="halfGutterInsetRight">
