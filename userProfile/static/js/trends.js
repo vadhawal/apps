@@ -74,6 +74,46 @@ var get_top_stores_handler = function(parent_category, sub_category)
    	return false;
 }
 
+var get_top_stores_v2_handler = function(sub_category)
+{
+    var $element = $('#topStoresForStoreCategory');
+    if (!$element || $element.length == 0 ) {
+        return;
+    }
+    var $scrollContainer = null;
+    if ($element.hasClass("scrollContainer")) {
+        $scrollContainer = $element;
+    } else {
+        $scrollContainer = $element.find(".scrollContainer");
+    }
+    if ($scrollContainer && $scrollContainer.hasClass('mCustomScrollbar')) { 
+        $scrollContainer.mCustomScrollbar("scrollTo","top");
+    }
+
+    var $url = '/' + sub_category + '/trendingstores/v2/';
+    $element.next().addClass("overlay");
+    $.get($url, {}, function(data) {
+        if(data.success === true) {
+            var $data_container = $scrollContainer.find('.mCSB_container');
+            if(!$data_container)
+                $data_container =  $scrollContainer;
+
+            $data_container.html(data.html);
+
+            $scrollContainer.mCustomScrollbar("update", true);
+
+            $('#trendingCategory').html(data.category);
+            $('#trendingCategory').attr('href', data.search_url);
+
+        } else {
+            $scrollContainer.removeAttr("data-href");
+        }
+        $element.next().removeClass("overlay");
+    });
+    return false;
+}
+
+
 var get_top_reviews_handler = function(parent_category, sub_category)
 {
     var $element = $('#topReviewsForStoreCategory');
@@ -119,11 +159,12 @@ var update_trends_handler = function(event, elementClicked)
   } else {
     $('.updateTrends').removeClass('imageCategoryBoxSelected');
     $this.addClass('imageCategoryBoxSelected');
-    var  parent_category_slug = $this.text().trim();
-    var sub_category_slug = "all";
-    get_top_reviews_handler(parent_category_slug, sub_category_slug);
-    get_top_stores_handler(parent_category_slug, sub_category_slug);
-    get_trending_deals_handler(parent_category_slug, sub_category_slug);
+    //var  parent_category_slug = $this.text().trim();
+    var sub_category_slug = $this.text().trim(); //"all";
+    /*get_top_reviews_handler(parent_category_slug, sub_category_slug);
+     get_top_stores_handler(parent_category_slug, sub_category_slug);
+     get_trending_deals_handler(parent_category_slug, sub_category_slug); */
+    get_top_stores_v2_handler(sub_category_slug);
   }
 	return false;
 }

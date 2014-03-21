@@ -657,9 +657,8 @@ def render_stores_for_categories(context, parent_category, sub_category, latest=
         }))
 
 @register.simple_tag(takes_context=True)
-def render_stores_for_categories_v2(context, parent_category, sub_category, latest=settings.STORES_NUM_LATEST):
+def render_stores_for_categories_v2(context, sub_category, latest=settings.STORES_NUM_LATEST):
         template_name = 'generic/new_vendor_list.html'
-        search_param = ''
 
         template = loader.get_template(template_name)
 
@@ -667,40 +666,26 @@ def render_stores_for_categories_v2(context, parent_category, sub_category, late
         result = None
         table_name = BlogPost._meta.db_table
 
-        blog_parentcategory_slug = parent_category
-        if blog_parentcategory_slug.lower() != "all" and BlogParentCategory.objects.all().exists():
-            blog_parentcategory = get_object_or_404(BlogParentCategory, slug=slugify(blog_parentcategory_slug))
-
         blog_subcategory = None
         blog_subcategory_slug = sub_category
-        if blog_subcategory_slug.lower() != "all" and BlogCategory.objects.all().exists():
-            blog_subcategory = get_object_or_404(BlogCategory, slug=slugify(blog_subcategory_slug))
+        table_name = BlogPost._meta.db_table
 
-        if blog_parentcategory_slug.lower() == "all" and blog_subcategory_slug.lower() == "all":
-            result = BlogPost.objects.published()
+        blog_subcategory = get_object_or_404(BlogCategory, slug=slugify(blog_subcategory_slug))
+        blog_parentcategory = blog_subcategory.parent_category
 
-        elif blog_parentcategory_slug.lower() != "all" and blog_subcategory_slug.lower() == "all":
-            if blog_parentcategory:
-                blog_subcategories = BlogCategory.objects.all().filter(parent_category=blog_parentcategory).values_list('id', flat=True)
-                result = BlogPost.objects.published().filter(categories__id__in=blog_subcategories)
-        else:
-            if blog_subcategory and blog_parentcategory:
-                result = BlogPost.objects.published().filter(categories=blog_subcategory)
-        
-        result = result.extra(select={'fieldsum':'price_average + website_ex_average + quality_average + service_average',
-                                      'followers': 'SELECT COUNT(*) FROM %s WHERE target_blogpost_id=%s.id' % (Follow._meta.db_table, table_name)}, 
-                                      order_by=('-overall_average', '-fieldsum', '-comments_count', '-followers',)).distinct()[:latest]
+        if blog_subcategory and blog_parentcategory:
+            stores = settings.CATEGORY_STORE_MAP.get(sub_category, [])
+            if len(stores) > 0:
+                result = BlogPost.objects.published().filter(title__in=stores)
 
-        data_href = reverse('getTrendingStores_v2', kwargs={'parent_category':slugify(parent_category),
-                                                        'sub_category':slugify(sub_category),
-                                                        'sIndex':0,
-                                                        'lIndex':latest})
-        data_chunk = 5
+        if result:
+            result = result.extra(select={'fieldsum':'price_average + website_ex_average + quality_average + service_average',
+                                          'followers': 'SELECT COUNT(*) FROM %s WHERE target_blogpost_id=%s.id' % (Follow._meta.db_table, table_name)}, 
+                                          order_by=('-overall_average', '-fieldsum', '-comments_count', '-followers',)).distinct()[:latest]
+
 
         return template.render(RequestContext(context['request'], {
-            'vendors' : result,
-            'data_href' : data_href + search_param,
-            'data_chunk': data_chunk
+            'vendors' : result
         }))
 
 @register.simple_tag(takes_context=True)
