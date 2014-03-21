@@ -118,7 +118,7 @@ var update_trends_handler = function(event, elementClicked)
     var sub_category_slug = "all";
     get_top_reviews_handler(parent_category_slug, sub_category_slug);
     get_top_stores_handler(parent_category_slug, sub_category_slug);
-    get_trending_deals_handler(parent_category_slug, sub_category_slug);
+    // get_trending_deals_handler(parent_category_slug, sub_category_slug);
   }
 	return false;
 }

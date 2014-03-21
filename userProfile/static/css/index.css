@@ -5,11 +5,13 @@
 .innerBox {
 	height: 150px;
 	overflow: auto;
+	padding-left: -2px;
 }
 
 @media (min-width: 1200px) {
 	.innerBox{
-		height: 176px;	
+		height: 176px;
+		padding-left: 5px;
 	}
 }
 
