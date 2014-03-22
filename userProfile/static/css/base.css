@@ -1729,4 +1729,11 @@ ul#footer-links li {
 	width: 100px;
 	font-size: 20px;
 	text-align: left;
+	-webkit-transition: width 2s; /* For Safari 3.1 to 6.0 */
+	transition: width 0.5s;
 }
+.shoppedRecently:hover {
+	background-color: #F9DF1E;
+	color: #029795;
+	width: 120px;
+};

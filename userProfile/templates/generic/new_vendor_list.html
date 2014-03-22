@@ -2,22 +2,30 @@
 {% load userProfile_tags %}
 
 {% if not is_incremental %}
-<div class="halfGutter halfGutterRight topHalfGutter bottomHalfGutter">
-	<div class="halfGutterInset whiteBox halfGutterinsetRight" style="height:236px;">
-		<div class="showcaseContainer scrollContainer topHalfGutter" data-href="{{data_href}}" data-chunk="{{data_chunk}}">
+<style>
+.storeMessage{
+	height:auto;
+	display:inline-block;
+	width:50%;
+	padding:8px;
+	box-sizing:border-box;
+}
+</style>
+<div class="showcaseBox halfGutter halfGutterRight">
+		<div class="showcaseContainer topHalfGutter scrollContainer" data-href="{{data_href}}" data-chunk="{{data_chunk}}">
 {% endif %}
 
 			{% for vendor in vendors %}
 				{% get_trends_image vendor as image %}
 				{% if image %}
-					<div class="showcaseItem noGutter halfGutterRight">
+					<div class="showcaseItem noGutter">
 						<img style="width:100%;max-height:100%;" class="noBoxShadow" src="{{MEDIA_URL}}{{ image.image }}"/>
 						<div class="showcaseTitle halfGutterInset halfGutterInsetRight">
 							{% comment %}
 								title for that store
 								and put in the blog url here
 							{% endcomment %}
-							<span class="yellowBar">{% trans "For more quirky gifts like these" %}</span><span class="greyBar fontSize16"><a class="colorYellow" href="{{vendor.web_url}}" target="_blank">{{vendor.web_url}}</a></span>
+							<div class="yellowBar storeMessage pagination-centered">{% trans "For more quirky gifts like these" %}</div><div class="greyBar fontSize16 storeMessage pagination-centered"><a class="colorYellow" href="{{vendor.get_absolute_url}}" target="_blank">{{vendor.title}}</a></div>
 						</div>
 					</div>
 				{% endif %}
@@ -25,8 +33,7 @@
 
 {% if not is_incremental %}
 		</div>
-	</div>
-	<span class="fontSize20 fontTitillium2 topHalfGutter" style="display:inline-block;">
-	{% trans "Find more stores for "%}<a class="radioColor" id="trendingCategory" href="{% url get_vendors 'Flowers, Cakes & Gifts' 'Gifts' %}">Gifts</a></span>
+	<div class="fontSize16 fontTitillium2 pagination-centered" style="margin-top:5px;">
+	{% trans "Find more stores for "%}<a class="radioColor" id="trendingCategory" href="{% url get_vendors 'Flowers, Cakes & Gifts' 'Gifts' %}">Gifts</a></div>
 </div>
 {% endif %}

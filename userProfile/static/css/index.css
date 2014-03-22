@@ -262,13 +262,12 @@ div.thirdCategory.imageCategoryBox:hover span{
 .showcaseItem{
 	position: relative;
 	display: inline-block;
-	max-height: 212px;
-	height: 236px;
-	width: 506px;
+	height: 250px;
+	width: 523px;
 }
 @media (min-width: 1200px) {
 	.showcaseItem{
-		width: 620px;	
+		width: 645px;
 	}
 }
 .showcaseItem img {
@@ -291,21 +290,24 @@ div.thirdCategory.imageCategoryBox:hover span{
 	background-image: url('/static/img/infoBox.png');
 	background-repeat: no-repeat;
 	background-size: cover;
-	height: 137px;
+	height: 121px;
 	position: relative;
 }
 .infoBox div{
 	position: absolute;
 	top: 50%;
-	margin-top: -15%;
+	margin-top: -8%;
 }
 @media (min-width: 1200px) {
 	.infoBox{
-		height: 121px;
+		height: 94px;
 	}
 }
 div.container.fancybox-margin{
 	margin-right: auto;
+}
+.showcaseContainer {
+	height: 253px;
 }
 .showcaseContainer .mCSB_horizontal.mCustomScrollBox>.mCSB_scrollTools {
 	overflow: visible !important;
@@ -313,7 +315,7 @@ div.container.fancybox-margin{
 .showcaseContainer .mCSB_buttonLeft{
 	height: 40px !important;
 	position: absolute !important;
-	top: -110px;
+	top: -120px;
 	left:0px;
 }
 .showcaseContainer .mCSB_buttonRight{
@@ -321,4 +323,7 @@ div.container.fancybox-margin{
 	position: absolute !important;
 	top: -110px;
 	right: 0px !important;
+}
+.showcaseBox{
+	padding-bottom: 5px;
 }

@@ -136,8 +136,13 @@ var build_category_menu_handler = function() {
         .addClass("dropdown-menu dropdown-menu-parent");
 
     var array_categories = [];
+    var exclude_categories = ["Classifieds", "Deals", "Event Ticketing", "Food Services", "Jobs & Related Services", "Matrimonial Portals", "Online Services", "Other Services", "Real Estate Services", "Reviews"];
+
+
     $.each(category_namespace.categories, function(object) {
-        array_categories.push(object);
+        if (exclude_categories.indexOf(object) == -1) {
+            array_categories.push(object);
+        }
     });
     array_categories.sort();
 
