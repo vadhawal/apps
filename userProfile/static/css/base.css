@@ -1278,7 +1278,8 @@ textarea:focus, input[type=text]:focus{
 }
 .category-icon{
 	background-repeat: no-repeat;
-	background-image: url(/static/img/category_icons.png);
+	background-image: none; /*url(/static/img/category_icons.png);*/
+	background-color: #FBFBDD;
 }
 
 .category-all{
