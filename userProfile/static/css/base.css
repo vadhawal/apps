@@ -1710,14 +1710,14 @@ ul#footer-links li {
 	display:none !important;
 }
 .mCSB_buttonLeft{
-	background-image: url('/static/img/scroll_nav_left.svg') !important;
+	background-image: url('/static/img/scroll_nav_left.png') !important;
 	background-position: 0 !important;
 	background-size: contain;
 	width: 40px !important;
 	opacity: 0.8 !important;
 }
 .mCSB_buttonRight{
-	background-image: url('/static/img/scroll_nav_right.svg') !important;
+	background-image: url('/static/img/scroll_nav_right.png') !important;
 	background-position: 0 !important;
 	background-size: contain;
 	width: 40px !important;
